@@ -53,11 +53,11 @@ when "debian", "ubuntu"
   end
   package "rabbitmq-server"
 when "redhat", "centos", "scientific", "amazon"
-  remote_file "/tmp/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
+  remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
     source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
     action :create_if_missing
   end
-  rpm_package "/tmp/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
+  rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
     action :install
   end
 end
