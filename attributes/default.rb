@@ -20,6 +20,10 @@ default[:rabbitmq][:cluster] = false
 default[:rabbitmq][:cluster_disk_nodes] = []
 default[:rabbitmq][:erlang_cookie] = 'AnyAlphaNumericStringWillDo'
 
+# directories
+default[:rabbitmq][:data_directory] = '/var/lib/rabbitmq'
+default[:rabbitmq][:log_directory] = '/var/log/rabbitmq'
+
 #ssl
 default[:rabbitmq][:ssl] = false
 default[:rabbitmq][:ssl_port] = '5671'
