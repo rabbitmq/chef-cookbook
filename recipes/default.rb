@@ -19,12 +19,7 @@
 # limitations under the License.
 #
 
-# rabbitmq-server is not well-behaved as far as managed services goes
-# we'll need to add a LWRP for calling rabbitmqctl stop
-# while still using /etc/init.d/rabbitmq-server start
-# because of this we just put the rabbitmq-env.conf in place and let it rip
-
-include_recipe "erlang::default"
+include_recipe "erlang"
 
 directory "/etc/rabbitmq/" do
   owner "root"
@@ -53,27 +48,60 @@ when "debian", "ubuntu"
     action :add
     notifies :run, resources(:execute => "apt-get update"), :immediately
   end
+
+  # installs the required setsid command -- should be there by default but just in case
+  package "util-linux"
   package "rabbitmq-server"
+
 when "redhat", "centos", "scientific", "amazon"
+
   remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
     source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
     action :create_if_missing
   end
+
   rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
     action :install
   end
+
 end
 
-if node['rabbitmq']['cluster']
-    # If this already exists, don't do anything
-    # Changing the cookie will stil have to be a manual process
-    template "/var/lib/rabbitmq/.erlang.cookie" do
-      source "doterlang.cookie.erb"
-      owner "rabbitmq"
-      group "rabbitmq"
-      mode 0400
-      not_if { File.exists? "/var/lib/rabbitmq/.erlang.cookie" }
-    end
+## You'll see setsid used in all the init statements in this cookbook. This
+## is because there is a problem with the stock init script in the RabbitMQ
+## debian package (at least in 2.8.2) that makes it not daemonize properly
+## when called from chef. The setsid command forces the subprocess into a state
+## where it can daemonize properly. -Kevin (thanks to Daniel DeLeo for the help)
+
+service "rabbitmq-server" do
+  start_command "setsid /etc/init.d/rabbitmq-server start"
+  stop_command "setsid /etc/init.d/rabbitmq-server stop"
+  restart_command "setsid /etc/init.d/rabbitmq-server restart"
+  status_command "setsid /etc/init.d/rabbitmq-server status"
+  supports :status => true, :restart => true
+end
+
+
+if File.exists?(node['rabbitmq']['erlang_cookie_path'])
+  existing_erlang_key =  File.read(node['rabbitmq']['erlang_cookie_path'])
+else
+  existing_erlang_key = ""
+end
+
+if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing_erlang_key
+  service "rabbitmq-server" do
+    action :stop
+  end
+
+  template "/var/lib/rabbitmq/.erlang.cookie" do
+    source "doterlang.cookie.erb"
+    owner "rabbitmq"
+    group "rabbitmq"
+    mode 0400
+  end
+
+  service "rabbitmq-server" do
+    action :start
+  end
 end
 
 template "/etc/rabbitmq/rabbitmq.config" do
@@ -85,7 +113,5 @@ template "/etc/rabbitmq/rabbitmq.config" do
 end
 
 service "rabbitmq-server" do
-  stop_command "/usr/sbin/rabbitmqctl stop"
-  supports :status => true, :restart => true
   action [ :enable, :start ]
 end
