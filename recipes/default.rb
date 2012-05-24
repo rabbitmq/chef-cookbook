@@ -59,15 +59,28 @@ when "redhat", "centos", "scientific"
   end
 end
 
-if node[:rabbitmq][:cluster]
-    # If this already exists, don't do anything
-    # Changing the cookie will stil have to be a manual process
+if File.exists?('/var/lib/rabbitmq/.erlang.cookie')
+  @existing_erlang_key =  File.read('/var/lib/rabbitmq/.erlang.cookie')
+else
+  @existing_erlang_key = ""
+end
+
+if node[:rabbitmq][:cluster] and node[:rabbitmq][:erlang_cookie] != @existing_erlang_key
+    execute "rabbitmq-stop" do
+      command "setsid /etc/init.d/rabbitmq-server stop"
+      action :run
+    end
+
     template "/var/lib/rabbitmq/.erlang.cookie" do
       source "doterlang.cookie.erb"
       owner "rabbitmq"
       group "rabbitmq"
       mode 0400
-      not_if { File.exists? "/var/lib/rabbitmq/.erlang.cookie" }
+    end
+
+    execute "rabbitmq-start" do
+      command "setsid /etc/init.d/rabbitmq-server start"
+      action :run
     end
 end
 
