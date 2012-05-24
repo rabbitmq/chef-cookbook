@@ -19,11 +19,6 @@
 # limitations under the License.
 #
 
-# rabbitmq-server is not well-behaved as far as managed services goes
-# we'll need to add a LWRP for calling rabbitmqctl stop
-# while still using /etc/init.d/rabbitmq-server start
-# because of this we just put the rabbitmq-env.conf in place and let it rip
-
 directory "/etc/rabbitmq/" do
   owner "root"
   group "root"
@@ -51,6 +46,8 @@ when "debian", "ubuntu"
     action :add
     notifies :run, resources(:execute => "apt-get update"), :immediately
   end
+  # installs the required setsid command -- should be there by default but just in case
+  package "util-linux"
   package "rabbitmq-server"
 when "redhat", "centos", "scientific"
   remote_file "/tmp/rabbitmq-server-2.6.1-1.noarch.rpm" do
@@ -82,8 +79,17 @@ template "/etc/rabbitmq/rabbitmq.config" do
   notifies :restart, "service[rabbitmq-server]", :immediately
 end
 
+## You'll see setsid used in all the init statements in this cookbook. This 
+## is because there is a problem with the stock init script in the RabbitMQ
+## debian package (at least in 2.8.2) that makes it not daemonize properly 
+## when called from chef. The setsid command forces the subprocess into a state 
+## where it can daemonize properly. -Kevin (thanks to Daniel DeLeo for the help)
+
 service "rabbitmq-server" do
-  stop_command "/usr/sbin/rabbitmqctl stop"
+  start_command "setsid /etc/init.d/rabbitmq-server start"
+  stop_command "setsid /etc/init.d/rabbitmq-server stop"
+  restart_command "setsid /etc/init.d/rabbitmq-server restart"
+  status_command "setsid /etc/init.d/rabbitmq-server status"
   supports :status => true, :restart => true
   action [ :enable, :start ]
 end
