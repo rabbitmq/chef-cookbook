@@ -4,6 +4,7 @@
 #
 # Copyright 2009, Benjamin Black
 # Copyright 2009-2011, Opscode, Inc.
+# Copyright 2012, Kevin Nuckolls <kevin.nuckolls@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -48,6 +49,7 @@ when "debian", "ubuntu"
     components ["main"]
     key "http://www.rabbitmq.com/rabbitmq-signing-key-public.asc"
     action :add
+    notifies :run, resources(:execute => "apt-get update"), :immediately
   end
   package "rabbitmq-server"
 when "redhat", "centos", "scientific"
