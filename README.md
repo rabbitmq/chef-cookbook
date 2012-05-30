@@ -14,7 +14,7 @@ To enable SSL turn :ssl to true and set the paths to your cacert, cert and key f
 
 Resources/Providers
 ===================
-There are 2 LWRPs for interacting with RabbitMQ.
+There are 3 LWRPs for interacting with RabbitMQ.
 
 user
 ----
@@ -57,6 +57,24 @@ rabbitmq_vhost "/nova" do
 end
 ```
 
+plugin
+-----
+Enables or disables a rabbitmq plugin.
+
+- `:enable` enables a `plugin`
+- `:disable` disables a `plugin`
+
+### Example
+``` ruby
+rabbitmq_plugin "rabbitmq_stomp" do
+  action :enable
+end
+
+rabbitmq_plugin "rabbitmq_shovel" do
+  action :disable
+end
+```
+
 Limitations
 ===========
 For an already running cluster, these actions still require manual intervention:
@@ -72,7 +90,7 @@ Author:: Benjamin Black <b@b3k.us>
 Author:: Daniel DeLeo <dan@kallistec.com>
 Author:: Matt Ray <matt@opscode.com>
 
-Copyright:: 2009-2011 Opscode, Inc
+Copyright:: 2009-2012 Opscode, Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
