@@ -42,7 +42,7 @@ case node[:platform]
 when "debian", "ubuntu"
   # use the RabbitMQ repository instead of Ubuntu or Debian's
   # because there are very useful features in the newer versions
-  package "rabbitmq-server"
+  package "rabbitmq-server" do
     action :upgrade
     options "-o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef'"
   end
