@@ -18,18 +18,20 @@
 #
 
 action :enable do
-  execute "rabbitmq-plugins enable #{new_resource.plugin}" do
-    not_if "rabbitmq-plugins list #{new_resource.plugin} | grep '\\[[Ee]\\] #{new_resource.plugin}'"
-    Chef::Log.info "Enabling RabbitMQ plugin '#{new_resource.plugin}'."
-    new_resource.updated_by_last_action(true)
+  unless system("rabbitmq-plugins list #{new_resource.plugin} | grep '\\[[Ee]\\] #{new_resource.plugin}'")
+    execute "rabbitmq-plugins enable #{new_resource.plugin}" do
+      Chef::Log.info "Enabling RabbitMQ plugin '#{new_resource.plugin}'."
+      new_resource.updated_by_last_action(true)
+    end
   end
 end
 
 action :disable do
-  execute "rabbitmq-plugins disable #{new_resource.plugin}" do
-    only_if "rabbitmq-plugins list #{new_resource.plugin} | grep '\\[[Ee]\\] #{new_resource.plugin}'"
-    Chef::Log.info "Disabling RabbitMQ plugin '#{new_resource.plugin}'."
-    new_resource.updated_by_last_action(true)
+  if system("rabbitmq-plugins list #{new_resource.plugin} | grep '\\[[Ee]\\] #{new_resource.plugin}'")
+    execute "rabbitmq-plugins disable #{new_resource.plugin}" do
+      Chef::Log.info "Disabling RabbitMQ plugin '#{new_resource.plugin}'."
+      new_resource.updated_by_last_action(true)
+    end
   end
 end
 
