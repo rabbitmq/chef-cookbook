@@ -51,14 +51,18 @@ when "debian", "ubuntu"
   end
   package "rabbitmq-server"
 when "redhat", "centos", "scientific", "amazon"
-  remote_file "/tmp/rabbitmq-server-#{node[:rabbitmq][:version]}-1.noarch.rpm" do
-    source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node[:rabbitmq][:version]}/rabbitmq-server-#{node[:rabbitmq][:version]}-1.noarch.rpm"
+  filename = node[:rabbitmq][:url].split('/')[-1]
+  localfile = "#{Chef::Config[:file_cache_path]}/#{filename}"
+  remote_file "#{localfile}" do
+    source node[:rabbitmq][:url]
     action :create_if_missing
   end
-  rpm_package "/tmp/rabbitmq-server-#{node[:rabbitmq][:version]}-1.noarch.rpm" do
+  rpm_package "#{localfile}" do
     action :install
   end
 end
+
+
 
 if node[:rabbitmq][:cluster]
     # If this already exists, don't do anything
