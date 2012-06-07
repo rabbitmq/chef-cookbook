@@ -6,10 +6,6 @@ default[:rabbitmq][:config] = nil
 default[:rabbitmq][:logdir] = nil
 default[:rabbitmq][:mnesiadir] = nil
 
-# RabbitMQ version to install for "redhat", "centos", "scientific", and "amazon". We default to 
-# 2.6.1, because that was what was installed in the previous version of the cookbook.
-default[:rabbitmq][:version] = '2.6.1'
-
 # config file location
 # http://www.rabbitmq.com/configure.html#define-environment-variables
 # "The .config extension is automatically appended by the Erlang runtime."
@@ -30,3 +26,6 @@ default[:rabbitmq][:ssl_port] = '5671'
 default[:rabbitmq][:ssl_cacert] = '/path/to/cacert.pem'
 default[:rabbitmq][:ssl_cert] = '/path/to/cert.pem'
 default[:rabbitmq][:ssl_key] = '/path/to/key.pem'
+
+# Centos packages
+default[:rabbitmq][:url] = "https://www.rabbitmq.com/releases/rabbitmq-server/v2.6.1/rabbitmq-server-2.6.1-1.noarch.rpm"
