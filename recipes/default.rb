@@ -80,6 +80,14 @@ template "/etc/rabbitmq/rabbitmq.config" do
   notifies :restart, "service[rabbitmq-server]", :immediately
 end
 
+template "/etc/rabbitmq/enabled_plugins" do
+  source "enabled_plugins.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :restart, "service[rabbitmq-server]", :immediately
+end
+
 service "rabbitmq-server" do
   stop_command "/usr/sbin/rabbitmqctl stop"
   supports :status => true, :restart => true
