@@ -6,9 +6,9 @@ default[:rabbitmq][:config] = nil
 default[:rabbitmq][:logdir] = nil
 default[:rabbitmq][:mnesiadir] = nil
 
-# RabbitMQ version to install for "redhat", "centos", "scientific", and "amazon". We default to 
+# RabbitMQ version to install for "redhat", "centos", "scientific", and "amazon". We default to
 # 2.6.1, because that was what was installed in the previous version of the cookbook.
-default[:rabbitmq][:version] = '2.6.1'
+default[:rabbitmq][:version] = '2.8.4'
 
 # config file location
 # http://www.rabbitmq.com/configure.html#define-environment-variables
