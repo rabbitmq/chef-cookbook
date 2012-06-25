@@ -23,6 +23,8 @@
 # while still using /etc/init.d/rabbitmq-server start
 # because of this we just put the rabbitmq-env.conf in place and let it rip
 
+include_recipe "erlang::default"
+
 directory "/etc/rabbitmq/" do
   owner "root"
   group "root"
