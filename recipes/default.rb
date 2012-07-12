@@ -19,6 +19,9 @@
 # limitations under the License.
 #
 
+
+include_recipe "erlang::default"
+
 directory "/etc/rabbitmq/" do
   owner "root"
   group "root"
@@ -49,23 +52,23 @@ when "debian", "ubuntu"
   # installs the required setsid command -- should be there by default but just in case
   package "util-linux"
   package "rabbitmq-server"
-when "redhat", "centos", "scientific"
-  remote_file "/tmp/rabbitmq-server-2.6.1-1.noarch.rpm" do
-    source "https://www.rabbitmq.com/releases/rabbitmq-server/v2.6.1/rabbitmq-server-2.6.1-1.noarch.rpm"
+when "redhat", "centos", "scientific", "amazon"
+  remote_file "/tmp/rabbitmq-server-#{node[:rabbitmq][:version]}-1.noarch.rpm" do
+    source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node[:rabbitmq][:version]}/rabbitmq-server-#{node[:rabbitmq][:version]}-1.noarch.rpm"
     action :create_if_missing
   end
-  rpm_package "/tmp/rabbitmq-server-2.6.1-1.noarch.rpm" do
+  rpm_package "/tmp/rabbitmq-server-#{node[:rabbitmq][:version]}-1.noarch.rpm" do
     action :install
   end
 end
 
 if File.exists?('/var/lib/rabbitmq/.erlang.cookie')
-  @existing_erlang_key =  File.read('/var/lib/rabbitmq/.erlang.cookie')
+  existing_erlang_key =  File.read('/var/lib/rabbitmq/.erlang.cookie')
 else
-  @existing_erlang_key = ""
+  existing_erlang_key = ""
 end
 
-if node[:rabbitmq][:cluster] and node[:rabbitmq][:erlang_cookie] != @existing_erlang_key
+if node[:rabbitmq][:cluster] and node[:rabbitmq][:erlang_cookie] != existing_erlang_key
     execute "rabbitmq-stop" do
       command "setsid /etc/init.d/rabbitmq-server stop"
       action :run
