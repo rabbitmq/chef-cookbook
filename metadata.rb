@@ -21,7 +21,7 @@ attribute "rabbitmq",
 attribute "rabbitmq/nodename",
   :display_name => "RabbitMQ Erlang node name",
   :description => "The Erlang node name for this server.",
-  :default => "node[:hostname]"
+  :default => "node['hostname']"
 
 attribute "rabbitmq/address",
   :display_name => "RabbitMQ server IP address",
