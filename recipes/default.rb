@@ -53,7 +53,7 @@ when "debian", "ubuntu"
   package "util-linux"
   package "rabbitmq-server"
 
-when "redhat", "centos", "scientific", "amazon"
+when "redhat", "centos", "scientific", "amazon", "fedora"
 
   remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
     source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
