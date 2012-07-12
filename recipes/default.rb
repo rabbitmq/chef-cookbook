@@ -52,7 +52,7 @@ when "debian", "ubuntu"
     action :add
   end
   package "rabbitmq-server"
-when "redhat", "centos", "scientific", "amazon"
+when "redhat", "centos", "scientific", "amazon", "fedora"
   remote_file "/tmp/rabbitmq-server-#{node[:rabbitmq][:version]}-1.noarch.rpm" do
     source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node[:rabbitmq][:version]}/rabbitmq-server-#{node[:rabbitmq][:version]}-1.noarch.rpm"
     action :create_if_missing
