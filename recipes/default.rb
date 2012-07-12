@@ -62,8 +62,8 @@ when "redhat", "centos", "scientific", "amazon"
   end
 end
 
-if File.exists?('/var/lib/rabbitmq/.erlang.cookie')
-  existing_erlang_key =  File.read('/var/lib/rabbitmq/.erlang.cookie')
+if File.exists?(node[:rabbitmq][:erlang_cookie_path])
+  existing_erlang_key =  File.read(node[:rabbitmq][:erlang_cookie_path])
 else
   existing_erlang_key = ""
 end
