@@ -28,14 +28,6 @@ directory "/etc/rabbitmq/" do
   action :create
 end
 
-template "/etc/rabbitmq/rabbitmq-env.conf" do
-  source "rabbitmq-env.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  notifies :restart, "service[rabbitmq-server]"
-end
-
 case node['platform']
 when "debian", "ubuntu"
   # use the RabbitMQ repository instead of Ubuntu or Debian's
@@ -64,6 +56,14 @@ when "redhat", "centos", "scientific", "amazon", "fedora"
     action :install
   end
 
+end
+
+template "/etc/rabbitmq/rabbitmq-env.conf" do
+  source "rabbitmq-env.conf.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :restart, "service[rabbitmq-server]"
 end
 
 ## You'll see setsid used in all the init statements in this cookbook. This
