@@ -116,9 +116,12 @@ template "/etc/rabbitmq/rabbitmq.config" do
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, "service[rabbitmq-server]", :immediately
+end
+
+rabbitmq_plugin "rabbitmq_management" do
+  action :enable
 end
 
 service "rabbitmq-server" do
-  action [ :enable, :start ]
+  action [ :enable, :restart ]
 end
