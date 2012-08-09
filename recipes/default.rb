@@ -19,6 +19,10 @@
 # limitations under the License.
 #
 
+if node.platform? "ubuntu", "debian"
+  include_recipe "apt::default"
+end
+
 include_recipe "erlang"
 
 directory "/etc/rabbitmq/" do
