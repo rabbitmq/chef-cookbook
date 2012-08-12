@@ -20,6 +20,7 @@
 #
 
 include_recipe "erlang"
+include_recipe "apt"
 
 directory "/etc/rabbitmq/" do
   owner "root"
