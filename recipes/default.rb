@@ -38,6 +38,8 @@ end
 
 case node['platform']
 when "debian", "ubuntu"
+  include_recipe "apt"
+
   # use the RabbitMQ repository instead of Ubuntu or Debian's
   # because there are very useful features in the newer versions
   apt_repository "rabbitmq" do
