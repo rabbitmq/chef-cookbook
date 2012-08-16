@@ -19,10 +19,6 @@
 # limitations under the License.
 #
 
-if node.platform? "ubuntu", "debian"
-  include_recipe "apt::default"
-end
-
 include_recipe "erlang"
 
 directory "/etc/rabbitmq/" do
@@ -44,6 +40,7 @@ case node['platform']
 when "debian", "ubuntu"
   # use the RabbitMQ repository instead of Ubuntu or Debian's
   # because there are very useful features in the newer versions
+  include_recipe "apt::default"
   apt_repository "rabbitmq" do
     uri "http://www.rabbitmq.com/debian/"
     distribution "testing"
