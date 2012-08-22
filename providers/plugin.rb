@@ -17,8 +17,15 @@
 # limitations under the License.
 #
 
+def plugin_enabled?(name)
+  cmd = Mixlib::ShellOut.new("rabbitmq-plugins list -e '#{name}\\b'")
+  cmd.run_command
+  cmd.error!
+  cmd.stdout =~ /\b#{name}\b/
+end
+
 action :enable do
-  unless system("rabbitmq-plugins list -e #{new_resource.plugin}\\\\b | grep .")
+  unless plugin_enabled?(new_resource.plugin)
     execute "rabbitmq-plugins enable #{new_resource.plugin}" do
       Chef::Log.info "Enabling RabbitMQ plugin '#{new_resource.plugin}'."
       new_resource.updated_by_last_action(true)
@@ -27,7 +34,7 @@ action :enable do
 end
 
 action :disable do
-  if system("rabbitmq-plugins list -e #{new_resource.plugin}\\\\b | grep .")
+  if plugin_enabled?(new_resource.plugin)
     execute "rabbitmq-plugins disable #{new_resource.plugin}" do
       Chef::Log.info "Disabling RabbitMQ plugin '#{new_resource.plugin}'."
       new_resource.updated_by_last_action(true)
