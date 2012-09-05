@@ -46,7 +46,7 @@ when "debian", "ubuntu"
     action :upgrade
     options "-o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef'"
   end
-when "redhat", "centos", "scientific"
+when "scientific"
   remote_file "/tmp/rabbitmq-server-2.6.1-1.noarch.rpm" do
     source "https://www.rabbitmq.com/releases/rabbitmq-server/v2.6.1/rabbitmq-server-2.6.1-1.noarch.rpm"
     action :create_if_missing
@@ -57,6 +57,12 @@ when "redhat", "centos", "scientific"
 when "fedora" #TODO(breu): Need to commit this fix upstream
   # when using fedora - ride the edge
   package "rabbitmq-server"
+when "centos", "redhat"
+  # from epel
+  include_recipe "yum::epel"
+  package "rabbitmq-server" do
+    action :install
+  end
 end
 
 if node[:rabbitmq][:cluster]
