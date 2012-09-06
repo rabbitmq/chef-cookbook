@@ -2,14 +2,14 @@ maintainer        "Opscode, Inc."
 maintainer_email  "cookbooks@opscode.com"
 license           "Apache 2.0"
 description       "Installs and configures RabbitMQ server"
-version           "1.4.1"
+version           "1.5.1"
 recipe            "rabbitmq", "Install and configure RabbitMQ"
 recipe            "rabbitmq::cluster", "Set up RabbitMQ clustering."
-depends           "apt", ">= 1.1"
+depends           "apt", ">= 1.4.4"
 depends           "yum", ">= 0.5.0"
 depends           "erlang", ">= 0.9"
 
-%w{ubuntu debian redhat centos scientific}.each do |os|
+%w{ubuntu debian redhat centos scientific amazon fedora}.each do |os|
   supports os
 end
 
@@ -21,7 +21,7 @@ attribute "rabbitmq",
 attribute "rabbitmq/nodename",
   :display_name => "RabbitMQ Erlang node name",
   :description => "The Erlang node name for this server.",
-  :default => "node[:hostname]"
+  :default => "node['hostname']"
 
 attribute "rabbitmq/address",
   :display_name => "RabbitMQ server IP address",
@@ -62,4 +62,3 @@ attribute "rabbitmq/cluster_disk_nodes",
 attribute "rabbitmq/erlang_cookie",
   :display_name => "RabbitMQ Erlang cookie",
   :description => "Access cookie for clustering nodes.  There is no default."
-
