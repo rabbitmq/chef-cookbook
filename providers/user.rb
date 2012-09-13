@@ -23,6 +23,11 @@ action :add do
     Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
     new_resource.updated_by_last_action(true)
   end
+  execute "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.tags.join(" ")}" do
+    not_if "rabbitmqctl list_users | grep #{new_resource.user} | grep -q '\[#{new_resource.tags.join(", ")}\]'"
+    Chef::Log.info "Setting RabbitMQ user tags for #{new_resource.user} to '[#{new_resource.tags.join(", ")}]'"
+    new_resource.updated_by_last_action(true)
+  end
 end
 
 action :delete do

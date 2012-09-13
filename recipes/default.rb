@@ -40,6 +40,7 @@ case node['platform']
 when "debian", "ubuntu"
   # use the RabbitMQ repository instead of Ubuntu or Debian's
   # because there are very useful features in the newer versions
+  include_recipe "apt::default"
   apt_repository "rabbitmq" do
     uri "http://www.rabbitmq.com/debian/"
     distribution "testing"
@@ -54,20 +55,13 @@ when "debian", "ubuntu"
 
 when "redhat", "centos", "scientific", "amazon", "fedora"
 
-  if node['rabbitmq']['use_yum'] then
-    package "rabbitmq-server" do
-      version "#{node['rabbitmq']['version']}-1"
-      action :install
-    end
-  else
-    remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
-      source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
-      action :create_if_missing
-    end
+  remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
+    source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
+    action :create_if_missing
+  end
 
-    rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
-      action :install
-    end
+  rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
+    action :install
   end
 
 end
@@ -93,20 +87,26 @@ else
   existing_erlang_key = ""
 end
 
-if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing_erlang_key
+if !File.exists?("/var/lib/rabbitmq/.mnesia_reset")
   service "rabbitmq-server" do
     action :stop
   end
 
+  directory "/var/lib/rabbitmq/mnesia" do
+    action :delete
+    recursive true
+  end
+
   template "/var/lib/rabbitmq/.erlang.cookie" do
+    action :create
     source "doterlang.cookie.erb"
     owner "rabbitmq"
     group "rabbitmq"
     mode 0400
   end
 
-  service "rabbitmq-server" do
-    action :start
+  file "/var/lib/rabbitmq/.mnesia_reset" do
+    action :touch
   end
 end
 
@@ -115,9 +115,12 @@ template "/etc/rabbitmq/rabbitmq.config" do
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, "service[rabbitmq-server]", :immediately
+end
+
+rabbitmq_plugin "rabbitmq_management" do
+  action :enable
 end
 
 service "rabbitmq-server" do
-  action [ :enable, :start ]
+  action [ :enable, :restart ]
 end
