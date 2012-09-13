@@ -15,9 +15,11 @@ data_bag("rabbitmq_users").each do |item_name|
     tags item["tags"]
   end
 
-  rabbitmq_user item["username"] do
-    action :set_permissions
-    vhost item["vhost"]
-    permissions item["permissions"]
+  item["permission_definitions"].each do |perm|
+    rabbitmq_user item["username"] do
+      action :set_permissions
+      vhost perm["vhost"]
+      permissions perm["permissions"]
+    end
   end
 end
