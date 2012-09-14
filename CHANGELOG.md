@@ -1,3 +1,10 @@
+## v1.6.0:
+
+* [COOK-1496] - explicitly include the apt recipe
+* [COOK-1501] - Allow user to enable yum-based installation of
+  rabbitmq via an attribute
+* [COOK-1503] - Recipe to enable rabbitmq web management console
+
 ## v1.5.0:
 
 This version requires apt cookbook v1.4.4 (reflected in metadata).
