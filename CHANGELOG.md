@@ -1,3 +1,8 @@
+## v1.6.2:
+
+* [COOK-1552] - removed rogue single quote from rabbitmq ssl
+  configuration
+
 ## v1.6.0:
 
 * [COOK-1496] - explicitly include the apt recipe
