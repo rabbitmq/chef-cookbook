@@ -40,12 +40,9 @@ case node['platform']
 when "debian", "ubuntu"
   # use the RabbitMQ repository instead of Ubuntu or Debian's
   # because there are very useful features in the newer versions
-  apt_repository "rabbitmq" do
-    uri "http://www.rabbitmq.com/debian/"
-    distribution "testing"
-    components ["main"]
-    key "http://www.rabbitmq.com/rabbitmq-signing-key-public.asc"
-    action :add
+  package "rabbitmq-server" do
+    action :upgrade
+    options "-o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef'"
   end
 
   # installs the required setsid command -- should be there by default but just in case
@@ -56,8 +53,8 @@ when "redhat", "centos", "scientific", "amazon", "fedora"
 
   if node['rabbitmq']['use_yum'] then
     yum_package "rabbitmq-server" do
-      version "#{node['rabbitmq']['version']}"-"#{node['rabbitmq']['release']}"
-      arch "#{node['rabbitmq']['arch']}"
+      version "#{node['rabbitmq']['version']}-#{node['rabbitmq']['release']}"
+      arch node['rabbitmq']['arch']
       action :install
     end
   else
