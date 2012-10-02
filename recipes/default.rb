@@ -3,7 +3,7 @@
 # Recipe:: default
 #
 # Copyright 2009, Benjamin Black
-# Copyright 2009-2011, Opscode, Inc.
+# Copyright 2009-2012, Opscode, Inc.
 # Copyright 2012, Kevin Nuckolls <kevin.nuckolls@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,19 +23,35 @@ include_recipe "erlang"
 
 case node['platform']
 when "debian", "ubuntu"
-  # use the RabbitMQ repository instead of Ubuntu or Debian's
-  # because there are very useful features in the newer versions
-  apt_repository "rabbitmq" do
-    uri "http://www.rabbitmq.com/debian/"
-    distribution "testing"
-    components ["main"]
-    key "http://www.rabbitmq.com/rabbitmq-signing-key-public.asc"
-    action :add
-    not_if { node['rabbitmq']['use_distro_version'] }
-  end
   # installs the required setsid command -- should be there by default but just in case
   package "util-linux"
-  package "rabbitmq-server"
+
+  if node['rabbitmq']['use_apt'] then
+    # use the RabbitMQ repository instead of Ubuntu or Debian's
+    # because there are very useful features in the newer versions
+    apt_repository "rabbitmq" do
+      uri "http://www.rabbitmq.com/debian/"
+      distribution "testing"
+      components ["main"]
+      key "http://www.rabbitmq.com/rabbitmq-signing-key-public.asc"
+      not_if { node['rabbitmq']['use_distro_version'] }
+      action :add
+    end
+
+    # important note here
+    # the official rabbitmq apt repo ONLY has the latest version
+    # so we can't hardcode a version here
+    package "rabbitmq-server"
+  else
+    remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb" do
+      source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
+      action :create_if_missing
+    end
+
+    dpkg_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb" do
+      action :install
+    end
+  end
 
 when "redhat", "centos", "scientific", "amazon", "fedora"
   if node['rabbitmq']['use_yum'] then
