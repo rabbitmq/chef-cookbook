@@ -77,7 +77,7 @@ template "/etc/rabbitmq/rabbitmq-env.conf" do
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, "service[rabbitmq-server]"
+  notifies :restart, "service[rabbitmq-server]", :immediately
 end
 
 template "/etc/rabbitmq/rabbitmq.config" do
@@ -85,7 +85,7 @@ template "/etc/rabbitmq/rabbitmq.config" do
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, "service[rabbitmq-server]"
+  notifies :restart, "service[rabbitmq-server]", :immediately
 end
 
 if File.exists?(node['rabbitmq']['erlang_cookie_path'])
@@ -105,7 +105,7 @@ if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing
     owner "rabbitmq"
     group "rabbitmq"
     mode 0400
-    notifies :start, "service[rabbitmq-server]"
+    notifies :start, "service[rabbitmq-server]", :immediately
   end
 end
 
