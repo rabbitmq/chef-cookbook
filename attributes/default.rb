@@ -6,9 +6,11 @@ default['rabbitmq']['config'] = nil
 default['rabbitmq']['logdir'] = nil
 default['rabbitmq']['mnesiadir'] = nil
 
+default['rabbitmq']['use_distro_version'] = false
+
 # RabbitMQ version to install for "redhat", "centos", "scientific", and "amazon".
 default['rabbitmq']['version'] = '2.8.4'
-# Override this if you have a yum repo with rabbitmq available. 
+# Override this if you have a yum repo with rabbitmq available.
 default['rabbitmq']['use_yum'] = false
 
 # config file location

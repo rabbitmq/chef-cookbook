@@ -21,21 +21,6 @@
 
 include_recipe "erlang"
 
-directory "/etc/rabbitmq/" do
-  owner "root"
-  group "root"
-  mode 0755
-  action :create
-end
-
-template "/etc/rabbitmq/rabbitmq-env.conf" do
-  source "rabbitmq-env.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  notifies :restart, "service[rabbitmq-server]"
-end
-
 case node['platform']
 when "debian", "ubuntu"
   # use the RabbitMQ repository instead of Ubuntu or Debian's
@@ -46,14 +31,13 @@ when "debian", "ubuntu"
     components ["main"]
     key "http://www.rabbitmq.com/rabbitmq-signing-key-public.asc"
     action :add
+    not_if { node['rabbitmq']['use_distro_version'] }
   end
-
   # installs the required setsid command -- should be there by default but just in case
   package "util-linux"
   package "rabbitmq-server"
 
 when "redhat", "centos", "scientific", "amazon", "fedora"
-
   if node['rabbitmq']['use_yum'] then
     package "rabbitmq-server" do
       version "#{node['rabbitmq']['version']}-1"
@@ -72,6 +56,43 @@ when "redhat", "centos", "scientific", "amazon", "fedora"
 
 end
 
+template "/etc/rabbitmq/rabbitmq-env.conf" do
+  source "rabbitmq-env.conf.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :restart, "service[rabbitmq-server]"
+end
+
+template "/etc/rabbitmq/rabbitmq.config" do
+  source "rabbitmq.config.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :restart, "service[rabbitmq-server]"
+end
+
+if File.exists?(node['rabbitmq']['erlang_cookie_path'])
+  existing_erlang_key =  File.read(node['rabbitmq']['erlang_cookie_path'])
+else
+  existing_erlang_key = ""
+end
+
+if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing_erlang_key
+  service "stop rabbitmq-server" do
+    service_name "rabbitmq-server"
+    action :stop
+  end
+
+  template "/var/lib/rabbitmq/.erlang.cookie" do
+    source "doterlang.cookie.erb"
+    owner "rabbitmq"
+    group "rabbitmq"
+    mode 0400
+    notifies :start, "service[rabbitmq-server]"
+  end
+end
+
 ## You'll see setsid used in all the init statements in this cookbook. This
 ## is because there is a problem with the stock init script in the RabbitMQ
 ## debian package (at least in 2.8.2) that makes it not daemonize properly
@@ -84,40 +105,5 @@ service "rabbitmq-server" do
   restart_command "setsid /etc/init.d/rabbitmq-server restart"
   status_command "setsid /etc/init.d/rabbitmq-server status"
   supports :status => true, :restart => true
-end
-
-
-if File.exists?(node['rabbitmq']['erlang_cookie_path'])
-  existing_erlang_key =  File.read(node['rabbitmq']['erlang_cookie_path'])
-else
-  existing_erlang_key = ""
-end
-
-if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing_erlang_key
-  service "rabbitmq-server" do
-    action :stop
-  end
-
-  template "/var/lib/rabbitmq/.erlang.cookie" do
-    source "doterlang.cookie.erb"
-    owner "rabbitmq"
-    group "rabbitmq"
-    mode 0400
-  end
-
-  service "rabbitmq-server" do
-    action :start
-  end
-end
-
-template "/etc/rabbitmq/rabbitmq.config" do
-  source "rabbitmq.config.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  notifies :restart, "service[rabbitmq-server]", :immediately
-end
-
-service "rabbitmq-server" do
   action [ :enable, :start ]
 end
