@@ -1,3 +1,7 @@
+## v1.6.4
+* [COOK-1684] - Unify behavior of debian and rhel clones in the rabbitmq cookbook
+* [COOK-1724] - enable using the distro release of rabbitmq instead of the RabbitMQ.org version
+
 ## v1.6.2:
 
 * [COOK-1552] - removed rogue single quote from rabbitmq ssl
