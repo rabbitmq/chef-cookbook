@@ -22,4 +22,5 @@ node.set['rabbitmq']['use_yum'] = true
 
 log "#{cookbook_name}::#{recipe_name} tests that COOK-1684 is implemented."
 
+include_recipe "yum::epel" if node['platform_family'] == 'rhel'
 include_recipe "rabbitmq::default"

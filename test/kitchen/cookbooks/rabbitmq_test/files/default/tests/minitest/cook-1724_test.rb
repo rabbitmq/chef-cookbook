@@ -1,7 +1,4 @@
 #
-# Cookbook Name:: rabbitmq_test
-# Recipe:: default
-#
 # Copyright 2012, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +14,18 @@
 # limitations under the License.
 #
 
-chef_gem "bunny" do
-  version "0.7.9"
-end
+describe "rabbitmq_test::cook-1724" do
+  include MiniTest::Chef::Assertions
+  include MiniTest::Chef::Context
+  include MiniTest::Chef::Resources
 
-include_recipe "rabbitmq::default"
+  it 'doesnt use the rabbitmq apt repository' do
+    unless node['platform_family'] == 'debian'
+      skip "Only applicable on Debian family"
+    end
+
+    file("/etc/apt/sources.list.d/rabbitmq-source.list").wont_exist &&
+      package("rabbitmq-server").must_be_installed
+  end
+
+end

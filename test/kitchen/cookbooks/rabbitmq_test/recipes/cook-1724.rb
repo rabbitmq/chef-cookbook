@@ -18,10 +18,8 @@
 #
 
 node.set['rabbitmq']['use_apt'] = true
-node.set['rabbitmq']['use_yum'] = true
 node.set['rabbitmq']['use_distro_version'] = true
 
 log "#{cookbook_name}::#{recipe_name} tests that COOK-1724 is implemented."
 
-include_recipe "yum::epel" if node['platform_family'] == 'rhel'
 include_recipe "rabbitmq::default"
