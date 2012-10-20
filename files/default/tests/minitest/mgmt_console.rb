@@ -1,12 +1,11 @@
 #
-# Author:: Joshua Timberman <joshua@opscode.com>
-# Copyright:: Copyright (c) 2012, Opscode, Inc. <legal@opscode.com>
+# Copyright 2012, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#    http://www.apache.org/licenses/LICENSE-2.0
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,9 +14,17 @@
 # limitations under the License.
 #
 
-cookbook "rabbitmq" do
-  configuration "default"
-  configuration "mgmt_console"
-  configuration "cook-1684"
-  configuration "cook-1724"
+require File.expand_path('../support/helpers', __FILE__)
+
+describe "rabbitmq::mgmt_console" do
+  include Helpers::RabbitMQ
+
+  it 'enables the rabbitmq_management plugin' do
+    assert(plugin_enabled?("rabbitmq_management"))
+  end
+
+  it 'enables the rabbitmq_management_visualiser plugin' do
+    assert(plugin_enabled?("rabbitmq_management_visualiser"))
+  end
+
 end

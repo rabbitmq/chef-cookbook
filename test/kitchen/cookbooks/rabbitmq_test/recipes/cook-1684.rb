@@ -1,12 +1,14 @@
 #
-# Author:: Joshua Timberman <joshua@opscode.com>
-# Copyright:: Copyright (c) 2012, Opscode, Inc. <legal@opscode.com>
+# Cookbook Name:: rabbitmq_test
+# Recipe:: default
+#
+# Copyright 2012, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#    http://www.apache.org/licenses/LICENSE-2.0
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,9 +17,10 @@
 # limitations under the License.
 #
 
-cookbook "rabbitmq" do
-  configuration "default"
-  configuration "mgmt_console"
-  configuration "cook-1684"
-  configuration "cook-1724"
-end
+node.set['rabbitmq']['use_apt'] = false
+node.set['rabbitmq']['use_yum'] = true
+
+log "#{cookbook_name}::#{recipe_name} tests that COOK-1684 is implemented."
+
+include_recipe "yum::epel" if node['platform_family'] == 'rhel'
+include_recipe "rabbitmq::default"

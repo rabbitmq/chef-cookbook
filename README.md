@@ -6,9 +6,9 @@ Recipes
 =======
 default
 -------
-Installs `rabbitmq-server` from RabbitMQ.com's APT repository or the RPM directly (there is no yum repo). The distribution-provided versions were quite old and newer features were needed.
+Installs `rabbitmq-server` from RabbitMQ.com's APT repository, your distro's version, or the DEB or RPM directly (there is no yum repo). Depending on your distribution, the provided version may be quite old so they are disabled by default. If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`.
 
-Cluster recipe is now combined with default. Recipe will now auto-cluster. Set the :cluster attribute to true, :cluster_disk_nodes array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the :erlang_cookie. 
+Cluster recipe is now combined with default. Recipe will now auto-cluster. Set the :cluster attribute to true, :cluster_disk_nodes array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the :erlang_cookie.
 
 To enable SSL turn :ssl to true and set the paths to your cacert, cert and key files.
 
@@ -78,7 +78,7 @@ end
 Limitations
 ===========
 For an already running cluster, these actions still require manual intervention:
-- changing the :erlang_cookie 
+- changing the :erlang_cookie
 - turning :cluster from true to false
 
 The rabbitmq::chef recipe was only used for the chef-server cookbook and has been moved to chef-server::rabbitmq.
