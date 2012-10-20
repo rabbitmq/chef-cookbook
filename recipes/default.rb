@@ -21,14 +21,15 @@
 
 include_recipe "erlang"
 
-case node['platform']
-when "debian", "ubuntu"
+case node['platform_family']
+when "debian"
   # installs the required setsid command -- should be there by default but just in case
   package "util-linux"
 
   if node['rabbitmq']['use_apt'] then
     # use the RabbitMQ repository instead of Ubuntu or Debian's
     # because there are very useful features in the newer versions
+
     apt_repository "rabbitmq" do
       uri "http://www.rabbitmq.com/debian/"
       distribution "testing"
@@ -38,11 +39,11 @@ when "debian", "ubuntu"
       action :add
     end
 
-    # important note here
-    # the official rabbitmq apt repo ONLY has the latest version
-    # so we can't hardcode a version here
+    # NOTE: The official RabbitMQ apt repository has only the latest version
     package "rabbitmq-server"
+
   else
+
     remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb" do
       source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
       action :create_if_missing
@@ -51,15 +52,17 @@ when "debian", "ubuntu"
     dpkg_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb" do
       action :install
     end
+
   end
 
-when "redhat", "centos", "scientific", "amazon", "fedora"
+when "rhel", "fedora"
+
   if node['rabbitmq']['use_yum'] then
-    package "rabbitmq-server" do
-      version "#{node['rabbitmq']['version']}-1"
-      action :install
-    end
+
+    package "rabbitmq-server"
+
   else
+
     remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
       source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
       action :create_if_missing
@@ -68,6 +71,7 @@ when "redhat", "centos", "scientific", "amazon", "fedora"
     rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
       action :install
     end
+
   end
 
 end
@@ -95,6 +99,7 @@ else
 end
 
 if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing_erlang_key
+
   service "stop rabbitmq-server" do
     service_name "rabbitmq-server"
     action :stop
@@ -107,6 +112,7 @@ if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing
     mode 0400
     notifies :start, "service[rabbitmq-server]", :immediately
   end
+
 end
 
 ## You'll see setsid used in all the init statements in this cookbook. This
