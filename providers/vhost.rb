@@ -19,7 +19,7 @@
 
 action :add do
   execute "rabbitmqctl add_vhost #{new_resource.vhost}" do
-    not_if "rabbitmqctl list_vhosts | grep #{new_resource.vhost}"
+    not_if "rabbitmqctl list_vhosts | grep ^#{new_resource.vhost}$"
     Chef::Log.info "Adding RabbitMQ vhost '#{new_resource.vhost}'."
     new_resource.updated_by_last_action(true)
   end
@@ -27,7 +27,7 @@ end
 
 action :delete do
   execute "rabbitmqctl delete_vhost #{new_resource.vhost}" do
-    only_if "rabbitmqctl list_vhosts | grep #{new_resource.vhost}"
+    only_if "rabbitmqctl list_vhosts | grep ^#{new_resource.vhost}$"
     Chef::Log.info "Deleting RabbitMQ vhost '#{new_resource.vhost}'."
     new_resource.updated_by_last_action(true)
   end
