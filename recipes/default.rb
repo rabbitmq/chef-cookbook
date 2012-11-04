@@ -80,7 +80,7 @@ template "/etc/rabbitmq/rabbitmq-env.conf" do
   source "rabbitmq-env.conf.erb"
   owner "root"
   group "root"
-  mode 0644
+  mode 00644
   notifies :restart, "service[rabbitmq-server]", :immediately
 end
 
@@ -88,7 +88,7 @@ template "/etc/rabbitmq/rabbitmq.config" do
   source "rabbitmq.config.erb"
   owner "root"
   group "root"
-  mode 0644
+  mode 00644
   notifies :restart, "service[rabbitmq-server]", :immediately
 end
 
@@ -109,7 +109,7 @@ if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing
     source "doterlang.cookie.erb"
     owner "rabbitmq"
     group "rabbitmq"
-    mode 0400
+    mode 00400
     notifies :start, "service[rabbitmq-server]", :immediately
   end
 
