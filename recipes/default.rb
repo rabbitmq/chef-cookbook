@@ -73,13 +73,21 @@ when "rhel", "fedora"
     end
 
   end
-else
-  Chef::Log.info("Platform family: #{node['platform_family']}")
-  raise "BORK"
+when "smartos"
+
+  package "rabbitmq"
+
+  service 'epmd' do
+    action :start
+  end
+
+  service node['rabbitmq']['service_name'] do
+    action :start
+  end
 
 end
 
-template "/etc/rabbitmq/rabbitmq-env.conf" do
+template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   source "rabbitmq-env.conf.erb"
   owner "root"
   group "root"
@@ -87,7 +95,7 @@ template "/etc/rabbitmq/rabbitmq-env.conf" do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
-template "/etc/rabbitmq/rabbitmq.config" do
+template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   source "rabbitmq.config.erb"
   owner "root"
   group "root"
@@ -108,7 +116,7 @@ if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing
     action :stop
   end
 
-  template "/var/lib/rabbitmq/.erlang.cookie" do
+  template node['rabbitmq']['erlang_cookie_path'] do
     source "doterlang.cookie.erb"
     owner "rabbitmq"
     group "rabbitmq"

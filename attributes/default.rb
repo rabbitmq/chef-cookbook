@@ -23,8 +23,10 @@ default['rabbitmq']['use_distro_version'] = false
 # config file location
 # http://www.rabbitmq.com/configure.html#define-environment-variables
 # "The .config extension is automatically appended by the Erlang runtime."
+default['rabbitmq']['config_root'] = "/etc/rabbitmq"
 default['rabbitmq']['config'] = "/etc/rabbitmq/rabbitmq"
 if platform?('smartos')
+  default['rabbitmq']['config_root'] = "/opt/local/etc/rabbitmq"
   default['rabbitmq']['config'] = "/opt/local/etc/rabbitmq/rabbitmq"
 end
 default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
