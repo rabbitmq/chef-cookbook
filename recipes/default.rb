@@ -73,6 +73,9 @@ when "rhel", "fedora"
     end
 
   end
+else
+  Chef::Log.info("Platform family: #{node['platform_family']}")
+  raise "BORK"
 
 end
 
@@ -81,7 +84,7 @@ template "/etc/rabbitmq/rabbitmq-env.conf" do
   owner "root"
   group "root"
   mode 00644
-  notifies :restart, "service[rabbitmq-server]"
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
 template "/etc/rabbitmq/rabbitmq.config" do
@@ -89,7 +92,7 @@ template "/etc/rabbitmq/rabbitmq.config" do
   owner "root"
   group "root"
   mode 00644
-  notifies :restart, "service[rabbitmq-server]"
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
 if File.exists?(node['rabbitmq']['erlang_cookie_path'])
@@ -100,8 +103,8 @@ end
 
 if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing_erlang_key
 
-  service "stop rabbitmq-server" do
-    service_name "rabbitmq-server"
+  service "stop #{node['rabbitmq']['service_name']}" do
+    service_name node['rabbitmq']['service_name']
     action :stop
   end
 
@@ -110,7 +113,7 @@ if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing
     owner "rabbitmq"
     group "rabbitmq"
     mode 00400
-    notifies :start, "service[rabbitmq-server]", :immediately
+    notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
   end
 
 end
@@ -121,11 +124,12 @@ end
 ## when called from chef. The setsid command forces the subprocess into a state
 ## where it can daemonize properly. -Kevin (thanks to Daniel DeLeo for the help)
 
-service "rabbitmq-server" do
+service node['rabbitmq']['service_name'] do
   start_command "setsid /etc/init.d/rabbitmq-server start"
   stop_command "setsid /etc/init.d/rabbitmq-server stop"
   restart_command "setsid /etc/init.d/rabbitmq-server restart"
   status_command "setsid /etc/init.d/rabbitmq-server status"
   supports :status => true, :restart => true
   action [ :enable, :start ]
+  not_if { platform?('smartos') }
 end
