@@ -2,7 +2,7 @@
 # Cookbook Name:: rabbitmq
 # Resource:: user
 #
-# Copyright 2011, Opscode, Inc.
+# Copyright 2011-2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-actions :add, :delete, :set_permissions, :clear_permissions, :set_user_tags
+actions :add, :delete, :set_permissions, :clear_permissions, :set_user_tags, :clear_user_tags
 
 attribute :user, :kind_of => String, :name_attribute => true
 attribute :password, :kind_of => String

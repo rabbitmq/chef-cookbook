@@ -69,7 +69,6 @@ def user_has_rights?(vhost,name,perm_list)
   end
 end
 
-
 action :add do
   unless user_exists?(new_resource.user)
     if new_resource.password.nil? || new_resource.password.empty?
@@ -128,7 +127,17 @@ action :set_user_tags do
   unless user_has_tag?(new_resource.user, new_resource.user_tag)
     execute "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.user_tag}" do
       Chef::Log.fatal "rabbitmq_user_set_user_tags: rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.user_tag}"
-      Chef::Log.info "Setting RabbitMQ user tag '#{new_resource.user_tag}' on '#{new_resource.user}'"
+      Chef::Log.info "Setting RabbitMQ user '#{new_resource.user}' tags '#{new_resource.user_tag}'"
+      new_resource.updated_by_last_action(true)
+    end
+  end
+end
+
+action :clear_user_tags do
+  unless user_has_tag?(new_resource.user, '"\[\]"')
+    execute "rabbitmqctl set_user_tags #{new_resource.user}" do
+      Chef::Log.fatal "rabbitmq_clear_user_tags: rabbitmqctl set_user_tags #{new_resource.user}"
+      Chef::Log.info "Clearing RabbitMQ user '#{new_resource.user}' tags."
       new_resource.updated_by_last_action(true)
     end
   end

@@ -1,3 +1,8 @@
+## v2.0.0:
+
+* [COOK-2416] - Add support for adding/clearing tags. This was partially added in v1.7.0
+
+
 ## v1.8.0:
 
 * [COOK-2151] - Add config options for `disk_free_limit` and
