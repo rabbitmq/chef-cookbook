@@ -64,3 +64,17 @@ action :clear_permissions do
     end
   end
 end
+
+action :set_tags do
+  execute "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.tags}" do
+    Chef::Log.info "Setting RabbitMQ tags '#{new_resource.tags}' for '#{new_resource.user}'."
+    new_resource.updated_by_last_action(true)
+  end
+end
+
+action :clear_tags do
+  execute "rabbitmqctl set_user_tags #{new_resource.user}" do
+    Chef::Log.info "Clearing RabbitMQ tags for '#{new_resource.user}'."
+    new_resource.updated_by_last_action(true)
+  end
+end
