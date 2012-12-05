@@ -65,7 +65,7 @@ action :clear_permissions do
   end
 end
 
-action :set_user_tag do
+action :set_user_tags do
   execute "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.user_tag}" do
     not_if "rabbitmqctl list_users | grep #{new_resource.user} | grep #{new_resource.user_tag}"
     only_if "rabbitmqctl list_users | grep #{new_resource.user}"
