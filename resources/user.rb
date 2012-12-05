@@ -17,12 +17,13 @@
 # limitations under the License.
 #
 
-actions :add, :delete, :set_permissions, :clear_permissions
+actions :add, :delete, :set_permissions, :clear_permissions, :set_user_tags
 
 attribute :user, :kind_of => String, :name_attribute => true
 attribute :password, :kind_of => String
 attribute :vhost, :kind_of => String
 attribute :permissions, :kind_of => String
+attribute :user_tag, :kind_of => String
 
 def initialize(*args)
   super
