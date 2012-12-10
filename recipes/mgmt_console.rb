@@ -24,6 +24,6 @@ plugins = %w( rabbitmq_management rabbitmq_management_visualiser )
 plugins.each do |plugin|
   rabbitmq_plugin plugin do
     action :enable
-    notifies :restart, resources(:service => "rabbitmq-server")
+    notifies :restart, resources(:service => node['rabbitmq']['service_name'])
   end
 end
