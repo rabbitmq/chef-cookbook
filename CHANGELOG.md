@@ -1,4 +1,12 @@
-## v1.6.4
+## v1.7.0:
+
+* [COOK-1850] - oracle linux support
+* [COOK-1873] - add `set_user_tag` action to `rabbitmq_user` LWRP
+* [COOK-1878] - :immediately action causes clustering to fail
+* [COOK-1888] - smartos support
+
+## v1.6.4:
+
 * [COOK-1684] - Unify behavior of debian and rhel clones in the rabbitmq cookbook
 * [COOK-1724] - enable using the distro release of rabbitmq instead of the RabbitMQ.org version
 
