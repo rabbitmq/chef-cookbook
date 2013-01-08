@@ -33,6 +33,10 @@ default['rabbitmq']['cluster'] = false
 default['rabbitmq']['cluster_disk_nodes'] = []
 default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 
+# resource usage
+default['rabbitmq']['disk_free_limit_relative'] = nil
+default['rabbitmq']['vm_memory_high_watermark'] = nil
+
 #ssl
 default['rabbitmq']['ssl'] = false
 default['rabbitmq']['ssl_port'] = 5671

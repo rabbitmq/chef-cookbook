@@ -15,6 +15,12 @@
                     {verify,verify_none},
                     {fail_if_no_peer_cert,false}]},
 <% end %>
+<% if node['rabbitmq']['disk_free_limit_relative'] -%>
+    {disk_free_limit, {mem_relative, <%= node['rabbitmq']['disk_free_limit_relative'] %>}},
+<% end %>
+<% if node['rabbitmq']['vm_memory_high_watermark'] -%>
+    {vm_memory_high_watermark, <%= node['rabbitmq']['disk_free_limit_relative'] %>},
+<% end %>
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>}
   ]}
