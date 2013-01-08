@@ -19,7 +19,7 @@
     {disk_free_limit, {mem_relative, <%= node['rabbitmq']['disk_free_limit_relative'] %>}},
 <% end %>
 <% if node['rabbitmq']['vm_memory_high_watermark'] -%>
-    {vm_memory_high_watermark, <%= node['rabbitmq']['disk_free_limit_relative'] %>},
+    {vm_memory_high_watermark, <%= node['rabbitmq']['vm_memory_high_watermark'] %>},
 <% end %>
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>}

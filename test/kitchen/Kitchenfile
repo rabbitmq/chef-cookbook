@@ -20,4 +20,5 @@ cookbook "rabbitmq" do
   configuration "mgmt_console"
   configuration "cook-1684"
   configuration "cook-1724"
+  configuration "cook-2151"
 end

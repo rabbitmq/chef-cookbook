@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rabbitmq_test
-# Recipe:: cook-1684
+# Recipe:: cook-2151
 #
 # Copyright 2012, Opscode, Inc. <legal@opscode.com>
 #
@@ -17,10 +17,10 @@
 # limitations under the License.
 #
 
-node.set['rabbitmq']['use_apt'] = false
-node.set['rabbitmq']['use_yum'] = true
+node.set['rabbitmq']['disk_free_limit_relative'] = 1.0
+node.set['rabbitmq']['vm_memory_high_watermark'] = 0.5
 
-log "#{cookbook_name}::#{recipe_name} tests that COOK-1684 is implemented."
+log "#{cookbook_name}::#{recipe_name} tests that COOK-2151 is implemented."
 
 include_recipe "yum::epel" if node['platform_family'] == 'rhel'
 include_recipe "rabbitmq::default"
