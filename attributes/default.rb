@@ -44,6 +44,11 @@ default['rabbitmq']['ssl_cacert'] = '/path/to/cacert.pem'
 default['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
 default['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 
+#plugins
+default['rabbitmq']['enabled_plugins'] = []
+default['rabbitmq']['disabled_plugins'] = []
+
+
 # SmartOS-specific defaults
 if node[:platform] == 'smartos'
   default['rabbitmq']['service_name'] = 'rabbitmq'
