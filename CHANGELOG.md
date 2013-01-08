@@ -1,3 +1,8 @@
+## v1.8.0:
+
+* [COOK-2151] - Add config options for `disk_free_limit` and
+  `vm_memory_high_watermark` via attributes
+
 ## v1.7.0:
 
 * [COOK-1850] - oracle linux support
