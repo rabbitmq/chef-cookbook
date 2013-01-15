@@ -63,3 +63,9 @@ attribute "rabbitmq/cluster_disk_nodes",
 attribute "rabbitmq/erlang_cookie",
   :display_name => "RabbitMQ Erlang cookie",
   :description => "Access cookie for clustering nodes.  There is no default."
+
+attribute "rabbitmq/virtualhosts",
+  :display_name => "Virtualhosts on rabbitmq instance",
+  :description => "List all virtualhosts that will exist",
+  :default => [],
+  :type => "array"
