@@ -17,18 +17,32 @@
 # limitations under the License.
 #
 
+def vhost_exists?(name)
+  cmd = Mixlib::ShellOut.new("rabbitmqctl list_vhosts |grep '#{name}\\b'")
+  cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
+  cmd.run_command
+  begin
+    cmd.error!
+    true
+  rescue
+    false
+  end
+end
+
 action :add do
-  execute "rabbitmqctl add_vhost #{new_resource.vhost}" do
-    not_if "rabbitmqctl list_vhosts | grep #{new_resource.vhost}"
-    Chef::Log.info "Adding RabbitMQ vhost '#{new_resource.vhost}'."
-    new_resource.updated_by_last_action(true)
+  unless vhost_exists?(new_resource.vhost)
+    execute "rabbitmqctl add_vhost #{new_resource.vhost}" do
+      Chef::Log.info "Adding RabbitMQ vhost '#{new_resource.vhost}'."
+      new_resource.updated_by_last_action(true)
+    end
   end
 end
 
 action :delete do
-  execute "rabbitmqctl delete_vhost #{new_resource.vhost}" do
-    only_if "rabbitmqctl list_vhosts | grep #{new_resource.vhost}"
-    Chef::Log.info "Deleting RabbitMQ vhost '#{new_resource.vhost}'."
-    new_resource.updated_by_last_action(true)
+  if vhost.exists?(new_resource.vhost)
+    execute "rabbitmqctl delete_vhost #{new_resource.vhost}" do
+      Chef::Log.info "Deleting RabbitMQ vhost '#{new_resource.vhost}'."
+      new_resource.updated_by_last_action(true)
+    end
   end
 end

@@ -24,7 +24,7 @@ enabled_plugins = node['rabbitmq']['enabled_plugins']
 enabled_plugins.each do |plugin|
   rabbitmq_plugin plugin do
     action :enable
-    notifies :restart, resources(:service => node['rabbitmq']['service_name'])
+    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
 
@@ -33,6 +33,6 @@ disabled_plugins = node['rabbitmq']['disabled_plugins']
 disabled_plugins.each do |plugin|
   rabbitmq_plugin plugin do
     action :disable
-    notifies :restart, resources(:service => node['rabbitmq']['service_name'])
+    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
