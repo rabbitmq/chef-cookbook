@@ -17,33 +17,77 @@
 # limitations under the License.
 #
 
+def user_exists?(name)
+  cmd = Mixlib::ShellOut.new("rabbitmqctl list_users |grep '#{name}\\b'")
+  cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
+  cmd.run_command
+  begin
+    cmd.error!
+    true
+  rescue
+    false
+  end
+end
+
+def user_has_tag?(name, tag)
+  tag = '"\[\]"' if tag.nil?
+  cmdStr = "rabbitmqctl list_users | grep ^#{name} | grep #{tag}"
+  cmd = Mixlib::ShellOut.new(cmdStr)
+  cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
+  cmd.run_command
+  begin
+    cmd.error!
+    true
+  rescue Exception => e
+    false
+  end
+end
+
+def user_has_rights?(vhost,name,perm_list)
+  if vhost.nil?
+    cmdStr = "rabbitmqctl list_permissions | grep ^#{name}"
+  else
+    cmdStr = "rabbitmqctl list_permissions -p  #{vhost} | grep ^#{name}"
+  end
+  cmd = Mixlib::ShellOut.new(cmdStr)
+  cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
+  cmd.run_command
+  begin
+    cmd.error!
+    current_permissions = cmd.stdout.each_line.first.split.drop(1)
+    Chef::Log.info "Rights for #{name} are #{current_permissions} (we want #{perm_list})"
+    current_permissions == perm_list
+  rescue Exception => e
+    Chef::Log.warn "User has probably no right on that virtual host: #{e}"
+    false
+  end
+end
+
+
 action :add do
-  execute "rabbitmqctl add_user #{new_resource.user} #{new_resource.password}" do
-    not_if "rabbitmqctl list_users | grep #{new_resource.user}"
-    Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
-    new_resource.updated_by_last_action(true)
+  unless user_exists?(new_resource.user)
+    execute "rabbitmqctl add_user #{new_resource.user} #{new_resource.password}" do
+      Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
+      new_resource.updated_by_last_action(true)
+    end
   end
 end
 
 action :delete do
+  if user_exists?(new_resource.user)
   execute "rabbitmqctl delete_user #{new_resource.user}" do
-    only_if "rabbitmqctl list_users | grep #{new_resource.user}"
     Chef::Log.info "Deleting RabbitMQ user '#{new_resource.user}'."
     new_resource.updated_by_last_action(true)
   end
 end
+end
 
 action :set_permissions do
-  if new_resource.vhost
-    execute "rabbitmqctl set_permissions -p #{new_resource.vhost} #{new_resource.user} #{new_resource.permissions}" do
-      not_if "rabbitmqctl list_user_permissions | grep #{new_resource.user}"
+  perm_list = new_resource.permissions.split
+  unless user_has_rights?(new_resource.vhost, new_resource.user, perm_list)
+    vhostOpt = "-p #{new_resource.vhost}" unless new_resource.vhost.nil?
+    execute "rabbitmqctl set_permissions #{vhostOpt} #{new_resource.user} \"#{perm_list.join("\" \"")}\"" do
       Chef::Log.info "Setting RabbitMQ user permissions for '#{new_resource.user}' on vhost #{new_resource.vhost}."
-      new_resource.updated_by_last_action(true)
-    end
-  else
-    execute "rabbitmqctl set_permissions #{new_resource.user} #{new_resource.permissions}" do
-      not_if "rabbitmqctl list_user_permissions | grep #{new_resource.user}"
-      Chef::Log.info "Setting RabbitMQ user permissions for '#{new_resource.user}'."
       new_resource.updated_by_last_action(true)
     end
   end
@@ -66,10 +110,10 @@ action :clear_permissions do
 end
 
 action :set_user_tags do
-  execute "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.user_tag}" do
-    not_if "rabbitmqctl list_users | grep #{new_resource.user} | grep #{new_resource.user_tag}"
-    only_if "rabbitmqctl list_users | grep #{new_resource.user}"
-    Chef::Log.info "Setting RabbitMQ user tag '#{new_resource.user_tag}' on '#{new_resource.user}'"
-    new_resource.updated_by_last_action(true)
+  unless user_has_tag?(new_resource.user, new_resource.user_tag)
+    execute "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.user_tag}" do
+      Chef::Log.info "Setting RabbitMQ user tag '#{new_resource.user_tag}' on '#{new_resource.user}'"
+      new_resource.updated_by_last_action(true)
+    end
   end
 end

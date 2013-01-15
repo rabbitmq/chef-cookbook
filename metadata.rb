@@ -7,6 +7,8 @@ version           "1.8.0"
 recipe            "rabbitmq", "Install and configure RabbitMQ"
 recipe            "rabbitmq::cluster", "Set up RabbitMQ clustering."
 recipe            "rabbitmq::plugin_management", "Manage plugins with node attributes"
+recipe            "rabbitmq::virtualhost_management", "Manage virtualhost with node attributes"
+recipe            "rabbitmq::user_management", "Manage users with node attributes"
 depends           "apt", ">= 1.4.4"
 depends           "yum", ">= 0.5.0"
 depends           "erlang", ">= 0.9"
@@ -68,6 +70,18 @@ attribute "rabbitmq/erlang_cookie",
 attribute "rabbitmq/virtualhosts",
   :display_name => "Virtualhosts on rabbitmq instance",
   :description => "List all virtualhosts that will exist",
+  :default => [],
+  :type => "array"
+
+attribute "rabbitmq/enabled_users",
+  :display_name => "Users and their rights on rabbitmq instance",
+  :description => "Users and description of their rights",
+  :default => [{ :name => "guest", :password => "guest", :rights => [{:vhost => nil , :conf => ".*", :write => ".*", :read => ".*"}]}],
+  :type => "array"
+
+attribute "rabbitmq/disabled_users",
+  :display_name => "Disabled users",
+  :description => "List all users that will be deactivated",
   :default => [],
   :type => "array"
 
