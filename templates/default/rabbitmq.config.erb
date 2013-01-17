@@ -24,4 +24,7 @@
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>}
   ]}
+<% @custom_conf.each do |k,v|  -%>
+<%= ",{#{k}, #{v}}"  %>
+<% end %>
 ].

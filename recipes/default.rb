@@ -84,8 +84,16 @@ when "smartos"
   service node['rabbitmq']['service_name'] do
     action :start
   end
-
 end
+
+
+custom_conf = Hash.new
+%w(custom_conf).each do |a|
+  node[:rabbitmq][a].to_hash.each do |k,v|
+    custom_conf[k] = v.to_erl("  ", 0)
+  end
+end
+
 
 template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   source "rabbitmq-env.conf.erb"
@@ -100,6 +108,9 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   owner "root"
   group "root"
   mode 00644
+  variables({
+    :custom_conf => custom_conf
+  })
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 

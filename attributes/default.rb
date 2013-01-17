@@ -50,6 +50,10 @@ default['rabbitmq']['virtualhosts'] = []
 default['rabbitmq']['enabled_plugins'] = []
 default['rabbitmq']['disabled_plugins'] = []
 
+# custom configuration
+default['rabbitmq']['custom_conf'] = {}
+
+
 # SmartOS-specific defaults
 if node[:platform] == 'smartos'
   default['rabbitmq']['service_name'] = 'rabbitmq'

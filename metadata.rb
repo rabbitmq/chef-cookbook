@@ -82,3 +82,10 @@ attribute "rabbitmq/disabled_plugins",
   :description => "List all plugins that will be deactivated",
   :default => [],
   :type => "array"
+
+
+attribute "rabbitmq/custom_conf",
+  :description => "Custom configuration that will be merged into rabbitmq.config file",
+  :display_name => "Custom configuration",
+  :default => {},
+  :type => "hash"
