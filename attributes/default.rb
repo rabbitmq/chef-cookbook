@@ -44,6 +44,10 @@ default['rabbitmq']['ssl_cacert'] = '/path/to/cacert.pem'
 default['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
 default['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 
+
+#virtualhosts
+default['rabbitmq']['virtualhosts'] = []
+
 # SmartOS-specific defaults
 if node[:platform] == 'smartos'
   default['rabbitmq']['service_name'] = 'rabbitmq'
