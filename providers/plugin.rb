@@ -20,6 +20,7 @@
 def plugin_enabled?(name)
   cmd = Mixlib::ShellOut.new("rabbitmq-plugins list -e '#{name}\\b'")
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
+  cmd.environment['PATH'] = ENV.fetch('PATH') + ':/usr/lib/rabbitmq/bin'
   cmd.run_command
   cmd.error!
   cmd.stdout =~ /\b#{name}\b/
@@ -42,4 +43,3 @@ action :disable do
     end
   end
 end
-
