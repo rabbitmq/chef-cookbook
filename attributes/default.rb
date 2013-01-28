@@ -46,6 +46,13 @@ default['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 
 #virtualhosts
 default['rabbitmq']['virtualhosts'] = []
+
+#users
+default['rabbitmq']['enabled_users'] = 
+  [{ :name => "guest", :password => "guest", :rights => 
+    [{:vhost => nil , :conf => ".*", :write => ".*", :read => ".*"}]
+  }]
+default['rabbitmq']['disabled_users'] =[] 
 #plugins
 default['rabbitmq']['enabled_plugins'] = []
 default['rabbitmq']['disabled_plugins'] = []
