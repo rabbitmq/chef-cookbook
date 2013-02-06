@@ -103,6 +103,15 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
+
+directory node[:rabbitmq][:mnesiadir] do
+  owner "rabbitmq"
+  group "rabbitmq"
+  mode "775"
+  recursive true
+end
+
+
 if File.exists?(node['rabbitmq']['erlang_cookie_path'])
   existing_erlang_key =  File.read(node['rabbitmq']['erlang_cookie_path'])
 else
