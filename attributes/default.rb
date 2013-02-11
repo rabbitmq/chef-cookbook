@@ -43,6 +43,8 @@ default['rabbitmq']['ssl_port'] = 5671
 default['rabbitmq']['ssl_cacert'] = '/path/to/cacert.pem'
 default['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
 default['rabbitmq']['ssl_key'] = '/path/to/key.pem'
+default['rabbitmq']['ssl_verify'] = 'verify_none'
+default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
 
 #virtualhosts
 default['rabbitmq']['virtualhosts'] = []
