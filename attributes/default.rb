@@ -36,6 +36,7 @@ default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 # resource usage
 default['rabbitmq']['disk_free_limit_relative'] = nil
 default['rabbitmq']['vm_memory_high_watermark'] = nil
+default['rabbitmq']['max_file_descriptors'] = 1024
 
 #ssl
 default['rabbitmq']['ssl'] = false
@@ -56,6 +57,8 @@ default['rabbitmq']['disabled_users'] =[]
 #plugins
 default['rabbitmq']['enabled_plugins'] = []
 default['rabbitmq']['disabled_plugins'] = []
+
+default['rabbitmq']['job_control'] = 'initd'
 
 # SmartOS-specific defaults
 if node[:platform] == 'smartos'
