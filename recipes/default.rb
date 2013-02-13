@@ -109,7 +109,7 @@ directory node[:rabbitmq][:mnesiadir] do
   group "rabbitmq"
   mode "775"
   recursive true
-  not_if node[:rabbitmq][:mnesiadir].nil?
+  not_if {node[:rabbitmq][:mnesiadir].nil?}
 end
 
 
