@@ -34,6 +34,10 @@ default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 # resource usage
 default['rabbitmq']['disk_free_limit_relative'] = nil
 default['rabbitmq']['vm_memory_high_watermark'] = nil
+default['rabbitmq']['max_file_descriptors'] = 1024
+
+# job control
+default['rabbitmq']['job_control'] = 'initd'
 
 #ssl
 default['rabbitmq']['ssl'] = false
@@ -79,4 +83,3 @@ default['rabbitmq']['policies']['ha-all']['priority'] = 0
 default['rabbitmq']['policies']['ha-two']['pattern'] = "^two\."
 default['rabbitmq']['policies']['ha-two']['params'] = { "ha-mode" => "exactly", "ha-params" => 2 }
 default['rabbitmq']['policies']['ha-two']['priority'] = 1
-

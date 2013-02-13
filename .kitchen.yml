@@ -92,20 +92,36 @@ platforms:
 suites:
 - name: default
   excludes:
-  - smartos-13.1
   - omnios-r151002
+  - smartos-13.1
   run_list:
   - recipe[minitest-handler]
   - recipe[rabbitmq_test::default]
-  attributes: {}
-  # attributes:
-  #   apt:
-  #     cacher_ipaddress: '192.168.1.10'
+  #attributes: {}
+  attributes:
+    apt:
+      cacher_ipaddress: '192.168.1.10'
+
+- name: upstart
+  excludes:
+  - centos-5.9
+  - centos-6.4
+  - fedora-18
+  - omnios-r151002
+  - smartos-13.1
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rabbitmq_test::default]
+  attributes:
+    rabbitmq:
+      job_control: 'upstart'
+    apt:
+      cacher_ipaddress: '192.168.1.10'
 
 - name: distro-version
   excludes:
-  - ubuntu-10.04
   - centos-5.9
+  - ubuntu-10.04
   run_list:
   - recipe[minitest-handler]
   - recipe[rabbitmq_test::default]

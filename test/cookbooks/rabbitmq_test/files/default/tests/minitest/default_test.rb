@@ -59,7 +59,7 @@ describe "rabbitmq_test::default" do
 
   # service
   it 'enables & starts the rabbitmq-server service' do
-    service(node['rabbitmq']['service_name']).must_be_enabled
+    service(node['rabbitmq']['service_name']).must_be_enabled unless node['rabbitmq']['job_control'] == 'upstart'
     service(node['rabbitmq']['service_name']).must_be_running
   end
 

@@ -21,6 +21,7 @@
 
 include_recipe 'erlang'
 
+## Install the package
 case node['platform_family']
 when 'debian'
   # installs the required setsid command -- should be there by default but just in case
@@ -36,18 +37,51 @@ when 'debian'
     dpkg_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
   end
 
+  # Configure job control
+  if node['rabbitmq']['job_control'] == 'upstart'
+    # We start with stock init.d, remove it if we're not using init.d, otherwise leave it alone
+    service node['rabbitmq']['service_name'] do
+      action [:stop]
+      only_if { File.exists?('/etc/init.d/rabbitmq-server') }
+    end
+
+    execute 'remove rabbitmq init.d command' do
+      command 'update-rc.d -f rabbitmq-server remove'
+    end
+
+    file '/etc/init.d/rabbitmq-server' do
+      action :delete
+    end
+
+    template "/etc/init/#{node['rabbitmq']['service_name']}.conf" do
+      source 'rabbitmq.upstart.conf.erb'
+      owner 'root'
+      group 'root'
+      mode 0644
+      variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
+    end
+
+    service node['rabbitmq']['service_name'] do
+      provider Chef::Provider::Service::Upstart
+      action [ :enable, :start ]
+      #restart_command "stop #{node['rabbitmq']['service_name']} && start #{node['rabbitmq']['service_name']}"
+    end
+  end
+
   ## You'll see setsid used in all the init statements in this cookbook. This
   ## is because there is a problem with the stock init script in the RabbitMQ
   ## debian package (at least in 2.8.2) that makes it not daemonize properly
   ## when called from chef. The setsid command forces the subprocess into a state
   ## where it can daemonize properly. -Kevin (thanks to Daniel DeLeo for the help)
-  service node['rabbitmq']['service_name'] do
-    start_command 'setsid /etc/init.d/rabbitmq-server start'
-    stop_command 'setsid /etc/init.d/rabbitmq-server stop'
-    restart_command 'setsid /etc/init.d/rabbitmq-server restart'
-    status_command 'setsid /etc/init.d/rabbitmq-server status'
-    supports :status => true, :restart => true
-    action [ :enable, :start ]
+  if node['rabbitmq']['job_control'] == 'initd'
+    service node['rabbitmq']['service_name'] do
+      start_command 'setsid /etc/init.d/rabbitmq-server start'
+      stop_command 'setsid /etc/init.d/rabbitmq-server stop'
+      restart_command 'setsid /etc/init.d/rabbitmq-server restart'
+      status_command 'setsid /etc/init.d/rabbitmq-server status'
+      supports :status => true, :restart => true
+      action [ :enable, :start ]
+    end
   end
 
 when 'rhel', 'fedora'
@@ -75,7 +109,6 @@ when 'smartos'
   service node['rabbitmq']['service_name'] do
     action [:enable, :start]
   end
-
 end
 
 directory node['rabbitmq']['mnesiadir'] do
@@ -128,4 +161,3 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     action :nothing
   end
 end
-
