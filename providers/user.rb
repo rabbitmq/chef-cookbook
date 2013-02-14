@@ -21,6 +21,8 @@ def user_exists?(name)
   cmd = Mixlib::ShellOut.new("rabbitmqctl list_users |grep '^#{name}\\b'")
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
+  Chef::Log.fatal "rabbitmq_user_exists?: rabbitmqctl list_users |grep '^#{name}\\b'"
+  Chef::Log.fatal "rabbitmq_user_exists?: #{cmd.stdout}"
   begin
     cmd.error!
     true
@@ -35,6 +37,8 @@ def user_has_tag?(name, tag)
   cmd = Mixlib::ShellOut.new(cmdStr)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
+  Chef::Log.fatal "rabbitmq_user_has_tag?: rabbitmqctl list_users | grep \"^#{name}\\b\" | grep #{tag}"
+  Chef::Log.fatal "rabbitmq_user_has_tag?: #{cmd.stdout}"
   begin
     cmd.error!
     true
@@ -52,6 +56,8 @@ def user_has_rights?(vhost,name,perm_list)
   cmd = Mixlib::ShellOut.new(cmdStr)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
+  Chef::Log.fatal "rabbitmq_user_has_rights?: #{cmdStr}"
+  Chef::Log.fatal "rabbitmq_user_has_rights?: #{cmd.stdout}"
   begin
     cmd.error!
     current_permissions = cmd.stdout.each_line.first.split.drop(1)
@@ -67,6 +73,7 @@ end
 action :add do
   unless user_exists?(new_resource.user)
     execute "rabbitmqctl add_user #{new_resource.user} #{new_resource.password}" do
+      Chef::Log.fatal "rabbitmq_user_add: rabbitmqctl add_user #{new_resource.user} #{new_resource.password}"
       Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
       new_resource.updated_by_last_action(true)
     end
@@ -75,11 +82,12 @@ end
 
 action :delete do
   if user_exists?(new_resource.user)
-  execute "rabbitmqctl delete_user #{new_resource.user}" do
-    Chef::Log.info "Deleting RabbitMQ user '#{new_resource.user}'."
-    new_resource.updated_by_last_action(true)
+    execute "rabbitmqctl delete_user #{new_resource.user}" do
+      Chef::Log.fatal "rabbitmq_user_delete: rabbitmqctl delete_user #{new_resource.user}"
+      Chef::Log.info "Deleting RabbitMQ user '#{new_resource.user}'."
+      new_resource.updated_by_last_action(true)
+    end
   end
-end
 end
 
 action :set_permissions do
@@ -87,6 +95,7 @@ action :set_permissions do
   unless user_has_rights?(new_resource.vhost, new_resource.user, perm_list)
     vhostOpt = "-p #{new_resource.vhost}" unless new_resource.vhost.nil?
     execute "rabbitmqctl set_permissions #{vhostOpt} #{new_resource.user} \"#{perm_list.join("\" \"")}\"" do
+      Chef::Log.fatal "rabbitmq_user_set_permissions: rabbitmqctl set_permissions #{vhostOpt} #{new_resource.user} \"#{perm_list.join("\" \"")}\""
       Chef::Log.info "Setting RabbitMQ user permissions for '#{new_resource.user}' on vhost #{new_resource.vhost}."
       new_resource.updated_by_last_action(true)
     end
@@ -94,14 +103,17 @@ action :set_permissions do
 end
 
 action :clear_permissions do
+  Chef::Log.fatal "rabbitmq_user_clear_permissions only_if: rabbitmqctl list_user_permissions | grep #{new_resource.user}"
   if new_resource.vhost
     execute "rabbitmqctl clear_permissions -p #{new_resource.vhost} #{new_resource.user}" do
+      Chef::Log.fatal "rabbitmq_user_clear_permissions: rabbitmqctl clear_permissions -p #{new_resource.vhost} #{new_resource.user}"
       only_if "rabbitmqctl list_user_permissions | grep #{new_resource.user}"
       Chef::Log.info "Clearing RabbitMQ user permissions for '#{new_resource.user}' from vhost #{new_resource.vhost}."
       new_resource.updated_by_last_action(true)
     end
   else
     execute "rabbitmqctl clear_permissions #{new_resource.user}" do
+      Chef::Log.fatal "rabbitmq_user_clear_permissions: rabbitmqctl clear_permissions #{new_resource.user}"
       only_if "rabbitmqctl list_user_permissions | grep #{new_resource.user}"
       Chef::Log.info "Clearing RabbitMQ user permissions for '#{new_resource.user}'."
       new_resource.updated_by_last_action(true)
@@ -112,6 +124,7 @@ end
 action :set_user_tags do
   unless user_has_tag?(new_resource.user, new_resource.user_tag)
     execute "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.user_tag}" do
+      Chef::Log.fatal "rabbitmq_user_set_user_tags: rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.user_tag}"
       Chef::Log.info "Setting RabbitMQ user tag '#{new_resource.user_tag}' on '#{new_resource.user}'"
       new_resource.updated_by_last_action(true)
     end
