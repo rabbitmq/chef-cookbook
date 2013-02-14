@@ -21,8 +21,8 @@ def vhost_exists?(name)
   cmd = Mixlib::ShellOut.new("rabbitmqctl list_vhosts |grep '#{name}\\b'")
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
-  Chef::Log.fatal "rabbitmq_vhost_exists?: rabbitmqctl list_vhosts |grep '#{name}\\b'"
-  Chef::Log.fatal "rabbitmq_vhost_exists?: #{cmd.stdout}"
+  Chef::Log.debug "rabbitmq_vhost_exists?: rabbitmqctl list_vhosts |grep '#{name}\\b'"
+  Chef::Log.debug "rabbitmq_vhost_exists?: #{cmd.stdout}"
   begin
     cmd.error!
     true
