@@ -2,7 +2,7 @@
 # Cookbook Name:: rabbitmq
 # Provider:: user
 #
-# Copyright 2011, Opscode, Inc.
+# Copyright 2011-2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ def user_exists?(name)
   cmd = Mixlib::ShellOut.new("rabbitmqctl list_users |grep '^#{name}\\b'")
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
-  Chef::Log.fatal "rabbitmq_user_exists?: rabbitmqctl list_users |grep '^#{name}\\b'"
-  Chef::Log.fatal "rabbitmq_user_exists?: #{cmd.stdout}"
+  Chef::Log.debug "rabbitmq_user_exists?: rabbitmqctl list_users |grep '^#{name}\\b'"
+  Chef::Log.debug "rabbitmq_user_exists?: #{cmd.stdout}"
   begin
     cmd.error!
     true
