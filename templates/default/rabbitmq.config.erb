@@ -12,8 +12,8 @@
     {ssl_options, [{cacertfile,"<%= node['rabbitmq']['ssl_cacert'] %>"},
                     {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
                     {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"},
-                    {verify,verify_none},
-                    {fail_if_no_peer_cert,false}]},
+                    {verify,<%= node['rabbitmq']['ssl_verify'] %>},
+                    {fail_if_no_peer_cert,<%= node['rabbitmq']['ssl_fail_if_no_peer_cert'] %>}]},
 <% end %>
 <% if node['rabbitmq']['disk_free_limit_relative'] -%>
     {disk_free_limit, {mem_relative, <%= node['rabbitmq']['disk_free_limit_relative'] %>}},
