@@ -72,6 +72,9 @@ end
 
 action :add do
   unless user_exists?(new_resource.user)
+    if new_resource.password.nil?
+      Chef::Application.fatal!("rabbitmq_user with action :add requires a non-nil password.")
+    end
     execute "rabbitmqctl add_user #{new_resource.user} #{new_resource.password}" do
       Chef::Log.fatal "rabbitmq_user_add: rabbitmqctl add_user #{new_resource.user} #{new_resource.password}"
       Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
