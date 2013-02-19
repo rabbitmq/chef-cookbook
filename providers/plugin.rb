@@ -2,7 +2,7 @@
 # Cookbook Name:: rabbitmq
 # Provider:: plugin
 #
-# Copyright 2012, Opscode, Inc.
+# Copyright 2012-2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@ def plugin_enabled?(name)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.environment['PATH'] = plugins_bin_path
   cmd.run_command
+  Chef::Log.debug "rabbitmq_plugin_enabled?: rabbitmq-plugins list -e '#{name}\\b'"
+  Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmd.stdout}"
   cmd.error!
   cmd.stdout =~ /\b#{name}\b/
 end
