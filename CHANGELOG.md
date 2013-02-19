@@ -1,7 +1,12 @@
 ## v2.0.0:
 
-* [COOK-2416] - Add support for adding/clearing tags. This was partially added in v1.7.0
-
+* [COOK-2180]
+* [COOK-2201]
+* [COOK-2210]
+* [COOK-2211]
+* [COOK-2153]
+* [COOK-2235]
+* [COOK-2416] - Add support for clearing tags.
 
 ## v1.8.0:
 
