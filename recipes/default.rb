@@ -21,6 +21,22 @@
 
 include_recipe "erlang"
 
+## You'll see setsid used in all the init statements in this cookbook. This
+## is because there is a problem with the stock init script in the RabbitMQ
+## debian package (at least in 2.8.2) that makes it not daemonize properly
+## when called from chef. The setsid command forces the subprocess into a state
+## where it can daemonize properly. -Kevin (thanks to Daniel DeLeo for the help)
+
+service node['rabbitmq']['service_name'] do
+  start_command "setsid /etc/init.d/rabbitmq-server start"
+  stop_command "setsid /etc/init.d/rabbitmq-server stop"
+  restart_command "setsid /etc/init.d/rabbitmq-server restart"
+  status_command "setsid /etc/init.d/rabbitmq-server status"
+  supports :status => true, :restart => true
+  action [ :enable, :start ]
+  not_if { platform?('smartos') }
+end
+
 case node['platform_family']
 when "debian"
   # installs the required setsid command -- should be there by default but just in case
@@ -93,12 +109,10 @@ else
   existing_erlang_key = ""
 end
 
-if node['rabbitmq']['cluster'] and node['rabbitmq']['erlang_cookie'] != existing_erlang_key
-  # Rabbit starts on package install. We must stop rabbit before modifying
-  # clustering, otherwise the stop fails, and prevents the start from succeeding.
-  # Was unsuccessful stopping rabbit via directly called service block. An execute works
-  # perfectly fine.
-  execute "setsid /etc/init.d/rabbitmq-server stop"
+if node['rabbitmq']['cluster'] and (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
+  service node['rabbitmq']['service_name'] do
+    action :stop
+  end
 
   template node['rabbitmq']['erlang_cookie_path'] do
     source "doterlang.cookie.erb"
@@ -124,20 +138,4 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   group "root"
   mode 00644
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
-end
-
-## You'll see setsid used in all the init statements in this cookbook. This
-## is because there is a problem with the stock init script in the RabbitMQ
-## debian package (at least in 2.8.2) that makes it not daemonize properly
-## when called from chef. The setsid command forces the subprocess into a state
-## where it can daemonize properly. -Kevin (thanks to Daniel DeLeo for the help)
-
-service node['rabbitmq']['service_name'] do
-  start_command "setsid /etc/init.d/rabbitmq-server start"
-  stop_command "setsid /etc/init.d/rabbitmq-server stop"
-  restart_command "setsid /etc/init.d/rabbitmq-server restart"
-  status_command "setsid /etc/init.d/rabbitmq-server status"
-  supports :status => true, :restart => true
-  action [ :enable, :start ]
-  not_if { platform?('smartos') }
 end
