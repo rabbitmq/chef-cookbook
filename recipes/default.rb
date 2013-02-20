@@ -104,12 +104,11 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
 end
 
 
-directory node[:rabbitmq][:mnesiadir] do
+directory node[:rabbitmq][:mnesiadir] || "/var/lib/rabbitmq/mnesia"  do
   owner "rabbitmq"
   group "rabbitmq"
   mode "775"
   recursive true
-  not_if {node[:rabbitmq][:mnesiadir].nil?}
 end
 
 
