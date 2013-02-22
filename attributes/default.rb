@@ -4,7 +4,7 @@ default['rabbitmq']['address']  = nil
 default['rabbitmq']['port']  = nil
 default['rabbitmq']['config'] = nil
 default['rabbitmq']['logdir'] = nil
-default['rabbitmq']['mnesiadir'] = nil
+default['rabbitmq']['mnesiadir'] = "/var/lib/rabbitmq/mnesia"
 
 default['rabbitmq']['service_name'] = 'rabbitmq-server'
 
@@ -50,11 +50,11 @@ default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
 default['rabbitmq']['virtualhosts'] = []
 
 #users
-default['rabbitmq']['enabled_users'] = 
-  [{ :name => "guest", :password => "guest", :rights => 
+default['rabbitmq']['enabled_users'] =
+  [{ :name => "guest", :password => "guest", :rights =>
     [{:vhost => nil , :conf => ".*", :write => ".*", :read => ".*"}]
   }]
-default['rabbitmq']['disabled_users'] =[] 
+default['rabbitmq']['disabled_users'] =[]
 #plugins
 default['rabbitmq']['enabled_plugins'] = []
 default['rabbitmq']['disabled_plugins'] = []

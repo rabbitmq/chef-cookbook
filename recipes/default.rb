@@ -3,7 +3,7 @@
 # Recipe:: default
 #
 # Copyright 2009, Benjamin Black
-# Copyright 2009-2012, Opscode, Inc.
+# Copyright 2009-2013, Opscode, Inc.
 # Copyright 2012, Kevin Nuckolls <kevin.nuckolls@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -103,8 +103,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
-
-directory node[:rabbitmq][:mnesiadir] do
+directory node['rabbitmq']['mnesiadir'] do
   owner "rabbitmq"
   group "rabbitmq"
   mode "775"
