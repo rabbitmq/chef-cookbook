@@ -104,7 +104,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
 end
 
 
-directory node[:rabbitmq][:mnesiadir] || "/var/lib/rabbitmq/mnesia"  do
+directory node[:rabbitmq][:mnesiadir]   do
   owner "rabbitmq"
   group "rabbitmq"
   mode "775"
