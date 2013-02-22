@@ -18,7 +18,7 @@
 #
 
 def vhost_exists?(name)
-  cmdStr = "rabbitmqctl list_vhosts |grep '#{name}\\b'"
+  cmdStr = "rabbitmqctl -q list_vhosts | grep ^#{name}$"
   cmd = Mixlib::ShellOut.new(cmdStr)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
