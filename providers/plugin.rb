@@ -23,11 +23,12 @@ def plugins_bin_path(return_array=false)
 end
 
 def plugin_enabled?(name)
-  cmd = Mixlib::ShellOut.new("rabbitmq-plugins list -e '#{name}\\b'")
+  cmdStr = "rabbitmq-plugins list -e '#{name}\\b'"
+  cmd = Mixlib::ShellOut.new(cmdStr)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.environment['PATH'] = plugins_bin_path
   cmd.run_command
-  Chef::Log.debug "rabbitmq_plugin_enabled?: rabbitmq-plugins list -e '#{name}\\b'"
+  Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmdStr}"
   Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmd.stdout}"
   cmd.error!
   cmd.stdout =~ /\b#{name}\b/
