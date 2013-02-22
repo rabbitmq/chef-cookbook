@@ -9,7 +9,7 @@ consistency with other actions. It has also been tested with 2.x and 3.0 concurr
 * [COOK-2210] - User management via node attributes
 * [COOK-2211] - Virtualhost management via node attributes
 * [COOK-2235]
-* [COOK-2366]
+* [COOK-2366] - Default recipe doesn't create mnesia dir
 * [COOK-2416] - Add support for clearing tags.
 
 ## v1.8.0:
