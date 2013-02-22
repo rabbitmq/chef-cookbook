@@ -1,11 +1,15 @@
 ## v2.0.0:
 
-* [COOK-2180]
-* [COOK-2201]
-* [COOK-2210]
-* [COOK-2211]
-* [COOK-2153]
+This is a major release for changing the action :set_user_tags to :set_tags for
+consistency with other actions. It has also been tested with 2.x and 3.0 concurrently.
+
+* [COOK-2153] - Fix of user LWRP
+* [COOK-2180] - Plugin management via node attributes
+* [COOK-2201] - Use the proper syntax when using rabbitmq 3.0 instead of 2.x
+* [COOK-2210] - User management via node attributes
+* [COOK-2211] - Virtualhost management via node attributes
 * [COOK-2235]
+* [COOK-2366]
 * [COOK-2416] - Add support for clearing tags.
 
 ## v1.8.0:
