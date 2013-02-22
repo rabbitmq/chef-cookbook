@@ -24,8 +24,8 @@ Adds and deletes users, fairly simplistic permissions management.
 - `:delete` deletes a `user`
 - `:set_permissions` sets the `permissions` for a `user`, `vhost` is optional
 - `:clear_permissions` clears the permissions for a `user`
-- `:set_user_tags` set the tags on a user
-- `:clear_user_tags` clear any tags on a user
+- `:set_tags` set the tags on a user
+- `:clear_tags` clear any tags on a user
 
 ### Examples
 ``` ruby
@@ -45,8 +45,8 @@ rabbitmq_user "nova" do
 end
 
 rabbitmq_user "joe" do
-  user_tag "admin,lead"
-  action :set_user_tags
+  tag "admin,lead"
+  action :set_tags
 end
 ```
 

@@ -127,28 +127,28 @@ action :clear_permissions do
   end
 end
 
-action :set_user_tags do
+action :set_tags do
   if !user_exists?(new_resource.user)
-    Chef::Application.fatal!("rabbitmq_user action :set_user_tags fails with non-existant '#{new_resource.user}' user.")
+    Chef::Application.fatal!("rabbitmq_user action :set_tags fails with non-existant '#{new_resource.user}' user.")
   end
-  unless user_has_tag?(new_resource.user, new_resource.user_tag)
-    cmdStr = "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.user_tag}"
+  unless user_has_tag?(new_resource.user, new_resource.tag)
+    cmdStr = "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.tag}"
     execute cmdStr do
-      Chef::Log.debug "rabbitmq_user_set_user_tags: #{cmdStr}"
-      Chef::Log.info "Setting RabbitMQ user '#{new_resource.user}' tags '#{new_resource.user_tag}'"
+      Chef::Log.debug "rabbitmq_user_set_tags: #{cmdStr}"
+      Chef::Log.info "Setting RabbitMQ user '#{new_resource.user}' tags '#{new_resource.tag}'"
       new_resource.updated_by_last_action(true)
     end
   end
 end
 
-action :clear_user_tags do
+action :clear_tags do
   if !user_exists?(new_resource.user)
-    Chef::Application.fatal!("rabbitmq_user action :clear_user_tags fails with non-existant '#{new_resource.user}' user.")
+    Chef::Application.fatal!("rabbitmq_user action :clear_tags fails with non-existant '#{new_resource.user}' user.")
   end
   unless user_has_tag?(new_resource.user, '"\[\]"')
     cmdStr = "rabbitmqctl set_user_tags #{new_resource.user}"
     execute cmdStr do
-      Chef::Log.debug "rabbitmq_clear_user_tags: #{cmdStr}"
+      Chef::Log.debug "rabbitmq_user_clear_tags: #{cmdStr}"
       Chef::Log.info "Clearing RabbitMQ user '#{new_resource.user}' tags."
       new_resource.updated_by_last_action(true)
     end
