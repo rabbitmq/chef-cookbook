@@ -40,7 +40,7 @@ end
 
 rabbitmq_user "nova" do
   vhost "/nova"
-  permissions "\".*\" \".*\" \".*\""
+  permissions ".* .* .*"
   action :set_permissions
 end
 
