@@ -8,7 +8,8 @@ consistency with other actions. It has also been tested with 2.x and 3.0 concurr
 * [COOK-2201] - Use the proper syntax when using rabbitmq 3.0 instead of 2.x
 * [COOK-2210] - User management via node attributes
 * [COOK-2211] - Virtualhost management via node attributes
-* [COOK-2235]
+* [COOK-2235] - RabbitMQ bin path isn't necessarily part of PATH for the plugin provider
+* [COOK-2392] - correctly configure a rabbitmq cluster
 * [COOK-2366] - Default recipe doesn't create mnesia dir
 * [COOK-2416] - Add support for clearing tags.
 
