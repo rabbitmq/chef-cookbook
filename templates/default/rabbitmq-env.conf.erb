@@ -8,3 +8,4 @@
 <% if node['rabbitmq']['config'] -%>CONFIG_FILE=<%= node['rabbitmq']['config'] %><% end %>
 <% if node['rabbitmq']['logdir'] -%>LOG_BASE=<%= node['rabbitmq']['logdir'] %><% end %>
 <% if node['rabbitmq']['mnesiadir'] -%>MNESIA_BASE=<%= node['rabbitmq']['mnesiadir'] %><% end %>
+<% if node['platform_family'] == 'debian' -%>ulimit -n <%= node['rabbitmq']['max_open_files'] %><% end %>
