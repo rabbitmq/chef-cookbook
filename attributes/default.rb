@@ -66,3 +66,6 @@ if node[:platform] == 'smartos'
   default['rabbitmq']['config'] = '/opt/local/etc/rabbitmq/rabbitmq'
   default['rabbitmq']['erlang_cookie_path'] = '/var/db/rabbitmq/.erlang.cookie'
 end
+
+# Debian
+default['rabbitmq']['max_open_files'] = '1024'
