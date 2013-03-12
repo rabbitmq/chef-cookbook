@@ -68,3 +68,7 @@ when 'smartos'
   default['rabbitmq']['config'] = '/opt/local/etc/rabbitmq/rabbitmq'
   default['rabbitmq']['erlang_cookie_path'] = '/var/db/rabbitmq/.erlang.cookie'
 end
+
+# policies
+default['rabbitmq']['policies']['ha-all']['pattern'] = "\"^(?!amq\\.).*\""
+default['rabbitmq']['policies']['ha-all']['params'] = "'{\"ha-mode\": \"all\"}'"
