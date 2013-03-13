@@ -31,8 +31,8 @@ enabled_users.each do |user|
     notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
   rabbitmq_user user['name'] do
-    user_tag user['tag']
-    action :set_user_tags
+    tag user['tag']
+    action :set_tags
     notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
   user['rights'].each  do |r|
