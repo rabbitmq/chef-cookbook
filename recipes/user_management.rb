@@ -28,19 +28,16 @@ enabled_users.each do |user|
   rabbitmq_user user['name'] do
     password user['password']
     action :add
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
   rabbitmq_user user['name'] do
     tag user['tag']
     action :set_tags
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
   user['rights'].each  do |r|
     rabbitmq_user user['name'] do
       vhost r['vhost']
       permissions "#{r['conf']} #{r['write']} #{r['read']}"
       action :set_permissions
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
     end
   end
 end
@@ -50,6 +47,5 @@ disabled_users = node['rabbitmq']['disabled_users']
 disabled_users.each do |user|
   rabbitmq_user user do
     action :delete
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
