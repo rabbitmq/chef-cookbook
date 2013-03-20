@@ -9,7 +9,7 @@ default['rabbitmq']['mnesiadir'] = "/var/lib/rabbitmq/mnesia"
 default['rabbitmq']['service_name'] = 'rabbitmq-server'
 
 # RabbitMQ version to install for "redhat", "centos", "scientific", and "amazon".
-default['rabbitmq']['version'] = '2.8.4'
+default['rabbitmq']['version'] = '3.0.4'
 # Override this if you have a yum repo with rabbitmq available.
 default['rabbitmq']['use_yum'] = false
 # Override this if you do not want to use an apt repo

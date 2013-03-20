@@ -12,6 +12,7 @@ consistency with other actions. It has also been tested with 2.x and 3.0 concurr
 * [COOK-2392] - correctly configure a rabbitmq cluster
 * [COOK-2366] - Default recipe doesn't create mnesia dir
 * [COOK-2416] - Add support for clearing tags.
+* bumped default version to latest '3.0.4'
 
 ## v1.8.0:
 
