@@ -4,21 +4,20 @@ This is a cookbook for managing RabbitMQ with Chef. It is intended for 2.6.1 or 
 
 Version 2.0 Changes
 ===================
-The 2.0 release of the cookbook defaults to using the latest version available from RabbitMQ.com via direct download of the package. This was done to simplify the installation options to either distro package or direct download. The attributes `use_apt` and `use_yum` have been removed as has the `apt` and `yum` cookbook dependencies.
+The 2.0 release of the cookbook defaults to using the latest version available from RabbitMQ.com via direct download of the package. This was done to simplify the installation options to either distro package or direct download. The attributes `use_apt` and `use_yum` have been removed as have the `apt` and `yum` cookbook dependencies.
 
 This release was tested with:
-
-CentOS 5.8: 3.0.4 (distro release unsupported)
-CentOS 6.3: 3.0.4/2.6.1 (no plugin support)
-Debian 6: 3.04 (distro release unsupported)
-Ubuntu 10.04: 3.0.4 (distro release unsupported)
-Ubuntu 12.04: 3.0.4/2.7.1
+* CentOS 5.8: 3.0.4 (distro release unsupported)
+* CentOS 6.3: 3.0.4/2.6.1 (no plugin support)
+* Debian 6: 3.04 (distro release unsupported)
+* Ubuntu 10.04: 3.0.4 (distro release unsupported)
+* Ubuntu 12.04: 3.0.4/2.7.1
 
 Recipes
 =======
 default
 -------
-Installs `rabbitmq-server` from RabbitMQ.com via direct download of the installation package or using the distribution version. Depending on your distribution, the provided version may be quite old so they are disabled by default. If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`. You may override the download URL (`['rabbitmq']['package']`) if you wish to use a local mirror.
+Installs `rabbitmq-server` from RabbitMQ.com via direct download of the installation package or using the distribution version. Depending on your distribution, the provided version may be quite old so they are disabled by default. If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`. You may override the download URL attribute `['rabbitmq']['package']` if you wish to use a local mirror.
 
 The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['cluster']` attribute to `true`, `['rabbitmq']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
