@@ -3,6 +3,7 @@
 This is a major release for changing the action :set_user_tags to :set_tags for
 consistency with other actions. It has also been tested with 2.x and 3.0 concurrently.
 
+* Major v2.0 changes are documented in the README.
 * [COOK-2153] - Fix of user LWRP
 * [COOK-2180] - Plugin management via node attributes
 * [COOK-2201] - Use the proper syntax when using rabbitmq 3.0 instead of 2.x
@@ -12,7 +13,6 @@ consistency with other actions. It has also been tested with 2.x and 3.0 concurr
 * [COOK-2392] - correctly configure a rabbitmq cluster
 * [COOK-2366] - Default recipe doesn't create mnesia dir
 * [COOK-2416] - Add support for clearing tags.
-* bumped default version to latest '3.0.4'
 
 ## v1.8.0:
 

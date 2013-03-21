@@ -1,16 +1,28 @@
 Description
 ===========
-This is a cookbook for managing RabbitMQ with Chef.  It uses the default settings, but can also be configured via attributes.
+This is a cookbook for managing RabbitMQ with Chef. It is intended for 2.6.1 or later releases.
+
+Version 2.0 Changes
+===================
+The 2.0 release of the cookbook defaults to using the latest version available from RabbitMQ.com via direct download of the package. This was done to simplify the installation options to either distro package or direct download. The attributes `use_apt` and `use_yum` have been removed as has the `apt` and `yum` cookbook dependencies.
+
+This release was tested with:
+
+CentOS 5.8: 3.0.4 (distro release unsupported)
+CentOS 6.3: 3.0.4/2.6.1 (no plugin support)
+Debian 6: 3.04 (distro release unsupported)
+Ubuntu 10.04: 3.0.4 (distro release unsupported)
+Ubuntu 12.04: 3.0.4/2.7.1
 
 Recipes
 =======
 default
 -------
-Installs `rabbitmq-server` from RabbitMQ.com's APT repository, your distro's version, or the DEB or RPM directly (there is no yum repo). Depending on your distribution, the provided version may be quite old so they are disabled by default. If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`.
+Installs `rabbitmq-server` from RabbitMQ.com via direct download of the installation package or using the distribution version. Depending on your distribution, the provided version may be quite old so they are disabled by default. If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`. You may override the download URL (`['rabbitmq']['package']`) if you wish to use a local mirror.
 
-Cluster recipe is now combined with default. Recipe will now auto-cluster. Set the :cluster attribute to true, :cluster_disk_nodes array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the :erlang_cookie.
+The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['cluster']` attribute to `true`, `['rabbitmq']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
-To enable SSL turn :ssl to true and set the paths to your cacert, cert and key files.
+To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
 
 Resources/Providers
 ===================
@@ -66,7 +78,7 @@ end
 
 plugin
 -----
-Enables or disables a rabbitmq plugin.
+Enables or disables a rabbitmq plugin. Plugins are not supported for releases prior to 2.7.0.
 
 - `:enable` enables a `plugin`
 - `:disable` disables a `plugin`
@@ -88,7 +100,7 @@ For an already running cluster, these actions still require manual intervention:
 - changing the :erlang_cookie
 - turning :cluster from true to false
 
-The rabbitmq::chef recipe was only used for the chef-server cookbook and has been moved to chef-server::rabbitmq.
+The `rabbitmq::chef` recipe was only used for the chef-server cookbook and has been moved to `chef-server::rabbitmq`.
 
 License and Author
 ==================

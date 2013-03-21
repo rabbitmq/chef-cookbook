@@ -1,3 +1,8 @@
+# Latest RabbitMQ.com version to install
+default['rabbitmq']['version'] = '3.0.4'
+# The distro versions may be more stable and have back-ported patches
+default['rabbitmq']['use_distro_version'] = false
+
 # being nil, the rabbitmq defaults will be used
 default['rabbitmq']['nodename']  = nil
 default['rabbitmq']['address']  = nil
@@ -5,17 +10,7 @@ default['rabbitmq']['port']  = nil
 default['rabbitmq']['config'] = nil
 default['rabbitmq']['logdir'] = nil
 default['rabbitmq']['mnesiadir'] = "/var/lib/rabbitmq/mnesia"
-
 default['rabbitmq']['service_name'] = 'rabbitmq-server'
-
-# RabbitMQ version to install for "redhat", "centos", "scientific", and "amazon".
-default['rabbitmq']['version'] = '3.0.4'
-# Override this if you have a yum repo with rabbitmq available.
-default['rabbitmq']['use_yum'] = false
-# Override this if you do not want to use an apt repo
-default['rabbitmq']['use_apt'] = true
-# The distro versions may be more stable and have back-ported patches
-default['rabbitmq']['use_distro_version'] = false
 
 # config file location
 # http://www.rabbitmq.com/configure.html#define-environment-variables
@@ -55,12 +50,19 @@ default['rabbitmq']['enabled_users'] =
     [{:vhost => nil , :conf => ".*", :write => ".*", :read => ".*"}]
   }]
 default['rabbitmq']['disabled_users'] =[]
+
 #plugins
 default['rabbitmq']['enabled_plugins'] = []
 default['rabbitmq']['disabled_plugins'] = []
 
-# SmartOS-specific defaults
-if node[:platform] == 'smartos'
+#platform specific settings
+case node['platform_family']
+when 'debian'
+  default['rabbitmq']['package'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
+when 'rhel'
+  default['rabbitmq']['package'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
+
+when 'smartos'
   default['rabbitmq']['service_name'] = 'rabbitmq'
   default['rabbitmq']['config_root'] = '/opt/local/etc/rabbitmq'
   default['rabbitmq']['config'] = '/opt/local/etc/rabbitmq/rabbitmq'

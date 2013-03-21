@@ -19,63 +19,48 @@
 # limitations under the License.
 #
 
-include_recipe "erlang"
+include_recipe 'erlang'
 
 case node['platform_family']
-when "debian"
+when 'debian'
   # installs the required setsid command -- should be there by default but just in case
-  package "util-linux"
+  package 'util-linux'
 
-  if node['rabbitmq']['use_apt'] then
-    # use the RabbitMQ repository instead of Ubuntu or Debian's
-    # because there are very useful features in the newer versions
+  if node['rabbitmq']['use_distro_version']
 
-    apt_repository "rabbitmq" do
-      uri "http://www.rabbitmq.com/debian/"
-      distribution "testing"
-      components ["main"]
-      key "http://www.rabbitmq.com/rabbitmq-signing-key-public.asc"
-      not_if { node['rabbitmq']['use_distro_version'] }
-      action :add
-    end
-
-    # NOTE: The official RabbitMQ apt repository has only the latest version
-    package "rabbitmq-server"
+    package 'rabbitmq-server'
 
   else
 
     remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb" do
-      source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
+      source node['rabbitmq']['package']
       action :create_if_missing
     end
 
-    dpkg_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb" do
-      action :install
-    end
+    dpkg_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
 
   end
 
-when "rhel", "fedora"
+when 'rhel', 'fedora'
 
-  if node['rabbitmq']['use_yum'] then
+  if node['rabbitmq']['use_distro_version'] then
 
-    package "rabbitmq-server"
+    package 'rabbitmq-server'
 
   else
 
     remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
-      source "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
+      source node['rabbitmq']['package']
       action :create_if_missing
     end
 
-    rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
-      action :install
-    end
+    rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
 
   end
-when "smartos"
 
-  package "rabbitmq"
+when 'smartos'
+
+  package 'rabbitmq'
 
   service 'epmd' do
     action :start
@@ -88,9 +73,9 @@ when "smartos"
 end
 
 directory node['rabbitmq']['mnesiadir'] do
-  owner "rabbitmq"
-  group "rabbitmq"
-  mode "775"
+  owner 'rabbitmq'
+  group 'rabbitmq'
+  mode '775'
   recursive true
 end
 
@@ -100,10 +85,10 @@ end
 ## when called from chef. The setsid command forces the subprocess into a state
 ## where it can daemonize properly. -Kevin (thanks to Daniel DeLeo for the help)
 service node['rabbitmq']['service_name'] do
-  start_command "setsid /etc/init.d/rabbitmq-server start"
-  stop_command "setsid /etc/init.d/rabbitmq-server stop"
-  restart_command "setsid /etc/init.d/rabbitmq-server restart"
-  status_command "setsid /etc/init.d/rabbitmq-server status"
+  start_command 'setsid /etc/init.d/rabbitmq-server start'
+  stop_command 'setsid /etc/init.d/rabbitmq-server stop'
+  restart_command 'setsid /etc/init.d/rabbitmq-server restart'
+  status_command 'setsid /etc/init.d/rabbitmq-server status'
   supports :status => true, :restart => true
   action [ :enable, :start ]
   not_if { platform?('smartos') }
@@ -112,7 +97,7 @@ end
 if File.exists?(node['rabbitmq']['erlang_cookie_path'])
   existing_erlang_key =  File.read(node['rabbitmq']['erlang_cookie_path'])
 else
-  existing_erlang_key = ""
+  existing_erlang_key = ''
 end
 
 if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
@@ -122,9 +107,9 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
   end
 
   template node['rabbitmq']['erlang_cookie_path'] do
-    source "doterlang.cookie.erb"
-    owner "rabbitmq"
-    group "rabbitmq"
+    source 'doterlang.cookie.erb'
+    owner 'rabbitmq'
+    group 'rabbitmq'
     mode 00400
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
   end
@@ -132,17 +117,17 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
 end
 
 template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
-  source "rabbitmq-env.conf.erb"
-  owner "root"
-  group "root"
+  source 'rabbitmq-env.conf.erb'
+  owner 'root'
+  group 'root'
   mode 00644
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
 template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
-  source "rabbitmq.config.erb"
-  owner "root"
-  group "root"
+  source 'rabbitmq.config.erb'
+  owner 'root'
+  group 'root'
   mode 00644
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
