@@ -37,7 +37,7 @@ action :set do
     cmd << " #{new_resource.pattern}"
     cmd << " #{new_resource.params}"
 
-    e = execute "set_policy" do
+    e = execute "set_policy #{new_resource.policy}" do
       command cmd
     end
 
@@ -50,7 +50,7 @@ end
 
 action :clear do
   if policy_exists?(new_resource.policy)
-    e = execute "clear_policy" do
+    e = execute "clear_policy #{new_resource.policy}" do
       command "rabbitmqctl clear_policy #{new_resource.policy}"
     end
 
