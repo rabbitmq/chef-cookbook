@@ -1,8 +1,5 @@
 ## v2.0.0:
 
-This is a major release for changing the action :set_user_tags to :set_tags for
-consistency with other actions. It has also been tested with 2.x and 3.0 concurrently.
-
 * Major v2.0 changes are documented in the README.
 * [COOK-2153] - Fix of user LWRP
 * [COOK-2180] - Plugin management via node attributes

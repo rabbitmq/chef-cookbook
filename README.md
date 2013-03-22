@@ -4,7 +4,7 @@ This is a cookbook for managing RabbitMQ with Chef. It is intended for 2.6.1 or 
 
 Version 2.0 Changes
 ===================
-The 2.0 release of the cookbook defaults to using the latest version available from RabbitMQ.com via direct download of the package. This was done to simplify the installation options to either distro package or direct download. The attributes `use_apt` and `use_yum` have been removed as have the `apt` and `yum` cookbook dependencies.
+The 2.0 release of the cookbook defaults to using the latest version available from RabbitMQ.com via direct download of the package. This was done to simplify the installation options to either distro package or direct download. The attributes `use_apt` and `use_yum` have been removed as have the `apt` and `yum` cookbook dependencies. The user LWRP action `:set_user_tags` was changed to `:set_tags` for consistency with other actions.
 
 This release was tested with:
 * CentOS 5.8: 3.0.4 (distro release unsupported)
