@@ -1,6 +1,7 @@
 ## v2.0.0:
 
 * Major v2.0 changes are documented in the README.
+* [COOK-2391] - Added support for verify verify_peer and fail_if_no_peer_cert true
 * [COOK-2153] - Fix of user LWRP
 * [COOK-2180] - Plugin management via node attributes
 * [COOK-2201] - Use the proper syntax when using rabbitmq 3.0 instead of 2.x
