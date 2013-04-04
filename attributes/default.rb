@@ -51,6 +51,14 @@ default['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 default['rabbitmq']['ssl_verify'] = 'verify_none'
 default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
 
+#tcp listen options
+default['rabbitmq']['tcp_listen_packet'] = 'raw'
+default['rabbitmq']['tcp_listen_reuseaddr']  = true
+default['rabbitmq']['tcp_listen_backlog'] = 128
+default['rabbitmq']['tcp_listen_nodelay'] = true
+default['rabbitmq']['tcp_listen_exit_on_close'] = false
+default['rabbitmq']['tcp_listen_keepalive'] = false
+
 #virtualhosts
 default['rabbitmq']['virtualhosts'] = []
 default['rabbitmq']['disabled_virtualhosts'] = []
