@@ -22,6 +22,14 @@
     {vm_memory_high_watermark, <%= node['rabbitmq']['vm_memory_high_watermark'] %>},
 <% end %>
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
-    {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>}
+    {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>},
+    {tcp_listen_options, [binary, {packet, <%= node['rabbitmq']['tcp_packet'] %>},
+                                  {reuseaddr, <%= node['rabbitmq']['tcp_reuseaddr'] %>},
+                                  {backlog, <%= node['rabbitmq']['tcp_backlog'] %>},
+                                  {nodelay, <%= node['rabbitmq']['tcp_nodelay'] %>},
+                              <% if node['rabbitmq']['tcp_keepalive'] -%>
+                                  {keepalive, <%= node['rabbitmq']['tcp_keepalive'] %>},
+                              <% end %>
+                                  {exit_on_close, <%= node['rabbitmq']['tcp_exit'] %>}]}
   ]}
 ].
