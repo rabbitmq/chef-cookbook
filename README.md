@@ -104,8 +104,9 @@ sets or clears a rabbitmq policy.
 ### Example
 ``` ruby
 rabbitmq_policy "ha-all" do
-  pattern "\"^(?!amq\\.).*\""
-  params "'{\"ha-mode\": \"all\"}'"
+  pattern "^(?!amq\\.).*"
+  params {"ha-mode"=>"all"}
+  priority 1
   action :set
 end
 

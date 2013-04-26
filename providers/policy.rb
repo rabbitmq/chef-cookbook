@@ -42,7 +42,7 @@ action :set do
       unless first_param      
         cmd << ","
       end
-      if value.kindof? String
+      if value.kind_of? String
         cmd << "\"#{key}\":\"#{value}\"" 
       else
         cmd << "\"#{key}\":#{value}" 

@@ -24,4 +24,4 @@ default_action :set
 attribute :policy, :kind_of => String, :name_attribute => true
 attribute :pattern, :kind_of => String
 attribute :params, :kind_of => Hash
-attribute :priority, :kind_of => String
+attribute :priority, :kind_of => Integer
