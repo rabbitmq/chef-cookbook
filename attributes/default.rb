@@ -68,3 +68,13 @@ when 'smartos'
   default['rabbitmq']['config'] = '/opt/local/etc/rabbitmq/rabbitmq'
   default['rabbitmq']['erlang_cookie_path'] = '/var/db/rabbitmq/.erlang.cookie'
 end
+
+# Example HA policies
+default['rabbitmq']['policies']['ha-all']['pattern'] = "^(?!amq\\.).*"
+default['rabbitmq']['policies']['ha-all']['params'] = { "ha-mode" => "all" }
+default['rabbitmq']['policies']['ha-all']['priority'] = 0
+
+default['rabbitmq']['policies']['ha-two']['pattern'] = "^two\."
+default['rabbitmq']['policies']['ha-two']['params'] = { "ha-mode" => "exactly", "ha-params" => 2 }
+default['rabbitmq']['policies']['ha-two']['priority'] = 1
+
