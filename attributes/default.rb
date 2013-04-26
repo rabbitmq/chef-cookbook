@@ -69,6 +69,7 @@ when 'smartos'
   default['rabbitmq']['erlang_cookie_path'] = '/var/db/rabbitmq/.erlang.cookie'
 end
 
-# policies
-default['rabbitmq']['policies']['ha-all']['pattern'] = "\"^(?!amq\\.).*\""
-default['rabbitmq']['policies']['ha-all']['params'] = "'{\"ha-mode\": \"all\"}'"
+# Example HA policies
+default['rabbitmq']['policies']['ha-all']['pattern'] = "^(?!amq\\.).*"
+default['rabbitmq']['policies']['ha-all']['params'] = { "ha-mode" => "all" }
+default['rabbitmq']['policies']['ha-all']['priority'] = nil

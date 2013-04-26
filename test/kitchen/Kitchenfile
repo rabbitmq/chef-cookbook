@@ -21,4 +21,5 @@ cookbook "rabbitmq" do
   configuration "cook-1684"
   configuration "cook-1724"
   configuration "cook-2151"
+  configuration "cook-2575"
 end

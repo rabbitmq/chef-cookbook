@@ -1,9 +1,8 @@
 #
-# Cookbook Name:: rabbitmq
-# Resource:: policy
+# Cookbook Name:: rabbitmq_test
+# Recipe:: default
 #
-# Author: Robert Choi <taeilchoi1@gmail.com>
-# Copyright 2013 by Robert Choi
+# Copyright 2012, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,10 +17,6 @@
 # limitations under the License.
 #
 
-actions :set, :clear, :list
-default_action :set
+log "#{cookbook_name}::#{recipe_name} tests that COOK-2575 is implemented."
 
-attribute :policy, :kind_of => String, :name_attribute => true
-attribute :pattern, :kind_of => String
-attribute :params, :kind_of => Hash
-attribute :priority, :kind_of => String
+include_recipe "rabbitmq::policy_management"

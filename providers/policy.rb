@@ -34,37 +34,52 @@ action :set do
   unless policy_exists?(new_resource.policy)
     cmd = "rabbitmqctl set_policy"
     cmd << " #{new_resource.policy}"
-    cmd << " #{new_resource.pattern}"
-    cmd << " #{new_resource.params}"
+    cmd << " \"#{new_resource.pattern}\""
+    cmd << " '{"
 
-    e = execute "set_policy #{new_resource.policy}" do
+    first_param = true
+    new_resource.params.each do |key, value|
+      unless first_param      
+        cmd << ","
+      end
+      if value.kindof? String
+        cmd << "\"#{key}\":\"#{value}\"" 
+      else
+        cmd << "\"#{key}\":#{value}" 
+      end
+      first_param = false
+    end
+
+    cmd << "}'"
+
+    if new_resource.priority
+      cmd << " #{new_resource.priority}"
+    end
+
+    execute "set_policy #{new_resource.policy}" do
       command cmd
     end
 
-    new_resource.updated_by_last_action(e.updated?)
-    if e.updated?
-      Chef::Log.info "Done setting RabbitMQ policy '#{new_resource.policy}'."
-    end
+    new_resource.updated_by_last_action(true)
+    Chef::Log.info "Done setting RabbitMQ policy '#{new_resource.policy}'."
   end
 end
 
 action :clear do
   if policy_exists?(new_resource.policy)
-    e = execute "clear_policy #{new_resource.policy}" do
+    execute "clear_policy #{new_resource.policy}" do
       command "rabbitmqctl clear_policy #{new_resource.policy}"
     end
 
-    new_resource.updated_by_last_action(e.updated?)
-    if e.updated?
-      Chef::Log.info "Done clearing RabbitMQ policy '#{new_resource.policy}'."
-    end
+    new_resource.updated_by_last_action(true)
+    Chef::Log.info "Done clearing RabbitMQ policy '#{new_resource.policy}'."
   end
 end
 
 action :list do
-  e = execute "list_policies" do
+  execute "list_policies" do
     command "rabbitmqctl list_policies"
-    Chef::Log.info "Listing RabbitMQ policies."
   end
-  new_resource.updated_by_last_action(e.updated?)
+
+  new_resource.updated_by_last_action(true)
 end
