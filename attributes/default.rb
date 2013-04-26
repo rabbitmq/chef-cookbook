@@ -89,3 +89,11 @@ default['rabbitmq']['policies']['ha-two']['params'] = { "ha-mode" => "exactly", 
 default['rabbitmq']['policies']['ha-two']['priority'] = 1
 
 default['rabbitmq']['disabled_policies'] = []
+
+# management plugin settings
+default['rabbitmq']['management_plugin']['enabled'] = false
+default['rabbitmq']['management_plugin']['port'] = 15672
+default['rabbitmq']['management_plugin']['host'] = nil
+default['rabbitmq']['management_plugin']['ssl'] = false
+default['rabbitmq']['management_plugin']['redirect_old_port'] = true
+
