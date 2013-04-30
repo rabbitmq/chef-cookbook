@@ -24,8 +24,8 @@ default['rabbitmq']['default_user'] = 'guest'
 default['rabbitmq']['default_pass'] = 'guest'
 
 #clustering
-default['rabbitmq']['cluster'] = true
-default['rabbitmq']['cluster_disk_nodes'] = ['rabbit@node1', 'rabbit@node2']
+default['rabbitmq']['cluster'] = false
+default['rabbitmq']['cluster_disk_nodes'] = []
 default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 
 # resource usage
