@@ -25,9 +25,15 @@ case node['platform_family']
 when 'debian'
   # installs the required setsid command -- should be there by default but just in case
   package 'util-linux'
-
+  
+  if node['rabbitmq']['use_upstream_repo']
+    
+    include_recipe 'rabbitmq::debian_repo' 
+  
+  end
+  
   if node['rabbitmq']['use_distro_version']
-
+  
     package 'rabbitmq-server'
 
   else
