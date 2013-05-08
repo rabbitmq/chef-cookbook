@@ -44,6 +44,9 @@ default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
 #virtualhosts
 default['rabbitmq']['virtualhosts'] = []
 
+#policies
+default['rabbitmq']['policies'] = []
+
 #users
 default['rabbitmq']['enabled_users'] =
   [{ :name => "guest", :password => "guest", :rights =>
