@@ -93,6 +93,28 @@ rabbitmq_plugin "rabbitmq_shovel" do
 end
 ```
 
+policy
+-----
+sets or clears a rabbitmq policy.
+
+- `:set` sets a `policy`
+- `:clear` clears a `policy`
+- `:list` lists `policy`s
+
+### Example
+``` ruby
+rabbitmq_policy "ha-all" do
+  pattern "^(?!amq\\.).*"
+  params {"ha-mode"=>"all"}
+  priority 1
+  action :set
+end
+
+rabbitmq_policy "ha-all" do
+  action :clear
+end
+```
+
 Limitations
 ===========
 For an already running cluster, these actions still require manual intervention:
