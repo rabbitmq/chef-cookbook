@@ -19,7 +19,7 @@ require File.expand_path('../support/helpers', __FILE__)
 describe "rabbitmq::default" do
   include Helpers::RabbitMQ
 
-  it 'uses the rabbitmq apt source on debian family' do
+  it 'installs the package from downloaded deb package on debian family' do
     unless node['platform_family'] == 'debian'
       skip "Only applicable on Debian family"
     end
