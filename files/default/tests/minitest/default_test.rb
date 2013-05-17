@@ -24,7 +24,9 @@ describe "rabbitmq::default" do
       skip "Only applicable on Debian family"
     end
 
-    file("/etc/apt/sources.list.d/rabbitmq-source.list").must_exist
+    deb_path = "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
+
+    file(deb_path).must_exist
   end
 
   it 'installs the package from downloaded rpm on rhel/fedora family' do
