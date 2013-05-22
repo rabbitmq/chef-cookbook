@@ -3,6 +3,12 @@
 %%%
 
 [
+<% if node['rabbitmq']['inet_dist_listen_min'] and node['rabbitmq']['inet_dist_listen_max'] -%>
+  {kernel, [
+    {inet_dist_listen_min, <%= node['rabbitmq']['inet_dist_listen_min'] %>},
+    {inet_dist_listen_max, <%= node['rabbitmq']['inet_dist_listen_max'] %>}
+  ]},
+<% end %>
   {rabbit, [
 <% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] -%>
     {cluster_nodes, [<%= node['rabbitmq']['cluster_disk_nodes'].map{|n| "\'#{n}\'"}.join(',') %>]},
