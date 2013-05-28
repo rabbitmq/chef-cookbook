@@ -52,7 +52,7 @@ end
 # empty perm_list means we're checking for any permissions
 def user_has_permissions?(name, vhost, perm_list = nil)
   vhost = '/' if vhost.nil?
-  cmdStr = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\s\""
+  cmdStr = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\b\""
   cmd = Mixlib::ShellOut.new(cmdStr)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
