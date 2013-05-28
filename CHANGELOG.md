@@ -1,3 +1,14 @@
+## v2.1.0:
+
+### Bug
+
+- [COOK-2828]: Rabbitmq Clustering doesn't work properly
+- [COOK-2975]: rabbitmq has foodcritic failures
+
+### New Feature
+
+- [COOK-2575]: LWRP for setting policies
+
 ## v2.0.0:
 
 * Major v2.0 changes are documented in the README.
