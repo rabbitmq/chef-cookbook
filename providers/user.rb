@@ -76,7 +76,8 @@ action :add do
     if new_resource.password.nil? || new_resource.password.empty?
       Chef::Application.fatal!("rabbitmq_user with action :add requires a non-nil/empty password.")
     end
-    cmdStr = "rabbitmqctl add_user #{new_resource.user} #{new_resource.password}"
+    new_password = new_resource.password.gsub("'", "'\\\\''")
+    cmdStr = "rabbitmqctl add_user #{new_resource.user} '#{new_password}'"
     execute cmdStr do
       Chef::Log.debug "rabbitmq_user_add: #{cmdStr}"
       Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
