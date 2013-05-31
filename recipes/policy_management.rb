@@ -25,6 +25,7 @@ node['rabbitmq']['policies'].each do |name, policy|
     pattern policy['pattern']
     params policy['params']
     priority policy['priority']
+    vhost policy['vhost']
     action :set
     notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
