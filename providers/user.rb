@@ -76,7 +76,13 @@ action :add do
     if new_resource.password.nil? || new_resource.password.empty?
       Chef::Application.fatal!("rabbitmq_user with action :add requires a non-nil/empty password.")
     end
-    cmdStr = "rabbitmqctl add_user #{new_resource.user} #{new_resource.password}"
+    # To escape single quotes in a shell, you have to close the surrounding single quotes, add
+    # in an escaped single quote, and then re-open the original single quotes.
+    # Since this string is interpolated once by ruby, and then a second time by the shell, we need
+    # to escape the escape character ('\') twice.  This is why the following is such a mess
+    # of leaning toothpicks:
+    new_password = new_resource.password.gsub("'", "'\\\\''")
+    cmdStr = "rabbitmqctl add_user #{new_resource.user} '#{new_password}'"
     execute cmdStr do
       Chef::Log.debug "rabbitmq_user_add: #{cmdStr}"
       Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
