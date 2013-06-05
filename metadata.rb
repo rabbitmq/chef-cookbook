@@ -3,13 +3,14 @@ maintainer        "Opscode, Inc."
 maintainer_email  "cookbooks@opscode.com"
 license           "Apache 2.0"
 description       "Installs and configures RabbitMQ server"
-version           "2.1.1"
+version           "2.1.2"
 recipe            "rabbitmq", "Install and configure RabbitMQ"
 recipe            "rabbitmq::cluster", "Set up RabbitMQ clustering."
 recipe            "rabbitmq::plugin_management", "Manage plugins with node attributes"
 recipe            "rabbitmq::virtualhost_management", "Manage virtualhost with node attributes"
 recipe            "rabbitmq::user_management", "Manage users with node attributes"
 depends           "erlang", ">= 0.9"
+depends           "hostsfile"
 
 %w{ubuntu debian linuxmint redhat centos scientific amazon fedora oracle smartos}.each do |os|
   supports os

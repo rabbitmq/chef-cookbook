@@ -4,8 +4,12 @@
 
 [
   {rabbit, [
-<% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] -%>
+<% if node['rabbitmq']['cluster'] and node['rabbitmq']['cluster_disk_nodes']-%>
+    <% if node['rabbitmq']['search'] -%>
+    {cluster_nodes, [<%= @nodes.map { |n| "\'rabbit@#{n}\'"}.join(', ')%>]},
+    <% else %>
     {cluster_nodes, [<%= node['rabbitmq']['cluster_disk_nodes'].map{|n| "\'#{n}\'"}.join(',') %>]},
+    <% end %>
 <% end %>
 <% if node['rabbitmq']['ssl'] -%>
     {ssl_listeners, [<%= node['rabbitmq']['ssl_port'] %>]},
