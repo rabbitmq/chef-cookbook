@@ -21,6 +21,8 @@ Installs `rabbitmq-server` from RabbitMQ.com via direct download of the installa
 
 The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['cluster']` attribute to `true`, `['rabbitmq']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
+It also possible to use Chef search to automatically search for RabbitMQ nodes to add. Set the `['rabbitmq']['cluster']` and `['rabbitmq']['search']` to `true` and it will perform a search for nodes in the same environment with `['rabbitmq'][cluster_role]`.
+
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
 
 Resources/Providers

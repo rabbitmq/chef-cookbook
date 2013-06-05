@@ -8,3 +8,5 @@ group :integration do
   cookbook "yum"
   cookbook "rabbitmq_test", :path => "./test/cookbooks/rabbitmq_test"
 end
+
+cookbook 'hostsfile'
