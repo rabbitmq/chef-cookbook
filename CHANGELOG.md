@@ -1,3 +1,15 @@
+## v2.1.2:
+
+### Improvement
+
+- [COOK-3099]: policy resource should support optional vhost argument
+
+### Bug
+
+- [COOK-3078]: rabbitmq password is not quoted or escaped on add_user
+- [COOK-3079]: rabbitmq permissions check doesn't match, resulting in
+  non-idempotency
+
 ## v2.1.0:
 
 ### Bug
