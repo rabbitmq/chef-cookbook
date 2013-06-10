@@ -1,0 +1,77 @@
+---
+driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: true
+
+platforms:
+- name: ubuntu-12.04
+  driver_config:
+    box: opscode-ubuntu-12.04
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
+  run_list:
+  - recipe[apt]
+
+- name: ubuntu-10.04
+  driver_config:
+    box: opscode-ubuntu-10.04
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_provisionerless.box
+  run_list:
+  - recipe[apt]
+
+- name: centos-6.4
+  driver_config:
+    box: opscode-centos-6.4
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
+  run_list:
+  - recipe[yum::epel]
+
+- name: centos-5.9
+  driver_config:
+    box: opscode-centos-5.9
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
+  run_list:
+  - recipe[yum::epel]
+
+suites:
+- name: default
+  run_list:
+  - recipe[rabbitmq]
+  attributes: {}
+
+- name: mgmt_console
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rabbitmq]
+  - recipe[rabbitmq_test::mgmt_console
+  attributes: {}
+
+- name: cook-2151
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rabbitmq]
+  - recipe[rabbitmq_test]
+  - recipe[rabbitmq_test::cook-2151]
+  attributes:
+    rabbitmq:
+      disk_free_limit_relative: 1.0
+      vm_memory_high_watermark: 0.5
+
+- name: policy-management
+  run_list:
+  - recipe[rabbitmq::policy_management]
+  attributes: {}
+
+- name: plugin-management
+  run_list:
+  - recipe[rabbitmq::plugin_management]
+  attributes:
+    rabbitmq:
+      enabled_plugins: ["rabbitmq_stomp", "rabbitmq_shovel"]
+
+- name: user-vhost-management
+  run_list:
+  - recipe[rabbitmq::user_management]
+  attributes:
+    rabbitmq:
+      enabled_users: [{name: "kitchen", password: "tester", rights: [{vhost: "kitchen", conf: ".*", write: ".*", read: ".*"}]}]
+      virtualhosts: ["kitchen"]
