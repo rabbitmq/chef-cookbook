@@ -3,6 +3,9 @@
 %%%
 
 [
+<% if node['rabbitmq']['local_erl_networking'] %>
+  {kernel, [{inet_dist_use_interface,{127,0,0,1}}]},
+<% end %>
   {rabbit, [
 <% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] -%>
     {cluster_nodes, [<%= node['rabbitmq']['cluster_disk_nodes'].map{|n| "\'#{n}\'"}.join(',') %>]},
