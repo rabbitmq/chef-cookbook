@@ -24,7 +24,7 @@ default['rabbitmq']['default_user'] = 'guest'
 default['rabbitmq']['default_pass'] = 'guest'
 
 # bind erlang networking to localhost
-default['rabbitmq']['local_erl_netowrking'] = false
+default['rabbitmq']['local_erl_networking'] = false
 
 #clustering
 default['rabbitmq']['cluster'] = false
