@@ -29,10 +29,16 @@ default['rabbitmq']['local_erl_networking'] = false
 # bind rabbit and erlang networking to an address
 default['rabbitmq']['erl_networking_bind_address'] = nil
 
+# general shell execution retry defaults
+default['rabbitmq']['execute_retries'] = 0
+default['rabbitmq']['execute_retry_delay'] = 2
+
 #clustering
 default['rabbitmq']['cluster'] = false
 default['rabbitmq']['cluster_disk_nodes'] = []
-default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
+default['rabbitmq']['cluster_restart_retries'] = 6
+default['rabbitmq']['cluster_restart_retry_delay'] = 10
+default['rabbitmq']['erlang_cookie'] = 'NOTSET'
 
 # resource usage
 default['rabbitmq']['disk_free_limit_relative'] = nil
@@ -65,10 +71,12 @@ default['rabbitmq']['virtualhosts'] = []
 default['rabbitmq']['disabled_virtualhosts'] = []
 
 #users
-default['rabbitmq']['enabled_users'] =
-  [{ :name => "guest", :password => "guest", :rights =>
-    [{:vhost => nil , :conf => ".*", :write => ".*", :read => ".*"}]
-  }]
+# e.g.
+#  default['rabbitmq']['enabled_users'] =
+#    [{ :name => "guest", :password => "guest", :rights =>
+#      [{:vhost => nil , :conf => ".*", :write => ".*", :read => ".*"}]
+#    }]
+default['rabbitmq']['enabled_users'] = []
 default['rabbitmq']['disabled_users'] =[]
 
 #plugins
@@ -85,7 +93,10 @@ when 'smartos'
   default['rabbitmq']['service_name'] = 'rabbitmq'
   default['rabbitmq']['config_root'] = '/opt/local/etc/rabbitmq'
   default['rabbitmq']['config'] = '/opt/local/etc/rabbitmq/rabbitmq'
+  default['rabbitmq']['mnesiadir'] = '/var/db/rabbitmq/mnesia'
   default['rabbitmq']['erlang_cookie_path'] = '/var/db/rabbitmq/.erlang.cookie'
+  default['rabbitmq']['execute_retries'] = 6
+  default['rabbitmq']['execute_retry_delay'] = 10
 end
 
 # Example HA policies
