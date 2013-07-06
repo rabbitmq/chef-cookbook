@@ -23,6 +23,9 @@ default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
 default['rabbitmq']['default_user'] = 'guest'
 default['rabbitmq']['default_pass'] = 'guest'
 
+# bind erlang networking to localhost
+default['rabbitmq']['local_erl_networking'] = false
+
 #clustering
 default['rabbitmq']['cluster'] = false
 default['rabbitmq']['cluster_disk_nodes'] = []

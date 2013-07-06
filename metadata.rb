@@ -94,3 +94,8 @@ attribute "rabbitmq/disabled_plugins",
   :description => "List all plugins that will be deactivated",
   :default => [],
   :type => "array"
+
+attribute "rabbitmq/local_erl_networking",
+  :display_name => "Local Erlang networking",
+  :description => "Bind erlang networking to localhost"
+
