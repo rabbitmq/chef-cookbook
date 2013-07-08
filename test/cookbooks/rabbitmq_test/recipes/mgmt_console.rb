@@ -17,4 +17,8 @@
 # limitations under the License.
 #
 
+chef_gem "bunny" do
+  version "0.7.9"
+end
+
 include_recipe "rabbitmq::mgmt_console"
