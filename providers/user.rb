@@ -83,8 +83,8 @@ action :add do
     # of leaning toothpicks:
     new_password = new_resource.password.gsub("'", "'\\\\''")
     cmdStr = "rabbitmqctl add_user #{new_resource.user} '#{new_password}'"
-    execute cmdStr do
-      Chef::Log.debug "rabbitmq_user_add: #{cmdStr}"
+    execute "rabbitmqctl add_user #{new_resource.user}" do
+      command cmdStr
       Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
       new_resource.updated_by_last_action(true)
     end
