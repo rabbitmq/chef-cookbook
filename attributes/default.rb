@@ -26,6 +26,9 @@ default['rabbitmq']['default_pass'] = 'guest'
 # bind erlang networking to localhost
 default['rabbitmq']['local_erl_networking'] = false
 
+# bind rabbit and erlang networking to an address
+default['rabbitmq']['erl_networking_bind_address'] = nil
+
 #clustering
 default['rabbitmq']['cluster'] = false
 default['rabbitmq']['cluster_disk_nodes'] = []
