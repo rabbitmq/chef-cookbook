@@ -43,7 +43,7 @@ def user_has_tag?(name, tag)
   begin
     cmd.error!
     true
-  rescue Exception => e
+  rescue Exception
     false
   end
 end
@@ -76,6 +76,18 @@ action :add do
     if new_resource.password.nil? || new_resource.password.empty?
       Chef::Application.fatal!("rabbitmq_user with action :add requires a non-nil/empty password.")
     end
+
+    if ::File.exists?(node['rabbitmq']['erlang_cookie_path'])
+      file '/root/.erlang.cookie' do
+        content ::File.read(node['rabbitmq']['erlang_cookie_path'])
+        user 'root'
+        group  'root'
+        mode 0600
+
+        only_if { platform?('smartos') }
+      end
+    end
+
     # To escape single quotes in a shell, you have to close the surrounding single quotes, add
     # in an escaped single quote, and then re-open the original single quotes.
     # Since this string is interpolated once by ruby, and then a second time by the shell, we need

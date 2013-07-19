@@ -36,3 +36,10 @@ disabled_plugins.each do |plugin|
     notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
+
+file "#{node['rabbitmq']['config_root']}/enabled_plugins" do
+  mode 0644
+  owner 'rabbitmq'
+  group 'rabbitmq'
+  action :touch
+end
