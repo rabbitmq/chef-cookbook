@@ -77,7 +77,7 @@ action :add do
       Chef::Application.fatal!("rabbitmq_user with action :add requires a non-nil/empty password.")
     end
 
-    execute 'write root erlang cookie' do
+    execute "ensure root erlang cookie exists for #{new_resource.user}" do
       command 'true'
       notifies :create, 'template[/root/.erlang.cookie]', :immediately
     end
