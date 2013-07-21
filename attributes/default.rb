@@ -51,10 +51,12 @@ default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
 default['rabbitmq']['virtualhosts'] = []
 
 #users
-default['rabbitmq']['enabled_users'] =
-  [{ :name => "guest", :password => "guest", :rights =>
-    [{:vhost => nil , :conf => ".*", :write => ".*", :read => ".*"}]
-  }]
+# e.g.
+#  default['rabbitmq']['enabled_users'] =
+#    [{ :name => "guest", :password => "guest", :rights =>
+#      [{:vhost => nil , :conf => ".*", :write => ".*", :read => ".*"}]
+#    }]
+default['rabbitmq']['enabled_users'] = []
 default['rabbitmq']['disabled_users'] =[]
 
 #plugins
@@ -78,11 +80,10 @@ when 'smartos'
 end
 
 # Example HA policies
-default['rabbitmq']['policies']['ha-all']['pattern'] = "^(?!amq\\.).*"
-default['rabbitmq']['policies']['ha-all']['params'] = { "ha-mode" => "all" }
-default['rabbitmq']['policies']['ha-all']['priority'] = 0
-
-default['rabbitmq']['policies']['ha-two']['pattern'] = "^two\."
-default['rabbitmq']['policies']['ha-two']['params'] = { "ha-mode" => "exactly", "ha-params" => 2 }
-default['rabbitmq']['policies']['ha-two']['priority'] = 1
-
+# default['rabbitmq']['policies']['ha-all']['pattern'] = "^(?!amq\\.).*"
+# default['rabbitmq']['policies']['ha-all']['params'] = { "ha-mode" => "all" }
+# default['rabbitmq']['policies']['ha-all']['priority'] = 0
+#
+# default['rabbitmq']['policies']['ha-two']['pattern'] = "^two\."
+# default['rabbitmq']['policies']['ha-two']['params'] = { "ha-mode" => "exactly", "ha-params" => 2 }
+# default['rabbitmq']['policies']['ha-two']['priority'] = 1
