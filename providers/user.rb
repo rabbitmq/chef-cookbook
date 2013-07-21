@@ -77,15 +77,9 @@ action :add do
       Chef::Application.fatal!("rabbitmq_user with action :add requires a non-nil/empty password.")
     end
 
-    template '/root/.erlang.cookie' do
-      source 'doterlang.cookie.erb'
-      user 'root'
-      group  'root'
-      mode 00400
-      only_if do
-        node['rabbitmq']['erlang_cookie'] != 'NOTSET' &&
-          platform?('smartos')
-      end
+    execute 'write root erlang cookie' do
+      command 'true'
+      notifies :create, 'template[/root/.erlang.cookie]', :immediately
     end
 
     # To escape single quotes in a shell, you have to close the surrounding single quotes, add
