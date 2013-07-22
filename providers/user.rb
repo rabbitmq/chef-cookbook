@@ -43,7 +43,7 @@ def user_has_tag?(name, tag)
   begin
     cmd.error!
     true
-  rescue Exception => e
+  rescue Exception
     false
   end
 end
@@ -76,6 +76,12 @@ action :add do
     if new_resource.password.nil? || new_resource.password.empty?
       Chef::Application.fatal!("rabbitmq_user with action :add requires a non-nil/empty password.")
     end
+
+    execute "ensure root erlang cookie exists for #{new_resource.user}" do
+      command 'true'
+      notifies :create, 'template[/root/.erlang.cookie]', :immediately
+    end
+
     # To escape single quotes in a shell, you have to close the surrounding single quotes, add
     # in an escaped single quote, and then re-open the original single quotes.
     # Since this string is interpolated once by ruby, and then a second time by the shell, we need
@@ -84,6 +90,8 @@ action :add do
     new_password = new_resource.password.gsub("'", "'\\\\''")
     cmdStr = "rabbitmqctl add_user #{new_resource.user} '#{new_password}'"
     execute cmdStr do
+      retries node['rabbitmq']['execute_retries']
+      retry_delay node['rabbitmq']['execute_retry_delay']
       Chef::Log.debug "rabbitmq_user_add: #{cmdStr}"
       Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
       new_resource.updated_by_last_action(true)
@@ -95,6 +103,8 @@ action :delete do
   if user_exists?(new_resource.user)
     cmdStr = "rabbitmqctl delete_user #{new_resource.user}"
     execute cmdStr do
+      retries node['rabbitmq']['execute_retries']
+      retry_delay node['rabbitmq']['execute_retry_delay']
       Chef::Log.debug "rabbitmq_user_delete: #{cmdStr}"
       Chef::Log.info "Deleting RabbitMQ user '#{new_resource.user}'."
       new_resource.updated_by_last_action(true)
@@ -111,6 +121,8 @@ action :set_permissions do
     vhostOpt = "-p #{new_resource.vhost}" unless new_resource.vhost.nil?
     cmdStr = "rabbitmqctl set_permissions #{vhostOpt} #{new_resource.user} \"#{perm_list.join("\" \"")}\""
     execute cmdStr do
+      retries node['rabbitmq']['execute_retries']
+      retry_delay node['rabbitmq']['execute_retry_delay']
       Chef::Log.debug "rabbitmq_user_set_permissions: #{cmdStr}"
       Chef::Log.info "Setting RabbitMQ user permissions for '#{new_resource.user}' on vhost #{new_resource.vhost}."
       new_resource.updated_by_last_action(true)
@@ -126,6 +138,8 @@ action :clear_permissions do
     vhostOpt = "-p #{new_resource.vhost}" unless new_resource.vhost.nil?
     cmdStr = "rabbitmqctl clear_permissions #{vhostOpt} #{new_resource.user}"
     execute cmdStr do
+      retries node['rabbitmq']['execute_retries']
+      retry_delay node['rabbitmq']['execute_retry_delay']
       Chef::Log.debug "rabbitmq_user_clear_permissions: #{cmdStr}"
       Chef::Log.info "Clearing RabbitMQ user permissions for '#{new_resource.user}' from vhost #{new_resource.vhost}."
       new_resource.updated_by_last_action(true)
@@ -140,6 +154,8 @@ action :set_tags do
   unless user_has_tag?(new_resource.user, new_resource.tag)
     cmdStr = "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.tag}"
     execute cmdStr do
+      retries node['rabbitmq']['execute_retries']
+      retry_delay node['rabbitmq']['execute_retry_delay']
       Chef::Log.debug "rabbitmq_user_set_tags: #{cmdStr}"
       Chef::Log.info "Setting RabbitMQ user '#{new_resource.user}' tags '#{new_resource.tag}'"
       new_resource.updated_by_last_action(true)
@@ -154,6 +170,8 @@ action :clear_tags do
   unless user_has_tag?(new_resource.user, '"\[\]"')
     cmdStr = "rabbitmqctl set_user_tags #{new_resource.user}"
     execute cmdStr do
+      retries node['rabbitmq']['execute_retries']
+      retry_delay node['rabbitmq']['execute_retry_delay']
       Chef::Log.debug "rabbitmq_user_clear_tags: #{cmdStr}"
       Chef::Log.info "Clearing RabbitMQ user '#{new_resource.user}' tags."
       new_resource.updated_by_last_action(true)

@@ -79,19 +79,20 @@ directory node['rabbitmq']['mnesiadir'] do
   recursive true
 end
 
-## You'll see setsid used in all the init statements in this cookbook. This
-## is because there is a problem with the stock init script in the RabbitMQ
-## debian package (at least in 2.8.2) that makes it not daemonize properly
-## when called from chef. The setsid command forces the subprocess into a state
-## where it can daemonize properly. -Kevin (thanks to Daniel DeLeo for the help)
-service node['rabbitmq']['service_name'] do
-  start_command 'setsid /etc/init.d/rabbitmq-server start'
-  stop_command 'setsid /etc/init.d/rabbitmq-server stop'
-  restart_command 'setsid /etc/init.d/rabbitmq-server restart'
-  status_command 'setsid /etc/init.d/rabbitmq-server status'
-  supports :status => true, :restart => true
-  action [ :enable, :start ]
-  not_if { platform?('smartos') }
+unless platform_family?('smartos')
+  ## You'll see setsid used in all the init statements in this cookbook. This
+  ## is because there is a problem with the stock init script in the RabbitMQ
+  ## debian package (at least in 2.8.2) that makes it not daemonize properly
+  ## when called from chef. The setsid command forces the subprocess into a state
+  ## where it can daemonize properly. -Kevin (thanks to Daniel DeLeo for the help)
+  service node['rabbitmq']['service_name'] do
+    start_command 'setsid /etc/init.d/rabbitmq-server start'
+    stop_command 'setsid /etc/init.d/rabbitmq-server stop'
+    restart_command 'setsid /etc/init.d/rabbitmq-server restart'
+    status_command 'setsid /etc/init.d/rabbitmq-server status'
+    supports :status => true, :restart => true
+    action [:enable, :start]
+  end
 end
 
 template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
@@ -110,10 +111,21 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
-if File.exists?(node['rabbitmq']['erlang_cookie_path'])
-  existing_erlang_key =  File.read(node['rabbitmq']['erlang_cookie_path'])
+if ::File.exists?(node['rabbitmq']['erlang_cookie_path'])
+  existing_erlang_key = File.read(node['rabbitmq']['erlang_cookie_path'])
 else
   existing_erlang_key = ''
+end
+
+template '/root/.erlang.cookie' do
+  source 'doterlang.cookie.erb'
+  user 'root'
+  group  'root'
+  mode 00400
+  only_if do
+    node['rabbitmq']['erlang_cookie'] != 'NOTSET' &&
+      platform?('smartos')
+  end
 end
 
 if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
@@ -123,6 +135,14 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     action :stop
   end
 
+  # Need to reset for clustering #
+  execute "reset-node" do
+    retries node['rabbitmq']['cluster_restart_retries']
+    retry_delay node['rabbitmq']['cluster_restart_retry_delay']
+    command "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
+    action :nothing
+  end
+
   template node['rabbitmq']['erlang_cookie_path'] do
     source 'doterlang.cookie.erb'
     owner 'rabbitmq'
@@ -130,12 +150,6 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     mode 00400
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
     notifies :run, "execute[reset-node]", :immediately
-  end
-
-  # Need to reset for clustering #
-  execute "reset-node" do
-    command "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
-    action :nothing
   end
 end
 
