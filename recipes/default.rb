@@ -117,10 +117,16 @@ else
 end
 
 if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
-  service "stop #{node['rabbitmq']['service_name']}" do
-    service_name node['rabbitmq']['service_name']
-    pattern node['rabbitmq']['service_name']
-    action :stop
+  execute "stop #{node['rabbitmq']['service_name']}" do
+    command "/etc/init.d/rabbitmq-server stop"
+    action :run
+  end
+
+  execute "purge rabbitmq mnesia directory" do
+    command "rm -rf /var/lib/rabbitmq/mnesia/*"
+    user "rabbitmq"
+    group "rabbitmq"
+    action :run
   end
 
   template node['rabbitmq']['erlang_cookie_path'] do
@@ -129,13 +135,12 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     group 'rabbitmq'
     mode 00400
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
-    notifies :run, "execute[reset-node]", :immediately
   end
 
   # Need to reset for clustering #
   execute "reset-node" do
     command "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
-    action :nothing
+    action :run
   end
 end
 
