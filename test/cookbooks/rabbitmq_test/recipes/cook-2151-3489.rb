@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rabbitmq_test
-# Recipe:: cook-2151
+# Recipe:: cook-2151-3489
 #
 # This recipe exists to ensure that minitest tests are run.
 

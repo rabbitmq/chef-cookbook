@@ -9,6 +9,7 @@
 - [COOK-2397]: Added upstart support to rabbitmq cookbook
 - [COOK-2830]: Use a notify for server restart, instead of defining a new service
 - [COOK-3384]: Added ability to change user password
+- [COOK-3489]: Add attribute to set open file limit
 
 ### Bug
 

@@ -28,4 +28,10 @@ describe "rabbitmq_test::cook-2151" do
     file("#{node['rabbitmq']['config_root']}/rabbitmq.config").
       must_match /\{vm_memory_high_watermark, #{node['rabbitmq']['vm_memory_high_watermark']}/
   end
+
+  it 'includes the open_file_limit configuration setting' do
+    file("#{node['rabbitmq']['config_root']}/rabbitmq-env.conf").
+      must_match /\{open_file_limit, #{node['rabbitmq']['open_file_limit']}/
+  end
+
 end
