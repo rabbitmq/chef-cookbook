@@ -1,5 +1,5 @@
 # Latest RabbitMQ.com version to install
-default['rabbitmq']['version'] = '3.0.4'
+default['rabbitmq']['version'] = '3.1.3'
 # The distro versions may be more stable and have back-ported patches
 default['rabbitmq']['use_distro_version'] = false
 
@@ -62,7 +62,7 @@ default['rabbitmq']['disabled_plugins'] = []
 case node['platform_family']
 when 'debian'
   default['rabbitmq']['package'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
-when 'rhel'
+when 'rhel', 'fedora'
   default['rabbitmq']['package'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
 
 when 'smartos'

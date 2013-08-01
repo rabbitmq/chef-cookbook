@@ -58,6 +58,10 @@ when 'rhel', 'fedora'
 
   end
 
+  service node['rabbitmq']['service_name'] do
+    action [:enable, :start]
+  end
+
 when 'smartos'
 
   package 'rabbitmq'
@@ -91,7 +95,7 @@ service node['rabbitmq']['service_name'] do
   status_command 'setsid /etc/init.d/rabbitmq-server status'
   supports :status => true, :restart => true
   action [ :enable, :start ]
-  not_if { platform?('smartos') }
+  not_if { platform?('smartos') || platform?('fedora') || platform?('redhat') }
 end
 
 template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
