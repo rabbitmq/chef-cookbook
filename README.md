@@ -23,6 +23,8 @@ The cluster recipe is now combined with the default and will now auto-cluster. S
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
 
+To only allow SSL connections from clients, set `ssl_only` to `true`.
+
 Resources/Providers
 ===================
 There are 3 LWRPs for interacting with RabbitMQ.
