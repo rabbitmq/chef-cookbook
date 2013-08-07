@@ -33,6 +33,7 @@ default['rabbitmq']['cluster_disk_nodes'] = []
 default['rabbitmq']['cluster_restart_retries'] = 6
 default['rabbitmq']['cluster_restart_retry_delay'] = 10
 default['rabbitmq']['erlang_cookie'] = 'NOTSET'
+default['rabbitmq']['cluster_partition_handling'] = 'ignore'
 
 # resource usage
 default['rabbitmq']['disk_free_limit_relative'] = nil

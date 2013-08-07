@@ -8,3 +8,4 @@
 <% if node['rabbitmq']['config'] -%>CONFIG_FILE=<%= node['rabbitmq']['config'] %><% end %>
 <% if node['rabbitmq']['logdir'] -%>LOG_BASE=<%= node['rabbitmq']['logdir'] %><% end %>
 <% if node['rabbitmq']['mnesiadir'] -%>MNESIA_BASE=<%= node['rabbitmq']['mnesiadir'] %><% end %>
+<% if node['rabbitmq']['cluster_partition_handling'] -%>cluster_partition_handling=<%= node['rabbitmq']['cluster_partition_handling'] %><% end %>
