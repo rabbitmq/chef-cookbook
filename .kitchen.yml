@@ -42,7 +42,8 @@ suites:
   run_list:
   - recipe[minitest-handler]
   - recipe[rabbitmq]
-  - recipe[rabbitmq_test::mgmt_console
+  - recipe[rabbitmq_test]
+  - recipe[rabbitmq_test::mgmt_console]
   attributes: {}
 
 - name: cook-2151

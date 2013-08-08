@@ -19,14 +19,6 @@ require File.expand_path('../support/helpers', __FILE__)
 describe "rabbitmq::default" do
   include Helpers::RabbitMQ
 
-  it 'uses the rabbitmq apt source on debian family' do
-    unless node['platform_family'] == 'debian'
-      skip "Only applicable on Debian family"
-    end
-
-    file("/etc/apt/sources.list.d/rabbitmq-source.list").must_exist
-  end
-
   it 'installs the package from downloaded rpm on rhel/fedora family' do
     unless node['platform_family'] == 'rhel' || node['platform_family'] == 'fedora'
       skip "Only applicable on RHEL/Fedora family"
