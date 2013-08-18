@@ -79,6 +79,15 @@ directory node['rabbitmq']['mnesiadir'] do
   recursive true
 end
 
+if node['rabbitmq']['logdir'] then
+  directory node['rabbitmq']['logdir'] do
+    owner 'rabbitmq'
+    group 'rabbitmq'
+    mode '775'
+    recursive true
+  end
+end
+
 ## You'll see setsid used in all the init statements in this cookbook. This
 ## is because there is a problem with the stock init script in the RabbitMQ
 ## debian package (at least in 2.8.2) that makes it not daemonize properly
