@@ -4,11 +4,12 @@
 
 - Greatly expanded Test Kitchen coverage and platform support.
 - added more asserts to the helper for vhosts, users, etc.
-- [COOK-3438]: RabbitMQ fixes for Fedora 19
+- [COOK-2830]: Use a notify for server restart, instead of defining a new service
 
 ### Bug
 
 - [COOK-3011]: Incorrect apt source test causes Chef run to fail on Ubuntu
+- [COOK-3438]: RabbitMQ fixes for Fedora 19
 
 ## v2.1.2:
 
