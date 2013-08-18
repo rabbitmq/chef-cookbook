@@ -89,8 +89,8 @@ service node['rabbitmq']['service_name'] do
   stop_command 'setsid /etc/init.d/rabbitmq-server stop'
   restart_command 'setsid /etc/init.d/rabbitmq-server restart'
   status_command 'setsid /etc/init.d/rabbitmq-server status'
-  supports :status => true, :restart => true
-  action [ :enable, :start ]
+  supports :status => true, :restart => true, :start => true, :stop => true
+  action [ :enable ]
   not_if { platform?('smartos') }
 end
 
@@ -99,7 +99,6 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   owner 'root'
   group 'root'
   mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
 template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
@@ -107,7 +106,6 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   owner 'root'
   group 'root'
   mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
 if File.exists?(node['rabbitmq']['erlang_cookie_path'])
@@ -115,6 +113,11 @@ if File.exists?(node['rabbitmq']['erlang_cookie_path'])
 else
   existing_erlang_key = ''
 end
+
+#Start RMQ
+  service node['rabbitmq']['service_name'] do
+    action :start
+  end
 
 if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
   service "stop #{node['rabbitmq']['service_name']}" do
