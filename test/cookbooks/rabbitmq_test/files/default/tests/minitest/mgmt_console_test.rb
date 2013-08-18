@@ -1,5 +1,5 @@
 #
-# Copyright 2012, Opscode, Inc.
+# Copyright 2012-2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 require File.expand_path('../support/helpers', __FILE__)
 
-describe "rabbitmq::mgmt_console" do
+describe "rabbitmq_test::mgmt_console" do
   include Helpers::RabbitMQ
 
   it 'enables the rabbitmq_management plugin' do

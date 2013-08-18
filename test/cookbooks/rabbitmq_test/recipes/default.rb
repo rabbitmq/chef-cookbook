@@ -2,7 +2,7 @@
 # Cookbook Name:: rabbitmq_test
 # Recipe:: default
 #
-# Copyright 2012, Opscode, Inc. <legal@opscode.com>
+# Copyright 2012-2013, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-chef_gem "bunny" do
-  version "0.7.9"
-end
+chef_gem "bunny"
 
 include_recipe "rabbitmq::default"
