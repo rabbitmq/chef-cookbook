@@ -1,3 +1,15 @@
+## v2.2.0:
+
+### Improvement
+
+- Greatly expanded Test Kitchen coverage and platform support.
+- added more asserts to the helper for vhosts, users, etc.
+- [COOK-3438]: RabbitMQ fixes for Fedora 19
+
+### Bug
+
+- [COOK-3011]: Incorrect apt source test causes Chef run to fail on Ubuntu
+
 ## v2.1.2:
 
 ### Improvement

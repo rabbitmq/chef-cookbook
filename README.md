@@ -6,12 +6,14 @@ Version 2.0 Changes
 ===================
 The 2.0 release of the cookbook defaults to using the latest version available from RabbitMQ.com via direct download of the package. This was done to simplify the installation options to either distro package or direct download. The attributes `use_apt` and `use_yum` have been removed as have the `apt` and `yum` cookbook dependencies. The user LWRP action `:set_user_tags` was changed to `:set_tags` for consistency with other actions.
 
-This release was tested with:
-* CentOS 5.8: 3.0.4 (distro release unsupported)
-* CentOS 6.3: 3.0.4/2.6.1 (no plugin support)
-* Debian 6: 3.04 (distro release unsupported)
-* Ubuntu 10.04: 3.0.4 (distro release unsupported)
-* Ubuntu 12.04: 3.0.4/2.7.1
+Th release was tested with (rabbitmq.com/distro version):
+* CentOS 5.9: 3.1.5 (distro release unsupported)
+* CentOS 6.4: 3.1.5/2.6.1 (no plugin support)
+* Debian 6: 3.1.5 (distro release unsupported)
+* Fedora 18: 3.1.5/3.1.3
+* Ubuntu 10.04: 3.1.5 (distro release unsupported)
+* Ubuntu 12.04: 3.1.5/2.7.1
+* Ubuntu 13.04: 3.1.5/3.0.2
 
 Recipes
 =======
