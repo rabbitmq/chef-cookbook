@@ -1,5 +1,5 @@
 #
-# Copyright 2012, Opscode, Inc.
+# Copyright 2012-2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,7 +24,17 @@ module Helpers
 
     def plugin_enabled?(plugin_name)
       plugin_list = shell_out("rabbitmq-plugins list -e '#{plugin_name}'")
-      plugin_list.stdout.include?(/\[[Ee]\] #{plugin_name}/)
+      plugin_list.stdout =~ /(\[[Ee]\]\s#{plugin_name})/
     end
+
+    def policy_enabled?(plugin_name)
+    end
+
+    def user_enabled?(plugin_name)
+    end
+
+    def vhost_enabled?(plugin_name)
+    end
+
   end
 end
