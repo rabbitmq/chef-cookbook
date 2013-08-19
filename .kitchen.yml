@@ -121,6 +121,7 @@ suites:
 - name: distro-version
   excludes:
   - centos-5.9
+  - fedora-18
   - ubuntu-10.04
   run_list:
   - recipe[minitest-handler]
