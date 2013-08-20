@@ -1,5 +1,5 @@
 #
-# Copyright 2012, Opscode, Inc. <legal@opscode.com>
+# Copyright 2012-2013, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
 # limitations under the License.
 #
 
+require File.expand_path('../support/helpers', __FILE__)
+
 describe "rabbitmq_test::cook-2151" do
-  include MiniTest::Chef::Assertions
-  include MiniTest::Chef::Context
-  include MiniTest::Chef::Resources
+  include Helpers::RabbitMQ
 
   it 'includes the disk_free_limit configuration setting' do
     file("#{node['rabbitmq']['config_root']}/rabbitmq.config").

@@ -1,5 +1,8 @@
 #
-# Copyright 2012, Opscode, Inc.
+# Cookbook Name:: rabbitmq_test
+# Recipe:: lwrps
+#
+# Copyright 2013, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,17 +17,17 @@
 # limitations under the License.
 #
 
-require File.expand_path('../support/helpers', __FILE__)
+chef_gem "bunny"
 
-describe "rabbitmq::mgmt_console" do
-  include Helpers::RabbitMQ
+include_recipe "rabbitmq::default"
 
-  it 'enables the rabbitmq_management plugin' do
-    assert(plugin_enabled?("rabbitmq_management"))
-  end
-
-  it 'enables the rabbitmq_management_visualiser plugin' do
-    assert(plugin_enabled?("rabbitmq_management_visualiser"))
-  end
-
+# force the rabbitmq restart now, then start testing
+execute "sleep 10" do
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end
+
+include_recipe "rabbitmq::plugin_management"
+include_recipe "rabbitmq::virtualhost_management"
+include_recipe "rabbitmq::policy_management"
+include_recipe "rabbitmq::user_management"
+

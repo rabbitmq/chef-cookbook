@@ -3,7 +3,7 @@ maintainer        "Opscode, Inc."
 maintainer_email  "cookbooks@opscode.com"
 license           "Apache 2.0"
 description       "Installs and configures RabbitMQ server"
-version           "2.1.3"
+version           "2.2.0"
 recipe            "rabbitmq", "Install and configure RabbitMQ"
 recipe            "rabbitmq::cluster", "Set up RabbitMQ clustering."
 recipe            "rabbitmq::plugin_management", "Manage plugins with node attributes"
@@ -99,3 +99,6 @@ attribute "rabbitmq/local_erl_networking",
   :display_name => "Local Erlang networking",
   :description => "Bind erlang networking to localhost"
 
+attribute "rabbitmq/erl_networking_bind_address",
+  :display_name => "Erl Networking Bind Address",
+  :description => "Bind Rabbit and erlang networking to an address"

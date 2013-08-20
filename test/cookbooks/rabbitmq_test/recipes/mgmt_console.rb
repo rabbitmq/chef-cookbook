@@ -2,7 +2,7 @@
 # Cookbook Name:: rabbitmq_test
 # Recipe:: mgmt_console
 #
-# Copyright 2012, Opscode, Inc. <legal@opscode.com>
+# Copyright 2012-2013, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,13 @@
 # limitations under the License.
 #
 
-chef_gem "bunny" do
-  version "0.7.9"
-end
+chef_gem "bunny"
 
 include_recipe "rabbitmq::mgmt_console"
+
+# hack to give rabbit time to spin up before the tests, it seems
+# to be responding that it has started before it really has
+execute "sleep 10" do
+  action :nothing
+  subscribes :run, "service[#{node['rabbitmq']['service_name']}]", :delayed
+end

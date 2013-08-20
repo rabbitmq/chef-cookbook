@@ -1,3 +1,18 @@
+## v2.2.0:
+
+### Improvement
+
+- Greatly expanded Test Kitchen coverage and platform support
+- added support for disabling policies and virtualhosts through attributes
+- added support for using with the erlang::esl recipe
+- [COOK-2397]: Added upstart support to rabbitmq cookbook
+- [COOK-2830]: Use a notify for server restart, instead of defining a new service
+
+### Bug
+
+- [COOK-3011]: Incorrect apt source test causes Chef run to fail on Ubuntu
+- [COOK-3438]: RabbitMQ fixes for Fedora 19
+
 ## v2.1.2:
 
 ### Improvement

@@ -6,12 +6,17 @@ Version 2.0 Changes
 ===================
 The 2.0 release of the cookbook defaults to using the latest version available from RabbitMQ.com via direct download of the package. This was done to simplify the installation options to either distro package or direct download. The attributes `use_apt` and `use_yum` have been removed as have the `apt` and `yum` cookbook dependencies. The user LWRP action `:set_user_tags` was changed to `:set_tags` for consistency with other actions.
 
-This release was tested with:
-* CentOS 5.8: 3.0.4 (distro release unsupported)
-* CentOS 6.3: 3.0.4/2.6.1 (no plugin support)
-* Debian 6: 3.04 (distro release unsupported)
-* Ubuntu 10.04: 3.0.4 (distro release unsupported)
-* Ubuntu 12.04: 3.0.4/2.7.1
+Requirements
+============
+This cookbook depends on the `erlang` cookbook.
+
+Please refer to the [TESTING file](TESTING.md) to see the currently (and passing) tested platforms. The release was tested with (rabbitmq.com/distro version):
+* CentOS 5.9: 3.1.5 (distro release unsupported)
+* CentOS 6.4: 3.1.5/2.6.1 (no lwrps support)
+* Fedora 18: 3.1.5 (distro release unsupported)
+* Ubuntu 10.04: 3.1.5 (distro release unsupported)
+* Ubuntu 12.04: 3.1.5/2.7.1 (no lwrps support)
+* Ubuntu 13.04: 3.1.5/3.0.2
 
 Recipes
 =======
@@ -23,9 +28,69 @@ The cluster recipe is now combined with the default and will now auto-cluster. S
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
 
+mgmt_console
+------------
+Installs the `rabbitmq_management` and `rabbitmq_management_visualiser` plugins.
+
+plugin_management
+------------
+Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq'][disabled_plugins']` attributes.
+
+policy_management
+------------
+Enables any policies listed in the `node['rabbitmq'][policies]` and disables any listed in `node['rabbitmq'][disabled_policies]` attributes.
+
+user_management
+------------
+Enables any users listed in the `node['rabbitmq']['enabled_users]` and disables any listed in `node['rabbitmq'][disabled_users]` attributes.
+
+virtualhost_management
+------------
+Enables any vhosts listed in the `node['rabbitmq'][virtualhosts]` and disables any listed in `node['rabbitmq'][disabled_virtualhosts]` attributes.
+
 Resources/Providers
 ===================
-There are 3 LWRPs for interacting with RabbitMQ.
+There are 4 LWRPs for interacting with RabbitMQ.
+
+plugin
+-----
+Enables or disables a rabbitmq plugin. Plugins are not supported for releases prior to 2.7.0.
+
+- `:enable` enables a `plugin`
+- `:disable` disables a `plugin`
+
+### Example
+``` ruby
+rabbitmq_plugin "rabbitmq_stomp" do
+  action :enable
+end
+
+rabbitmq_plugin "rabbitmq_shovel" do
+  action :disable
+end
+```
+
+policy
+-----
+sets or clears a rabbitmq policy.
+
+- `:set` sets a `policy`
+- `:clear` clears a `policy`
+- `:list` lists `policy`s
+
+### Example
+``` ruby
+rabbitmq_policy "ha-all" do
+  pattern "^(?!amq\\.).*"
+  params {"ha-mode"=>"all"}
+  priority 1
+  action :set
+end
+
+rabbitmq_policy "ha-all" do
+  action :clear
+end
+```
 
 user
 ----
@@ -75,62 +140,22 @@ rabbitmq_vhost "/nova" do
 end
 ```
 
-plugin
------
-Enables or disables a rabbitmq plugin. Plugins are not supported for releases prior to 2.7.0.
-
-- `:enable` enables a `plugin`
-- `:disable` disables a `plugin`
-
-### Example
-``` ruby
-rabbitmq_plugin "rabbitmq_stomp" do
-  action :enable
-end
-
-rabbitmq_plugin "rabbitmq_shovel" do
-  action :disable
-end
-```
-
-policy
------
-sets or clears a rabbitmq policy.
-
-- `:set` sets a `policy`
-- `:clear` clears a `policy`
-- `:list` lists `policy`s
-
-### Example
-``` ruby
-rabbitmq_policy "ha-all" do
-  pattern "^(?!amq\\.).*"
-  params {"ha-mode"=>"all"}
-  priority 1
-  action :set
-end
-
-rabbitmq_policy "ha-all" do
-  action :clear
-end
-```
-
 Limitations
 ===========
 For an already running cluster, these actions still require manual intervention:
 - changing the :erlang_cookie
 - turning :cluster from true to false
 
-The `rabbitmq::chef` recipe was only used for the chef-server cookbook and has been moved to `chef-server::rabbitmq`.
-
 License and Author
 ==================
 
-Author:: Benjamin Black <b@b3k.us>
-Author:: Daniel DeLeo <dan@kallistec.com>
-Author:: Matt Ray <matt@opscode.com>
-
-Copyright:: 2009-2013 Opscode, Inc
+|                      |                                        |
+|:---------------------|:---------------------------------------|
+| **Author**           | Benjamin Black <b@b3k.us>              |
+| **Author**           | Daniel DeLeo <dan@kallistec.com>       |
+| **Author**           | Matt Ray (<matt@opscode.com>)          |
+|                      |                                        |
+| **Copyright**        | Copyright (c) 2009-2013, Opscode, Inc. |
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
