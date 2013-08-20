@@ -111,6 +111,15 @@ when 'smartos'
   end
 end
 
+if node['rabbitmq']['logdir']
+  directory node['rabbitmq']['logdir'] do
+    owner 'rabbitmq'
+    group 'rabbitmq'
+    mode '775'
+    recursive true
+  end
+end
+
 directory node['rabbitmq']['mnesiadir'] do
   owner 'rabbitmq'
   group 'rabbitmq'
