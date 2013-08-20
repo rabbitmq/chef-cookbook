@@ -102,6 +102,7 @@ Adds and deletes users, fairly simplistic permissions management.
 - `:clear_permissions` clears the permissions for a `user`
 - `:set_tags` set the tags on a user
 - `:clear_tags` clear any tags on a user
+- `:change_password` sets the password for a user
 
 ### Examples
 ``` ruby
@@ -123,6 +124,11 @@ end
 rabbitmq_user "joe" do
   tag "admin,lead"
   action :set_tags
+end
+
+rabbitmq_user "nova" do
+  password "sekret"
+  action :change_password
 end
 ```
 

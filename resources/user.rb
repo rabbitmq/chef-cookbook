@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-actions :add, :delete, :set_permissions, :clear_permissions, :set_tags, :clear_tags
+actions :add, :delete, :set_permissions, :clear_permissions, :set_tags, :clear_tags, :change_password
 
 attribute :user, :kind_of => String, :name_attribute => true
 attribute :password, :kind_of => String

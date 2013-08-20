@@ -25,6 +25,10 @@ include_recipe "rabbitmq::virtualhost_management"
 node['rabbitmq']['enabled_users'].each do |user|
   rabbitmq_user user['name'] do
     password user['password']
+    action :change_password
+  end
+  rabbitmq_user user['name'] do
+    password user['password']
     action :add
   end
   rabbitmq_user user['name'] do
