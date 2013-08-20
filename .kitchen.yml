@@ -81,6 +81,7 @@ suites:
 
 - name: default-esl
   excludes:
+  - centos-5.9
   - omnios-r151002
   - smartos-13.1
   run_list:
