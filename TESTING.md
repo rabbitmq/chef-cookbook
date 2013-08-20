@@ -29,7 +29,7 @@ This cookbook has the following Test-Kitchen coverage:
 | Test Coverage  | Ubuntu 10.04  | Ubuntu 12.04 | Ubuntu 13.04 | Centos 5.9 | Centos 6.4 | Fedora 18 | Debian 7.1 | SmartOS 13.1 | OmniOS r151002 |
 | -------------- |:-------------:|:------------:|:------------:|:----------:|:----------:|:---------:|:----------:|:------------:|:--------------:|
 | default        | **Y**         | **Y**        | **Y**        | **Y**      | **Y**      | **Y**     | **N**      | **N**        | **N**          |
-| default-esl    | **Y**         | **Y**        | **Y**        | **N**      | **Y**      | **Y**     | **N**      | **N**        | **N**          |
+| default-esl    | **Y**         | **Y**        | **Y**        | **N**      | **Y**      | **N**     | **N**      | **N**        | **N**          |
 | upstart        | **Y**         | **Y**        | **Y**        | **N**      | **N**      | **N**     | **N**      | **N**        | **N**          |
 | distro-version | **N**         | **Y**        | **Y**        | **N**      | **Y**      | **N**     | **N**      | **N**        | **N**          |
 | mgmt_console   | **Y**         | **Y**        | **Y**        | **Y**      | **Y**      | **Y**     | **N**      | **N**        | **N**          |
