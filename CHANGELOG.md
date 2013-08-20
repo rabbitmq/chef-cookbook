@@ -4,6 +4,7 @@
 
 - Greatly expanded Test Kitchen coverage and platform support
 - added support for disabling policies and virtualhosts through attributes
+- added support for using with the erlang::esl recipe
 - [COOK-2397]: Added upstart support to rabbitmq cookbook
 - [COOK-2830]: Use a notify for server restart, instead of defining a new service
 
