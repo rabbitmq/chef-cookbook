@@ -79,11 +79,23 @@ suites:
   - recipe[rabbitmq_test::default]
   attributes: {}
 
+- name: default-esl
+  excludes:
+  - omnios-r151002
+  - smartos-13.1
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rabbitmq_test::default]
+  attributes:
+    erlang:
+      install_method: 'esl'
+
 - name: upstart
   excludes:
   - centos-5.9
   - centos-6.4
   - fedora-18
+  - ubuntu-13.04
   - omnios-r151002
   - smartos-13.1
   run_list:
@@ -144,8 +156,10 @@ suites:
 - name: lwrps-distro
   excludes:
   - centos-5.9
+  - centos-6.4
   - fedora-18
   - ubuntu-10.04
+  - ubuntu-12.04
   run_list:
   - recipe[minitest-handler]
   - recipe[rabbitmq_test::lwrps]

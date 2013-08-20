@@ -12,10 +12,10 @@ This cookbook depends on the `erlang` cookbook.
 
 Please refer to the [TESTING file](TESTING.md) to see the currently (and passing) tested platforms. The release was tested with (rabbitmq.com/distro version):
 * CentOS 5.9: 3.1.5 (distro release unsupported)
-* CentOS 6.4: 3.1.5/2.6.1 (no plugin support)
+* CentOS 6.4: 3.1.5/2.6.1 (no lwrps support)
 * Fedora 18: 3.1.5 (distro release unsupported)
 * Ubuntu 10.04: 3.1.5 (distro release unsupported)
-* Ubuntu 12.04: 3.1.5/2.7.1
+* Ubuntu 12.04: 3.1.5/2.7.1 (no lwrps support)
 * Ubuntu 13.04: 3.1.5/3.0.2
 
 Recipes
