@@ -149,11 +149,13 @@ For an already running cluster, these actions still require manual intervention:
 License and Author
 ==================
 
-Author:: Benjamin Black <b@b3k.us>
-Author:: Daniel DeLeo <dan@kallistec.com>
-Author:: Matt Ray <matt@opscode.com>
-
-Copyright:: 2009-2013 Opscode, Inc
+|                      |                                        |
+|:---------------------|:---------------------------------------|
+| **Author**           | Benjamin Black <b@b3k.us>              |
+| **Author**           | Daniel DeLeo <dan@kallistec.com>       |
+| **Author**           | Matt Ray (<matt@opscode.com>)          |
+|                      |                                        |
+| **Copyright**        | Copyright (c) 2009-2013, Opscode, Inc. |
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
