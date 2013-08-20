@@ -50,6 +50,7 @@ default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
 
 #virtualhosts
 default['rabbitmq']['virtualhosts'] = []
+default['rabbitmq']['disabled_virtualhosts'] = []
 
 #users
 default['rabbitmq']['enabled_users'] =
@@ -83,3 +84,5 @@ default['rabbitmq']['policies']['ha-all']['priority'] = 0
 default['rabbitmq']['policies']['ha-two']['pattern'] = "^two\."
 default['rabbitmq']['policies']['ha-two']['params'] = { "ha-mode" => "exactly", "ha-params" => 2 }
 default['rabbitmq']['policies']['ha-two']['priority'] = 1
+
+default['rabbitmq']['disabled_policies'] = []

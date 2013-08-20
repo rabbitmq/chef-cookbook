@@ -2,8 +2,8 @@
 
 ### Improvement
 
-- Greatly expanded Test Kitchen coverage and platform support.
-- added more asserts to the helper for vhosts, users, etc.
+- Greatly expanded Test Kitchen coverage and platform support
+- added support for disabling policies and virtualhosts through attributes
 - [COOK-2397]: Added upstart support to rabbitmq cookbook
 - [COOK-2830]: Use a notify for server restart, instead of defining a new service
 

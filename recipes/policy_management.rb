@@ -4,6 +4,7 @@
 #
 # Author: Robert Choi <taeilchoi1@gmail.com>
 # Copyright 2013 by Robert Choi
+# Copyright 2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,3 +31,11 @@ node['rabbitmq']['policies'].each do |name, policy|
     notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
+
+node['rabbitmq']['disabled_policies'].each do |policy|
+  rabbitmq_policy policy do
+    action :clear
+    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  end
+end
+

@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 #
 # Cookbook Name:: rabbitmq
 # Recipe:: plugin_management
 #
 # Copyright 2013, Grégoire Seux
+# Copyright 2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,18 +21,14 @@
 
 include_recipe "rabbitmq::default"
 
-enabled_plugins = node['rabbitmq']['enabled_plugins']
-
-enabled_plugins.each do |plugin|
+node['rabbitmq']['enabled_plugins'].each do |plugin|
   rabbitmq_plugin plugin do
     action :enable
     notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
 
-disabled_plugins = node['rabbitmq']['disabled_plugins']
-
-disabled_plugins.each do |plugin|
+node['rabbitmq']['disabled_plugins'].each do |plugin|
   rabbitmq_plugin plugin do
     action :disable
     notifies :restart, "service[#{node['rabbitmq']['service_name']}]"

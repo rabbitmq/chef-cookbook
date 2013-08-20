@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 #
 # Cookbook Name:: rabbitmq
 # Recipe:: user_management
 #
 # Copyright 2013, Grégoire Seux
+# Copyright 2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,11 +22,7 @@
 include_recipe "rabbitmq::default"
 include_recipe "rabbitmq::virtualhost_management"
 
-enabled_users = node['rabbitmq']['enabled_users']
-
-Chef::Log.info( enabled_users.each)
-
-enabled_users.each do |user|
+node['rabbitmq']['enabled_users'].each do |user|
   rabbitmq_user user['name'] do
     password user['password']
     action :add
@@ -42,9 +40,7 @@ enabled_users.each do |user|
   end
 end
 
-disabled_users = node['rabbitmq']['disabled_users']
-
-disabled_users.each do |user|
+node['rabbitmq']['disabled_users'].each do |user|
   rabbitmq_user user do
     action :delete
   end
