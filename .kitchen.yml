@@ -6,48 +6,27 @@ driver_config:
 platforms:
 - name: ubuntu-10.04
   driver_config:
-    customize:
-      memory: 1024
     box: opscode-ubuntu-10.04
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_provisionerless.box
   run_list:
-  - recipe[apt::cacher-client]
   - recipe[apt]
 
 - name: ubuntu-12.04
   driver_config:
-    customize:
-      memory: 1024
     box: opscode-ubuntu-12.04
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
   run_list:
-  - recipe[apt::cacher-client]
   - recipe[apt]
 
 - name: ubuntu-13.04
   driver_config:
-    customize:
-      memory: 1024
     box: opscode-ubuntu-13.04
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-13.04_provisionerless.box
   run_list:
-  - recipe[apt::cacher-client]
   - recipe[apt]
-
-# add once the bento image is fixed
-# - name: debian-7.1
-#   driver_config:
-#     customize:
-#       memory: 1024
-#     box: opscode-debian-7.1
-#     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
-#   run_list:
-#   - recipe[apt]
 
 - name: centos-5.9
   driver_config:
-    customize:
-      memory: 1024
     box: opscode-centos-5.9
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
   run_list:
@@ -62,18 +41,21 @@ platforms:
 
 - name: fedora-18
   driver_config:
-    customize:
-      memory: 1024
     box: opscode-fedora-18
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode-fedora-18_provisionerless.box
-  run_list:
-  - recipe[rabbitmq]
+  run_list: {}
+
+# add once the bento image is fixed
+# - name: debian-7.1
+#   driver_config:
+#     box: opscode-debian-7.1
+#     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
+#   run_list:
+#   - recipe[apt]
 
 # image not downloading
 # - name: smartos-13.1
 #   driver_config:
-#     customize:
-#       memory: 1024
 #     box: smartos-base1310
 #     box_url: http://dlc-int.openindiana.org/aszeszo/vagrant/smartos-base1310-64-virtualbox-20130806.box
 #   run_list:
@@ -82,8 +64,6 @@ platforms:
 # http://tickets.opscode.com/browse/COOK-2467
 # - name: omnios-r151002
 #   driver_config:
-#     customize:
-#       memory: 1024
 #     box: omnios-r151002
 #     box_url: http://omnios.omniti.com/media/omnios-latest.box
 #   run_list:
@@ -97,10 +77,7 @@ suites:
   run_list:
   - recipe[minitest-handler]
   - recipe[rabbitmq_test::default]
-  #attributes: {}
-  attributes:
-    apt:
-      cacher_ipaddress: '192.168.1.10'
+  attributes: {}
 
 - name: upstart
   excludes:
@@ -115,8 +92,6 @@ suites:
   attributes:
     rabbitmq:
       job_control: 'upstart'
-    apt:
-      cacher_ipaddress: '192.168.1.10'
 
 - name: distro-version
   excludes:
@@ -129,43 +104,28 @@ suites:
   attributes:
     rabbitmq:
       use_distro_version: true
-    apt:
-      cacher_ipaddress: '192.168.1.10'
 
 - name: mgmt_console
   run_list:
   - recipe[minitest-handler]
-  - recipe[rabbitmq]
   - recipe[rabbitmq_test::mgmt_console]
-  #attributes: {}
-  attributes:
-    apt:
-      cacher_ipaddress: '192.168.1.10'
+  attributes: {}
 
-# - name: cook-2151
-#   run_list:
-#   - recipe[minitest-handler]
-#   - recipe[rabbitmq]
-#   - recipe[rabbitmq_test]
-#   - recipe[rabbitmq_test::cook-2151]
-#   attributes:
-#     rabbitmq:
-#       disk_free_limit_relative: 1.0
-#       vm_memory_high_watermark: 0.5
-#     apt:
-#       cacher_ipaddress: '192.168.1.10'
+- name: cook-2151
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rabbitmq_test::cook-2151]
+  attributes:
+    rabbitmq:
+      disk_free_limit_relative: 1.0
+      vm_memory_high_watermark: 0.5
 
 # this is testing create and deletes with duplicates and nonexistant entries.
 - name: all-management
   run_list:
-  - recipe[rabbitmq::plugin_management]
-  - recipe[rabbitmq::vhost_management]
-  - recipe[rabbitmq::policy_management]
-  - recipe[rabbitmq::user_management]
-  #- recipe[rabbitmq_test::user_tests] # more deletes, tag, permissions
+  - recipe[minitest-handler]
+  - recipe[rabbitmq_test::all_management]
   attributes:
-    apt:
-      cacher_ipaddress: '192.168.1.10'
     rabbitmq:
       enabled_plugins: ["rabbitmq_stomp", "rabbitmq_shovel", "rabbitmq_stomp"]
       disabled_plugins: ["nonexistant_plugin", "rabbitmq_shovel"]
@@ -176,4 +136,6 @@ suites:
       {name: "kitchen1", password: "test", tag: "tag4", rights: [{vhost: "kitchen", conf: ".*", write: ".*", read: ".*"}]}
       ]
       disabled_users: ["nonexistant_user", "kitchen2"]
+      disabled_policies: ["nonexistant_policy"]
       virtualhosts: ["kitchen", "kitchen"]
+      disabled_virtualhosts: ["nonexistant_vhost"]
