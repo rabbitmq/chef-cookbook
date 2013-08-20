@@ -16,24 +16,29 @@
 
 module Helpers
   module RabbitMQ
-    require 'chef/mixin/shell_out'
-    include Chef::Mixin::ShellOut
+    require 'mixlib/shellout'
     include MiniTest::Chef::Assertions
     include MiniTest::Chef::Context
     include MiniTest::Chef::Resources
 
-    def plugin_enabled?(plugin_name)
-      plugin_list = shell_out("rabbitmq-plugins list -e '#{plugin_name}'")
-      plugin_list.stdout =~ /(\[[Ee]\]\s#{plugin_name})/
+    def plugin_enabled?(plugin)
+      plugins = Mixlib::ShellOut.new("rabbitmq-plugins list -e '#{plugin}'").run_command
+      plugins.stdout =~ /(\[[Ee]\]\s#{plugin})/
     end
 
-    def policy_enabled?(plugin_name)
+    def policy_enabled?(policy)
+      policies = Mixlib::ShellOut.new("rabbitmqctl -q list_policies").run_command
+      policies.stdout =~ /\t#{policy}\t/
     end
 
-    def user_enabled?(plugin_name)
+    def user_enabled?(user)
+      users = Mixlib::ShellOut.new("rabbitmqctl -q list_users").run_command
+      users.stdout =~ /(#{user}\s)/
     end
 
-    def vhost_enabled?(plugin_name)
+    def vhost_enabled?(vhost)
+      vhosts = Mixlib::ShellOut.new("rabbitmqctl -q list_vhosts").run_command
+      vhosts.stdout =~ /(\n#{vhost}\n)/
     end
 
   end
