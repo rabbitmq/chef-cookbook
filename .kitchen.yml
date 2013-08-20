@@ -120,13 +120,38 @@ suites:
       disk_free_limit_relative: 1.0
       vm_memory_high_watermark: 0.5
 
-# this is testing create and deletes with duplicates and nonexistant entries.
-- name: all-management
+# stress test for lwrps
+- name: lwrps-default
   run_list:
   - recipe[minitest-handler]
-  - recipe[rabbitmq_test::all_management]
+  - recipe[rabbitmq_test::lwrps]
   attributes:
     rabbitmq:
+      enabled_plugins: ["rabbitmq_stomp", "rabbitmq_shovel", "rabbitmq_stomp"]
+      disabled_plugins: ["nonexistant_plugin", "rabbitmq_shovel"]
+      enabled_users: [
+      {name: "kitchen1", password: "test", tag: "tag1", rights: [{vhost: "kitchen", conf: ".*", write: ".*", read: ".*"}]},
+      {name: "kitchen2", password: "test", tag: "tag2", rights: [{vhost: "kitchen", conf: ".*", write: ".*", read: ".*"}, {vhost: "kitchen", conf: ".*", write: ".*", read: ".*"}]},
+      {name: "kitchen3", password: "test", tag: "tag3", rights: [{vhost: "kitchen", conf: ".*", write: ".*", read: ".*"}]},
+      {name: "kitchen1", password: "test", tag: "tag4", rights: [{vhost: "kitchen", conf: ".*", write: ".*", read: ".*"}]}
+      ]
+      disabled_users: ["nonexistant_user", "kitchen2"]
+      disabled_policies: ["nonexistant_policy"]
+      virtualhosts: ["kitchen", "kitchen"]
+      disabled_virtualhosts: ["nonexistant_vhost"]
+
+# stress test for lwrps with distro packages
+- name: lwrps-distro
+  excludes:
+  - centos-5.9
+  - fedora-18
+  - ubuntu-10.04
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rabbitmq_test::lwrps]
+  attributes:
+    rabbitmq:
+      use_distro_version: true
       enabled_plugins: ["rabbitmq_stomp", "rabbitmq_shovel", "rabbitmq_stomp"]
       disabled_plugins: ["nonexistant_plugin", "rabbitmq_shovel"]
       enabled_users: [

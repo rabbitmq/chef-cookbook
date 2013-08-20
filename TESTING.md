@@ -34,4 +34,5 @@ This cookbook has the following Test-Kitchen coverage:
 | distro-version | **Y**         | **Y**        | **Y**        | **N**      | **Y**      | **N**     | **N**      | **N**        | **N**          |
 | mgmt_console   | **Y**         | **Y**        | **Y**        | **Y**      | **Y**      | **Y**     | **N**      | **N**        | **N**          |
 | cook-2151      | **Y**         | **Y**        | **Y**        | **Y**      | **Y**      | **Y**     | **N**      | **N**        | **N**          |
-| all-management | **Y**         | **Y**        | **Y**        | **Y**      | **Y**      | **Y**     | **N**      | **N**        | **N**          |
+| lwrps-default  | **Y**         | **Y**        | **Y**        | **Y**      | **Y**      | **Y**     | **N**      | **N**        | **N**          |
+| lwrps-distro   | **Y**         | **Y**        | **Y**        | **N**      | **Y**      | **N**     | **N**      | **N**        | **N**          |

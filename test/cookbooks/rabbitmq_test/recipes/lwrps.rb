@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rabbitmq_test
-# Recipe:: all_management
+# Recipe:: lwrps
 #
 # Copyright 2013, Opscode, Inc. <legal@opscode.com>
 #
