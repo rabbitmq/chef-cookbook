@@ -31,3 +31,8 @@ include_recipe "rabbitmq::virtualhost_management"
 include_recipe "rabbitmq::policy_management"
 include_recipe "rabbitmq::user_management"
 
+# can't verify it actually goes through without logging in, but at least exercise the code
+rabbitmq_user 'kitchen3' do
+  password 'foobar'
+  action :change_password
+end
