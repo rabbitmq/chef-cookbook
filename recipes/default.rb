@@ -158,8 +158,18 @@ else
 end
 
 if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
-  log "stopping service[#{node['rabbitmq']['service_name']}] to change erlang_cookie" do
+  execute "sleep 10" do
+    action :nothing
+  end
+
+  directory "/var/lib/rabbitmq/mnesia" do
+    action :nothing
+    recursive true
+  end
+
+  log "stopping service[#{node['rabbitmq']['service_name']}] before changing erlang_cookie" do
     level :info
+    notifies :run, "execute[sleep 10]", :immediately
     notifies :stop, "service[#{node['rabbitmq']['service_name']}]", :immediately
   end
 
@@ -168,13 +178,15 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     owner 'rabbitmq'
     group 'rabbitmq'
     mode 00400
-    notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
-    notifies :run, "execute[reset-node]", :immediately
   end
 
-  # Need to reset for clustering #
-  execute "reset-node" do
-    command "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
-    action :nothing
+  log "removing /var/lib/rabbitmq/mnesia to reset clustering" do
+    level :info
+    notifies :delete, "directory[/var/lib/rabbitmq/mnesia]", :immediately
+  end
+
+  log "starting service[#{node['rabbitmq']['service_name']}] after changing erlang_cookie" do
+    level :info
+    notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
   end
 end
