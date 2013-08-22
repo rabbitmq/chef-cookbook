@@ -38,6 +38,7 @@ default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 default['rabbitmq']['disk_free_limit_relative'] = nil
 default['rabbitmq']['vm_memory_high_watermark'] = nil
 default['rabbitmq']['max_file_descriptors'] = 1024
+default['rabbitmq']['open_file_limit'] = nil
 
 # job control
 default['rabbitmq']['job_control'] = 'initd'
@@ -50,6 +51,14 @@ default['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
 default['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 default['rabbitmq']['ssl_verify'] = 'verify_none'
 default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
+
+#tcp listen options
+default['rabbitmq']['tcp_listen_packet'] = 'raw'
+default['rabbitmq']['tcp_listen_reuseaddr']  = true
+default['rabbitmq']['tcp_listen_backlog'] = 128
+default['rabbitmq']['tcp_listen_nodelay'] = true
+default['rabbitmq']['tcp_listen_exit_on_close'] = false
+default['rabbitmq']['tcp_listen_keepalive'] = false
 
 #virtualhosts
 default['rabbitmq']['virtualhosts'] = []

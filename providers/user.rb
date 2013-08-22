@@ -160,3 +160,14 @@ action :clear_tags do
     end
   end
 end
+
+action :change_password do
+  if user_exists?(new_resource.user)
+    cmdStr = "rabbitmqctl change_password #{new_resource.user} #{new_resource.password}"
+    execute cmdStr do
+      Chef::Log.debug "rabbitmq_user_change_password: #{cmdStr}"
+      Chef::Log.info "Editing RabbitMQ user '#{new_resource.user}'."
+      new_resource.updated_by_last_action(true)
+    end
+  end
+end

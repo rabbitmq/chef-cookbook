@@ -5,8 +5,11 @@
 - Greatly expanded Test Kitchen coverage and platform support
 - added support for disabling policies and virtualhosts through attributes
 - added support for using with the erlang::esl recipe
+- [COOK-2705]: Add ability to change tcp_listen_options in config
 - [COOK-2397]: Added upstart support to rabbitmq cookbook
 - [COOK-2830]: Use a notify for server restart, instead of defining a new service
+- [COOK-3384]: Added ability to change user password
+- [COOK-3489]: Add attribute to set open file limit
 
 ### Bug
 

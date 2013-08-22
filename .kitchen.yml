@@ -125,14 +125,24 @@ suites:
   - recipe[rabbitmq_test::mgmt_console]
   attributes: {}
 
-- name: cook-2151
+- name: cook-2151-3489
   run_list:
   - recipe[minitest-handler]
-  - recipe[rabbitmq_test::cook-2151]
+  - recipe[rabbitmq_test::cook-2151-3489]
   attributes:
     rabbitmq:
       disk_free_limit_relative: 1.0
       vm_memory_high_watermark: 0.5
+      max_file_descriptors: 2048
+      open_file_limit: 102400
+
+- name: cook-2705
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rabbitmq_test::default]
+  attributes:
+    rabbitmq:
+      tcp_listen_keepalive: true
 
 # stress test for lwrps
 - name: lwrps-default
