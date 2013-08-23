@@ -107,6 +107,13 @@ when 'rhel', 'fedora'
     action [:enable, :start]
   end
 
+when 'suse'
+  # rabbitmq-server-plugins needs to be first so they both get installed
+  # from the right repository. Otherwise, zypper will stop and ask for a
+  # vendor change.
+  package 'rabbitmq-server-plugins'
+  package 'rabbitmq-server'
+  
 when 'smartos'
   package 'rabbitmq'
 
