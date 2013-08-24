@@ -11,7 +11,7 @@ recipe            "rabbitmq::virtualhost_management", "Manage virtualhost with n
 recipe            "rabbitmq::user_management", "Manage users with node attributes"
 depends           "erlang", ">= 0.9"
 
-%w{ubuntu debian linuxmint redhat centos scientific amazon fedora oracle smartos}.each do |os|
+%w{ubuntu debian linuxmint redhat centos scientific amazon fedora oracle smartos suse}.each do |os|
   supports os
 end
 

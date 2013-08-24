@@ -38,4 +38,3 @@ node['rabbitmq']['disabled_policies'].each do |policy|
     notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
-
