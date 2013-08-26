@@ -113,6 +113,10 @@ when 'suse'
   # vendor change.
   package 'rabbitmq-server-plugins'
   package 'rabbitmq-server'
+
+  service node['rabbitmq']['service_name'] do
+    action [:enable, :start]
+  end
 when 'smartos'
   package 'rabbitmq'
 
