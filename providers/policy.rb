@@ -40,13 +40,13 @@ action :set do
 
     first_param = true
     new_resource.params.each do |key, value|
-      unless first_param      
+      unless first_param
         cmd << ","
       end
       if value.kind_of? String
-        cmd << "\"#{key}\":\"#{value}\"" 
+        cmd << "\"#{key}\":\"#{value}\""
       else
-        cmd << "\"#{key}\":#{value}" 
+        cmd << "\"#{key}\":#{value}"
       end
       first_param = false
     end
