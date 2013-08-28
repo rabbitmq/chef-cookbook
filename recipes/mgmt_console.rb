@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+node.set['rabbitmq']['management_plugin']['enabled'] = true
+
 include_recipe "rabbitmq::default"
 
 plugins = %w( rabbitmq_management rabbitmq_management_visualiser )
@@ -29,3 +31,4 @@ plugins.each do |plugin|
     notifies :restart, "service[#{service_name}]"
   end
 end
+

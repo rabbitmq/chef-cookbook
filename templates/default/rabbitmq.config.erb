@@ -8,6 +8,27 @@
 <% elsif node['rabbitmq']['erl_networking_bind_address'] -%>
   {kernel, [{inet_dist_use_interface,{<%= node['rabbitmq']['erl_networking_bind_address'].gsub(/\./, ',') %>}}]},
 <% end %>
+<% if node['rabbitmq']['management_plugin']['enabled'] %>
+  {rabbitmq_management, [
+  <% if node['rabbitmq']['management_plugin']['port'] || node['rabbitmq']['management_plugin']['host'] || node['rabbitmq']['management_plugin']['ssl'] %>
+    {listener, [
+    <% if node['rabbitmq']['management_plugin']['ssl'] %>
+      {ssl, true},
+      {ssl_opts, [{cacertfile,"<%= node['rabbitmq']['ssl_cacert'] %>"},
+                  {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
+                  {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"},
+                  {verify,<%= node['rabbitmq']['ssl_verify'] %>},
+                  {fail_if_no_peer_cert,<%= node['rabbitmq']['ssl_fail_if_no_peer_cert'] %>}]},
+    <% end %>
+    <% if node['rabbitmq']['management_plugin']['host'] %>
+      {ip, "<%= node['rabbitmq']['management_plugin']['host'] %>"},
+    <% end %>
+      {port, <%= node['rabbitmq']['management_plugin']['port'] %>}
+    ]},
+  <% end %>
+    {redirect_old_port, <%= node['rabbitmq']['management_plugin']['redirect_old_port'] %>}
+  ]},
+<% end %>
   {rabbit, [
 <% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] -%>
     {cluster_nodes, [<%= node['rabbitmq']['cluster_disk_nodes'].map{|n| "\'#{n}\'"}.join(',') %>]},
