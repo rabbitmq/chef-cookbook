@@ -3,6 +3,14 @@ rabbitmq Cookbook CHANGELOG
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
 
+v2.3.0
+------
+### Improvement
+- **[COOK-3369](https://tickets.opscode.com/browse/COOK-3369)** - Add SUSE support
+- **[COOK-3320](https://tickets.opscode.com/browse/COOK-3320)** - Configure bind and cluster over a specified addr
+- **[COOK-3138](https://tickets.opscode.com/browse/COOK-3138)** - Do not log RabbitMQ password
+- **[COOK-2803](https://tickets.opscode.com/browse/COOK-2803)** - Bind erlang networking to localhost (attribute-driven)
+
 v2.2.0
 ------
 ### Improvement
