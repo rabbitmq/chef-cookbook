@@ -185,8 +185,12 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     notifies :delete, "directory[/var/lib/rabbitmq/mnesia]", :immediately
   end
 
+  # TODO(breu): figure out why we need the extra sleep statement here.  This
+  #             doesn't break in jenkins, but QE was seeing consistent failures
+  #             of rabbitmq startups
   log "starting service[#{node['rabbitmq']['service_name']}] after changing erlang_cookie" do
     level :info
+    notifies :run, "execute[sleep 10]", :immediately
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
   end
 end
