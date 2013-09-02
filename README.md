@@ -31,6 +31,7 @@ To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and ke
 
 ### mgmt_console
 Installs the `rabbitmq_management` and `rabbitmq_management_visualiser` plugins.
+To use https connection to management console, turn `['rabbitmq']['web_console_ssl']` to true.
 
 ### plugin_management
 Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq'][disabled_plugins']` attributes.
