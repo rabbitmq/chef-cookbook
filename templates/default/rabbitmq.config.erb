@@ -10,7 +10,7 @@
 <% end %>
 <% if node['rabbitmq']['web_console_ssl'] -%>
   {rabbitmq_management, [
-    {listener, [{port, 15671},
+    {listener, [{port, <%= node['rabbitmq']['web_console_ssl_port'] %>},
                 {ssl, true}
               ]}
   ]},

@@ -52,6 +52,7 @@ default['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 default['rabbitmq']['ssl_verify'] = 'verify_none'
 default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
 default['rabbitmq']['web_console_ssl'] = false
+default['rabbitmq']['web_console_ssl_port'] = 15671
 
 #tcp listen options
 default['rabbitmq']['tcp_listen_packet'] = 'raw'
