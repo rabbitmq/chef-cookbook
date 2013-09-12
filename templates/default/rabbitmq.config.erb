@@ -9,8 +9,8 @@
   {kernel, [{inet_dist_use_interface,{<%= node['rabbitmq']['erl_networking_bind_address'].gsub(/\./, ',') %>}}]},
 <% end %>
   {rabbit, [
-<% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] -%>
-    {cluster_nodes, [<%= node['rabbitmq']['cluster_disk_nodes'].map{|n| "\'#{n}\'"}.join(',') %>]},
+<% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] && !node['rabbitmq']['cluster_disk_nodes'].empty? -%>
+    {cluster_nodes, {[<%= node['rabbitmq']['cluster_disk_nodes'].map{|n| "\'#{n}\'"}.join(',') %>], disc}},
 <% end %>
 <% if node['rabbitmq']['ssl'] -%>
     {ssl_listeners, [<%= node['rabbitmq']['ssl_port'] %>]},
