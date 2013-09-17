@@ -171,6 +171,7 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
   log "stopping service[#{node['rabbitmq']['service_name']}] to change erlang_cookie" do
     level :info
     notifies :stop, "service[#{node['rabbitmq']['service_name']}]", :immediately
+    not_if "cat #{node['rabbitmq']['erlang_cookie_path']} | grep #{node['rabbitmq']['erlang_cookie']}"
   end
 
   template node['rabbitmq']['erlang_cookie_path'] do
