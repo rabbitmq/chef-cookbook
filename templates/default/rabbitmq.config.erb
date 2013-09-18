@@ -8,6 +8,13 @@
 <% elsif node['rabbitmq']['erl_networking_bind_address'] -%>
   {kernel, [{inet_dist_use_interface,{<%= node['rabbitmq']['erl_networking_bind_address'].gsub(/\./, ',') %>}}]},
 <% end %>
+<% if node['rabbitmq']['web_console_ssl'] -%>
+  {rabbitmq_management, [
+    {listener, [{port, <%= node['rabbitmq']['web_console_ssl_port'] %>},
+                {ssl, true}
+              ]}
+  ]},
+<% end %>
   {rabbit, [
 <% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] -%>
     {cluster_nodes, [<%= node['rabbitmq']['cluster_disk_nodes'].map{|n| "\'#{n}\'"}.join(',') %>]},
