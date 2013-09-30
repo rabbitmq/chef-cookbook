@@ -18,8 +18,14 @@
 # limitations under the License.
 #
 
-def policy_exists?(name)
-  cmd = Mixlib::ShellOut.new("rabbitmqctl list_policies |grep '#{name}\\b'")
+require 'shellwords'
+
+def policy_exists?(vhost, name)
+  cmd = "rabbitmqctl list_policies"
+  cmd << " -p #{Shellwords.escape vhost}" unless vhost.nil?
+  cmd << " |grep '#{name}\\b'"
+
+  cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
   begin
@@ -31,7 +37,7 @@ def policy_exists?(name)
 end
 
 action :set do
-  unless policy_exists?(new_resource.policy)
+  unless policy_exists?(new_resource.vhost, new_resource.policy)
     cmd = "rabbitmqctl set_policy"
     cmd << " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
     cmd << " #{new_resource.policy}"
@@ -67,7 +73,7 @@ action :set do
 end
 
 action :clear do
-  if policy_exists?(new_resource.policy)
+  if policy_exists?(new_resource.vhost, new_resource.policy)
     execute "clear_policy #{new_resource.policy}" do
       command "rabbitmqctl clear_policy #{new_resource.policy}"
     end
