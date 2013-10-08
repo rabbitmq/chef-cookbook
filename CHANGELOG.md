@@ -3,6 +3,17 @@ rabbitmq Cookbook CHANGELOG
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
 
+v2.3.2
+------
+### Bug
+- **[COOK-3678](https://tickets.opscode.com/browse/COOK-3678)** - Fix an issue where a RabbitMQ policy resource with vhost arguments emits unexpected restart notification
+- **[COOK-3606](https://tickets.opscode.com/browse/COOK-3606)** - Fix erlang cookie comparison
+- **[COOK-3512](https://tickets.opscode.com/browse/COOK-3512)** - Define rabbitmq service on SUSE
+
+### New Feature
+- **[COOK-3538](https://tickets.opscode.com/browse/COOK-3538)** - Configure web management console to use SSL
+
+
 v2.3.0
 ------
 ### Improvement
