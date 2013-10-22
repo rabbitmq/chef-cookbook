@@ -40,6 +40,7 @@
     {vm_memory_high_watermark, <%= node['rabbitmq']['vm_memory_high_watermark'] %>},
 <% end %>
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
-    {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>}
+    {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>},
+    {heartbeat, <%= node['rabbitmq']['heartbeat'] %>}
   ]}
 ].
