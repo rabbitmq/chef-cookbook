@@ -129,6 +129,15 @@ when 'smartos'
   end
 end
 
+if %w(debian rhel fedora suse).include? node['platform_family']
+  template '/etc/default/rabbitmq-server' do
+    source 'rabbitmq.default.erb'
+    owner 'root'
+    group 'root'
+    mode 0644
+  end
+end
+
 if node['rabbitmq']['logdir']
   directory node['rabbitmq']['logdir'] do
     owner 'rabbitmq'
