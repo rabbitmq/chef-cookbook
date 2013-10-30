@@ -153,7 +153,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
-template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
+template "#{node['rabbitmq']['config']}.config" do
   source 'rabbitmq.config.erb'
   owner 'root'
   group 'root'
