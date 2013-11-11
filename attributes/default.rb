@@ -55,6 +55,7 @@ default['rabbitmq']['web_console_ssl'] = false
 default['rabbitmq']['web_console_ssl_port'] = 15671
 
 #tcp listen options
+default['rabbitmq']['tcp'] = true
 default['rabbitmq']['tcp_listen_packet'] = 'raw'
 default['rabbitmq']['tcp_listen_reuseaddr']  = true
 default['rabbitmq']['tcp_listen_backlog'] = 128
