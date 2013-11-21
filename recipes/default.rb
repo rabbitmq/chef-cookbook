@@ -30,6 +30,10 @@ when 'debian'
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server'
   else
+    # for dependency
+    package 'adduser'
+    package 'logrotate'
+
     remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb" do
       source node['rabbitmq']['package']
       action :create_if_missing
