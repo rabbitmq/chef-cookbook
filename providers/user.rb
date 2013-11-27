@@ -104,7 +104,7 @@ end
 
 action :set_permissions do
   if !user_exists?(new_resource.user)
-    Chef::Application.fatal!("rabbitmq_user action :set_permissions fails with non-existant '#{new_resource.user}' user.")
+    Chef::Log.warn("rabbitmq_user '#{new_resource.user}' does not presently exist")
   end
   perm_list = new_resource.permissions.split
   unless user_has_permissions?(new_resource.user, new_resource.vhost, perm_list)
@@ -120,7 +120,7 @@ end
 
 action :clear_permissions do
   if !user_exists?(new_resource.user)
-    Chef::Application.fatal!("rabbitmq_user action :clear_permissions fails with non-existant '#{new_resource.user}' user.")
+    Chef::Log.warn("rabbitmq_user '#{new_resource.user}' does not presently exist")
   end
   if user_has_permissions?(new_resource.user, new_resource.vhost)
     vhostOpt = "-p #{new_resource.vhost}" unless new_resource.vhost.nil?
@@ -135,7 +135,7 @@ end
 
 action :set_tags do
   if !user_exists?(new_resource.user)
-    Chef::Application.fatal!("rabbitmq_user action :set_tags fails with non-existant '#{new_resource.user}' user.")
+    Chef::Log.warn("rabbitmq_user '#{new_resource.user}' does not presently exist")
   end
   unless user_has_tag?(new_resource.user, new_resource.tag)
     cmdStr = "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.tag}"
@@ -149,7 +149,7 @@ end
 
 action :clear_tags do
   if !user_exists?(new_resource.user)
-    Chef::Application.fatal!("rabbitmq_user action :clear_tags fails with non-existant '#{new_resource.user}' user.")
+    Chef::Log.warn("rabbitmq_user '#{new_resource.user}' does not presently exist")
   end
   unless user_has_tag?(new_resource.user, '"\[\]"')
     cmdStr = "rabbitmqctl set_user_tags #{new_resource.user}"
