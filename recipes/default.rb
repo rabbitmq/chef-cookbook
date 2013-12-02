@@ -5,6 +5,7 @@
 # Copyright 2009, Benjamin Black
 # Copyright 2009-2013, Opscode, Inc.
 # Copyright 2012, Kevin Nuckolls <kevin.nuckolls@gmail.com>
+# Copyright 2013, Alex Hewson <alex@mbird.biz>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +21,55 @@
 #
 
 include_recipe 'erlang'
+
+
+## NB - conf files must be created before the RabbitMQ service first starts.
+##      Otherwise if a static nodename is specified it triggers a restart of
+##      the service but rabbitmqctl can't find the existing one and the
+##      restart (& your Chef run) noisily fail.
+
+if node['rabbitmq']['logdir']
+  directory node['rabbitmq']['logdir'] do
+    owner 'rabbitmq'
+    group 'rabbitmq'
+    mode '775'
+    recursive true
+  end
+end
+
+directory node['rabbitmq']['mnesiadir'] do
+  owner 'rabbitmq'
+  group 'rabbitmq'
+  mode '775'
+  recursive true
+end
+
+directory "#{node['rabbitmq']['config_root']}" do
+	action :create
+	recursive  true
+	owner  "root"
+	group  "root"
+	mode   00755
+end
+
+template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
+  source 'rabbitmq-env.conf.erb'
+  owner 'root'
+  group 'root'
+  mode 00644
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+end
+
+template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
+  source 'rabbitmq.config.erb'
+  owner 'root'
+  group 'root'
+  mode 00644
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+end
+
+
+
 
 ## Install the package
 case node['platform_family']
@@ -129,37 +179,6 @@ when 'smartos'
   end
 end
 
-if node['rabbitmq']['logdir']
-  directory node['rabbitmq']['logdir'] do
-    owner 'rabbitmq'
-    group 'rabbitmq'
-    mode '775'
-    recursive true
-  end
-end
-
-directory node['rabbitmq']['mnesiadir'] do
-  owner 'rabbitmq'
-  group 'rabbitmq'
-  mode '775'
-  recursive true
-end
-
-template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
-  source 'rabbitmq-env.conf.erb'
-  owner 'root'
-  group 'root'
-  mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
-end
-
-template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
-  source 'rabbitmq.config.erb'
-  owner 'root'
-  group 'root'
-  mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
-end
 
 if File.exists?(node['rabbitmq']['erlang_cookie_path'])
   existing_erlang_key =  File.read(node['rabbitmq']['erlang_cookie_path']).strip
