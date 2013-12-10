@@ -29,6 +29,11 @@ default['rabbitmq']['local_erl_networking'] = false
 # bind rabbit and erlang networking to an address
 default['rabbitmq']['erl_networking_bind_address'] = nil
 
+# Erlang kernel application options
+# See http://www.erlang.org/doc/man/kernel_app.html
+default['rabbitmq']['kernel']['inet_dist_listen_min'] = nil
+default['rabbitmq']['kernel']['inet_dist_listen_max'] = nil
+
 #clustering
 default['rabbitmq']['cluster'] = false
 default['rabbitmq']['cluster_disk_nodes'] = []
