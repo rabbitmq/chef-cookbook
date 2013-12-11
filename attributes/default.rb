@@ -23,11 +23,13 @@ default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
 default['rabbitmq']['default_user'] = 'guest'
 default['rabbitmq']['default_pass'] = 'guest'
 
-# bind erlang networking to localhost
-default['rabbitmq']['local_erl_networking'] = false
+# Erlang kernel application options
+# See http://www.erlang.org/doc/man/kernel_app.html
+default['rabbitmq']['kernel']['inet_dist_listen_min'] = nil
+default['rabbitmq']['kernel']['inet_dist_listen_max'] = nil
 
-# bind rabbit and erlang networking to an address
-default['rabbitmq']['erl_networking_bind_address'] = nil
+# Tell Erlang what IP to bind to
+default['rabbitmq']['kernel']['inet_dist_use_interface'] = nil
 
 #clustering
 default['rabbitmq']['cluster'] = false

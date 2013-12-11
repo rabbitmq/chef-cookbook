@@ -19,6 +19,10 @@
 # limitations under the License.
 #
 
+class Chef::Resource
+  include Opscode::RabbitMQ
+end
+
 include_recipe 'erlang'
 
 ## Install the package
@@ -158,6 +162,8 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   owner 'root'
   group 'root'
   mode 00644
+  variables(
+    :kernel => format_kernel_parameters )
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
