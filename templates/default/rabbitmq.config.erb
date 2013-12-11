@@ -4,13 +4,7 @@
 
 [
   {kernel, [
-<% if @kernel['inet_dist_user_interface'] %>
-    {inet_dist_use_interface,{<%= @kernel['inet_dist_user_interface'].gsub(/\./, ',') %>}}
-<% end %>
-<% if @kernel['inet_dist_listen_min'] && @kernel['inet_dist_listen_max'] %>
-    {inet_dist_listen_min, @kernel['inet_dist_listen_min']},
-    {inet_dist_listen_max, @kernel['inet_dist_listen_max']}
-<% end %>
+<%= @kernel %> 
   ]},
 <% if node['rabbitmq']['web_console_ssl'] -%>
   {rabbitmq_management, [
