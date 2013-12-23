@@ -184,3 +184,7 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     action :nothing
   end
 end
+
+if node['rabbitmq']['stomp']
+  include_recipe 'rabbitmq::stomp'
+end

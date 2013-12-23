@@ -39,7 +39,18 @@
 <% if node['rabbitmq']['vm_memory_high_watermark'] -%>
     {vm_memory_high_watermark, <%= node['rabbitmq']['vm_memory_high_watermark'] %>},
 <% end %>
+<% if node['rabbitmq']['stomp_ssl_cert_login_from'] %>
+    {ssl_cert_login_from, <%= node['rabbitmq']['stomp_ssl_cert_login_from'] %>},
+<% end %>
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>}
   ]}
+<% if node['rabbitmq']['stomp'] %>
+  ,{rabbitmq_stomp, [{tcp_listeners, [<%= node['rabbitmq']['stomp_port'] %>]},
+                     {ssl_listeners, [<%= node['rabbitmq']['stomp_ssl_port'] %>]},
+                     {default_user, [{login, "<%= node['rabbitmq']['stomp_default_user'] %>"},{passcode, "<%= node['rabbitmq']['stomp_default_pass'] %>"}]},
+                     {ssl_cert_login, <%= node['rabbitmq']['stomp_ssl_cert_login'] %>},
+                     {implicit_connect, <%= node['rabbitmq']['stomp_implicit_connect'] %>}]
+  }
+<% end %>
 ].
