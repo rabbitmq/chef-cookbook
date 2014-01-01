@@ -16,7 +16,7 @@
 <% if !node['rabbitmq']['inet_dist_listen_max'].nil? %>
      {inet_dist_listen_max, <%= node['rabbitmq']['inet_dist_listen_max'] %>},
 <% end %>
-   {ignore_this_param, 0}
+     {ignore_this_param, 0}
    ]
   },
 <% if node['rabbitmq']['web_console_ssl'] -%>
