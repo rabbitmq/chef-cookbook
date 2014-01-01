@@ -3,11 +3,22 @@
 %%%
 
 [
+  {kernel,
+   [
 <% if node['rabbitmq']['local_erl_networking'] %>
-  {kernel, [{inet_dist_use_interface,{127,0,0,1}}]},
+     {inet_dist_use_interface,{127,0,0,1}},
 <% elsif node['rabbitmq']['erl_networking_bind_address'] -%>
-  {kernel, [{inet_dist_use_interface,{<%= node['rabbitmq']['erl_networking_bind_address'].gsub(/\./, ',') %>}}]},
+     {inet_dist_use_interface,{<%= node['rabbitmq']['erl_networking_bind_address'].gsub(/\./, ',') %>}},
 <% end %>
+<% if !node['rabbitmq']['inet_dist_listen_min'].nil? %>
+     {inet_dist_listen_min, <%= node['rabbitmq']['inet_dist_listen_min'] %>},
+<% end %>
+<% if !node['rabbitmq']['inet_dist_listen_max'].nil? %>
+     {inet_dist_listen_max, <%= node['rabbitmq']['inet_dist_listen_max'] %>},
+<% end %>
+     {ignore_this_param, 0}
+   ]
+  },
 <% if node['rabbitmq']['web_console_ssl'] -%>
   {rabbitmq_management, [
     {listener, [{port, <%= node['rabbitmq']['web_console_ssl_port'] %>},
