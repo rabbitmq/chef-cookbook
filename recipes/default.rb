@@ -188,3 +188,7 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     action :nothing
   end
 end
+
+service node['rabbitmq']['service_name'] do
+  action :start
+end
