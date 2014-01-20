@@ -129,6 +129,10 @@ when 'smartos'
   end
 end
 
+service node['rabbitmq']['service_name'] do
+  action :stop
+end
+
 if node['rabbitmq']['logdir']
   directory node['rabbitmq']['logdir'] do
     owner 'rabbitmq'
