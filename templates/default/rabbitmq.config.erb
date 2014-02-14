@@ -3,11 +3,9 @@
 %%%
 
 [
-<% if node['rabbitmq']['local_erl_networking'] %>
-  {kernel, [{inet_dist_use_interface,{127,0,0,1}}]},
-<% elsif node['rabbitmq']['erl_networking_bind_address'] -%>
-  {kernel, [{inet_dist_use_interface,{<%= node['rabbitmq']['erl_networking_bind_address'].gsub(/\./, ',') %>}}]},
-<% end %>
+  {kernel, [
+<%= @kernel %> 
+  ]},
 <% if node['rabbitmq']['web_console_ssl'] -%>
   {rabbitmq_management, [
     {listener, [{port, <%= node['rabbitmq']['web_console_ssl_port'] %>},
