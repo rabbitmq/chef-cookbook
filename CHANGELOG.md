@@ -3,6 +3,13 @@ rabbitmq Cookbook CHANGELOG
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
 
+v2.4.0 (2014-02-14)
+-------------------
+- [COOK-4050] - Do not force failure in rabbitmq_user
+- [COOK-4088] - Update rabbitmq.config for port ranges
+- Updating test harness. Fixing style cops
+
+
 v2.3.2
 ------
 ### Bug
