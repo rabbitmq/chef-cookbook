@@ -14,5 +14,5 @@
 # limitations under the License.
 #
 
-describe "rabbitmq_test::ssl" do
+describe 'rabbitmq_test::ssl' do
 end

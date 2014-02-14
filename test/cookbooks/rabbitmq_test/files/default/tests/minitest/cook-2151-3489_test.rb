@@ -16,22 +16,22 @@
 
 require File.expand_path('../support/helpers', __FILE__)
 
-describe "rabbitmq_test::cook-2151" do
+describe 'rabbitmq_test::cook-2151' do
   include Helpers::RabbitMQ
 
   it 'includes the disk_free_limit configuration setting' do
-    file("#{node['rabbitmq']['config_root']}/rabbitmq.config").
-      must_match /\{disk_free_limit, \{mem_relative, #{node['rabbitmq']['disk_free_limit_relative']}/
+    file("#{node['rabbitmq']['config_root']}/rabbitmq.config")
+      .must_match(/\{disk_free_limit, \{mem_relative, #{node['rabbitmq']['disk_free_limit_relative']}/)
   end
 
   it 'includes the vm_memory_high_watermark configuration setting' do
-    file("#{node['rabbitmq']['config_root']}/rabbitmq.config").
-      must_match /\{vm_memory_high_watermark, #{node['rabbitmq']['vm_memory_high_watermark']}/
+    file("#{node['rabbitmq']['config_root']}/rabbitmq.config")
+      .must_match(/\{vm_memory_high_watermark, #{node['rabbitmq']['vm_memory_high_watermark']}/)
   end
 
   it 'includes the open_file_limit configuration setting' do
-    file("#{node['rabbitmq']['config_root']}/rabbitmq-env.conf").
-      must_match /(ulimit -n #{node['rabbitmq']['open_file_limit']})/
+    file("#{node['rabbitmq']['config_root']}/rabbitmq-env.conf")
+       .must_match(/(ulimit -n #{node['rabbitmq']['open_file_limit']})/)
   end
 
 end

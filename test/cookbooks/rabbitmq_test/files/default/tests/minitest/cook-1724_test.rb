@@ -14,18 +14,16 @@
 # limitations under the License.
 #
 
-describe "rabbitmq_test::cook-1724" do
+describe 'rabbitmq_test::cook-1724' do
   include MiniTest::Chef::Assertions
   include MiniTest::Chef::Context
   include MiniTest::Chef::Resources
 
   it 'doesnt use the rabbitmq apt repository' do
-    unless node['platform_family'] == 'debian'
-      skip "Only applicable on Debian family"
-    end
+    skip 'Only applicable on Debian family' unless node['platform_family'] == 'debian'
 
-    file("/etc/apt/sources.list.d/rabbitmq-source.list").wont_exist &&
-      package("rabbitmq-server").must_be_installed
+    file('/etc/apt/sources.list.d/rabbitmq-source.list').wont_exist &&
+      package('rabbitmq-server').must_be_installed
   end
 
 end

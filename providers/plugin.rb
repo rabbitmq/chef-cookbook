@@ -17,18 +17,18 @@
 # limitations under the License.
 #
 
-def plugins_bin_path(return_array=false)
+def plugins_bin_path(return_array = false)
   path = ENV.fetch('PATH') + ':/usr/lib/rabbitmq/bin'
   return_array ? path.split(':') : path
 end
 
 def plugin_enabled?(name)
-  cmdStr = "rabbitmq-plugins list -e '#{name}\\b'"
-  cmd = Mixlib::ShellOut.new(cmdStr)
+  cmdstr = "rabbitmq-plugins list -e '#{name}\\b'"
+  cmd = Mixlib::ShellOut.new(cmdstr)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.environment['PATH'] = plugins_bin_path
   cmd.run_command
-  Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmdStr}"
+  Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmdstr}"
   Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmd.stdout}"
   cmd.error!
   cmd.stdout =~ /\b#{name}\b/

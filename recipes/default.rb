@@ -19,6 +19,7 @@
 # limitations under the License.
 #
 
+#
 class Chef::Resource
   include Opscode::RabbitMQ
 end
@@ -67,8 +68,8 @@ when 'debian'
 
     service node['rabbitmq']['service_name'] do
       provider Chef::Provider::Service::Upstart
-      action [ :enable, :start ]
-      #restart_command "stop #{node['rabbitmq']['service_name']} && start #{node['rabbitmq']['service_name']}"
+      action [:enable, :start]
+      # restart_command "stop #{node['rabbitmq']['service_name']} && start #{node['rabbitmq']['service_name']}"
     end
   end
 
@@ -84,20 +85,20 @@ when 'debian'
       restart_command 'setsid /etc/init.d/rabbitmq-server restart'
       status_command 'setsid /etc/init.d/rabbitmq-server status'
       supports :status => true, :restart => true
-      action [ :enable, :start ]
+      action [:enable, :start]
     end
   end
 
 when 'rhel', 'fedora'
-  #This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
+  # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
   if node['erlang']['install_method'] == 'esl'
     remote_file "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm" do
-      source "https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/esl-erlang-compat-R14B-1.el6.noarch.rpm?raw=true"
+      source 'https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/esl-erlang-compat-R14B-1.el6.noarch.rpm?raw=true'
     end
     rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
   end
 
-  if node['rabbitmq']['use_distro_version'] then
+  if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server'
   else
     remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
@@ -163,7 +164,8 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   group 'root'
   mode 00644
   variables(
-    :kernel => format_kernel_parameters )
+    :kernel => format_kernel_parameters
+    )
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
@@ -181,12 +183,12 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     mode 00400
     notifies :stop, "service[#{node['rabbitmq']['service_name']}]", :immediately
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
-    notifies :run, "execute[reset-node]", :immediately
+    notifies :run, 'execute[reset-node]', :immediately
   end
 
   # Need to reset for clustering #
-  execute "reset-node" do
-    command "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
+  execute 'reset-node' do
+    command 'rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app'
     action :nothing
   end
 end

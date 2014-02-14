@@ -15,6 +15,7 @@
 #
 
 module Helpers
+  # rabbitmq
   module RabbitMQ
     require 'mixlib/shellout'
     include MiniTest::Chef::Assertions
@@ -27,19 +28,18 @@ module Helpers
     end
 
     def policy_enabled?(policy)
-      policies = Mixlib::ShellOut.new("rabbitmqctl -q list_policies").run_command
+      policies = Mixlib::ShellOut.new('rabbitmqctl -q list_policies').run_command
       policies.stdout =~ /\t#{policy}\t/
     end
 
     def user_enabled?(user)
-      users = Mixlib::ShellOut.new("rabbitmqctl -q list_users").run_command
+      users = Mixlib::ShellOut.new('rabbitmqctl -q list_users').run_command
       users.stdout =~ /(#{user}\s)/
     end
 
     def vhost_enabled?(vhost)
-      vhosts = Mixlib::ShellOut.new("rabbitmqctl -q list_vhosts").run_command
+      vhosts = Mixlib::ShellOut.new('rabbitmqctl -q list_vhosts').run_command
       vhosts.stdout =~ /(\n#{vhost}\n)/
     end
-
   end
 end

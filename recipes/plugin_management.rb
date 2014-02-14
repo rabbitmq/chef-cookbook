@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe "rabbitmq::default"
+include_recipe 'rabbitmq::default'
 
 node['rabbitmq']['enabled_plugins'].each do |plugin|
   rabbitmq_plugin plugin do

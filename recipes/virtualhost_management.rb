@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe "rabbitmq::default"
+include_recipe 'rabbitmq::default'
 
 node['rabbitmq']['virtualhosts'].each do |virtualhost|
   rabbitmq_vhost virtualhost do
@@ -34,4 +34,3 @@ node['rabbitmq']['disabled_virtualhosts'].each do |virtualhost|
     notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
-

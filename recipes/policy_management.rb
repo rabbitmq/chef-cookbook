@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe "rabbitmq::default"
+include_recipe 'rabbitmq::default'
 
 node['rabbitmq']['policies'].each do |name, policy|
   rabbitmq_policy name do

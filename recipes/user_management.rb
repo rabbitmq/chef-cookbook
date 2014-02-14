@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe "rabbitmq::default"
-include_recipe "rabbitmq::virtualhost_management"
+include_recipe 'rabbitmq::default'
+include_recipe 'rabbitmq::virtualhost_management'
 
 node['rabbitmq']['enabled_users'].each do |user|
   rabbitmq_user user['name'] do

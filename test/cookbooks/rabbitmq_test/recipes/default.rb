@@ -17,13 +17,13 @@
 # limitations under the License.
 #
 
-chef_gem "bunny"
+chef_gem 'bunny'
 
-include_recipe "rabbitmq::default"
+include_recipe 'rabbitmq::default'
 
-# hack to give rabbit time to spin up before the tests, it seems
+# HACK: Give rabbit time to spin up before the tests, it seems
 # to be responding that it has started before it really has
-execute "sleep 10" do
+execute 'sleep 10' do
   action :nothing
   subscribes :run, "service[#{node['rabbitmq']['service_name']}]", :delayed
 end

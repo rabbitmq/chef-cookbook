@@ -18,4 +18,4 @@
 #
 
 node.set['rabbitmq']['cluster'] = true
-include_recipe "rabbitmq::default"
+include_recipe 'rabbitmq::default'

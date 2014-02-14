@@ -16,46 +16,46 @@
 
 require File.expand_path('../support/helpers', __FILE__)
 
-describe "rabbitmq_test::lwrps" do
+describe 'rabbitmq_test::lwrps' do
   include Helpers::RabbitMQ
 
-  #plugins
+  # plugins
   it 'enabled the rabbitmq_stomp plugin' do
-    assert(plugin_enabled?("rabbitmq_stomp"))
+    assert(plugin_enabled?('rabbitmq_stomp'))
   end
 
   it 'disabled the nonexistant_plugin and rabbitmq_shovel plugin' do
-    assert(!plugin_enabled?("rabbitmq_shovel"))
-    assert(!plugin_enabled?("nonexistant_plugin"))
+    assert(!plugin_enabled?('rabbitmq_shovel'))
+    assert(!plugin_enabled?('nonexistant_plugin'))
   end
 
-  #users
+  # users
   it 'enabled the kitchen1 and kitchen3 users' do
-    assert(user_enabled?("kitchen1"))
-    assert(user_enabled?("kitchen3"))
+    assert(user_enabled?('kitchen1'))
+    assert(user_enabled?('kitchen3'))
   end
 
   it 'disabled the nonexistant_user and kitchen2 users' do
-    assert(!user_enabled?("kitchen2"))
-    assert(!user_enabled?("nonexistant_user"))
+    assert(!user_enabled?('kitchen2'))
+    assert(!user_enabled?('nonexistant_user'))
   end
 
-  #policies
+  # policies
   it 'enabled the example policies from the default attributes' do
-    assert(policy_enabled?("ha-all"))
-    assert(policy_enabled?("ha-two"))
+    assert(policy_enabled?('ha-all'))
+    assert(policy_enabled?('ha-two'))
   end
 
   it 'disabled the nonexistant_policy' do
-    assert(!policy_enabled?("nonexistant_policy"))
+    assert(!policy_enabled?('nonexistant_policy'))
   end
 
-  #vhosts
+  # vhosts
   it 'enabled the kitchen vhost' do
-    assert(vhost_enabled?("kitchen"))
+    assert(vhost_enabled?('kitchen'))
   end
 
   it 'disabled the nonexistant_vhost' do
-    assert(!vhost_enabled?("nonexistant_vhost"))
+    assert(!vhost_enabled?('nonexistant_vhost'))
   end
 end

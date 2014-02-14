@@ -17,29 +17,26 @@
 #
 
 module Opscode
+  # module rabbit
   module RabbitMQ
-
     # This method does some of the yuckiness of formatting parameters properly
     # for rendering into the rabbit.config template.
     def format_kernel_parameters
       rendered = []
-      kernel = node[:rabbitmq][:kernel].dup
+      kernel = node['rabbitmq']['kernel'].dup
 
       # This parameter is special and needs commas instead of periods.
-      if kernel[:inet_dist_use_interface]
-        rendered << "{inet_dist_use_interface, {#{kernel[:inet_dist_use_interface].gsub(/\./, ',')}}}"
-      end
+      rendered << "{inet_dist_use_interface, {#{kernel[:inet_dist_use_interface].gsub(/\./, ',')}}}" if kernel[:inet_dist_use_interface]
       kernel.delete(:inet_dist_use_interface)
 
       # Otherwise, we can just render it nicely as Erlang wants. This
       # theoretically opens the door for arbitrary kernel_app parameters to be
       # declared.
-      kernel.select{|k,v| !v.nil?}.each_pair do |param, val|
+      kernel.select { |k, v| !v.nil? }.each_pair do |param, val|
         rendered << "{#{param}, #{val}}"
       end
 
-      return rendered.each{|r| r.prepend('    ')}.join(",\n")
+      rendered.each { |r| r.prepend('    ') }.join(",\n")
     end
-
   end
 end
