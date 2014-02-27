@@ -89,7 +89,9 @@ when 'debian'
     end
   end
 
-if node['rabbitmq']['use_distro_version']
+
+when 'rhel', 'fedora'
+ if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server'
   else
     remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
