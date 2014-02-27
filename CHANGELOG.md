@@ -3,6 +3,11 @@ rabbitmq Cookbook CHANGELOG
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
 
+v2.4.2 (2014-02-27)
+-------------------
+[COOK-4280] Upstart script properly waits until the server is started
+
+
 v2.4.0 (2014-02-14)
 -------------------
 - [COOK-4050] - Do not force failure in rabbitmq_user
