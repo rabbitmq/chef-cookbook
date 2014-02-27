@@ -97,6 +97,7 @@ if node['rabbitmq']['use_distro_version']
       action :create_if_missing
     end
     rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
+    action :upgrade
   end
 
   service node['rabbitmq']['service_name'] do
