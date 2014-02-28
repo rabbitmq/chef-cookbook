@@ -3,6 +3,11 @@ rabbitmq Cookbook CHANGELOG
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
 
+v3.0.2 (2014-02-27)
+-------------------
+- [COOK-4384] Add ChefSpec Custom Matchers for LWRPs
+
+
 v3.0.0 (2014-02-27)
 -------------------
 [COOK-4369] - use_inline_resources
