@@ -176,12 +176,17 @@ else
 end
 
 if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
+
+  # You need to do this first because it doesn't work after you change the erlang cookie, because the cookie doesn't match
+  service node['rabbitmq']['service_name'] do
+    action :stop
+  end
+
   template node['rabbitmq']['erlang_cookie_path'] do
     source 'doterlang.cookie.erb'
     owner 'rabbitmq'
     group 'rabbitmq'
     mode 00400
-    notifies :stop, "service[#{node['rabbitmq']['service_name']}]", :immediately
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
     notifies :run, 'execute[reset-node]', :immediately
   end
