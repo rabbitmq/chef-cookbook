@@ -35,8 +35,10 @@ when 'debian'
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server'
   else
+    # we need to download the package
+    deb_package = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
     remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb" do
-      source node['rabbitmq']['package']
+      source deb_package
       action :create_if_missing
     end
     dpkg_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
@@ -101,8 +103,11 @@ when 'rhel', 'fedora'
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server'
   else
+    # We need to download the rpm
+    rpm_package = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
+
     remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
-      source node['rabbitmq']['package']
+      source rpm_package
       action :create_if_missing
     end
     rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
