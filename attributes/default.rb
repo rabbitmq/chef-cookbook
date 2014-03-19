@@ -81,10 +81,6 @@ default['rabbitmq']['disabled_plugins'] = []
 
 # platform specific settings
 case node['platform_family']
-when 'debian'
-  default['rabbitmq']['package'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
-when 'rhel', 'fedora'
-  default['rabbitmq']['package'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
 when 'smartos'
   default['rabbitmq']['service_name'] = 'rabbitmq'
   default['rabbitmq']['config_root'] = '/opt/local/etc/rabbitmq'
