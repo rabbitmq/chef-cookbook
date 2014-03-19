@@ -57,7 +57,11 @@ action :set do
     end
 
     cmd << "}'"
-    cmd << " #{new_resource.priority}" if new_resource.priority
+    if node['rabbitmq']['version'] >= '3.2.0'
+      cmd << " --priority #{new_resource.priority}" if new_resource.priority
+    else
+      cmd << " #{new_resource.priority}" if new_resource.priority
+    end
 
     execute "set_policy #{new_resource.policy}" do
       command cmd
