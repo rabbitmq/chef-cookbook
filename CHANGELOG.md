@@ -3,6 +3,12 @@ rabbitmq Cookbook CHANGELOG
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
 
+v3.0.4 (2014-03-19)
+-------------------
+- [COOK-4431] - RPM / DEB package installs now use the rabbit version you specify
+- [COOK-4438] - rabbitmq_policy resource breaks if you use rabbitmq version >= 3.2
+
+
 v3.0.2 (2014-02-27)
 -------------------
 - [COOK-4384] Add ChefSpec Custom Matchers for LWRPs
