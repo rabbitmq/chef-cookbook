@@ -31,6 +31,7 @@ case node['platform_family']
 when 'debian'
   # installs the required setsid command -- should be there by default but just in case
   package 'util-linux'
+  package 'logrotate'
 
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server'
