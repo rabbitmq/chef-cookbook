@@ -9,7 +9,10 @@
 <% if node['rabbitmq']['web_console_ssl'] -%>
   {rabbitmq_management, [
     {listener, [{port, <%= node['rabbitmq']['web_console_ssl_port'] %>},
-                {ssl, true}
+                {ssl, true},
+                {ssl_opts, [{cacertfile,"<%= node['rabbitmq']['ssl_cacert'] %>"},
+                    {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
+                    {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"}]}
               ]}
   ]},
 <% end %>
