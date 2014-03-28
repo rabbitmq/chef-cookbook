@@ -3,6 +3,12 @@ rabbitmq Cookbook CHANGELOG
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
 
+v3.1.0 (2014-03-27)
+-------------------
+- [COOK-4459] - added missing dependency package logrotate
+- [COOK-4279] - Addition of ssl_opts in rabbitmq.config when web_console_ssl is enabled
+
+
 v3.0.4 (2014-03-19)
 -------------------
 - [COOK-4431] - RPM / DEB package installs now use the rabbit version you specify
