@@ -35,6 +35,7 @@ default['rabbitmq']['kernel']['inet_dist_use_interface'] = nil
 default['rabbitmq']['cluster'] = false
 default['rabbitmq']['cluster_disk_nodes'] = []
 default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
+default['rabbitmq']['cluster_partition_handling'] = 'ignore'
 
 # resource usage
 default['rabbitmq']['disk_free_limit_relative'] = nil
