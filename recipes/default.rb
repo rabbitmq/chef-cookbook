@@ -93,7 +93,7 @@ when 'debian'
     end
   end
 
-when 'rhel', 'fedora'
+when 'rhel', 'fedora', 'centos'
   # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
   if node['erlang']['install_method'] == 'esl'
     remote_file "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm" do
@@ -115,9 +115,51 @@ when 'rhel', 'fedora'
     rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
   end
 
-  service node['rabbitmq']['service_name'] do
-    action [:enable, :start]
+# Configure job control
+  if node['rabbitmq']['job_control'] == 'upstart'
+    # We start with stock init.d, remove it if we're not using init.d, otherwise leave it alone
+    service node['rabbitmq']['service_name'] do
+      action [:stop]
+      only_if { File.exists?('/etc/init.d/rabbitmq-server') }
+    end
+
+
+    file '/etc/init.d/rabbitmq-server' do
+      action :delete
+    end
+
+    template "/etc/init/#{node['rabbitmq']['service_name']}.conf" do
+      source 'rabbitmq.upstart.conf.erb'
+      owner 'root'
+      group 'root'
+      mode 0644
+      variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
+    end
+
+    service node['rabbitmq']['service_name'] do
+      provider Chef::Provider::Service::Upstart
+      action [:enable, :start]
+      # restart_command "stop #{node['rabbitmq']['service_name']} && start #{node['rabbitmq']['service_name']}"
+    end
   end
+
+  ## You'll see setsid used in all the init statements in this cookbook. This
+  ## is because there is a problem with the stock init script in the RabbitMQ
+  ## debian package (at least in 2.8.2) that makes it not daemonize properly
+  ## when called from chef. The setsid command forces the subprocess into a state
+  ## where it can daemonize properly. -Kevin (thanks to Daniel DeLeo for the help)
+  if node['rabbitmq']['job_control'] == 'initd'
+    service node['rabbitmq']['service_name'] do
+      start_command 'setsid /etc/init.d/rabbitmq-server start'
+      stop_command 'setsid /etc/init.d/rabbitmq-server stop'
+      restart_command 'setsid /etc/init.d/rabbitmq-server restart'
+      status_command 'setsid /etc/init.d/rabbitmq-server status'
+      supports :status => true, :restart => true
+      action [:enable, :start]
+    end
+  end
+
+
 
 when 'suse'
   # rabbitmq-server-plugins needs to be first so they both get installed
