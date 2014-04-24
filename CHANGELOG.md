@@ -3,6 +3,11 @@ rabbitmq Cookbook CHANGELOG
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
 
+v3.2.0 (2014-04-23)
+-------------------
+- [COOK-4517] - Add cluster partition handling attribute to the cookbook
+
+
 v3.1.0 (2014-03-27)
 -------------------
 - [COOK-4459] - added missing dependency package logrotate
