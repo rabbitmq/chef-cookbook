@@ -183,6 +183,12 @@ else
 end
 
 if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
+  service "stop #{node['rabbitmq']['service_name']}" do
+    service_name node['rabbitmq']['service_name']
+    pattern node['rabbitmq']['service_name']
+    action :stop
+  end  
+
   template node['rabbitmq']['erlang_cookie_path'] do
     source 'doterlang.cookie.erb'
     owner 'rabbitmq'
