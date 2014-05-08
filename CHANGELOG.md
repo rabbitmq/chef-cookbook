@@ -3,6 +3,11 @@ rabbitmq Cookbook CHANGELOG
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
 
+v3.2.2 (2014-05-07)
+-------------------
+- [COOK-2676] - Fixing startup issue when cluster mode is enabled
+
+
 v3.2.0 (2014-04-23)
 -------------------
 - [COOK-4517] - Add cluster partition handling attribute to the cookbook
