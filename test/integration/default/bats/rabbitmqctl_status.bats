@@ -1,3 +1,3 @@
 @test "rabbitmqctl status runs successfully" {
-  rabbitmqctl status
+  run sudo su - root -c "/usr/sbin/rabbitmqctl status"
 }
