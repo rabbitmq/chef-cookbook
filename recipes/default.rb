@@ -197,10 +197,10 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
   end
 
   service "start #{node['rabbitmq']['service_name']}" do
-      service_name node['rabbitmq']['service_name']
-      pattern node['rabbitmq']['service_name']
-      action :start
-  end  
+    service_name node['rabbitmq']['service_name']
+    pattern node['rabbitmq']['service_name']
+    action :start
+  end
 
   # Need to reset for clustering #
   execute 'reset-node' do
