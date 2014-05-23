@@ -24,6 +24,8 @@ class Chef::Resource
   include Opscode::RabbitMQ
 end
 
+package "curl"
+
 include_recipe 'erlang'
 
 ## Install the package
