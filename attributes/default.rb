@@ -11,6 +11,7 @@ default['rabbitmq']['config'] = nil
 default['rabbitmq']['logdir'] = nil
 default['rabbitmq']['mnesiadir'] = '/var/lib/rabbitmq/mnesia'
 default['rabbitmq']['service_name'] = 'rabbitmq-server'
+default['rabbitmq']['heartbeat'] = nil
 
 # config file location
 # http://www.rabbitmq.com/configure.html#define-environment-variables
