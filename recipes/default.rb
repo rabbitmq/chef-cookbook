@@ -186,6 +186,7 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
   service "stop #{node['rabbitmq']['service_name']}" do
     service_name node['rabbitmq']['service_name']
     pattern node['rabbitmq']['service_name']
+    only_if { File.exists?("/etc/init.d/#{node.rabbitmq.service_name}") }
     action :stop
   end  
 
