@@ -45,6 +45,6 @@
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>}
   ]}
 <% node['rabbitmq']['conf'].each do |key,value|  -%>
-	,{key, value}
+	,{<%= key %>, <%= value %>}
 <% end -%>
 ].
