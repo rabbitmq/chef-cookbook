@@ -48,6 +48,7 @@ when 'debian'
   if node['rabbitmq']['job_control'] == 'upstart'
     # We start with stock init.d, remove it if we're not using init.d, otherwise leave it alone
     service node['rabbitmq']['service_name'] do
+      provider Chef::Provider::Service::Debian
       action [:stop]
       only_if { File.exists?('/etc/init.d/rabbitmq-server') }
     end
@@ -77,6 +78,7 @@ when 'debian'
 
   if node['rabbitmq']['job_control'] == 'initd'
     service node['rabbitmq']['service_name'] do
+      provider Chef::Provider::Service::Debian
       supports :status => true, :restart => true
       action [:enable, :start]
     end
