@@ -4,7 +4,7 @@
 
 [
   {kernel, [
-<%= @kernel %> 
+<%= @kernel %>
   ]},
 <% if node['rabbitmq']['web_console_ssl'] -%>
   {rabbitmq_management, [
@@ -18,7 +18,7 @@
 <% end %>
   {rabbit, [
 <% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] -%>
-    {cluster_nodes, {[<%= node['rabbitmq']['cluster_disk_nodes'].map{|n| "\'#{n}\'"}.join(',') %>], disc}},
+    {cluster_nodes, {[<%= node['rabbitmq']['cluster_disk_nodes'].map{|n| "\'#{n}\'"}.sort.join(',') %>], disc}},
     {cluster_partition_handling,<%= node['rabbitmq']['cluster_partition_handling'] %>},
 <% end %>
 <% if node['rabbitmq']['ssl'] -%>
