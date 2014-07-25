@@ -75,6 +75,7 @@ default['rabbitmq']['enabled_users'] =
     [{ :vhost => nil , :conf => '.*', :write => '.*', :read => '.*' }]
   }]
 default['rabbitmq']['disabled_users'] = []
+default['rabbitmq']['loopback_users'] = '[<<"guest">>]'
 
 # plugins
 default['rabbitmq']['enabled_plugins'] = []
