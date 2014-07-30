@@ -1,8 +1,9 @@
 #
 # Cookbook Name:: rabbitmq
-# Recipe:: mgmt_console
+# Resource:: policy
 #
-# Copyright 2012, Tacit Knowledge, Inc.
+# Author: Robert Choi <taeilchoi1@gmail.com>
+# Copyright 2013 by Robert Choi
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,15 +18,11 @@
 # limitations under the License.
 #
 
-include_recipe 'rabbitmq::default'
+actions :set, :clear, :list
+default_action :set
 
-plugins = %w( rabbitmq_management rabbitmq_management_visualiser )
-
-service_name = node['rabbitmq']['service_name']
-
-plugins.each do |plugin|
-  rabbitmq_plugin plugin do
-    action :enable
-    notifies :restart, "service[#{service_name}]"
-  end
-end
+attribute :policy, :kind_of => String, :name_attribute => true
+attribute :pattern, :kind_of => String
+attribute :params, :kind_of => Hash
+attribute :priority, :kind_of => Integer
+attribute :vhost, :kind_of => String

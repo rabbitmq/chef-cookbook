@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: rabbitmq
-# Recipe:: mgmt_console
+# Cookbook Name:: rabbitmq_test
+# Recipe:: default
 #
-# Copyright 2012, Tacit Knowledge, Inc.
+# Copyright 2012-2013, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,15 +17,13 @@
 # limitations under the License.
 #
 
+chef_gem 'bunny'
+
 include_recipe 'rabbitmq::default'
 
-plugins = %w( rabbitmq_management rabbitmq_management_visualiser )
-
-service_name = node['rabbitmq']['service_name']
-
-plugins.each do |plugin|
-  rabbitmq_plugin plugin do
-    action :enable
-    notifies :restart, "service[#{service_name}]"
-  end
+# HACK: Give rabbit time to spin up before the tests, it seems
+# to be responding that it has started before it really has
+execute 'sleep 10' do
+  action :nothing
+  subscribes :run, "service[#{node['rabbitmq']['service_name']}]", :delayed
 end

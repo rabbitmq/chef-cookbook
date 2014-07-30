@@ -1,8 +1,5 @@
 #
-# Cookbook Name:: rabbitmq
-# Recipe:: mgmt_console
-#
-# Copyright 2012, Tacit Knowledge, Inc.
+# Copyright 2012, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,15 +14,16 @@
 # limitations under the License.
 #
 
-include_recipe 'rabbitmq::default'
+describe 'rabbitmq_test::cluster' do
 
-plugins = %w( rabbitmq_management rabbitmq_management_visualiser )
-
-service_name = node['rabbitmq']['service_name']
-
-plugins.each do |plugin|
-  rabbitmq_plugin plugin do
-    action :enable
-    notifies :restart, "service[#{service_name}]"
+  it 'writes the erlang cookie file' do
+    file('/var/lib/rabbitmq/.erlang.cookie').must_exist
   end
+
+  it 'writes cluster configuration to the config file' do
+    file('/etc/rabbitmq/rabbitmq.conf').must_match(
+      /^    {cluster_nodes, [.*]},$/
+    )
+  end
+
 end

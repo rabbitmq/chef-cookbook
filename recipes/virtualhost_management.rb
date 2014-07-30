@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 #
 # Cookbook Name:: rabbitmq
 # Recipe:: virtualhost_management
 #
 # Copyright 2013, Grégoire Seux
+# Copyright 2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,14 +19,18 @@
 # limitations under the License.
 #
 
-include_recipe "rabbitmq::default"
+include_recipe 'rabbitmq::default'
 
-virtualhosts = node['rabbitmq']['virtualhosts']
-
-virtualhosts.each do |virtualhost|
+node['rabbitmq']['virtualhosts'].each do |virtualhost|
   rabbitmq_vhost virtualhost do
     action :add
-    notifies :restart, resources(:service => node['rabbitmq']['service_name'])
+    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
 
+node['rabbitmq']['disabled_virtualhosts'].each do |virtualhost|
+  rabbitmq_vhost virtualhost do
+    action :delete
+    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  end
+end

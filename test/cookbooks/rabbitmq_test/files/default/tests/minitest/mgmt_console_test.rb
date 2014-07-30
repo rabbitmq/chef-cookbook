@@ -1,8 +1,5 @@
 #
-# Cookbook Name:: rabbitmq
-# Recipe:: mgmt_console
-#
-# Copyright 2012, Tacit Knowledge, Inc.
+# Copyright 2012-2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,15 +14,17 @@
 # limitations under the License.
 #
 
-include_recipe 'rabbitmq::default'
+require File.expand_path('../support/helpers', __FILE__)
 
-plugins = %w( rabbitmq_management rabbitmq_management_visualiser )
+describe 'rabbitmq_test::mgmt_console' do
+  include Helpers::RabbitMQ
 
-service_name = node['rabbitmq']['service_name']
-
-plugins.each do |plugin|
-  rabbitmq_plugin plugin do
-    action :enable
-    notifies :restart, "service[#{service_name}]"
+  it 'enables the rabbitmq_management plugin' do
+    assert(plugin_enabled?('rabbitmq_management'))
   end
+
+  it 'enables the rabbitmq_management_visualiser plugin' do
+    assert(plugin_enabled?('rabbitmq_management_visualiser'))
+  end
+
 end

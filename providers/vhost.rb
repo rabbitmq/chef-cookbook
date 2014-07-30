@@ -2,7 +2,7 @@
 # Cookbook Name:: rabbitmq
 # Provider:: vhost
 #
-# Copyright 2011, Opscode, Inc.
+# Copyright 2011-2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,9 +18,12 @@
 #
 
 def vhost_exists?(name)
-  cmd = Mixlib::ShellOut.new("rabbitmqctl list_vhosts |grep '#{name}\\b'")
+  cmd = "rabbitmqctl -q list_vhosts | grep ^#{name}$"
+  cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
+  Chef::Log.debug "rabbitmq_vhost_exists?: #{cmd}"
+  Chef::Log.debug "rabbitmq_vhost_exists?: #{cmd.stdout}"
   begin
     cmd.error!
     true
@@ -31,7 +34,9 @@ end
 
 action :add do
   unless vhost_exists?(new_resource.vhost)
-    execute "rabbitmqctl add_vhost #{new_resource.vhost}" do
+    cmd = "rabbitmqctl add_vhost #{new_resource.vhost}"
+    execute cmd do
+      Chef::Log.debug "rabbitmq_vhost_add: #{cmd}"
       Chef::Log.info "Adding RabbitMQ vhost '#{new_resource.vhost}'."
       new_resource.updated_by_last_action(true)
     end
@@ -39,8 +44,10 @@ action :add do
 end
 
 action :delete do
-  if vhost.exists?(new_resource.vhost)
-    execute "rabbitmqctl delete_vhost #{new_resource.vhost}" do
+  if vhost_exists?(new_resource.vhost)
+    cmd =  "rabbitmqctl delete_vhost #{new_resource.vhost}"
+    execute cmd do
+      Chef::Log.debug "rabbitmq_vhost_delete: #{cmd}"
       Chef::Log.info "Deleting RabbitMQ vhost '#{new_resource.vhost}'."
       new_resource.updated_by_last_action(true)
     end

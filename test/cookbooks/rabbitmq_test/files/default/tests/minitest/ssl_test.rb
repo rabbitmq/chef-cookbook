@@ -1,8 +1,5 @@
 #
-# Cookbook Name:: rabbitmq
-# Recipe:: mgmt_console
-#
-# Copyright 2012, Tacit Knowledge, Inc.
+# Copyright 2012, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,15 +14,5 @@
 # limitations under the License.
 #
 
-include_recipe 'rabbitmq::default'
-
-plugins = %w( rabbitmq_management rabbitmq_management_visualiser )
-
-service_name = node['rabbitmq']['service_name']
-
-plugins.each do |plugin|
-  rabbitmq_plugin plugin do
-    action :enable
-    notifies :restart, "service[#{service_name}]"
-  end
+describe 'rabbitmq_test::ssl' do
 end

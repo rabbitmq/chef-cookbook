@@ -1,0 +1,17 @@
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-5.10
+  - name: centos-6.5
+  - name: ubuntu-12.04
+  - name: ubuntu-14.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[minitest-handler]
+      - recipe[rabbitmq::default]

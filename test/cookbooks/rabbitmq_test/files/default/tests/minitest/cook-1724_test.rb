@@ -1,8 +1,5 @@
 #
-# Cookbook Name:: rabbitmq
-# Recipe:: mgmt_console
-#
-# Copyright 2012, Tacit Knowledge, Inc.
+# Copyright 2012, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,15 +14,16 @@
 # limitations under the License.
 #
 
-include_recipe 'rabbitmq::default'
+describe 'rabbitmq_test::cook-1724' do
+  include MiniTest::Chef::Assertions
+  include MiniTest::Chef::Context
+  include MiniTest::Chef::Resources
 
-plugins = %w( rabbitmq_management rabbitmq_management_visualiser )
+  it 'doesnt use the rabbitmq apt repository' do
+    skip 'Only applicable on Debian family' unless node['platform_family'] == 'debian'
 
-service_name = node['rabbitmq']['service_name']
-
-plugins.each do |plugin|
-  rabbitmq_plugin plugin do
-    action :enable
-    notifies :restart, "service[#{service_name}]"
+    file('/etc/apt/sources.list.d/rabbitmq-source.list').wont_exist &&
+      package('rabbitmq-server').must_be_installed
   end
+
 end
