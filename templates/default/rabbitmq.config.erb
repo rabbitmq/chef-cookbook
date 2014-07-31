@@ -41,6 +41,13 @@
 <% if node['rabbitmq']['vm_memory_high_watermark'] -%>
     {vm_memory_high_watermark, <%= node['rabbitmq']['vm_memory_high_watermark'] %>},
 <% end %>
+<% if node['rabbitmq']['loopback_users'] -%>
+   <% if node['rabbitmq']['loopback_users'].empty? -%>
+     {loopback_users, []},
+   <% else %>
+     {loopback_users, [<%= node['rabbitmq']['loopback_users'].map{ |user| "<<\""+user+"\">>" }.join(',') -%>]},
+   <% end %>
+ <% end %>
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>}
   ]}
