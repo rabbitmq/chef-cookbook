@@ -2,6 +2,12 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.3.0 (2014-08-28)
+-------------------
+- Bump default rabbitmq-server version to 3.3.5
+- [COOK-4641] - remove setsid calls in service resource
+- Testing updates
+- Minor documentation fix re: rabbitmq_policy usage
 
 v3.2.2 (2014-05-07)
 -------------------
