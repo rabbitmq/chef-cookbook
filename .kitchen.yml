@@ -13,5 +13,11 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[minitest-handler]
       - recipe[rabbitmq::default]
+  - name: cluster
+    run_list:
+      - recipe[rabbitmq::default]
+    attributes:
+      rabbitmq:
+        cluster: true
+        cluster_disk_nodes: ['rabbit@localhost']
