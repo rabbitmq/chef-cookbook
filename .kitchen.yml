@@ -20,4 +20,4 @@ suites:
     attributes:
       rabbitmq:
         cluster: true
-        cluster_disk_nodes: ['node1', 'node2']
+        cluster_disk_nodes: ['rabbit@localhost']
