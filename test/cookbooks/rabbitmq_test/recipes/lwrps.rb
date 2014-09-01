@@ -36,3 +36,12 @@ rabbitmq_user 'kitchen3' do
   password 'foobar'
   action :change_password
 end
+
+rabbitmq_exchange 'testexchange' do
+  type 'topic'
+end
+rabbitmq_exchange_binding 'testbinding' do
+  destination 'testexchange'
+  type 'exchange'
+  arguments('dest' => 'test')
+end
