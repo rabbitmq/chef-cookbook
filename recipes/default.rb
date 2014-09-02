@@ -160,7 +160,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   group 'root'
   mode 00644
   variables(
-    :kernel => format_kernel_parameters
+    :kernel => format_kernel_parameters,
     :log_levels => format_log_levels_parameters
     )
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
