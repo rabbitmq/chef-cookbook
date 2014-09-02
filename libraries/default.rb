@@ -38,5 +38,16 @@ module Opscode
 
       rendered.each { |r| r.prepend('    ') }.join(",\n")
     end
+
+    def format_log_levels_parameters
+      rendered = []
+      log_levels = node['rabbitmq']['log_levels'].dup
+
+      log_levels.select { |k, v| !v.nil? }.each_pair do |param, val|
+        rendered << "{#{param}, #{val}}"
+      end
+
+      rendered.each { |r| r.prepend('    ') }.join(",\n")
+    end
   end
 end
