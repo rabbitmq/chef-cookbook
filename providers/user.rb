@@ -35,19 +35,24 @@ def user_exists?(name)
 end
 
 def user_has_tag?(name, tag)
-  tag = '"\[\]"' if tag.nil?
-  cmd = "rabbitmqctl -q list_users | grep \"^#{name}\\b\" | grep #{tag}"
+  cmd = "rabbitmqctl -q list_users"
   cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
+  user_list = cmd.stdout
+  tags = user_list.match(/^#{name}\s+\[(.+*)\]/)[1].split
   Chef::Log.debug "rabbitmq_user_has_tag?: #{cmd}"
   Chef::Log.debug "rabbitmq_user_has_tag?: #{cmd.stdout}"
-  begin
-    cmd.error!
+  Chef::Log.debug "rabbitmq_user_has_tag?: #{name} has tags: #{tags}"
+  if tag.nil? && tags.empty?
     true
-  rescue RuntimeError
+  elsif tags.include?(tag)
+    true
+  else
     false
   end
+rescue RuntimeError
+  false
 end
 
 # does the user have the rights listed on the vhost?
