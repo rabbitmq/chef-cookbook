@@ -36,3 +36,17 @@ rabbitmq_user 'kitchen3' do
   password 'foobar'
   action :change_password
 end
+
+# download the rabbitmqadmin util from management plugin
+# this tests an immediate notifies statement
+# see https://github.com/kennonkwok/rabbitmq/issues/141
+rabbitmq_plugin "rabbitmq_management" do
+  action :enable
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately # must restart before we can download
+end
+
+remote_file "/usr/local/bin/rabbitmqadmin" do
+  source "http://localhost:15672/cli/rabbitmqadmin"
+  mode "0755"
+  action :create
+end
