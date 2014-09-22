@@ -2,6 +2,10 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.3.1 (2014-09-22)
+-------------------
+- Add the packages upgrade support.
+
 v3.3.0 (2014-08-28)
 -------------------
 - Bump default rabbitmq-server version to 3.3.5
