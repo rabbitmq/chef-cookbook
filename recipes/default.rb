@@ -156,6 +156,7 @@ end
 
 template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   source 'rabbitmq.config.erb'
+  cookbook node['rabbitmq']['config_template_cookbook']
   owner 'root'
   group 'root'
   mode 00644
