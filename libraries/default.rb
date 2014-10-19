@@ -38,5 +38,9 @@ module Opscode
 
       rendered.each { |r| r.prepend('    ') }.join(",\n")
     end
+
+    def format_ssl_versions
+      Array(node['rabbitmq']['ssl_versions']).map { |n| "'#{n}'" }.join(',')
+    end
   end
 end

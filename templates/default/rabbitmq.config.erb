@@ -12,14 +12,14 @@
                 {ssl, true},
                 {ssl_opts, [{cacertfile,"<%= node['rabbitmq']['ssl_cacert'] %>"},
                     {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
-                    {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"}<% if node['rabbitmq']['ssl_versions'] -%>,
-                    {versions,[<%= Array(node['rabbitmq']['ssl_versions']).map{|n| "\'#{n}\'"}.join(',') %>]}
+                    {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"}<% if @ssl_versions -%>,
+                    {versions,[<%= @ssl_versions %>]}
                     <% end -%>]}
               ]}
   ]},
 <% end %>
-<% if node['rabbitmq']['ssl'] && node['rabbitmq']['ssl_versions'] -%>
-  {ssl, [{versions, [<%= Array(node['rabbitmq']['ssl_versions']).map{|n| "\'#{n}\'"}.join(',') %>]}]},
+<% if node['rabbitmq']['ssl'] && @ssl_versions -%>
+  {ssl, [{versions, [<%= @ssl_versions %>]}]},
 <% end %>
   {rabbit, [
 <% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] -%>
@@ -32,8 +32,8 @@
                     {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
                     {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"},
                     {verify,<%= node['rabbitmq']['ssl_verify'] %>},
-                    {fail_if_no_peer_cert,<%= node['rabbitmq']['ssl_fail_if_no_peer_cert'] %>}<% if node['rabbitmq']['ssl_versions'] -%>,
-                    {versions,[<%= Array(node['rabbitmq']['ssl_versions']).map{|n| "\'#{n}\'"}.join(',') %>]}
+                    {fail_if_no_peer_cert,<%= node['rabbitmq']['ssl_fail_if_no_peer_cert'] %>}<% if @ssl_versions -%>,
+                    {versions,[<%= @ssl_versions %>]}
                     <% end -%>]},
 <% end %>
 <% if node['rabbitmq']['tcp_listen'] -%>
