@@ -172,7 +172,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   variables(
     :kernel => format_kernel_parameters
     )
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
 if File.exists?(node['rabbitmq']['erlang_cookie_path'])
