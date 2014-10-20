@@ -34,6 +34,8 @@ def plugin_enabled?(name)
   cmd.stdout =~ /\b#{name}\b/
 end
 
+use_inline_resources
+
 action :enable do
   unless plugin_enabled?(new_resource.plugin)
     execute "rabbitmq-plugins enable #{new_resource.plugin}" do

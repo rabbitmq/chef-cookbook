@@ -21,3 +21,6 @@ suites:
       rabbitmq:
         cluster: true
         cluster_disk_nodes: ['rabbit@localhost']
+  - name: lwrps
+    run_list:
+      - recipe[rabbitmq_test::lwrps]
