@@ -26,6 +26,6 @@ service_name = node['rabbitmq']['service_name']
 plugins.each do |plugin|
   rabbitmq_plugin plugin do
     action :enable
-    notifies :restart, "service[#{service_name}]"
+    notifies :restart, "service[#{service_name}]", :immediately
   end
 end
