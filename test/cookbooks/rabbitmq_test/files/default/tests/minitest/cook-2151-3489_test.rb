@@ -31,7 +31,7 @@ describe 'rabbitmq_test::cook-2151' do
 
   it 'includes the open_file_limit configuration setting' do
     file("#{node['rabbitmq']['config_root']}/rabbitmq-env.conf")
-       .must_match(/(ulimit -n #{node['rabbitmq']['open_file_limit']})/)
+      .must_match(/(ulimit -n #{node['rabbitmq']['open_file_limit']})/)
   end
 
 end

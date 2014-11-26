@@ -73,7 +73,7 @@ default['rabbitmq']['disabled_virtualhosts'] = []
 # users
 default['rabbitmq']['enabled_users'] =
   [{ :name => 'guest', :password => 'guest', :rights =>
-    [{ :vhost => nil , :conf => '.*', :write => '.*', :read => '.*' }]
+    [{ :vhost => nil, :conf => '.*', :write => '.*', :read => '.*' }]
   }]
 default['rabbitmq']['disabled_users'] = []
 

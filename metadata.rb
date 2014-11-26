@@ -1,15 +1,15 @@
-name              'rabbitmq'
-maintainer        'Opscode, Inc.'
-maintainer_email  'cookbooks@opscode.com'
-license           'Apache 2.0'
-description       'Installs and configures RabbitMQ server'
-version           '3.4.0'
-recipe            'rabbitmq', 'Install and configure RabbitMQ'
-recipe            'rabbitmq::cluster', 'Set up RabbitMQ clustering.'
-recipe            'rabbitmq::plugin_management', 'Manage plugins with node attributes'
-recipe            'rabbitmq::virtualhost_management', 'Manage virtualhost with node attributes'
-recipe            'rabbitmq::user_management', 'Manage users with node attributes'
-depends           'erlang', '>= 0.9'
+name 'rabbitmq'
+maintainer 'Opscode, Inc.'
+maintainer_email 'cookbooks@opscode.com'
+license 'Apache 2.0'
+description 'Installs and configures RabbitMQ server'
+version '3.4.0'
+recipe 'rabbitmq', 'Install and configure RabbitMQ'
+recipe 'rabbitmq::cluster', 'Set up RabbitMQ clustering.'
+recipe 'rabbitmq::plugin_management', 'Manage plugins with node attributes'
+recipe 'rabbitmq::virtualhost_management', 'Manage virtualhost with node attributes'
+recipe 'rabbitmq::user_management', 'Manage users with node attributes'
+depends 'erlang', '>= 0.9'
 
 supports 'debian'
 supports 'ubuntu'
@@ -80,7 +80,7 @@ attribute 'rabbitmq/virtualhosts',
 attribute 'rabbitmq/enabled_users',
   :display_name => 'Users and their rights on rabbitmq instance',
   :description => 'Users and description of their rights',
-  :default => [{ :name => 'guest', :password => 'guest', :rights => [{ :vhost => nil , :conf => '.*', :write => '.*', :read => '.*' }] }],
+  :default => [{ :name => 'guest', :password => 'guest', :rights => [{ :vhost => nil, :conf => '.*', :write => '.*', :read => '.*' }] }],
   :type => 'array'
 
 attribute 'rabbitmq/disabled_users',

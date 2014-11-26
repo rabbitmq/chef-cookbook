@@ -48,7 +48,7 @@ action :set do
     new_resource.params.each do |key, value|
       cmd << ',' unless first_param
 
-      if value.kind_of? String
+      if value.is_a? String
         cmd << "\"#{key}\":\"#{value}\""
       else
         cmd << "\"#{key}\":#{value}"
