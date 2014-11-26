@@ -2,6 +2,12 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.5.0 (2014-11-26)
+-------------------
+Updated for the new release of RabbitMQ release 3.4.2
+Removed the Centos 5.10 from integration testing
+Updated the Gemfile for testing
+
 v3.4.0 (2014-11-23)
 -------------------
 - Updated the RuboCop camel case
