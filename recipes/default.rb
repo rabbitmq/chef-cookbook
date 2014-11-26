@@ -20,8 +20,8 @@
 #
 
 #
-class Chef::Resource
-  include Opscode::RabbitMQ
+class Chef::Resource # rubocop:disable all
+  include Opscode::RabbitMQ # rubocop:enable all
 end
 
 include_recipe 'erlang'
