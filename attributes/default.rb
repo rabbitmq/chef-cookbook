@@ -91,7 +91,7 @@ when 'smartos'
 end
 
 # heartbeat
-default['rabbitmq']['heartbeat'] = 600
+default['rabbitmq']['heartbeat'] = 580
 
 # Example HA policies
 default['rabbitmq']['policies']['ha-all']['pattern'] = '^(?!amq\\.).*'
