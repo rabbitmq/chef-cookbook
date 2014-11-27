@@ -83,14 +83,6 @@ when 'debian'
   end
 
 when 'rhel', 'fedora'
-  # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
-  if node['erlang']['install_method'] == 'esl'
-    remote_file "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm" do
-      source 'https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/esl-erlang-compat-R14B-1.el6.noarch.rpm?raw=true'
-    end
-    rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
-  end
-
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server'
   else
@@ -161,7 +153,8 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   group 'root'
   mode 00644
   variables(
-    :kernel => format_kernel_parameters
+    :kernel => format_kernel_parameters,
+    :log_levels => format_log_levels_parameters
     )
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end

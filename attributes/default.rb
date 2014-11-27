@@ -9,6 +9,7 @@ default['rabbitmq']['address']  = nil
 default['rabbitmq']['port']  = nil
 default['rabbitmq']['config'] = nil
 default['rabbitmq']['logdir'] = nil
+default['rabbitmq']['logs'] = nil
 default['rabbitmq']['mnesiadir'] = '/var/lib/rabbitmq/mnesia'
 default['rabbitmq']['service_name'] = 'rabbitmq-server'
 
@@ -22,6 +23,9 @@ default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
 # rabbitmq.config defaults
 default['rabbitmq']['default_user'] = 'guest'
 default['rabbitmq']['default_pass'] = 'guest'
+
+# logging levels
+default['rabbitmq']['log_levels'] = { 'connection' => 'info' }
 
 # Erlang kernel application options
 # See http://www.erlang.org/doc/man/kernel_app.html
