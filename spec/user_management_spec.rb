@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'rabbitmq::user_management' do
   let(:chef_run) do
-    ChefSpec::Runner.new do |node|
+    ChefSpec::ServerRunner.new do |node|
       node.default['rabbitmq'] = {
         ['version'] => '3.3.5-1'
       }

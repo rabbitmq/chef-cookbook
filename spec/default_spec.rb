@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'rabbitmq::default' do
-  let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::ServerRunner.new.converge(described_recipe) }
   let(:file_cache_path) { Chef::Config[:file_cache_path] }
 
   version = '3.3.5'
