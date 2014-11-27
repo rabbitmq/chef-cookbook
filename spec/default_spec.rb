@@ -1,7 +1,14 @@
 require 'spec_helper'
 
 describe 'rabbitmq::default' do
-  let(:chef_run) { ChefSpec::ServerRunner.new.converge(described_recipe) }
+  let(:chef_run) do
+    ChefSpec::ServerRunner.new do |node|
+      node.default['rabbitmq'] = {
+        ['version'] => '3.3.5'
+      }
+    end.converge(described_recipe)
+  end
+
   let(:file_cache_path) { Chef::Config[:file_cache_path] }
 
   version = '3.3.5'
@@ -35,7 +42,7 @@ describe 'rabbitmq::default' do
   end
 
   it 'creates a rabbitmq-server rpm in the cache path' do
-    expect(chef_run).to create_remote_file_if_missing("#{file_cache_path}/rabbitmq-server-#{version}-1.noarch.rpm")
+    expect(chef_run).to create_remote_file_if_missing("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{version}-1.noarch.rpm")
   end
 
   it 'installs the rabbitmq-server rpm_package with the default action' do

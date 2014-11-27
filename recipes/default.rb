@@ -166,7 +166,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end
 
-if File.exist?(node['rabbitmq']['erlang_cookie_path'])
+if File.exist?(node['rabbitmq']['erlang_cookie_path']) && File.readable?((node['rabbitmq']['erlang_cookie_path']))
   existing_erlang_key =  File.read(node['rabbitmq']['erlang_cookie_path']).strip
 else
   existing_erlang_key = ''
