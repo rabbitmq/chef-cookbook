@@ -1,17 +1,14 @@
 require 'spec_helper'
 
 describe 'rabbitmq::default' do
+
+  version = '3.3.5-1'
+
   let(:chef_run) do
-    ChefSpec::ServerRunner.new do |node|
-      node.default['rabbitmq'] = {
-        ['version'] => '3.3.5'
-      }
-    end.converge(described_recipe)
+    ChefSpec::ServerRunner.new.converge(described_recipe)
   end
 
   let(:file_cache_path) { Chef::Config[:file_cache_path] }
-
-  version = '3.3.5'
 
   it 'creates a directory for mnesiadir' do
     expect(chef_run).to create_directory('/var/lib/rabbitmq/mnesia')
@@ -42,11 +39,11 @@ describe 'rabbitmq::default' do
   end
 
   it 'creates a rabbitmq-server rpm in the cache path' do
-    expect(chef_run).to create_remote_file_if_missing("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{version}-1.noarch.rpm")
+    expect(chef_run).to create_remote_file_if_missing("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{version}.noarch.rpm")
   end
 
   it 'installs the rabbitmq-server rpm_package with the default action' do
-    expect(chef_run).to install_rpm_package("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{version}-1.noarch.rpm")
+    expect(chef_run).to install_rpm_package("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{version}.noarch.rpm")
   end
 
   it 'creates a template rabbitmq.config with attributes' do
