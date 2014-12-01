@@ -16,7 +16,7 @@ default['rabbitmq']['service_name'] = 'rabbitmq-server'
 # http://www.rabbitmq.com/configure.html#define-environment-variables
 # "The .config extension is automatically appended by the Erlang runtime."
 default['rabbitmq']['config_root'] = '/etc/rabbitmq'
-default['rabbitmq']['config'] = '/etc/rabbitmq/rabbitmq'
+default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq"
 default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
 
 # rabbitmq.config defaults
@@ -86,7 +86,7 @@ case node['platform_family']
 when 'smartos'
   default['rabbitmq']['service_name'] = 'rabbitmq'
   default['rabbitmq']['config_root'] = '/opt/local/etc/rabbitmq'
-  default['rabbitmq']['config'] = '/opt/local/etc/rabbitmq/rabbitmq'
+  default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq"
   default['rabbitmq']['erlang_cookie_path'] = '/var/db/rabbitmq/.erlang.cookie'
 end
 
