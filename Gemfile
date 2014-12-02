@@ -2,13 +2,14 @@ source 'https://rubygems.org'
 
 group :lint do
   gem 'foodcritic', '~> 4.0'
-  gem 'rubocop', '~> 0.18'
+  gem 'rubocop', '~> 0.23'
   gem 'rainbow', '< 2.0'
 end
 
 group :unit do
   gem 'berkshelf'
   gem 'chefspec'
+  gem 'fauxhai'
 end
 
 group :kitchen_common do
