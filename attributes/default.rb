@@ -103,3 +103,6 @@ default['rabbitmq']['policies']['ha-two']['params'] = { 'ha-mode' => 'exactly', 
 default['rabbitmq']['policies']['ha-two']['priority'] = 1
 
 default['rabbitmq']['disabled_policies'] = []
+
+# conf
+default['rabbitmq']['conf'] = {}
