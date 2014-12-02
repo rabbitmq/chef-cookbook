@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'rabbitmq::default' do
 
-  version = '3.3.5-1'
+  version = '3.4.2-1'
 
   let(:chef_run) do
     ChefSpec::ServerRunner.new.converge(described_recipe)
