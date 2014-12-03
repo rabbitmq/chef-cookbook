@@ -33,6 +33,7 @@ when 'debian'
   package 'logrotate'
 
   if node['rabbitmq']['use_distro_version']
+    execute 'echo "rabbitmq-server install" | dpkg --set-selections'
     package 'rabbitmq-server'
   else
     # we need to download the package
@@ -41,6 +42,7 @@ when 'debian'
       source deb_package
       action :create_if_missing
     end
+    execute 'echo "rabbitmq-server hold" | dpkg --set-selections'
     dpkg_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
   end
 
