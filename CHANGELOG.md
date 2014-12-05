@@ -2,6 +2,11 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.5.1 (2014-12-5)
+-------------------
+#176 Chef-client 12 released and the `PATH` attribute was removed.
+This release fixes it.
+
 v3.5.0 (2014-12-2)
 -------------------
 Song of this Release: 0 to 100/The Catchup by Drake
