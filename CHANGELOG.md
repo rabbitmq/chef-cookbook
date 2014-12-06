@@ -42,6 +42,7 @@ v3.3.0 (2014-08-28)
 - [COOK-4641] - remove setsid calls in service resource
 - Testing updates
 - Minor documentation fix re: rabbitmq_policy usage
+- Add the packages upgrade support.
 
 v3.2.2 (2014-05-07)
 -------------------

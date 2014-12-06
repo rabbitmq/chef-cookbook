@@ -33,7 +33,9 @@ when 'debian'
   package 'logrotate'
 
   if node['rabbitmq']['use_distro_version']
-    package 'rabbitmq-server'
+    package 'rabbitmq-server' do
+      action :upgrade
+    end
   else
     # we need to download the package
     deb_package = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
@@ -92,7 +94,9 @@ when 'rhel', 'fedora'
   end
 
   if node['rabbitmq']['use_distro_version']
-    package 'rabbitmq-server'
+    package 'rabbitmq-server' do
+      action :upgrade
+    end
   else
     # We need to download the rpm
     rpm_package = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
@@ -112,14 +116,20 @@ when 'suse'
   # rabbitmq-server-plugins needs to be first so they both get installed
   # from the right repository. Otherwise, zypper will stop and ask for a
   # vendor change.
-  package 'rabbitmq-server-plugins'
-  package 'rabbitmq-server'
+  package 'rabbitmq-server-plugins' do
+    action :upgrade
+  end
+  package 'rabbitmq-server' do
+    action :upgrade
+  end
 
   service node['rabbitmq']['service_name'] do
     action [:enable, :start]
   end
 when 'smartos'
-  package 'rabbitmq'
+  package 'rabbitmq' do
+    action :upgrade
+  end
 
   service 'epmd' do
     action :start
