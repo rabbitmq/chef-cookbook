@@ -130,6 +130,10 @@ when 'smartos'
   end
 end
 
+service node['rabbitmq']['service_name'] do
+  action :stop
+end
+
 if node['rabbitmq']['logdir']
   directory node['rabbitmq']['logdir'] do
     owner 'rabbitmq'
@@ -191,4 +195,8 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     command 'rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app'
     action :nothing
   end
+end
+
+service node['rabbitmq']['service_name'] do
+  action :start
 end
