@@ -48,8 +48,8 @@
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>},
     {heartbeat, <%= node['rabbitmq']['heartbeat'] %>}
-  ]}
 <% node['rabbitmq']['conf'].each do |key,value|  -%>
-	,{<%= key %>, <%= value %>}
+    ,{<%= key %>, <%= value %>}
 <% end -%>
+  ]}
 ].
