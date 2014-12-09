@@ -21,8 +21,8 @@ module Opscode
   module RabbitMQ
     # This method does some of the yuckiness of formatting parameters properly
     # for rendering into the rabbit.config template.
-    def format_kernel_parameters
-      rendered = []
+    def format_kernel_parameters  # rubocop:disable all
+      rendered = []   # rubocop:enable all
       kernel = node['rabbitmq']['kernel'].dup
 
       # This parameter is special and needs commas instead of periods.
@@ -32,7 +32,7 @@ module Opscode
       # Otherwise, we can just render it nicely as Erlang wants. This
       # theoretically opens the door for arbitrary kernel_app parameters to be
       # declared.
-      kernel.select { |k, v| !v.nil? }.each_pair do |param, val|
+      kernel.select { |_k, v| !v.nil? }.each_pair do |param, val|
         rendered << "{#{param}, #{val}}"
       end
 

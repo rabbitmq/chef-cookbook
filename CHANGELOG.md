@@ -2,6 +2,21 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.4.0 (2014-11-23)
+-------------------
+- Updated the RuboCop camel case
+- Make rabbitmq service restart immediately
+- Add sensitive flag for resources that expose passwords in log
+- Issue: #153
+- move serverspec v1 tests to use busser-rspec
+- Adding switch to make TCP listeners optional
+- Update user.rb
+- Update default.rb
+- Merge branch 'pr-128'
+- add serverspec tests for plugin lwrp
+- Plugin provider. fixes #141
+- Add test that fails if plugin notifications aren't working properly.
+
 v3.3.0 (2014-08-28)
 -------------------
 - Bump default rabbitmq-server version to 3.3.5
