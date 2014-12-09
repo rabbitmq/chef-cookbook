@@ -80,6 +80,7 @@ default['rabbitmq']['disabled_users'] = []
 # plugins
 default['rabbitmq']['enabled_plugins'] = []
 default['rabbitmq']['disabled_plugins'] = []
+default['rabbitmq']['community_plugins'] = nil
 
 # platform specific settings
 case node['platform_family']
