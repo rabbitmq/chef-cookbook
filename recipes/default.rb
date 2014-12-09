@@ -20,8 +20,8 @@
 #
 
 #
-class Chef::Resource
-  include Opscode::RabbitMQ
+class Chef::Resource # rubocop:disable all
+  include Opscode::RabbitMQ # rubocop:enable all
 end
 
 include_recipe 'erlang'
@@ -49,7 +49,7 @@ when 'debian'
     # We start with stock init.d, remove it if we're not using init.d, otherwise leave it alone
     service node['rabbitmq']['service_name'] do
       action [:stop]
-      only_if { File.exists?('/etc/init.d/rabbitmq-server') }
+      only_if { File.exist?('/etc/init.d/rabbitmq-server') }
     end
 
     execute 'remove rabbitmq init.d command' do
@@ -151,10 +151,11 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   owner 'root'
   group 'root'
   mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end
 
 template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
+  sensitive true
   source 'rabbitmq.config.erb'
   owner 'root'
   group 'root'
@@ -162,10 +163,10 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
   variables(
     :kernel => format_kernel_parameters
     )
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end
 
-if File.exists?(node['rabbitmq']['erlang_cookie_path'])
+if File.exist?(node['rabbitmq']['erlang_cookie_path'])
   existing_erlang_key =  File.read(node['rabbitmq']['erlang_cookie_path']).strip
 else
   existing_erlang_key = ''

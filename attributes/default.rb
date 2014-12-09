@@ -73,7 +73,7 @@ default['rabbitmq']['disabled_virtualhosts'] = []
 # users
 default['rabbitmq']['enabled_users'] =
   [{ :name => 'guest', :password => 'guest', :rights =>
-    [{ :vhost => nil , :conf => '.*', :write => '.*', :read => '.*' }]
+    [{ :vhost => nil, :conf => '.*', :write => '.*', :read => '.*' }]
   }]
 default['rabbitmq']['disabled_users'] = []
 
@@ -90,6 +90,9 @@ when 'smartos'
   default['rabbitmq']['config'] = '/opt/local/etc/rabbitmq/rabbitmq'
   default['rabbitmq']['erlang_cookie_path'] = '/var/db/rabbitmq/.erlang.cookie'
 end
+
+# heartbeat
+default['rabbitmq']['heartbeat'] = 580
 
 # Example HA policies
 default['rabbitmq']['policies']['ha-all']['pattern'] = '^(?!amq\\.).*'

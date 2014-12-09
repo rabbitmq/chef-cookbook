@@ -1,5 +1,8 @@
 rabbitmq Cookbook
 =================
+
+[![Build Status](https://travis-ci.org/jjasghar/rabbitmq.svg?branch=master)](https://travis-ci.org/jjasghar/rabbitmq)
+
 This is a cookbook for managing RabbitMQ with Chef. It is intended for 2.6.1 or later releases.
 
 **Version 2.0 Changes**
