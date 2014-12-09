@@ -34,7 +34,7 @@ when 'debian'
 
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
-      action :upgrade
+      action :install
       version node['rabbitmq']['version']
     end
   else
@@ -44,7 +44,9 @@ when 'debian'
       source deb_package
       action :create_if_missing
     end
-    dpkg_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
+    dpkg_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb" do
+      action :install
+    end
   end
 
   # Configure job control
@@ -96,7 +98,7 @@ when 'rhel', 'fedora'
 
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
-      action :upgrade
+      action :install
       version node['rabbitmq']['version']
     end
   else
@@ -119,11 +121,11 @@ when 'suse'
   # from the right repository. Otherwise, zypper will stop and ask for a
   # vendor change.
   package 'rabbitmq-server-plugins' do
-    action :upgrade
+    action :install
     version node['rabbitmq']['version']
   end
   package 'rabbitmq-server' do
-    action :upgrade
+    action :install
     version node['rabbitmq']['version']
   end
 
@@ -132,7 +134,7 @@ when 'suse'
   end
 when 'smartos'
   package 'rabbitmq'do
-    action :upgrade
+    action :install
     version node['rabbitmq']['version']
   end
 
