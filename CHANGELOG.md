@@ -5,7 +5,6 @@ This file is used to list changes made in each version of the rabbitmq cookbook.
 v3.5.1 (2014-12-5)
 -------------------
 - #176 Chef-client 12 released and the `PATH` attribute was removed.
-- #143 Add the packages upgrade support.
 
 v3.5.0 (2014-12-2)
 -------------------

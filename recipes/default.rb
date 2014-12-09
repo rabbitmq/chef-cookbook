@@ -35,6 +35,7 @@ when 'debian'
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
       action :upgrade
+      version node['rabbitmq']['version']
     end
   else
     # we need to download the package
@@ -96,6 +97,7 @@ when 'rhel', 'fedora'
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
       action :upgrade
+      version node['rabbitmq']['version']
     end
   else
     # We need to download the rpm
@@ -118,9 +120,11 @@ when 'suse'
   # vendor change.
   package 'rabbitmq-server-plugins' do
     action :upgrade
+    version node['rabbitmq']['version']
   end
   package 'rabbitmq-server' do
     action :upgrade
+    version node['rabbitmq']['version']
   end
 
   service node['rabbitmq']['service_name'] do
@@ -129,6 +133,7 @@ when 'suse'
 when 'smartos'
   package 'rabbitmq'do
     action :upgrade
+    version node['rabbitmq']['version']
   end
 
   service 'epmd' do
