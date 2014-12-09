@@ -2,6 +2,25 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.5.1 (2014-12-5)
+-------------------
+- #176 Chef-client 12 released and the `PATH` attribute was removed.
+
+v3.5.0 (2014-12-2)
+-------------------
+Song of this Release: 0 to 100/The Catchup by Drake
+
+- Updated for the new release of RabbitMQ release 3.4.2
+- Removed the Centos 5.10 from integration testing
+- Updated the Gemfile for testing
+- #87 expose the heartbeat configuration parameter
+- #168 Initial Chefspec
+- #166 Updated to 3.4.2 release
+- d1bfae8 Rubocop'd all the things
+- ccf42a3 Started to get Travis to be our gatekeeper
+- #172 Updates ['rabbitmq']['config'] to use ['rabbitmq']['config_root'] attribute
+- #123 Add raw configuration for rabbitmq.erb
+
 v3.4.0 (2014-11-23)
 -------------------
 - Updated the RuboCop camel case
