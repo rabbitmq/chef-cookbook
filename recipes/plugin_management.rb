@@ -31,6 +31,5 @@ end
 node['rabbitmq']['disabled_plugins'].each do |plugin|
   rabbitmq_plugin plugin do
     action :disable
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
