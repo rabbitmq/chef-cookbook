@@ -50,3 +50,10 @@ remote_file '/usr/local/bin/rabbitmqadmin' do
   mode '0755'
   action :create
 end
+
+rabbitmq_policy "rabbitmq_cluster" do
+  pattern 'cluster.*'
+  params 'ha-mode' => 'all', 'ha-sync-mode' => 'automatic'
+  apply_to 'queues'
+  action :set
+end
