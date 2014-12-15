@@ -10,5 +10,4 @@ describe 'rabbitmq::policy_management' do
   it 'includes the `default` recipe' do
     expect(chef_run).to include_recipe('rabbitmq::default')
   end
-
 end

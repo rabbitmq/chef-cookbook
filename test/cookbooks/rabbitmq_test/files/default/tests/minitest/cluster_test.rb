@@ -15,7 +15,6 @@
 #
 
 describe 'rabbitmq_test::cluster' do
-
   it 'writes the erlang cookie file' do
     file('/var/lib/rabbitmq/.erlang.cookie').must_exist
   end
@@ -25,5 +24,4 @@ describe 'rabbitmq_test::cluster' do
       /^    {cluster_nodes, [.*]},$/
     )
   end
-
 end
