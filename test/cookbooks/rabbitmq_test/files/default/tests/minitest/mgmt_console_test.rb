@@ -26,5 +26,4 @@ describe 'rabbitmq_test::mgmt_console' do
   it 'enables the rabbitmq_management_visualiser plugin' do
     assert(plugin_enabled?('rabbitmq_management_visualiser'))
   end
-
 end
