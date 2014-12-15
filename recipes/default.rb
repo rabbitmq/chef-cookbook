@@ -171,7 +171,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end
 
-template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
+template "#{node['rabbitmq']['config']}.config" do
   sensitive true
   source 'rabbitmq.config.erb'
   cookbook node['rabbitmq']['config_template_cookbook']

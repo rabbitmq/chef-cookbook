@@ -5,6 +5,7 @@ describe 'rabbitmq::default' do
   let(:node) { runner.node }
 
   let(:chef_run) do
+    node.set['rabbitmq']['config'] = '/path/to/rabbitmq'
     runner.converge(described_recipe)
   end
 
@@ -118,7 +119,7 @@ describe 'rabbitmq::default' do
   end
 
   it 'creates a template rabbitmq.config with attributes' do
-    expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.config').with(
+    expect(chef_run).to create_template('/path/to/rabbitmq.config').with(
       :user => 'root',
       :group => 'root',
       :source => 'rabbitmq.config.erb',
