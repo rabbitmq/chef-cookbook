@@ -1,22 +1,23 @@
 source 'https://rubygems.org'
 
 group :lint do
-  gem 'foodcritic', '~> 3.0'
-  gem 'rubocop', '~> 0.18'
+  gem 'foodcritic', '~> 4.0'
+  gem 'rubocop', '~> 0.23'
   gem 'rainbow', '< 2.0'
 end
 
 group :unit do
-  gem 'berkshelf',  '~> 3.0.0.beta6'
-  gem 'chefspec',   '~> 3.1'
+  gem 'berkshelf'
+  gem 'chefspec'
+  gem 'fauxhai'
 end
 
 group :kitchen_common do
-  gem 'test-kitchen', '~> 1.2'
+  gem 'test-kitchen'
 end
 
 group :kitchen_vagrant do
-  gem 'kitchen-vagrant', '~> 0.11'
+  gem 'kitchen-vagrant'
 end
 
 group :kitchen_cloud do
@@ -34,4 +35,5 @@ group :development do
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'rake'
+  gem 'stove'
 end

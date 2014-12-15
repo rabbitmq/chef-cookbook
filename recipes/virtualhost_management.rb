@@ -24,13 +24,11 @@ include_recipe 'rabbitmq::default'
 node['rabbitmq']['virtualhosts'].each do |virtualhost|
   rabbitmq_vhost virtualhost do
     action :add
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
 
 node['rabbitmq']['disabled_virtualhosts'].each do |virtualhost|
   rabbitmq_vhost virtualhost do
     action :delete
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end

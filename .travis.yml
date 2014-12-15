@@ -9,8 +9,7 @@ before_install:
 - cat ~/.ssh/id_ec2.base64 | tr -d ' ' | base64 --decode > ~/.ssh/id_ec2.pem
 script:
 - bundle exec rake travis
-after_script:
-- bundle exec kitchen destroy
+
 env:
   global:
   - secure: azjR7jwSlkSSx61D9WYoil0BB/ztHnud17F9nDfmqHIacgjO8szyQfF18eKal8/iPCFii4RrsTytHE1iEckbTqCssfg1QeFPjYZpllY0tKTjF5L3+DGn+pLrouhfwJpxo1Lo4s5wD0z4uFiAcGVJtw8I/Xh+xaGdOjYaVlLW/bI=

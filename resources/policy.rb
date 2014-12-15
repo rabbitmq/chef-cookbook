@@ -26,3 +26,4 @@ attribute :pattern, :kind_of => String
 attribute :params, :kind_of => Hash
 attribute :priority, :kind_of => Integer
 attribute :vhost, :kind_of => String
+attribute :apply_to, :kind_of => String, :equal_to => %w(all queues exchanges)

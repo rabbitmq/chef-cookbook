@@ -2,6 +2,53 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.6.0 (2014-12-9)
+------------------
+- #161 Community plugins
+- #158 Adds policy apply_to option
+- #151 make config file template source cookbook configurable
+- #121 COOK-4694 Remove service restart for vhost mgmnt
+
+v3.5.1 (2014-12-5)
+-------------------
+- #176 Chef-client 12 released and the `PATH` attribute was removed.
+
+v3.5.0 (2014-12-2)
+-------------------
+Song of this Release: 0 to 100/The Catchup by Drake
+
+- Updated for the new release of RabbitMQ release 3.4.2
+- Removed the Centos 5.10 from integration testing
+- Updated the Gemfile for testing
+- #87 expose the heartbeat configuration parameter
+- #168 Initial Chefspec
+- #166 Updated to 3.4.2 release
+- d1bfae8 Rubocop'd all the things
+- ccf42a3 Started to get Travis to be our gatekeeper
+- #172 Updates ['rabbitmq']['config'] to use ['rabbitmq']['config_root'] attribute
+- #123 Add raw configuration for rabbitmq.erb
+
+v3.4.0 (2014-11-23)
+-------------------
+- Updated the RuboCop camel case
+- Make rabbitmq service restart immediately
+- Add sensitive flag for resources that expose passwords in log
+- Issue: #153
+- move serverspec v1 tests to use busser-rspec
+- Adding switch to make TCP listeners optional
+- Update user.rb
+- Update default.rb
+- Merge branch 'pr-128'
+- add serverspec tests for plugin lwrp
+- Plugin provider. fixes #141
+- Add test that fails if plugin notifications aren't working properly.
+
+v3.3.0 (2014-08-28)
+-------------------
+- Bump default rabbitmq-server version to 3.3.5
+- [COOK-4641] - remove setsid calls in service resource
+- Testing updates
+- Minor documentation fix re: rabbitmq_policy usage
 
 v3.2.2 (2014-05-07)
 -------------------

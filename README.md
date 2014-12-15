@@ -1,5 +1,8 @@
 rabbitmq Cookbook
 =================
+
+[![Build Status](https://travis-ci.org/jjasghar/rabbitmq.svg?branch=master)](https://travis-ci.org/jjasghar/rabbitmq)
+
 This is a cookbook for managing RabbitMQ with Chef. It is intended for 2.6.1 or later releases.
 
 **Version 2.0 Changes**
@@ -35,6 +38,11 @@ To use https connection to management console, turn `['rabbitmq']['web_console_s
 
 ### plugin_management
 Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq'][disabled_plugins']` attributes.
+
+### community_plugins
+Downloads, installs and enables pre-built community plugins binaries.
+
+To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['PLUGIN_NAME']` to `'DOWNLOAD_URL'`. For example, to use the RabbitMQ priority queue plugin (https://github.com/rabbitmq/rabbitmq-priority-queue), set the attribute `node['rabbitmq']['community_plugins']['rabbitmq_priority_queue']` to `'https://www.rabbitmq.com/community-plugins/v3.4.x/rabbitmq_priority_queue-3.4.x-3431dc1e.ez'`.
 
 ### policy_management
 Enables any policies listed in the `node['rabbitmq'][policies]` and disables any listed in `node['rabbitmq'][disabled_policies]` attributes.
@@ -80,7 +88,7 @@ sets or clears a rabbitmq policy.
 ```ruby
 rabbitmq_policy "ha-all" do
   pattern "^(?!amq\\.).*"
-  params {"ha-mode"=>"all"}
+  params ({"ha-mode"=>"all"})
   priority 1
   action :set
 end

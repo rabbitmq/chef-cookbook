@@ -17,16 +17,10 @@
 # limitations under the License.
 #
 
-def plugins_bin_path(return_array = false)
-  path = ENV.fetch('PATH') + ':/usr/lib/rabbitmq/bin'
-  return_array ? path.split(':') : path
-end
-
 def plugin_enabled?(name)
   cmdstr = "rabbitmq-plugins list -e '#{name}\\b'"
   cmd = Mixlib::ShellOut.new(cmdstr)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
-  cmd.environment['PATH'] = plugins_bin_path
   cmd.run_command
   Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmdstr}"
   Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmd.stdout}"
@@ -34,11 +28,13 @@ def plugin_enabled?(name)
   cmd.stdout =~ /\b#{name}\b/
 end
 
+use_inline_resources
+
 action :enable do
   unless plugin_enabled?(new_resource.plugin)
     execute "rabbitmq-plugins enable #{new_resource.plugin}" do
       Chef::Log.info "Enabling RabbitMQ plugin '#{new_resource.plugin}'."
-      path plugins_bin_path(true)
+      environment 'PATH' => "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
       new_resource.updated_by_last_action(true)
     end
   end
@@ -48,7 +44,7 @@ action :disable do
   if plugin_enabled?(new_resource.plugin)
     execute "rabbitmq-plugins disable #{new_resource.plugin}" do
       Chef::Log.info "Disabling RabbitMQ plugin '#{new_resource.plugin}'."
-      path plugins_bin_path(true)
+      environment 'PATH' => "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
       new_resource.updated_by_last_action(true)
     end
   end

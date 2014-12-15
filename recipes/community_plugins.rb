@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 #
 # Cookbook Name:: rabbitmq
-# Recipe:: mgmt_console
+# Recipe:: community_plugins
 #
-# Copyright 2012, Tacit Knowledge, Inc.
+# Copyright 2013, Grégoire Seux
+# Copyright 2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,13 +21,18 @@
 
 include_recipe 'rabbitmq::default'
 
-plugins = %w( rabbitmq_management rabbitmq_management_visualiser )
+node['rabbitmq']['community_plugins'].each do |plugin, download_url|
+  # This will only work for deb/rpm installations, such as Ubuntu, Fedora and CentOS
+  # List of installation directory per installation method: https://www.rabbitmq.com/installing-plugins.html
+  remote_file "/usr/lib/rabbitmq/lib/rabbitmq_server-#{node['rabbitmq']['version']}/plugins/#{plugin}.ez" do
+    mode '0644'
+    owner 'root'
+    group 'root'
+    source download_url
+  end
 
-service_name = node['rabbitmq']['service_name']
-
-plugins.each do |plugin|
   rabbitmq_plugin plugin do
     action :enable
-    notifies :restart, "service[#{service_name}]", :immediately
+    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end

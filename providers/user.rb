@@ -52,8 +52,8 @@ end
 
 # does the user have the rights listed on the vhost?
 # empty perm_list means we're checking for any permissions
-def user_has_permissions?(name, vhost, perm_list = nil)
-  vhost = '/' if vhost.nil?
+def user_has_permissions?(name, vhost, perm_list = nil) # rubocop:disable all
+  vhost = '/' if vhost.nil? # rubocop:enable all
   cmd = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\b\""
   cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
@@ -84,7 +84,8 @@ action :add do
     # of leaning toothpicks:
     new_password = new_resource.password.gsub("'", "'\\\\''")
     cmd = "rabbitmqctl add_user #{new_resource.user} '#{new_password}'"
-    execute "rabbitmqctl add_user #{new_resource.user}" do
+    execute "rabbitmqctl add_user #{new_resource.user}" do # ~FC009
+      sensitive true
       command cmd
       Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
     end
@@ -156,6 +157,7 @@ action :change_password do
   if user_exists?(new_resource.user)
     cmd = "rabbitmqctl change_password #{new_resource.user} #{new_resource.password}"
     execute cmd do
+      sensitive true
       Chef::Log.debug "rabbitmq_user_change_password: #{cmd}"
       Chef::Log.info "Editing RabbitMQ user '#{new_resource.user}'."
     end

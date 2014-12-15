@@ -1,4 +1,9 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
+require 'fauxhai'
+ChefSpec::Coverage.start!
 
-at_exit { ChefSpec::Coverage.report! }
+RSpec.configure do |config|
+  config.platform = 'redhat'
+  config.version = '6.5'
+end
