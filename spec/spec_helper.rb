@@ -8,22 +8,22 @@ require 'chef/application'
 
 LOG_LEVEL = :fatal
 SUSE_OPTS = {
-  platform: 'suse',
-  version: '11.3',
-  log_level: LOG_LEVEL
+  :platform => 'suse',
+  :version => '11.3',
+  :log_level => LOG_LEVEL
 }
 REDHAT_OPTS = {
-    platform: 'redhat',
-    version: '6.5',
-    log_level: LOG_LEVEL
+  :platform => 'redhat',
+  :version => '6.5',
+  :log_level => LOG_LEVEL
 }
 UBUNTU_OPTS = {
-    platform: 'ubuntu',
-    version: '12.04',
-    log_level: LOG_LEVEL
+  :platform => 'ubuntu',
+  :version => '12.04',
+  :log_level => LOG_LEVEL
 }
 CENTOS_OPTS = {
-    platform: 'centos',
-    version: '6.5',
-    log_level: LOG_LEVEL
+  :platform => 'centos',
+  :version => '6.5',
+  :log_level => LOG_LEVEL
 }

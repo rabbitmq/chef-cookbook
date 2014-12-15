@@ -39,7 +39,7 @@ describe 'rabbitmq::default' do
   end
 
   it 'should have the use_distro_version set to false' do
-     expect(chef_run.node['rabbitmq']['use_distro_version']).to eq(false)
+    expect(chef_run.node['rabbitmq']['use_distro_version']).to eq(false)
   end
 
   it 'should install the erlang package' do
@@ -100,7 +100,6 @@ describe 'rabbitmq::default' do
     end
   end
 
-
   describe 'redhat' do
     let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
     let(:node) { runner.node }
@@ -109,13 +108,13 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
-  it 'creates a rabbitmq-server rpm in the cache path' do
-    expect(chef_run).to create_remote_file_if_missing("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm")
-  end
+    it 'creates a rabbitmq-server rpm in the cache path' do
+      expect(chef_run).to create_remote_file_if_missing("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm")
+    end
 
-  it 'installs the rabbitmq-server rpm_package with the default action' do
-    expect(chef_run).to install_rpm_package("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm")
-  end
+    it 'installs the rabbitmq-server rpm_package with the default action' do
+      expect(chef_run).to install_rpm_package("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm")
+    end
 
   end
 
