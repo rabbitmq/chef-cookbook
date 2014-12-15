@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe 'rabbitmq::plugin_management' do
+  let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
+  let(:node) { runner.node }
   let(:chef_run) do
-    ChefSpec::ServerRunner.new.converge(described_recipe)
+    runner.converge(described_recipe)
   end
 
   let(:file_cache_path) { Chef::Config[:file_cache_path] }
