@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'rabbitmq::default' do
-
   let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
   let(:node) { runner.node }
   let(:chef_run) do
@@ -115,7 +114,6 @@ describe 'rabbitmq::default' do
     it 'installs the rabbitmq-server rpm_package with the default action' do
       expect(chef_run).to install_rpm_package("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm")
     end
-
   end
 
   it 'creates a template rabbitmq.config with attributes' do
@@ -125,5 +123,4 @@ describe 'rabbitmq::default' do
       :source => 'rabbitmq.config.erb',
       :mode => 00644)
   end
-
 end

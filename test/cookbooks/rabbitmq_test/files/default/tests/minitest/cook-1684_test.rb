@@ -33,5 +33,4 @@ describe 'rabbitmq_test::cook-1684' do
 
     file(rpm_path).wont_exist && package('rabbitmq-server').must_be_installed
   end
-
 end
