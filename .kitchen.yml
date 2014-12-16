@@ -3,11 +3,13 @@ driver:
 
 provisioner:
   name: chef_zero
+  require_chef_omnibus: latest
 
 platforms:
   - name: centos-6.5
   - name: ubuntu-12.04
   - name: ubuntu-14.04
+  - name: debian-7.7
 
 suites:
   - name: default

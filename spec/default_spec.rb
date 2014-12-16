@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'rabbitmq::default' do
   let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
   let(:node) { runner.node }
+
   let(:chef_run) do
     runner.converge(described_recipe)
   end
