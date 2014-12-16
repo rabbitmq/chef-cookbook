@@ -25,5 +25,4 @@ describe 'rabbitmq_test::cook-1724' do
     file('/etc/apt/sources.list.d/rabbitmq-source.list').wont_exist &&
       package('rabbitmq-server').must_be_installed
   end
-
 end

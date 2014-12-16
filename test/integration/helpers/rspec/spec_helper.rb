@@ -10,4 +10,5 @@ RSpec.configure do |c|
   else
     c.sudo_password = ENV['SUDO_PASSWORD']
   end
+  c.path = '/usr/local/bin'
 end
