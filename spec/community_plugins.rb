@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'rabbitmq::virtualhost_management' do
+describe 'rabbitmq::community_plugins' do
   let(:chef_run) do
     ChefSpec::ServerRunner.new.converge(described_recipe)
   end

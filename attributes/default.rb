@@ -18,6 +18,8 @@ default['rabbitmq']['service_name'] = 'rabbitmq-server'
 default['rabbitmq']['config_root'] = '/etc/rabbitmq'
 default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq"
 default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
+# override this if you wish to provide `rabbitmq.config.erb` in your own wrapper cookbook
+default['rabbitmq']['config_template_cookbook'] = 'rabbitmq'
 
 # rabbitmq.config defaults
 default['rabbitmq']['default_user'] = 'guest'
@@ -80,6 +82,7 @@ default['rabbitmq']['disabled_users'] = []
 # plugins
 default['rabbitmq']['enabled_plugins'] = []
 default['rabbitmq']['disabled_plugins'] = []
+default['rabbitmq']['community_plugins'] = nil
 
 # platform specific settings
 case node['platform_family']

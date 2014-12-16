@@ -14,5 +14,4 @@ describe 'rabbitmq::user_management' do
   it 'includes the `virtualhost_management` recipe' do
     expect(chef_run).to include_recipe('rabbitmq::virtualhost_management')
   end
-
 end

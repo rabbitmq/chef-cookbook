@@ -2,6 +2,13 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.6.0 (2014-12-9)
+------------------
+- #161 Community plugins
+- #158 Adds policy apply_to option
+- #151 make config file template source cookbook configurable
+- #121 COOK-4694 Remove service restart for vhost mgmnt
+
 v3.5.1 (2014-12-5)
 -------------------
 - #176 Chef-client 12 released and the `PATH` attribute was removed.

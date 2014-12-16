@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'rabbitmq::default' do
-
   version = '3.4.2-1'
 
   let(:chef_run) do
@@ -49,5 +48,4 @@ describe 'rabbitmq::default' do
       :source => 'rabbitmq.config.erb',
       :mode => 00644)
   end
-
 end

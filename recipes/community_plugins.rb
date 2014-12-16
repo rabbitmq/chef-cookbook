@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: rabbitmq
-# Recipe:: virtualhost_management
+# Recipe:: community_plugins
 #
 # Copyright 2013, Grégoire Seux
 # Copyright 2013, Opscode, Inc.
@@ -21,14 +21,18 @@
 
 include_recipe 'rabbitmq::default'
 
-node['rabbitmq']['virtualhosts'].each do |virtualhost|
-  rabbitmq_vhost virtualhost do
-    action :add
+node['rabbitmq']['community_plugins'].each do |plugin, download_url|
+  # This will only work for deb/rpm installations, such as Ubuntu, Fedora and CentOS
+  # List of installation directory per installation method: https://www.rabbitmq.com/installing-plugins.html
+  remote_file "/usr/lib/rabbitmq/lib/rabbitmq_server-#{node['rabbitmq']['version']}/plugins/#{plugin}.ez" do
+    mode '0644'
+    owner 'root'
+    group 'root'
+    source download_url
   end
-end
 
-node['rabbitmq']['disabled_virtualhosts'].each do |virtualhost|
-  rabbitmq_vhost virtualhost do
-    action :delete
+  rabbitmq_plugin plugin do
+    action :enable
+    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
