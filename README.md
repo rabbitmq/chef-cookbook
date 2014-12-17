@@ -1,30 +1,22 @@
-rabbitmq Cookbook
-=================
+# rabbitmq Cookbook
 
 [![Build Status](https://travis-ci.org/jjasghar/rabbitmq.svg?branch=master)](https://travis-ci.org/jjasghar/rabbitmq)
 
-This is a cookbook for managing RabbitMQ with Chef. It is intended for 2.6.1 or later releases.
+This is a cookbook for managing RabbitMQ with Chef. It is intended for RabbitMQ 2.6.1 or later releases. With Chef we have adopted support >= 11.14.0 for chef-client, and leaning heavily on chef-client 12 and above.
 
-**Version 2.0 Changes**
+## Requirements
 
-The 2.0 release of the cookbook defaults to using the latest version available from RabbitMQ.com via direct download of the package. This was done to simplify the installation options to either distro package or direct download. The attributes `use_apt` and `use_yum` have been removed as have the `apt` and `yum` cookbook dependencies. The user LWRP action `:set_user_tags` was changed to `:set_tags` for consistency with other actions.
+This cookbook depends on the [erlang cookbook](https://supermarket.chef.io/cookbooks/erlang).
 
+The release was tested with (rabbitmq.com/distro version), from the [kitchen.yml](.kitchen.cloud.yml).
 
-Requirements
-------------
-This cookbook depends on the `erlang` cookbook.
+- CentOS 6.5
+- Ubuntu 12.04
+- Ubuntu 14.04
+- Debian 7.0
 
-Please refer to the [TESTING file](TESTING.md) to see the currently (and passing) tested platforms. The release was tested with (rabbitmq.com/distro version):
-- CentOS 5.9: 3.1.5 (distro release unsupported)
-- CentOS 6.4: 3.1.5/2.6.1 (no lwrps support)
-- Fedora 18: 3.1.5 (distro release unsupported)
-- Ubuntu 10.04: 3.1.5 (distro release unsupported)
-- Ubuntu 12.04: 3.1.5/2.7.1 (no lwrps support)
-- Ubuntu 13.04: 3.1.5/3.0.2
+## Recipes
 
-
-Recipes
--------
 ### default
 Installs `rabbitmq-server` from RabbitMQ.com via direct download of the installation package or using the distribution version. Depending on your distribution, the provided version may be quite old so they are disabled by default. If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`. You may override the download URL attribute `['rabbitmq']['package']` if you wish to use a local mirror.
 
@@ -42,7 +34,7 @@ Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disa
 ### community_plugins
 Downloads, installs and enables pre-built community plugins binaries.
 
-To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['PLUGIN_NAME']` to `'DOWNLOAD_URL'`. For example, to use the RabbitMQ priority queue plugin (https://github.com/rabbitmq/rabbitmq-priority-queue), set the attribute `node['rabbitmq']['community_plugins']['rabbitmq_priority_queue']` to `'https://www.rabbitmq.com/community-plugins/v3.4.x/rabbitmq_priority_queue-3.4.x-3431dc1e.ez'`.
+To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['PLUGIN_NAME']` to `'DOWNLOAD_URL'`. For example, to use the [RabbitMQ priority queue plugin](https://github.com/rabbitmq/rabbitmq-priority-queue), set the attribute `node['rabbitmq']['community_plugins']['rabbitmq_priority_queue']` to `'https://www.rabbitmq.com/community-plugins/v3.4.x/rabbitmq_priority_queue-3.4.x-3431dc1e.ez'`.
 
 ### policy_management
 Enables any policies listed in the `node['rabbitmq'][policies]` and disables any listed in `node['rabbitmq'][disabled_policies]` attributes.
@@ -54,8 +46,8 @@ Enables any users listed in the `node['rabbitmq']['enabled_users]` and disables 
 Enables any vhosts listed in the `node['rabbitmq'][virtualhosts]` and disables any listed in `node['rabbitmq'][disabled_virtualhosts]` attributes.
 
 
-Resources/Providers
--------------------
+## Resources/Providers
+
 There are 4 LWRPs for interacting with RabbitMQ.
 
 ### plugin
@@ -154,21 +146,24 @@ end
 ```
 
 
-Limitations
------------
+## Limitations
+
 For an already running cluster, these actions still require manual intervention:
 - changing the :erlang_cookie
 - turning :cluster from true to false
 
 
-License & Authors
------------------
-- Author:: Benjamin Black <b@b3k.us>
-- Author:: Daniel DeLeo <dan@kallistec.com>
-- Author:: Matt Ray (<matt@opscode.com>)
+## License & Authors
+
+- Author:: Benjamin Black (<b@b3k.us>)
+- Author:: Daniel DeLeo (<dan@kallistec.com>)
+- Author:: Matt Ray (<matt@chef.io>)
+- Author:: Seth Thomas (<cheeseplus@chef.io>)
+- Author:: JJ Asghar (<jj@chef.io>)
 
 ```text
 Copyright (c) 2009-2013, Opscode, Inc.
+Copyright (c) 2014-2015, Chef Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
