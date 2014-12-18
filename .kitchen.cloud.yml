@@ -7,13 +7,6 @@ platforms:
 - name: centos-6-5-x64
   driver:
     name: digitalocean
-    
-- name: amazon-2014.09.01
-  driver:
-    name: ec2
-    image_id: ami-9a6ed3f2
-    username: ec2-user
-    ssh_key: <%= ENV["EC2_SSH_KEY_PATH"] %>
 
 - name: debian-7-0-x64
   driver:
