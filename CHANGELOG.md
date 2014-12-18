@@ -1,6 +1,13 @@
 rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
+v3.7.0 (2014-12-18)
+------------------
+- #185 Updated cloud kitchen.yml
+- #186 Updated chefspec for multiple oses
+- #180 Instead of defaulting to :upgrade we default to :install with the a pinned version number
+- #187 Updating Readme
+- #184 Supports setting rabbitmq config file to a different path
 
 v3.6.0 (2014-12-9)
 ------------------
