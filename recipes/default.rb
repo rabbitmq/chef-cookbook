@@ -109,7 +109,11 @@ when 'rhel', 'fedora'
       source rpm_package
       action :create_if_missing
     end
-    rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
+    rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
+      only_if do
+        `rpm -qa | grep '^rabbitmq-server-#{node['rabbitmq']['version']}-1' | wc -l`.strip == "0"
+      end
+    end
   end
 
   service node['rabbitmq']['service_name'] do
