@@ -103,7 +103,8 @@ when 'rhel', 'fedora'
     end
   else
     # We need to download the rpm
-    rpm_package = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
+    #rpm_package = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
+    rpm_package = "#{node['rabbitmq']['mirror']}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
 
     remote_file "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm" do
       source rpm_package
