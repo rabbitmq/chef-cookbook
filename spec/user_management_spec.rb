@@ -16,4 +16,8 @@ describe 'rabbitmq::user_management' do
   it 'includes the `virtualhost_management` recipe' do
     expect(chef_run).to include_recipe('rabbitmq::virtualhost_management')
   end
+
+  it 'adds rabbitmq enabled users' do
+    expect(chef_run).to add_rabbitmq_user('guest')
+  end
 end

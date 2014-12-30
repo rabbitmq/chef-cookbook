@@ -15,15 +15,30 @@ SUSE_OPTS = {
 REDHAT_OPTS = {
   :platform => 'redhat',
   :version => '6.5',
-  :log_level => LOG_LEVEL
+  :log_level => LOG_LEVEL,
+  :file_cache_path => '/tmp'
 }
 UBUNTU_OPTS = {
   :platform => 'ubuntu',
   :version => '14.04',
-  :log_level => LOG_LEVEL
+  :log_level => LOG_LEVEL,
+  :file_cache_path => '/tmp'
 }
 CENTOS_OPTS = {
   :platform => 'centos',
   :version => '6.5',
   :log_level => LOG_LEVEL
 }
+FEDORA_OPTS = {
+  :platform => 'fedora',
+  :version => '20',
+  :log_level => LOG_LEVEL,
+  :file_cache_path => '/tmp'
+}
+
+shared_context 'rabbitmq-stubs' do
+  before do
+    allow_any_instance_of(Chef::Config).to receive(:file_cache_path)
+      .and_return('/tmp')
+  end
+end
