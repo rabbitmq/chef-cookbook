@@ -1,5 +1,5 @@
 # Latest RabbitMQ.com version to install
-default['rabbitmq']['version'] = '3.4.2'
+default['rabbitmq']['version'] = '3.4.3'
 # The distro versions may be more stable and have back-ported patches
 default['rabbitmq']['use_distro_version'] = false
 

@@ -84,7 +84,7 @@ describe 'rabbitmq::default' do
     let(:runner) { ChefSpec::ServerRunner.new(UBUNTU_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
-      node.set['rabbitmq']['version'] = '3.4.2'
+      node.set['rabbitmq']['version'] = '3.4.3'
       runner.converge(described_recipe)
     end
 
@@ -105,7 +105,7 @@ describe 'rabbitmq::default' do
     let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
-      node.set['rabbitmq']['version'] = '3.4.2'
+      node.set['rabbitmq']['version'] = '3.4.3'
       runner.converge(described_recipe)
     end
 
