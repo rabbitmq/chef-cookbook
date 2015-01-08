@@ -1,6 +1,13 @@
 rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
+v3.8.0 (2015-01-07)
+------------------
+Song of this Release:
+
+- Update to `3.4.3` release of rabbitmq
+- Updated from 12.04 to 14.04 for Ubuntu Specs
+
 v3.7.0 (2014-12-18)
 ------------------
 - #185 Updated cloud kitchen.yml
