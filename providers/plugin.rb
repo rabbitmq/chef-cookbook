@@ -35,7 +35,6 @@ action :enable do
     execute "rabbitmq-plugins enable #{new_resource.plugin}" do
       Chef::Log.info "Enabling RabbitMQ plugin '#{new_resource.plugin}'."
       environment 'PATH' => "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
-      umask 0644
       new_resource.updated_by_last_action(true)
     end
   end
@@ -47,7 +46,6 @@ action :disable do
       Chef::Log.info "Disabling RabbitMQ plugin '#{new_resource.plugin}'."
       environment 'PATH' => "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
       new_resource.updated_by_last_action(true)
-      umask 0644
     end
   end
 end
