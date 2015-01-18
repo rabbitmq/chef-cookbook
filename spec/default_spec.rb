@@ -47,6 +47,15 @@ describe 'rabbitmq::default' do
     expect(chef_run).to install_package('erlang')
   end
 
+  it 'should create the rabbitmq /etc/default file' do
+    expect(chef_run).to create_template("/etc/default/#{chef_run.node['rabbitmq']['service_name']}").with(
+      :user => 'root',
+      :group => 'root',
+      :source => 'default.rabbitmq-server.erb',
+      :mode => 00644
+    ) 
+  end
+
   describe 'suse' do
     let(:runner) { ChefSpec::ServerRunner.new(SUSE_OPTS) }
     let(:node) { runner.node }
