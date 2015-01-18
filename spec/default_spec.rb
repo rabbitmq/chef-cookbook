@@ -53,7 +53,7 @@ describe 'rabbitmq::default' do
       :group => 'root',
       :source => 'default.rabbitmq-server.erb',
       :mode => 00644
-    ) 
+    )
   end
 
   describe 'suse' do
