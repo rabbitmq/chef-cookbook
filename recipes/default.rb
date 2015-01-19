@@ -188,7 +188,7 @@ template "/etc/default/#{node['rabbitmq']['service_name']}" do
   source 'default.rabbitmq-server.erb'
   owner 'root'
   group 'root'
-  mode 0644
+  mode 00644
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end
 
