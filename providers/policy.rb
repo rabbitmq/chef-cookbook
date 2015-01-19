@@ -75,8 +75,10 @@ end
 
 action :clear do
   if policy_exists?(new_resource.vhost, new_resource.policy)
+    cmd = "rabbitmqctl clear_policy #{new_resource.policy}"
+    cmd << " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
     execute "clear_policy #{new_resource.policy}" do
-      command "rabbitmqctl clear_policy #{new_resource.policy}"
+      command cmd
     end
 
     new_resource.updated_by_last_action(true)
