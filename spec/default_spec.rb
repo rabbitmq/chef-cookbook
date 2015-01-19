@@ -52,7 +52,7 @@ describe 'rabbitmq::default' do
       :user => 'root',
       :group => 'root',
       :source => 'default.rabbitmq-server.erb',
-      :mode => 00644
+      :mode => 0644
     )
   end
 
