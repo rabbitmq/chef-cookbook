@@ -57,3 +57,13 @@ rabbitmq_policy 'rabbitmq_cluster' do
   apply_to 'queues'
   action :set
 end
+
+rabbitmq_plugin 'rabbitmq_federation'
+
+rabbitmq_vhost '/sensu'
+
+rabbitmq_parameter 'sensu-dc-1' do
+  vhost '/sensu'
+  component 'federation-upstream'
+  params uri: 'amqp://dc-cluster-node'
+end
