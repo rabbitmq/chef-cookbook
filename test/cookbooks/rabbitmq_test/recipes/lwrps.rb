@@ -65,5 +65,5 @@ rabbitmq_vhost '/sensu'
 rabbitmq_parameter 'sensu-dc-1' do
   vhost '/sensu'
   component 'federation-upstream'
-  params uri: 'amqp://dc-cluster-node'
+  params 'uri' => 'amqp://dc-cluster-node'
 end
