@@ -2,8 +2,8 @@
 # Cookbook Name:: rabbitmq
 # Provider:: parameter
 #
-# Author: Robert Choi <taeilchoi1@gmail.com>, Sean Porter <portertech@gmail.com>
-# Copyright 2013 by Robert Choi
+# Author: Sean Porter <portertech@gmail.com>
+# Copyright 2015 by Heavy Water Operations, LLC.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,21 +42,10 @@ action :set do
     cmd << " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
     cmd << " #{new_resource.component}"
     cmd << " #{new_resource.parameter}"
-    cmd << " '{"
 
-    first_param = true
-    new_resource.params.each do |key, value|
-      cmd << ',' unless first_param
-
-      if value.is_a? String
-        cmd << "\"#{key}\":\"#{value}\""
-      else
-        cmd << "\"#{key}\":#{value}"
-      end
-      first_param = false
-    end
-
-    cmd << "}'"
+    cmd << " '"
+    cmd << JSON.dump(new_resource.params)
+    cmd << "'"
 
     parameter = "#{new_resource.component} #{new_resource.parameter}"
 
