@@ -26,6 +26,7 @@ group :kitchen_cloud do
 end
 
 group :development do
+  gem 'chefspec'
   gem 'ruby_gntp'
   gem 'growl'
   gem 'rb-fsevent'
