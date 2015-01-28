@@ -1,9 +1,19 @@
 rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
+
+v3.9.0 (2015-01-28)
+------------------
+Song of this Release: [Cascade](http://www.pandora.com/hyper/we-control/cascade) by Hyper
+
+- Moved the service enable and start to the bottom of the default recipe so you can change variables around. Issue #201
+- syntax typos #208
+- LWRP for managing RabbitMQ parameters #207
+- Distro version pinning #211
+
 v3.8.0 (2015-01-07)
 ------------------
-Song of this Release:
+Song of this Release: Sunlight (2011) by by Modestep
 
 - Update to `3.4.3` release of rabbitmq
 - Updated from 12.04 to 14.04 for Ubuntu Specs
