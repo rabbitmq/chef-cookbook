@@ -47,6 +47,14 @@ describe 'rabbitmq::default' do
     expect(chef_run).to install_package('erlang')
   end
 
+  it 'creates a template rabbitmq.config with attributes' do
+    expect(chef_run).to create_template('/path/to/rabbitmq.config').with(
+      :user => 'root',
+      :group => 'root',
+      :source => 'rabbitmq.config.erb',
+      :mode => 00644)
+  end
+
   describe 'suse' do
     let(:runner) { ChefSpec::ServerRunner.new(SUSE_OPTS) }
     let(:node) { runner.node }
@@ -129,13 +137,5 @@ describe 'rabbitmq::default' do
     it 'installs the rabbitmq-server rpm_package with the default action' do
       expect(chef_run).to install_rpm_package("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm")
     end
-  end
-
-  it 'creates a template rabbitmq.config with attributes' do
-    expect(chef_run).to create_template('/path/to/rabbitmq.config').with(
-      :user => 'root',
-      :group => 'root',
-      :source => 'rabbitmq.config.erb',
-      :mode => 00644)
   end
 end
