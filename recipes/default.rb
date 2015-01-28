@@ -35,7 +35,7 @@ when 'debian'
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
       action :install
-      version node['rabbitmq']['version']
+      version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
   else
     # we need to download the package

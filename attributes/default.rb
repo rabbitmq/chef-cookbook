@@ -2,6 +2,9 @@
 default['rabbitmq']['version'] = '3.4.3'
 # The distro versions may be more stable and have back-ported patches
 default['rabbitmq']['use_distro_version'] = false
+# Allow the distro version to be optionally pinned like the rabbitmq.com version
+default['rabbitmq']['pin_distro_version'] = false
+
 
 # being nil, the rabbitmq defaults will be used
 default['rabbitmq']['nodename']  = nil
