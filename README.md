@@ -29,7 +29,7 @@ Installs the `rabbitmq_management` and `rabbitmq_management_visualiser` plugins.
 To use https connection to management console, turn `['rabbitmq']['web_console_ssl']` to true. The SSL port for web management console can be configured by setting attribute `['rabbitmq']['web_console_ssl_port']`, whose default value is 15671.
 
 ### plugin_management
-Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq'][disabled_plugins']` attributes.
+Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq']['disabled_plugins']` attributes.
 
 ### community_plugins
 Downloads, installs and enables pre-built community plugins binaries.
@@ -37,13 +37,13 @@ Downloads, installs and enables pre-built community plugins binaries.
 To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['PLUGIN_NAME']` to `'DOWNLOAD_URL'`. For example, to use the [RabbitMQ priority queue plugin](https://github.com/rabbitmq/rabbitmq-priority-queue), set the attribute `node['rabbitmq']['community_plugins']['rabbitmq_priority_queue']` to `'https://www.rabbitmq.com/community-plugins/v3.4.x/rabbitmq_priority_queue-3.4.x-3431dc1e.ez'`.
 
 ### policy_management
-Enables any policies listed in the `node['rabbitmq'][policies]` and disables any listed in `node['rabbitmq'][disabled_policies]` attributes.
+Enables any policies listed in the `node['rabbitmq']['policies']` and disables any listed in `node['rabbitmq']['disabled_policies']` attributes.
 
 ### user_management
-Enables any users listed in the `node['rabbitmq']['enabled_users]` and disables any listed in `node['rabbitmq'][disabled_users]` attributes.
+Enables any users listed in the `node['rabbitmq']['enabled_users']` and disables any listed in `node['rabbitmq']['disabled_users']` attributes.
 
 ### virtualhost_management
-Enables any vhosts listed in the `node['rabbitmq'][virtualhosts]` and disables any listed in `node['rabbitmq'][disabled_virtualhosts]` attributes.
+Enables any vhosts listed in the `node['rabbitmq']['virtualhosts']` and disables any listed in `node['rabbitmq']['disabled_virtualhosts']` attributes.
 
 
 ## Resources/Providers
