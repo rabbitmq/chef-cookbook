@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'chef', '~> 12.0'
+gem 'chefspec', '~> 4.0'
 
 group :lint do
   gem 'foodcritic', '~> 4.0'
@@ -10,7 +11,6 @@ end
 
 group :unit do
   gem 'berkshelf'
-  gem 'chefspec'
   gem 'fauxhai'
 end
 
@@ -32,7 +32,6 @@ group :kitchen_cloud do
 end
 
 group :development do
-  gem 'chefspec'
   gem 'ruby_gntp'
   gem 'growl'
   gem 'rb-fsevent'
