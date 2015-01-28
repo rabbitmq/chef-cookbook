@@ -101,6 +101,19 @@ describe 'rabbitmq::default' do
     end
   end
 
+  describe 'redhat-use_distro_version' do
+    let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
+    let(:node) { runner.node }
+    let(:chef_run) do
+      node.set['rabbitmq']['use_distro_version'] = true
+      runner.converge(described_recipe)
+    end
+
+    it 'should install the rabbitmq distro package' do
+      expect(chef_run).to install_package('rabbitmq-server')
+    end
+  end
+
   describe 'redhat' do
     let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
     let(:node) { runner.node }
