@@ -113,8 +113,8 @@ describe 'rabbitmq::default' do
     end
 
     it 'loopback_users shows in config file when specified' do
-       node.set['rabbitmq']['loopback_users'] = []
-       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users')
+      node.set['rabbitmq']['loopback_users'] = []
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users')
     end
   end
 
