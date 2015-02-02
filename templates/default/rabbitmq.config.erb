@@ -45,6 +45,9 @@
 <% if node['rabbitmq']['vm_memory_high_watermark'] -%>
     {vm_memory_high_watermark, <%= node['rabbitmq']['vm_memory_high_watermark'] %>},
 <% end %>
+<% unless node['rabbitmq']['heartbeat'].nil? -%>
+    {heartbeat, <%= node['rabbitmq']['heartbeat'] %>},
+<% end -%>
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>},
     {heartbeat, <%= node['rabbitmq']['heartbeat'] %>}
