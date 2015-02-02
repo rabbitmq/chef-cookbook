@@ -1,3 +1,6 @@
+# REALLY REALLY OUT OF DATE. TODO: update this.
+
+
 # Contributing to Opscode Cookbooks
 
 We are glad you want to contribute to Opscode Cookbooks! The first
