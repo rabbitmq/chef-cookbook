@@ -107,6 +107,15 @@ describe 'rabbitmq::default' do
     it 'installs the rabbitmq-server deb_package with the default action' do
       expect(chef_run).to install_dpkg_package("#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb")
     end
+
+    it 'loopback_users will not show in config file unless attribute is specified' do
+      expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users')
+    end
+
+    it 'loopback_users shows in config file when specified' do
+       node.set['rabbitmq']['loopback_users'] = []
+       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users')
+    end
   end
 
   describe 'redhat-use_distro_version' do
