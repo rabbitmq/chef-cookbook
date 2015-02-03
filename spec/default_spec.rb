@@ -5,11 +5,12 @@ describe 'rabbitmq::default' do
   let(:node) { runner.node }
 
   let(:chef_run) do
-    node.set['rabbitmq']['config'] = '/path/to/rabbitmq'
     runner.converge(described_recipe)
   end
 
   let(:file_cache_path) { Chef::Config[:file_cache_path] }
+
+  include_context 'rabbitmq-stubs'
 
   it 'creates a directory for mnesiadir' do
     expect(chef_run).to create_directory('/var/lib/rabbitmq/mnesia')
@@ -48,7 +49,7 @@ describe 'rabbitmq::default' do
   end
 
   it 'creates a template rabbitmq.config with attributes' do
-    expect(chef_run).to create_template('/path/to/rabbitmq.config').with(
+    expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.config').with(
       :user => 'root',
       :group => 'root',
       :source => 'rabbitmq.config.erb',
@@ -96,16 +97,38 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
+    include_context 'rabbitmq-stubs'
+
     it 'should install the logrotate package' do
       expect(chef_run).to install_package('logrotate')
     end
 
     it 'creates a rabbitmq-server deb in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing("#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb")
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.4.3-1_all.deb')
     end
 
     it 'installs the rabbitmq-server deb_package with the default action' do
-      expect(chef_run).to install_dpkg_package("#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb")
+      expect(chef_run).to install_dpkg_package('/tmp/rabbitmq-server_3.4.3-1_all.deb')
+    end
+  end
+
+  it 'creates a rabbitmq-server rpm in the cache path' do
+    expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.4.3-1.noarch.rpm')
+    expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.4.3-1.noarch.rpm')
+  end
+
+  it 'installs the rabbitmq-server rpm_package with the default action' do
+    expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.4.3-1.noarch.rpm')
+    expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.4.3-1.noarch.rpm')
+  end
+
+  describe 'uses distro version' do
+    before do
+      node.set['rabbitmq']['use_distro_version'] = true
+    end
+
+    it 'should install rabbitmq-server package' do
+      expect(chef_run).to install_package('rabbitmq-server')
     end
   end
 
@@ -122,8 +145,8 @@ describe 'rabbitmq::default' do
     end
   end
 
-  describe 'redhat' do
-    let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
+  describe 'fedora' do
+    let(:runner) { ChefSpec::ServerRunner.new(FEDORA_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
       node.set['rabbitmq']['version'] = '3.4.3'
@@ -131,11 +154,32 @@ describe 'rabbitmq::default' do
     end
 
     it 'creates a rabbitmq-server rpm in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm")
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.4.3-1.noarch.rpm')
+      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.4.3-1.noarch.rpm')
     end
 
     it 'installs the rabbitmq-server rpm_package with the default action' do
-      expect(chef_run).to install_rpm_package("#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm")
+      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.4.3-1.noarch.rpm')
+      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.4.3-1.noarch.rpm')
     end
+
+    describe 'uses distro version' do
+      before do
+        node.set['rabbitmq']['use_distro_version'] = true
+      end
+
+      it 'should install rabbitmq-server package' do
+        expect(chef_run).to install_package('rabbitmq-server')
+      end
+    end
+  end
+
+  it 'creates a template rabbitmq.config with attributes' do
+    expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.config').with(
+      :user => 'root',
+      :group => 'root',
+      :source => 'rabbitmq.config.erb',
+      :mode => 00644
+    )
   end
 end
