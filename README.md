@@ -28,15 +28,21 @@ To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and ke
 
 Default values and usage information of important attributes are shown below.  More attributes are documented in metadata.rb.
 
+##### Default Username and Password
+
 The default username and password are guest/guest:
 
 `['rabbitmq']['default_user'] = 'guest'`
 
 `['rabbitmq']['default_pass'] = 'guest'`
 
-By default, the guest user can only connect via localhost.  If you wish to allow the default guest user to connect remotely, you can change this to `[]`. More information is here: https://www.rabbitmq.com/access-control.html
+##### Loopback Users
+By default, the guest user can only connect via localhost.
 
 `['rabbitmq']['loopback_users'] = nil`
+
+If you wish to allow the default guest user to connect remotely, you can change this to `[]`. If instead you wanted to allow just the user 'foo' to connect over loopback, you would set this value to `["foo"]`.  More information is here: https://www.rabbitmq.com/access-control.html
+
 
 
 ### mgmt_console
