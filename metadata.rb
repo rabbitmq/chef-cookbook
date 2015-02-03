@@ -107,3 +107,9 @@ attribute 'rabbitmq/local_erl_networking',
 attribute 'rabbitmq/erl_networking_bind_address',
   :display_name => 'Erl Networking Bind Address',
   :description => 'Bind Rabbit and erlang networking to an address'
+
+attribute 'rabbitmq/loopback_users',
+  :display_name => 'Loopback Users',
+  :description => 'A list of users which can only connect over a loopback interface (localhost)',
+  :default => nil,
+  :type => 'array'
