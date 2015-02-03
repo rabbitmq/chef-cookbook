@@ -118,12 +118,12 @@ describe 'rabbitmq::default' do
     end
 
     it 'loopback_users can list single user' do
-      node.set['rabbitmq']['loopback_users'] = ["foo"]
+      node.set['rabbitmq']['loopback_users'] = ['foo']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"foo">>]')
     end
 
     it 'loopback_users can list multiple users' do
-      node.set['rabbitmq']['loopback_users'] = ["foo", "bar"]
+      node.set['rabbitmq']['loopback_users'] = %w(foo bar)
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"foo">>,<<"bar">>]')
     end
   end
