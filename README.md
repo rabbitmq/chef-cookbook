@@ -24,6 +24,16 @@ The cluster recipe is now combined with the default and will now auto-cluster. S
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
 
+#### Typical Attributes
+
+The default username and password are guest/guest:
+`['rabbitmq']['default_user'] = 'guest'`
+`['rabbitmq']['default_pass'] = 'guest'`
+
+By default, the guest user can only connect via localhost.  If you wish to allow the default guest user to connect remotely, you need to change this to `[]`.
+`['rabbitmq']['loopback_users'] = nil`
+
+
 ### mgmt_console
 Installs the `rabbitmq_management` and `rabbitmq_management_visualiser` plugins.
 To use https connection to management console, turn `['rabbitmq']['web_console_ssl']` to true. The SSL port for web management console can be configured by setting attribute `['rabbitmq']['web_console_ssl_port']`, whose default value is 15671.

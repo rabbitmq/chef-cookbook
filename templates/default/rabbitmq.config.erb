@@ -46,7 +46,7 @@
     {vm_memory_high_watermark, <%= node['rabbitmq']['vm_memory_high_watermark'] %>},
 <% end %>
 <% if node['rabbitmq']['loopback_users'] -%>
-    {loopback_users, <%= node['rabbitmq']['loopback_users'] %>},
+    {loopback_users, [<%= node['rabbitmq']['loopback_users'].map{|n| "<<\"#{n}\">>"}.join(',') %>]},
 <% end %>
 
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
