@@ -28,7 +28,7 @@ To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and ke
 
 Default values and usage information of important attributes are shown below.  More attributes are documented in metadata.rb.
 
-##### Default Username and Password
+##### Username and Password
 
 The default username and password are guest/guest:
 
