@@ -24,13 +24,18 @@ The cluster recipe is now combined with the default and will now auto-cluster. S
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
 
-#### Typical Attributes
+#### Attributes
+
+Default values and usage information of important attributes are shown below.
 
 The default username and password are guest/guest:
+
 `['rabbitmq']['default_user'] = 'guest'`
+
 `['rabbitmq']['default_pass'] = 'guest'`
 
 By default, the guest user can only connect via localhost.  If you wish to allow the default guest user to connect remotely, you need to change this to `[]`.
+
 `['rabbitmq']['loopback_users'] = nil`
 
 
