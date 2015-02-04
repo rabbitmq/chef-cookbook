@@ -1,6 +1,5 @@
 .vagrant
 Berksfile.lock
-Gemfile.lock
 *~
 *#
 .#*
