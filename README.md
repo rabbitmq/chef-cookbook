@@ -11,6 +11,7 @@ This cookbook depends on the [erlang cookbook](https://supermarket.chef.io/cookb
 The release was tested with (rabbitmq.com/distro version), from the [kitchen.yml](.kitchen.cloud.yml).
 
 - CentOS 6.5
+- CentOS 7.0
 - Ubuntu 12.04
 - Ubuntu 14.04
 - Debian 7.0

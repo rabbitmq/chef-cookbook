@@ -24,6 +24,14 @@ class Chef::Resource # rubocop:disable all
   include Opscode::RabbitMQ # rubocop:enable all
 end
 
+case node['platform_family']
+when  'rhel', 'fedora'
+  if node["platform_version"].to_f >= 7.0
+    include_recipe 'yum-epel'
+    include_recipe 'yum-erlang_solutions'
+  end
+end
+
 include_recipe 'erlang'
 
 ## Install the package
