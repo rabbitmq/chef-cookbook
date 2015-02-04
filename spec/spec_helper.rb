@@ -26,7 +26,7 @@ UBUNTU_OPTS = {
 }
 CENTOS_OPTS = {
   :platform => 'centos',
-  :version => '6.5',
+  :version => '7.0',
   :log_level => LOG_LEVEL
 }
 FEDORA_OPTS = {

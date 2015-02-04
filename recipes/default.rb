@@ -26,7 +26,7 @@ end
 
 case node['platform_family']
 when  'rhel', 'fedora'
-  if node["platform_version"].to_f >= 7.0
+  if node['platform_version'].to_f >= 7.0
     include_recipe 'yum-epel'
     include_recipe 'yum-erlang_solutions'
   end
