@@ -72,24 +72,7 @@ describe 'rabbitmq::default' do
     end
   end
 
-  describe 'debian-use_distro_version' do
-    let(:runner) { ChefSpec::ServerRunner.new(UBUNTU_OPTS) }
-    let(:node) { runner.node }
-    let(:chef_run) do
-      node.set['rabbitmq']['use_distro_version'] = true
-      runner.converge(described_recipe)
-    end
-
-    it 'should install the logrotate package' do
-      expect(chef_run).to install_package('logrotate')
-    end
-
-    it 'should install the rabbitmq distro package' do
-      expect(chef_run).to install_package('rabbitmq-server')
-    end
-  end
-
-  describe 'debian' do
+  describe 'ubuntu' do
     let(:runner) { ChefSpec::ServerRunner.new(UBUNTU_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
@@ -110,38 +93,82 @@ describe 'rabbitmq::default' do
     it 'installs the rabbitmq-server deb_package with the default action' do
       expect(chef_run).to install_dpkg_package('/tmp/rabbitmq-server_3.4.3-1_all.deb')
     end
-  end
 
-  it 'creates a rabbitmq-server rpm in the cache path' do
-    expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.4.3-1.noarch.rpm')
-    expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.4.3-1.noarch.rpm')
-  end
+    describe 'uses distro version' do
+      before do
+        node.set['rabbitmq']['use_distro_version'] = true
+      end
 
-  it 'installs the rabbitmq-server rpm_package with the default action' do
-    expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.4.3-1.noarch.rpm')
-    expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.4.3-1.noarch.rpm')
-  end
+      it 'should install rabbitmq-server package' do
+        expect(chef_run).to install_package('rabbitmq-server')
+      end
 
-  describe 'uses distro version' do
-    before do
-      node.set['rabbitmq']['use_distro_version'] = true
-    end
-
-    it 'should install rabbitmq-server package' do
-      expect(chef_run).to install_package('rabbitmq-server')
+      it 'should install the logrotate package' do
+        expect(chef_run).to install_package('logrotate')
+      end
     end
   end
 
-  describe 'redhat-use_distro_version' do
+  describe 'redhat' do
     let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
-      node.set['rabbitmq']['use_distro_version'] = true
       runner.converge(described_recipe)
     end
 
-    it 'should install the rabbitmq distro package' do
-      expect(chef_run).to install_package('rabbitmq-server')
+    it 'creates a rabbitmq-server rpm in the cache path' do
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.4.3-1.noarch.rpm')
+      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.4.3-1.noarch.rpm')
+    end
+
+    it 'installs the rabbitmq-server rpm_package with the default action' do
+      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.4.3-1.noarch.rpm')
+      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.4.3-1.noarch.rpm')
+    end
+
+    describe 'uses distro version' do
+      before do
+        node.set['rabbitmq']['use_distro_version'] = true
+      end
+
+      it 'should install rabbitmq-server package' do
+        expect(chef_run).to install_package('rabbitmq-server')
+      end
+    end
+  end
+
+  describe 'centos' do
+    let(:runner) { ChefSpec::ServerRunner.new(CENTOS_OPTS) }
+    let(:node) { runner.node }
+    let(:chef_run) do
+      runner.converge(described_recipe)
+    end
+
+    it 'creates a rabbitmq-server rpm in the cache path' do
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.4.3-1.noarch.rpm')
+      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.4.3-1.noarch.rpm')
+    end
+
+    it 'installs the rabbitmq-server rpm_package with the default action' do
+      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.4.3-1.noarch.rpm')
+      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.4.3-1.noarch.rpm')
+    end
+
+    it 'includes the `yum-epel` recipe' do
+      expect(chef_run).to include_recipe('yum-epel')
+    end
+    it 'includes the `yum-erlang_solutions` recipe' do
+      expect(chef_run).to include_recipe('yum-erlang_solutions')
+    end
+
+    describe 'uses distro version' do
+      before do
+        node.set['rabbitmq']['use_distro_version'] = true
+      end
+
+      it 'should install rabbitmq-server package' do
+        expect(chef_run).to install_package('rabbitmq-server')
+      end
     end
   end
 
