@@ -106,9 +106,7 @@ describe 'rabbitmq::default' do
       it 'should install the logrotate package' do
         expect(chef_run).to install_package('logrotate')
       end
-
     end
-
   end
 
   describe 'redhat' do
@@ -137,7 +135,6 @@ describe 'rabbitmq::default' do
         expect(chef_run).to install_package('rabbitmq-server')
       end
     end
-
   end
 
   describe 'centos' do
@@ -173,9 +170,7 @@ describe 'rabbitmq::default' do
         expect(chef_run).to install_package('rabbitmq-server')
       end
     end
-
   end
-
 
   describe 'fedora' do
     let(:runner) { ChefSpec::ServerRunner.new(FEDORA_OPTS) }

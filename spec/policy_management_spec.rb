@@ -12,4 +12,12 @@ describe 'rabbitmq::policy_management' do
   it 'includes the `default` recipe' do
     expect(chef_run).to include_recipe('rabbitmq::default')
   end
+
+  it 'sets a rabbitmq policy ha-all' do
+    expect(chef_run).to set_rabbitmq_policy('ha-all')
+  end
+
+  it 'sets a rabbitmq policy ha-two' do
+    expect(chef_run).to set_rabbitmq_policy('ha-two')
+  end
 end
