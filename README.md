@@ -25,6 +25,27 @@ The cluster recipe is now combined with the default and will now auto-cluster. S
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
 
+#### Attributes
+
+Default values and usage information of important attributes are shown below.  More attributes are documented in metadata.rb.
+
+##### Username and Password
+
+The default username and password are guest/guest:
+
+`['rabbitmq']['default_user'] = 'guest'`
+
+`['rabbitmq']['default_pass'] = 'guest'`
+
+##### Loopback Users
+By default, the guest user can only connect via localhost.  This is the behavior of RabbitMQ when the loopback_users configuration is not specified in it's configuration file.   Also, by default, this cookbook does not specify loopback_users in the configuration file:
+
+`['rabbitmq']['loopback_users'] = nil`
+
+If you wish to allow the default guest user to connect remotely, you can change this to `[]`. If instead you wanted to allow just the user 'foo' to connect over loopback, you would set this value to `["foo"]`.  More information can be found here: https://www.rabbitmq.com/access-control.html.
+
+
+
 ### mgmt_console
 Installs the `rabbitmq_management` and `rabbitmq_management_visualiser` plugins.
 To use https connection to management console, turn `['rabbitmq']['web_console_ssl']` to true. The SSL port for web management console can be configured by setting attribute `['rabbitmq']['web_console_ssl_port']`, whose default value is 15671.

@@ -135,6 +135,25 @@ describe 'rabbitmq::default' do
         expect(chef_run).to install_package('rabbitmq-server')
       end
     end
+
+    it 'loopback_users will not show in config file unless attribute is specified' do
+      expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users')
+    end
+
+    it 'loopback_users is empty when attribute is empty array' do
+      node.set['rabbitmq']['loopback_users'] = []
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, []')
+    end
+
+    it 'loopback_users can list single user' do
+      node.set['rabbitmq']['loopback_users'] = ['foo']
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"foo">>]')
+    end
+
+    it 'loopback_users can list multiple users' do
+      node.set['rabbitmq']['loopback_users'] = %w(foo bar)
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"foo">>,<<"bar">>]')
+    end
   end
 
   describe 'centos' do
