@@ -5,6 +5,11 @@ default['rabbitmq']['use_distro_version'] = false
 # Allow the distro version to be optionally pinned like the rabbitmq.com version
 default['rabbitmq']['pin_distro_version'] = false
 
+# provide options to override download urls
+default['rabbitmq']['deb_package_url'] = 'https://www.rabbitmq.com/releases/rabbitmq-server/'
+default['rabbitmq']['rpm_package_url'] = 'https://www.rabbitmq.com/releases/rabbitmq-server/'
+default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/esl-erlang-compat-R14B-1.el6.noarch.rpm?raw=true'
+
 # being nil, the rabbitmq defaults will be used
 default['rabbitmq']['nodename']  = nil
 default['rabbitmq']['address']  = nil
