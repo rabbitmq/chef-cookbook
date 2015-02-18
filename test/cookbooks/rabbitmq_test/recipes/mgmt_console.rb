@@ -17,7 +17,10 @@
 # limitations under the License.
 #
 
-chef_gem 'bunny'
+chef_gem 'bunny' do
+  compile_time true
+  action :install
+end
 
 include_recipe 'rabbitmq::mgmt_console'
 
