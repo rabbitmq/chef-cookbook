@@ -3,7 +3,7 @@
 # Recipe:: default
 #
 # Copyright 2009, Benjamin Black
-# Copyright 2009-2013, Opscode, Inc.
+# Copyright 2009-2013, Chef Software, Inc.
 # Copyright 2012, Kevin Nuckolls <kevin.nuckolls@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@
 
 #
 class Chef::Resource # rubocop:disable all
-  include Opscode::RabbitMQ # rubocop:enable all
+  include Chef Software::RabbitMQ # rubocop:enable all
 end
 
 case node['platform_family']

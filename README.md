@@ -184,7 +184,7 @@ For an already running cluster, these actions still require manual intervention:
 - Author:: JJ Asghar (<jj@chef.io>)
 
 ```text
-Copyright (c) 2009-2013, Opscode, Inc.
+Copyright (c) 2009-2013, Chef Software, Inc.
 Copyright (c) 2014-2015, Chef Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");

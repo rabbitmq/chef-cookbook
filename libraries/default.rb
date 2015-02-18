@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-module Opscode
+module Chef Software
   # module rabbit
   module RabbitMQ
     # This method does some of the yuckiness of formatting parameters properly
