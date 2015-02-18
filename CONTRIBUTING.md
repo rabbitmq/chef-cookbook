@@ -1,15 +1,5 @@
-# Contributing to Chef Cookbooks
-
-We are glad you want to contribute to Chef Cookbooks! The first
-step is the desire to improve the project. If you're new to the Chef
-community, please read
-[How to become a contributor](https://supermarket.chef.io/become-a-contributor)
-on the Supermarket website for more information.
-
 ## Quick-contribute
 
-* Create an account on the [Supermarket](http://supermarket.chef.io)
-* Sign our contributor agreement (CLA)[online](https://supermarket.chef.io/ccla-signatures/new)
 * Visit the Github page for the project.
 * Fork the repository
 * Create a feature branch for your change.
@@ -41,13 +31,6 @@ patches.
 
 It only takes a few minutes to complete a CLA, and you retain the
 copyright to your contribution.
-
-You can complete our contributor agreement (CLA)
-[online](https://supermarket.chef.io/ccla-signatures/new) If
-you're contributing on behalf of your employer, have your employer
-fill out our
-[Corporate CLA](https://supermarket.chef.io/ccla-signatures/new)
-instead.
 
 ## Using git
 
@@ -154,15 +137,16 @@ other members of the Chef community:
 * [chef](http://lists.chef.io/sympa/info/chef) and
   [chef-dev](http://lists.chef.io/sympa/info/chef-dev) mailing
   lists
-* #chef and #chef-hacking IRC channels on irc.freenode.net
-* [Community Cookbook site](http://community.chef.io)
+* #openstack-chef, #chef, #chef-hacking IRC channels on irc.freenode.net
 * Chef, Inc [product page](http://www.chef.io/chef)
 
 ## Cookbook Contribution Do's and Don't's
 
 Please do include tests for your contribution. If you need help, ask
-on the [chef-dev mailing list](http://lists.chef.io/sympa/info/chef-dev)
+on the [openstack cookbook group](https://groups.google.com/forum/#!forum/opscode-chef-openstack)
+or the [chef-dev mailing list](http://lists.chef.io/sympa/info/chef-dev)
 or the [#chef-hacking IRC channel](http://community.chef.io/chat/chef-hacking).
+
 Not all platforms that a cookbook supports may be supported by Test
 Kitchen. Please provide evidence of testing your contribution if it
 isn't trivial so we don't have to duplicate effort in testing. Chef
@@ -186,5 +170,5 @@ cycle information above.
 
 Please do not update the CHANGELOG.md for a new version. Not all
 changes to a cookbook may be merged and released in the same versions.
-Chef Software will update the CHANGELOG.md when releasing a new version of
+A maintainer will update the CHANGELOG.md when releasing a new version of
 the cookbook.
