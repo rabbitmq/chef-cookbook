@@ -26,9 +26,9 @@ describe 'rabbitmq::default' do
 
   it 'should create the directory /var/lib/rabbitmq/mnesia' do
     expect(chef_run).to create_directory('/var/lib/rabbitmq/mnesia').with(
-     :user => 'rabbitmq',
-     :group => 'rabbitmq',
-     :mode => '775'
+      :user => 'rabbitmq',
+      :group => 'rabbitmq',
+      :mode => '775'
    )
   end
 
