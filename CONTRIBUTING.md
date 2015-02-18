@@ -105,7 +105,8 @@ signalling to them to research your ticket and use case and accounting
 for it.
 
 If you need help writing tests, please ask on the Chef Developer's
-mailing list or the OpenStack Mailing List, or the #chef-hacking IRC channel.
+mailing list or the OpenStack Mailing List, or the #openstack-chef
+#chef-hacking IRC channels.
 
 ## Code Review
 
