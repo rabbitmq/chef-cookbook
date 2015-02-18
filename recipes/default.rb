@@ -21,7 +21,7 @@
 
 #
 class Chef::Resource # rubocop:disable all
-  include Chef Software::RabbitMQ # rubocop:enable all
+  include Chef::RabbitMQ # rubocop:enable all
 end
 
 case node['platform_family']
