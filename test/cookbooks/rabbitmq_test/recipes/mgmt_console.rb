@@ -18,7 +18,6 @@
 #
 
 chef_gem 'bunny' do
-  compile_time true
   action :install
 end
 
