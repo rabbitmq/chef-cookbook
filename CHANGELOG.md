@@ -2,6 +2,24 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.11.0 (2015-02-25)
+------------------
+- Fix travis build. #228
+- Update Contributing file with new links and help. #229
+- Change module back to Opscode. #231
+- Update for 3.4.4 #223
+- Exclude CentOS 6/7 from distro version suite (no or broken upstream)
+
+v3.10.0 (2015-02-05)
+------------------
+Song of this Release: [First Person Shooter](http://www.pandora.com/celldweller/soundtrack-for-voices-in-my-head-vol-02/1st-person-shooter) by Celldweller
+
+- Add more chefspec tests #193
+- initial enforcement of Gemfile.lock #213
+- add support for loopback users #212
+- CentOS 7 support #214
+- changed regex behavior for guard command on set user permission resource #215
+
 v3.9.0 (2015-01-28)
 ------------------
 Song of this Release: [Cascade](http://www.pandora.com/hyper/we-control/cascade) by Hyper
