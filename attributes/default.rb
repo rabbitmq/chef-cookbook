@@ -46,6 +46,18 @@ default['rabbitmq']['cluster_disk_nodes'] = []
 default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 default['rabbitmq']['cluster_partition_handling'] = 'ignore'
 
+default[:rabbitmq][:clustering][:use_auto_clustering] = false
+default[:rabbitmq][:clustering][:cluster_name] = nil
+default[:rabbitmq][:clustering][:cluster_nodes] = []
+
+# Manual clustering
+# - Node type : master | slave
+default['rabbitmq']['clustering']['node_type'] = 'master'
+# - Master node name : ex) rabbit@rabbit1
+default['rabbitmq']['clustering']['master_node_name'] = 'rabbit@rabbit1'
+# - Cluster node type : disc | ram
+default['rabbitmq']['clustering']['cluster_node_type'] = 'disc'
+
 # resource usage
 default['rabbitmq']['disk_free_limit_relative'] = nil
 default['rabbitmq']['vm_memory_high_watermark'] = nil
