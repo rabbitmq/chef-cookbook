@@ -99,7 +99,7 @@ when 'rhel', 'fedora'
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
       action :install
-      version node['rabbitmq']['version']
+      version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
   else
     # We need to download the rpm
@@ -122,13 +122,13 @@ when 'suse'
   end
   package 'rabbitmq-server' do
     action :install
-    version node['rabbitmq']['version']
+    version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
   end
 
 when 'smartos'
   package 'rabbitmq'do
     action :install
-    version node['rabbitmq']['version']
+    version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
   end
 
   service 'epmd' do
