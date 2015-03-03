@@ -156,8 +156,9 @@ end
 action :change_password do
   if user_exists?(new_resource.user)
     cmd = "rabbitmqctl change_password #{new_resource.user} #{new_resource.password}"
-    execute cmd do
+    execute "rabbitmqctl change_password #{new_resource.user}" do # ~FC009
       sensitive true
+      comand cmd
       Chef::Log.debug "rabbitmq_user_change_password: #{cmd}"
       Chef::Log.info "Editing RabbitMQ user '#{new_resource.user}'."
     end
