@@ -67,10 +67,44 @@ Enables any users listed in the `node['rabbitmq']['enabled_users']` and disables
 ### virtualhost_management
 Enables any vhosts listed in the `node['rabbitmq']['virtualhosts']` and disables any listed in `node['rabbitmq']['disabled_virtualhosts']` attributes.
 
+### cluster
+Configure the cluster between the nodes in the `node['rabbitmq']['clustering']['cluster_nodes']` attribute. It also, supports the auto or manual clustering.
+* Auto clustering : Use auto-configuration of RabbitMQ, http://www.rabbitmq.com/clustering.html#auto-config
+* Manual clustering : Configure the cluster by executing `rabbitmqctl join_cluster` command.
+
+#### Attributes that related to clustering
+* `node['rabbitmq']['cluster']` : Default decision flag of clustering
+* `node['rabbitmq']['erlang_cookie']` : Same erlang cookie is required for the cluster
+* `node['rabbitmq']['clustering']['use\_auto_clustering']` : Default is false. (manual clustering is default)
+* `node['rabbitmq']['clustering']['cluster_name']` : Name of cluster. default value is nil. In case of nil or '' is set for `cluster_name`, first node name in `node['rabbitmq']['clustering']['cluster_nodes']` attribute will be set for manual clustering. for the auto clustering, one of the node name will be set. 
+* `node['rabbitmq']['clustering']['cluster_nodes']` : List of cluster nodes. it required node name and cluster node type. please refer to example in below.
+
+Attributes example
+```ruby
+node['rabbitmq']['cluster'] = true
+node['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
+node['rabbitmq']['cluster_partition_handling'] = 'ignore'
+node['rabbitmq']['clustering']['use_auto_clustering'] = false
+node['rabbitmq']['clustering']['cluster_name'] = 'seoul_tokyo_newyork'
+node['rabbitmq']['clustering']['cluster_nodes'] = [
+    {
+        :name => 'rabbit@rabbit1',
+        :type => 'disc'
+    },
+    {
+        :name => 'rabbit@rabbit2',
+        :type => 'ram'
+    },
+    {
+        :name => 'rabbit@rabbit3',
+        :type => 'disc'
+    }
+]
+```
 
 ## Resources/Providers
 
-There are 4 LWRPs for interacting with RabbitMQ.
+There are 5 LWRPs for interacting with RabbitMQ.
 
 ### plugin
 Enables or disables a rabbitmq plugin. Plugins are not supported for releases prior to 2.7.0.
@@ -164,6 +198,53 @@ Adds and deletes vhosts.
 ``` ruby
 rabbitmq_vhost "/nova" do
   action :add
+end
+```
+
+### cluster
+Join cluster, set cluster name and change cluster node type.
+
+- `:join` join in cluster as a manual clustering. node will join in first node of json string data.
+
+ - cluster nodes data json format : Data should have all the cluster nodes information.
+ 
+ ```json
+ [
+     {
+         "name" : "rabbit@rabbit1",
+         "type" : "disc"
+     },
+     {
+         "name" : "rabbit@rabbit2",
+         "type" : "ram"
+     },
+     {
+         "name" "rabbit@rabbit3",
+         "type" : "disc"
+     }
+]
+ ```
+
+- `:set_cluster_name` set the cluster name.
+- `:change_cluster_node_type` change cluster type of node. `disc` or `ram` should be set.
+
+#### Examples
+```ruby
+rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2","type":"ram"},{"name":"rabbit@rabbit3","type":"disc"}]' do
+  action :join
+end
+```
+
+```ruby
+rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2","type":"ram"},{"name":"rabbit@rabbit3","type":"disc"}]' do
+  cluster_name 'seoul_tokyo_newyork'
+  action :set_cluster_name
+end
+```
+
+```ruby
+rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2","type":"ram"},{"name":"rabbit@rabbit3","type":"disc"}]' do
+  action :change_cluster_node_type
 end
 ```
 

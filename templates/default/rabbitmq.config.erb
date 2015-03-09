@@ -18,8 +18,8 @@
 <% end %>
   {rabbit, [
 <% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] -%>
-    <%if node[:rabbitmq][:clustering][:use_auto_clustering]-%>
-    {cluster_nodes, {[<%= node[:rabbitmq][:clustering][:cluster_nodes].map { |n| "'#{n['name']}'"}.join(',') %>], disc}},
+    <%if node['rabbitmq']['clustering']['use_auto_clustering']-%>
+    {cluster_nodes, {[<%= node['rabbitmq']['clustering']['cluster_nodes'].map { |n| "'#{n['name']}'"}.join(',') %>], disc}},
     {cluster_partition_handling,<%= node['rabbitmq']['cluster_partition_handling'] %>},
     <% end %>
 <% end %>

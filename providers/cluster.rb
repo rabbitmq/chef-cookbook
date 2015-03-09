@@ -190,18 +190,17 @@ action :join do
   _cluster_status = cluster_status
   _node_name = node_name
   _node_name_to_join = parse_cluster_nodes_string(new_resource.cluster_nodes).first['name']
-  _cluster_name =  new_resource.cluster_name.nil? || new_resource.cluster_name.empty? ? _node_name_to_join : new_resource.cluster_name
 
   if _node_name == _node_name_to_join
     Chef::Log.warn('[rabbitmq_cluster] Trying to join cluster node itself. Joining cluster will be skipped.')
-  elsif current_cluster_name(_cluster_status) == _cluster_name && joined_cluster?(_node_name_to_join, _cluster_status)
-    Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{_cluster_name} and joined in #{_node_name_to_join}. Joining cluster will be skipped.")
+  elsif joined_cluster?(_node_name_to_join, _cluster_status)
+    Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{current_cluster_name(_cluster_status)}. Joining cluster will be skipped.")
   else
     run_rabbitmqctl('stop_app')
     join_cluster(_node_name_to_join)
     run_rabbitmqctl('start_app')
     Chef::Log.info("[rabbitmq_cluster] Node #{_node_name} joined in #{_node_name_to_join}")
-    Chef::Log.info("#{cluster_status}")
+    Chef::Log.info(cluster_status)
   end
 end
 
@@ -227,7 +226,7 @@ action :change_cluster_node_type do
   _cluster_status = cluster_status
   _node_name = node_name
   _current_cluster_node_type = current_cluster_node_type(_node_name, _cluster_status)
-  _cluster_node_type = parse_cluster_nodes_string(new_resource.cluster_nodes).select { |node| node['name'] == _node_name }.first['type']
+  _cluster_node_type = parse_cluster_nodes_string(new_resource.cluster_nodes).select { |node| node['name'] == _node_name }.first['type'] # ~FC039
 
   if _current_cluster_node_type == _cluster_node_type
     Chef::Log.warn('[rabbitmq_cluster] Skip changing cluster node type : trying to change to same cluster node type')
@@ -254,6 +253,6 @@ action :change_cluster_node_type do
     change_cluster_node_type(_cluster_node_type)
     run_rabbitmqctl('start_app')
     Chef::Log.info("[rabbitmq_cluster] The cluster node type of #{_node_name} has been changed into #{_cluster_node_type}")
-    Chef::Log.info("#{cluster_status}")
+    Chef::Log.info(cluster_status)
   end
 end
