@@ -26,7 +26,7 @@ use_inline_resources
 def get_shellout(cmd)
   sh_cmd = Mixlib::ShellOut.new(cmd)
   sh_cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
-  return sh_cmd
+  sh_cmd
 end
 
 # Execute rabbitmqctl command with args
@@ -55,7 +55,7 @@ def cluster_status
   cmd.error!
   result = cmd.stdout.chomp
   Chef::Log.debug("[rabbitmq_cluster] rabbitmqctl cluster_status : #{result}")
-  return result
+  result
 end
 
 # Match regex pattern from result of rabbitmqctl cluster_status
@@ -64,7 +64,7 @@ def match_pattern_cluster_status(cluster_status, pattern)
     Chef::Application.fatal!('[rabbitmq_cluster] cluster_status should not be empty')
   end
   match = cluster_status.match(pattern)
-  return match[2]
+  match[2]
 end
 
 # Get currently joined cluster name from result string of "rabbitmqctl cluster_status"
@@ -72,7 +72,7 @@ def current_cluster_name(cluster_status)
   pattern = '({cluster_name,<<")(.*?)(">>})'
   result = match_pattern_cluster_status(cluster_status, pattern)
   Chef::Log.debug("[rabbitmq_cluster] current_cluster_name : #{result}")
-  return result
+  result
 end
 
 # Get running nodes
@@ -80,7 +80,7 @@ def running_nodes(cluster_status)
   pattern = '({running_nodes,\[)(.*?)(\]})'
   result = match_pattern_cluster_status(cluster_status, pattern)
   Chef::Log.debug("[rabbitmq_cluster] running_nodes : #{result}")
-  return result.split(',')
+  result.split(',')
 end
 
 # Get disc nodes
@@ -88,7 +88,7 @@ def disc_nodes(cluster_status)
   pattern = '({disc,\[)(.*?)(\]})'
   result = match_pattern_cluster_status(cluster_status, pattern)
   Chef::Log.debug("[rabbitmq_cluster] disc_nodes : #{result}")
-  return result.split(',')
+  result.split(',')
 end
 
 # Get ram nodes
@@ -96,7 +96,7 @@ def ram_nodes(cluster_status)
   pattern = '({ram,\[)(.*?)(\]})'
   result = match_pattern_cluster_status(cluster_status, pattern)
   Chef::Log.debug("[rabbitmq_cluster] ram_nodes : #{result}")
-  return result.split(',')
+  result.split(',')
 end
 
 # Get node name
@@ -109,18 +109,18 @@ def node_name
   cmd.error!
   result = cmd.stdout.chomp
   Chef::Log.debug("[rabbitmq_cluster] node name : #{result}")
-  return result
+  result
 end
 
 # Get cluster_node_type of current node
 def current_cluster_node_type(node_name, cluster_status)
+  var_cluster_node_type = ''
   if disc_nodes(cluster_status).include?(node_name)
-    return 'disc'
+    var_cluster_node_type = 'disc'
+  elsif ram_nodes(cluster_status).include?(node_name)
+    var_cluster_node_type = 'ram'
   end
-  if ram_nodes(cluster_status).include?(node_name)
-    return 'ram'
-  end
-  ''
+  var_cluster_node_type
 end
 
 # Parse hash string of cluster_nodes to JSON object
@@ -187,19 +187,19 @@ action :join do
 
   Chef::Application.fatal!('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
 
-  _cluster_status = cluster_status
-  _node_name = node_name
-  _node_name_to_join = parse_cluster_nodes_string(new_resource.cluster_nodes).first['name']
+  var_cluster_status = cluster_status
+  var_node_name = node_name
+  var_node_name_to_join = parse_cluster_nodes_string(new_resource.cluster_nodes).first['name']
 
-  if _node_name == _node_name_to_join
+  if var_node_name == var_node_name_to_join
     Chef::Log.warn('[rabbitmq_cluster] Trying to join cluster node itself. Joining cluster will be skipped.')
-  elsif joined_cluster?(_node_name_to_join, _cluster_status)
-    Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{current_cluster_name(_cluster_status)}. Joining cluster will be skipped.")
+  elsif joined_cluster?(var_node_name_to_join, var_cluster_status)
+    Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{current_cluster_name(var_cluster_status)}. Joining cluster will be skipped.")
   else
     run_rabbitmqctl('stop_app')
-    join_cluster(_node_name_to_join)
+    join_cluster(var_node_name_to_join)
     run_rabbitmqctl('start_app')
-    Chef::Log.info("[rabbitmq_cluster] Node #{_node_name} joined in #{_node_name_to_join}")
+    Chef::Log.info("[rabbitmq_cluster] Node #{var_node_name} joined in #{var_node_name_to_join}")
     Chef::Log.info(cluster_status)
   end
 end
@@ -207,11 +207,11 @@ end
 # Action for set cluster name
 action :set_cluster_name do
   Chef::Application.fatal!('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
-  _cluster_status = cluster_status
-  _cluster_name = new_resource.cluster_name
-  unless current_cluster_name(_cluster_status) == _cluster_name
-    unless _cluster_name.empty?
-      run_rabbitmqctl("set_cluster_name #{_cluster_name}")
+  var_cluster_status = cluster_status
+  var_cluster_name = new_resource.cluster_name
+  unless current_cluster_name(var_cluster_status) == var_cluster_name
+    unless var_cluster_name.empty?
+      run_rabbitmqctl("set_cluster_name #{var_cluster_name}")
       Chef::Log.info("[rabbitmq_cluster] Cluster name has been set : #{current_cluster_name(cluster_status)}")
     end
   end
@@ -223,26 +223,26 @@ action :change_cluster_node_type do
 
   Chef::Application.fatal!('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
 
-  _cluster_status = cluster_status
-  _node_name = node_name
-  _current_cluster_node_type = current_cluster_node_type(_node_name, _cluster_status)
-  _cluster_node_type = parse_cluster_nodes_string(new_resource.cluster_nodes).select { |node| node['name'] == _node_name }.first['type'] # ~FC039
+  var_cluster_status = cluster_status
+  var_node_name = node_name
+  var_current_cluster_node_type = current_cluster_node_type(var_node_name, var_cluster_status)
+  var_cluster_node_type = parse_cluster_nodes_string(new_resource.cluster_nodes).select { |node| node['name'] == var_node_name }.first['type'] # ~FC039
 
-  if _current_cluster_node_type == _cluster_node_type
+  if var_current_cluster_node_type == var_cluster_node_type
     Chef::Log.warn('[rabbitmq_cluster] Skip changing cluster node type : trying to change to same cluster node type')
     node_type_changeable = false
   else
-    if _cluster_node_type == 'ram'
-      if _current_cluster_node_type == 'disc' && disc_nodes(_cluster_status).length < 2
+    if var_cluster_node_type == 'ram'
+      if var_current_cluster_node_type == 'disc' && disc_nodes(var_cluster_status).length < 2
         Chef::Log.warn('[rabbitmq_cluster] At least one disc node is required for rabbitmq cluster. Changing cluster node type will be ignored.')
         node_type_changeable = false
       else
         node_type_changeable = true
       end
-    elsif _cluster_node_type == 'disc'
+    elsif var_cluster_node_type == 'disc'
       node_type_changeable = true
     else
-      Chef::Log.warn("[rabbitmq_cluster] Unexpected cluster_note_type #{_cluster_node_type}. Changing cluster node type will be ignored.")
+      Chef::Log.warn("[rabbitmq_cluster] Unexpected cluster_note_type #{var_cluster_node_type}. Changing cluster node type will be ignored.")
       node_type_changeable = false
     end
   end
@@ -250,9 +250,9 @@ action :change_cluster_node_type do
   # Change cluster node type
   if node_type_changeable
     run_rabbitmqctl('stop_app')
-    change_cluster_node_type(_cluster_node_type)
+    change_cluster_node_type(var_cluster_node_type)
     run_rabbitmqctl('start_app')
-    Chef::Log.info("[rabbitmq_cluster] The cluster node type of #{_node_name} has been changed into #{_cluster_node_type}")
+    Chef::Log.info("[rabbitmq_cluster] The cluster node type of #{var_node_name} has been changed into #{var_cluster_node_type}")
     Chef::Log.info(cluster_status)
   end
 end

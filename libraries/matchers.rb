@@ -59,7 +59,7 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:rabbitmq_cluster, :join, resource_name)
   end
 
-  def set_cluster_name(resource_name)
+  def set_cluster_name(resource_name) # rubocop:disable AccessorMethodName
     ChefSpec::Matchers::ResourceMatcher.new(:rabbitmq_cluster, :change_cluster_node_type, resource_name)
   end
 
