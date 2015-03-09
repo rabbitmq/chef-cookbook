@@ -48,7 +48,9 @@
 <% if node['rabbitmq']['loopback_users'] -%>
     {loopback_users, [<%= node['rabbitmq']['loopback_users'].map{|n| "<<\"#{n}\">>"}.join(',') %>]},
 <% end %>
-
+<% if node['rabbitmq']['auth_backends'] -%>
+    {auth_backends, [<%= node['rabbitmq']['auth_backends'].sort.join(',') %>]},
+<% end %>
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>},
     {heartbeat, <%= node['rabbitmq']['heartbeat'] %>}

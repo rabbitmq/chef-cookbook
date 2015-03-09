@@ -86,6 +86,9 @@ default['rabbitmq']['enabled_users'] =
   }]
 default['rabbitmq']['disabled_users'] = []
 
+# auth backenends
+default['rabbitmq']['auth_backends'] = nil
+
 # plugins
 default['rabbitmq']['enabled_plugins'] = []
 default['rabbitmq']['disabled_plugins'] = []
