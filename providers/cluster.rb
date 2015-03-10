@@ -45,15 +45,16 @@ end
 
 # Get cluster status result
 def cluster_status
-  # execute > rabbitmqctl cluster_status | sed "1d" | tr "\n" " " | tr -d " "
-  # rabbitmqctl cluster_status returns "Cluster status of node rabbit@rabbit1 ..." at the first line.
-  # To parse the result string, it is removed by sed "1d"
-  cmd = 'rabbitmqctl cluster_status | sed "1d" | tr "\n" " " | tr -d " "'
+  # execute > rabbitmqctl cluster_status"
+  # To parse the result string, this function normalize the output string
+  # - Removing first line : it returns "Cluster status of node 'rabbit@rabbit1' ..."
+  # - Removing "... Done" : old version returns this
+  cmd = 'rabbitmqctl cluster_status'
   Chef::Log.debug("[rabbitmq_cluster] Executing #{cmd}")
   cmd = get_shellout(cmd)
   cmd.run_command
   cmd.error!
-  result = cmd.stdout.chomp
+  result = cmd.stdout.split(/\n/, 2).last.squeeze(' ').gsub(/\n/, '').gsub('...done.', '')
   Chef::Log.debug("[rabbitmq_cluster] rabbitmqctl cluster_status : #{result}")
   result
 end
@@ -146,7 +147,7 @@ def join_cluster(cluster_name)
     err = cmd.stderr
     Chef::Log.warn("[rabbitmq_cluster] #{err}")
     if err.include?('{ok,already_member}')
-      Chef::Log.info('[rabbitmq_cluster] Node is already member of cluster, error will be ignored.')
+      Chef::Log.info('[rabbitmq_cluster] Node is already a member of the cluster, error will be ignored.')
     elsif err.include?('cannot_cluster_node_with_itself')
       Chef::Log.info('[rabbitmq_cluster] Cannot cluster node itself, error will be ignored.')
     else

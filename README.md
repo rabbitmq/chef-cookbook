@@ -208,7 +208,7 @@ Join cluster, set cluster name and change cluster node type.
 
  - cluster nodes data json format : Data should have all the cluster nodes information.
  
- ```json
+ ```
  [
      {
          "name" : "rabbit@rabbit1",
