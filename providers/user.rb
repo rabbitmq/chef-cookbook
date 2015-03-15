@@ -2,7 +2,7 @@
 # Cookbook Name:: rabbitmq
 # Provider:: user
 #
-# Copyright 2011-2013, Opscode, Inc.
+# Copyright 2011-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ end
 # empty perm_list means we're checking for any permissions
 def user_has_permissions?(name, vhost, perm_list = nil) # rubocop:disable all
   vhost = '/' if vhost.nil? # rubocop:enable all
-  cmd = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\b\""
+  cmd = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\s\""
   cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
@@ -156,8 +156,9 @@ end
 action :change_password do
   if user_exists?(new_resource.user)
     cmd = "rabbitmqctl change_password #{new_resource.user} #{new_resource.password}"
-    execute cmd do
+    execute "rabbitmqctl change_password #{new_resource.user}" do # ~FC009
       sensitive true
+      comand cmd
       Chef::Log.debug "rabbitmq_user_change_password: #{cmd}"
       Chef::Log.info "Editing RabbitMQ user '#{new_resource.user}'."
     end

@@ -11,6 +11,7 @@ This cookbook depends on the [erlang cookbook](https://supermarket.chef.io/cookb
 The release was tested with (rabbitmq.com/distro version), from the [kitchen.yml](.kitchen.cloud.yml).
 
 - CentOS 6.5
+- CentOS 7.0
 - Ubuntu 12.04
 - Ubuntu 14.04
 - Debian 7.0
@@ -24,12 +25,33 @@ The cluster recipe is now combined with the default and will now auto-cluster. S
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
 
+#### Attributes
+
+Default values and usage information of important attributes are shown below.  More attributes are documented in metadata.rb.
+
+##### Username and Password
+
+The default username and password are guest/guest:
+
+`['rabbitmq']['default_user'] = 'guest'`
+
+`['rabbitmq']['default_pass'] = 'guest'`
+
+##### Loopback Users
+By default, the guest user can only connect via localhost.  This is the behavior of RabbitMQ when the loopback_users configuration is not specified in it's configuration file.   Also, by default, this cookbook does not specify loopback_users in the configuration file:
+
+`['rabbitmq']['loopback_users'] = nil`
+
+If you wish to allow the default guest user to connect remotely, you can change this to `[]`. If instead you wanted to allow just the user 'foo' to connect over loopback, you would set this value to `["foo"]`.  More information can be found here: https://www.rabbitmq.com/access-control.html.
+
+
+
 ### mgmt_console
 Installs the `rabbitmq_management` and `rabbitmq_management_visualiser` plugins.
 To use https connection to management console, turn `['rabbitmq']['web_console_ssl']` to true. The SSL port for web management console can be configured by setting attribute `['rabbitmq']['web_console_ssl_port']`, whose default value is 15671.
 
 ### plugin_management
-Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq'][disabled_plugins']` attributes.
+Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq']['disabled_plugins']` attributes.
 
 ### community_plugins
 Downloads, installs and enables pre-built community plugins binaries.
@@ -37,13 +59,13 @@ Downloads, installs and enables pre-built community plugins binaries.
 To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['PLUGIN_NAME']` to `'DOWNLOAD_URL'`. For example, to use the [RabbitMQ priority queue plugin](https://github.com/rabbitmq/rabbitmq-priority-queue), set the attribute `node['rabbitmq']['community_plugins']['rabbitmq_priority_queue']` to `'https://www.rabbitmq.com/community-plugins/v3.4.x/rabbitmq_priority_queue-3.4.x-3431dc1e.ez'`.
 
 ### policy_management
-Enables any policies listed in the `node['rabbitmq'][policies]` and disables any listed in `node['rabbitmq'][disabled_policies]` attributes.
+Enables any policies listed in the `node['rabbitmq']['policies']` and disables any listed in `node['rabbitmq']['disabled_policies']` attributes.
 
 ### user_management
-Enables any users listed in the `node['rabbitmq']['enabled_users]` and disables any listed in `node['rabbitmq'][disabled_users]` attributes.
+Enables any users listed in the `node['rabbitmq']['enabled_users']` and disables any listed in `node['rabbitmq']['disabled_users']` attributes.
 
 ### virtualhost_management
-Enables any vhosts listed in the `node['rabbitmq'][virtualhosts]` and disables any listed in `node['rabbitmq'][disabled_virtualhosts]` attributes.
+Enables any vhosts listed in the `node['rabbitmq']['virtualhosts']` and disables any listed in `node['rabbitmq']['disabled_virtualhosts']` attributes.
 
 
 ## Resources/Providers
@@ -162,7 +184,7 @@ For an already running cluster, these actions still require manual intervention:
 - Author:: JJ Asghar (<jj@chef.io>)
 
 ```text
-Copyright (c) 2009-2013, Opscode, Inc.
+Copyright (c) 2009-2013, Chef Software, Inc.
 Copyright (c) 2014-2015, Chef Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");

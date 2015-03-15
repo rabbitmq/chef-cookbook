@@ -3,13 +3,16 @@ maintainer 'Chef, Inc.'
 maintainer_email 'cookbooks@chef.io'
 license 'Apache 2.0'
 description 'Installs and configures RabbitMQ server'
-version '3.7.0'
+version '3.11.0'
 recipe 'rabbitmq', 'Install and configure RabbitMQ'
 recipe 'rabbitmq::cluster', 'Set up RabbitMQ clustering.'
 recipe 'rabbitmq::plugin_management', 'Manage plugins with node attributes'
 recipe 'rabbitmq::virtualhost_management', 'Manage virtualhost with node attributes'
 recipe 'rabbitmq::user_management', 'Manage users with node attributes'
+
 depends 'erlang', '>= 0.9'
+depends 'yum-epel'
+depends 'yum-erlang_solutions'
 
 supports 'debian'
 supports 'ubuntu'
@@ -107,3 +110,9 @@ attribute 'rabbitmq/local_erl_networking',
 attribute 'rabbitmq/erl_networking_bind_address',
   :display_name => 'Erl Networking Bind Address',
   :description => 'Bind Rabbit and erlang networking to an address'
+
+attribute 'rabbitmq/loopback_users',
+  :display_name => 'Loopback Users',
+  :description => 'A list of users which can only connect over a loopback interface (localhost)',
+  :default => nil,
+  :type => 'array'

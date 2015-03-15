@@ -2,7 +2,7 @@
 # Cookbook Name:: rabbitmq_test
 # Recipe:: mgmt_console
 #
-# Copyright 2012-2013, Opscode, Inc. <legal@opscode.com>
+# Copyright 2012-2013, Chef Software, Inc. <legal@chef.io>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-chef_gem 'bunny'
+chef_gem 'bunny' do
+  action :install
+end
 
 include_recipe 'rabbitmq::mgmt_console'
 

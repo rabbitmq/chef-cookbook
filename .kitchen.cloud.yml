@@ -8,6 +8,10 @@ platforms:
   driver:
     name: digitalocean
 
+- name: centos-7-0-x64
+  driver:
+    name: digitalocean
+
 - name: debian-7-0-x64
   driver:
     name: digitalocean
@@ -30,6 +34,13 @@ suites:
   - name: default
     run_list:
       - recipe[rabbitmq::default]
+  - name: default-use-distro-version
+    run_list:
+      - recipe[rabbitmq::default]
+    attributes:
+      rabbitmq:
+        use_distro_version: true
+    excludes: ["centos-6-5-x64", "centos-7-0-x64"]
   - name: cluster
     run_list:
       - recipe[rabbitmq::default]

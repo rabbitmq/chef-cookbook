@@ -1,7 +1,9 @@
 # Latest RabbitMQ.com version to install
-default['rabbitmq']['version'] = '3.4.2'
+default['rabbitmq']['version'] = '3.4.4'
 # The distro versions may be more stable and have back-ported patches
 default['rabbitmq']['use_distro_version'] = false
+# Allow the distro version to be optionally pinned like the rabbitmq.com version
+default['rabbitmq']['pin_distro_version'] = false
 
 # being nil, the rabbitmq defaults will be used
 default['rabbitmq']['nodename']  = nil
@@ -24,6 +26,11 @@ default['rabbitmq']['config_template_cookbook'] = 'rabbitmq'
 # rabbitmq.config defaults
 default['rabbitmq']['default_user'] = 'guest'
 default['rabbitmq']['default_pass'] = 'guest'
+
+# loopback_users
+# List of users which are only permitted to connect to the broker via a loopback interface (i.e. localhost).
+# If you wish to allow the default guest user to connect remotely, you need to change this to [].
+default['rabbitmq']['loopback_users'] = nil
 
 # Erlang kernel application options
 # See http://www.erlang.org/doc/man/kernel_app.html

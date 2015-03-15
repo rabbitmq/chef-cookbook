@@ -1,6 +1,41 @@
 rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
+
+v3.11.0 (2015-02-25)
+------------------
+- Fix travis build. #228
+- Update Contributing file with new links and help. #229
+- Change module back to Opscode. #231
+- Update for 3.4.4 #223
+- Exclude CentOS 6/7 from distro version suite (no or broken upstream)
+
+v3.10.0 (2015-02-05)
+------------------
+Song of this Release: [First Person Shooter](http://www.pandora.com/celldweller/soundtrack-for-voices-in-my-head-vol-02/1st-person-shooter) by Celldweller
+
+- Add more chefspec tests #193
+- initial enforcement of Gemfile.lock #213
+- add support for loopback users #212
+- CentOS 7 support #214
+- changed regex behavior for guard command on set user permission resource #215
+
+v3.9.0 (2015-01-28)
+------------------
+Song of this Release: [Cascade](http://www.pandora.com/hyper/we-control/cascade) by Hyper
+
+- Moved the service enable and start to the bottom of the default recipe so you can change variables around. Issue #201
+- syntax typos #208
+- LWRP for managing RabbitMQ parameters #207
+- Distro version pinning #211
+
+v3.8.0 (2015-01-07)
+------------------
+Song of this Release: Sunlight (2011) by by Modestep
+
+- Update to `3.4.3` release of rabbitmq
+- Updated from 12.04 to 14.04 for Ubuntu Specs
+
 v3.7.0 (2014-12-18)
 ------------------
 - #185 Updated cloud kitchen.yml
@@ -104,21 +139,21 @@ v2.4.0 (2014-02-14)
 v2.3.2
 ------
 ### Bug
-- **[COOK-3678](https://tickets.opscode.com/browse/COOK-3678)** - Fix an issue where a RabbitMQ policy resource with vhost arguments emits unexpected restart notification
-- **[COOK-3606](https://tickets.opscode.com/browse/COOK-3606)** - Fix erlang cookie comparison
-- **[COOK-3512](https://tickets.opscode.com/browse/COOK-3512)** - Define rabbitmq service on SUSE
+- **[COOK-3678](https://tickets.chef.io/browse/COOK-3678)** - Fix an issue where a RabbitMQ policy resource with vhost arguments emits unexpected restart notification
+- **[COOK-3606](https://tickets.chef.io/browse/COOK-3606)** - Fix erlang cookie comparison
+- **[COOK-3512](https://tickets.chef.io/browse/COOK-3512)** - Define rabbitmq service on SUSE
 
 ### New Feature
-- **[COOK-3538](https://tickets.opscode.com/browse/COOK-3538)** - Configure web management console to use SSL
+- **[COOK-3538](https://tickets.chef.io/browse/COOK-3538)** - Configure web management console to use SSL
 
 
 v2.3.0
 ------
 ### Improvement
-- **[COOK-3369](https://tickets.opscode.com/browse/COOK-3369)** - Add SUSE support
-- **[COOK-3320](https://tickets.opscode.com/browse/COOK-3320)** - Configure bind and cluster over a specified addr
-- **[COOK-3138](https://tickets.opscode.com/browse/COOK-3138)** - Do not log RabbitMQ password
-- **[COOK-2803](https://tickets.opscode.com/browse/COOK-2803)** - Bind erlang networking to localhost (attribute-driven)
+- **[COOK-3369](https://tickets.chef.io/browse/COOK-3369)** - Add SUSE support
+- **[COOK-3320](https://tickets.chef.io/browse/COOK-3320)** - Configure bind and cluster over a specified addr
+- **[COOK-3138](https://tickets.chef.io/browse/COOK-3138)** - Do not log RabbitMQ password
+- **[COOK-2803](https://tickets.chef.io/browse/COOK-2803)** - Bind erlang networking to localhost (attribute-driven)
 
 v2.2.0
 ------

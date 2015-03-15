@@ -3,7 +3,7 @@
 # Recipe:: default
 #
 # Copyright 2009, Benjamin Black
-# Copyright 2009-2013, Opscode, Inc.
+# Copyright 2009-2013, Chef Software, Inc.
 # Copyright 2012, Kevin Nuckolls <kevin.nuckolls@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +35,7 @@ when 'debian'
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
       action :install
-      version node['rabbitmq']['version']
+      version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
   else
     # we need to download the package
@@ -99,7 +99,7 @@ when 'rhel', 'fedora'
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
       action :install
-      version node['rabbitmq']['version']
+      version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
   else
     # We need to download the rpm
@@ -112,10 +112,6 @@ when 'rhel', 'fedora'
     rpm_package "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
   end
 
-  service node['rabbitmq']['service_name'] do
-    action [:enable, :start]
-  end
-
 when 'suse'
   # rabbitmq-server-plugins needs to be first so they both get installed
   # from the right repository. Otherwise, zypper will stop and ask for a
@@ -126,25 +122,19 @@ when 'suse'
   end
   package 'rabbitmq-server' do
     action :install
-    version node['rabbitmq']['version']
+    version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
   end
 
-  service node['rabbitmq']['service_name'] do
-    action [:enable, :start]
-  end
 when 'smartos'
   package 'rabbitmq'do
     action :install
-    version node['rabbitmq']['version']
+    version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
   end
 
   service 'epmd' do
     action :start
   end
 
-  service node['rabbitmq']['service_name'] do
-    action [:enable, :start]
-  end
 end
 
 if node['rabbitmq']['logdir']
@@ -217,4 +207,8 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
     command 'rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app'
     action :nothing
   end
+end
+
+service node['rabbitmq']['service_name'] do
+  action [:enable, :start]
 end

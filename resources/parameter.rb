@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: rabbitmq_test
-# Recipe:: ssl
+# Cookbook Name:: rabbitmq
+# Resource:: parameter
 #
-# Copyright 2012, Chef Software, Inc. <legal@chef.io>
+# Author: Sean Porter <portertech@gmail.com>
+# Copyright 2015 by Sean Porter
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,3 +17,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+actions :set, :clear, :list
+default_action :set
+
+attribute :parameter, :kind_of => String, :name_attribute => true
+attribute :component, :kind_of => String
+attribute :vhost, :kind_of => String
+attribute :params, :kind_of => [Hash, Array], :default => {}

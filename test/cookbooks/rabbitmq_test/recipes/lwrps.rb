@@ -2,7 +2,7 @@
 # Cookbook Name:: rabbitmq_test
 # Recipe:: lwrps
 #
-# Copyright 2013, Opscode, Inc. <legal@opscode.com>
+# Copyright 2013, Chef Software, Inc. <legal@chef.io>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-chef_gem 'bunny'
+chef_gem 'bunny' do
+  action :install
+end
 
 include_recipe 'rabbitmq::default'
 
@@ -56,4 +58,14 @@ rabbitmq_policy 'rabbitmq_cluster' do
   params 'ha-mode' => 'all', 'ha-sync-mode' => 'automatic'
   apply_to 'queues'
   action :set
+end
+
+rabbitmq_plugin 'rabbitmq_federation'
+
+rabbitmq_vhost '/sensu'
+
+rabbitmq_parameter 'sensu-dc-1' do
+  vhost '/sensu'
+  component 'federation-upstream'
+  params 'uri' => 'amqp://dc-cluster-node'
 end
