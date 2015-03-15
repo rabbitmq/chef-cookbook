@@ -11,7 +11,6 @@ end
 
 group :unit do
   gem 'berkshelf'
-  gem 'chefspec', '~> 4.0'
   gem 'fauxhai'
 end
 
