@@ -66,7 +66,6 @@ default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
 default['rabbitmq']['web_console_ssl'] = false
 default['rabbitmq']['web_console_ssl_port'] = 15_671
 
-<<<<<<< HEAD
 #stomp
 default['rabbitmq']['stomp'] = false
 default['rabbitmq']['stomp_port'] = 61613
@@ -77,11 +76,8 @@ default['rabbitmq']['stomp_ssl_cert_login'] = false
 default['rabbitmq']['stomp_ssl_cert_login_from'] = 'common_name'
 default['rabbitmq']['stomp_implicit_connect'] = false
 
-#tcp listen options
-=======
 # tcp listen options
 default['rabbitmq']['tcp_listen'] = true
->>>>>>> upstream/master
 default['rabbitmq']['tcp_listen_packet'] = 'raw'
 default['rabbitmq']['tcp_listen_reuseaddr']  = true
 default['rabbitmq']['tcp_listen_backlog'] = 128
