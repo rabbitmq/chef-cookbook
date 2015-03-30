@@ -1,5 +1,5 @@
 #
-# Copyright 2012, Opscode, Inc. <legal@opscode.com>
+# Copyright 2012, Chef Software, Inc. <legal@chef.io>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,28 +14,23 @@
 # limitations under the License.
 #
 
-describe "rabbitmq_test::cook-1684" do
+describe 'rabbitmq_test::cook-1684' do
   include MiniTest::Chef::Assertions
   include MiniTest::Chef::Context
   include MiniTest::Chef::Resources
 
   it 'installs rabbitmq from deb file when apt isnt used' do
-    unless node['platform_family'] == 'debian'
-      skip "Only applicable on Debian family"
-    end
+    skip 'Only applicable on Debian family' unless node['platform_family'] == 'debian'
 
     file("#{Chef::Config[:file_cache_path]}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb").must_exist &&
-      package("rabbitmq-server").must_be_installed
+      package('rabbitmq-server').must_be_installed
   end
 
   it 'installs rabbitmq from yum when used' do
-    unless node['platform_family'] == 'rhel' || node['platform_family'] == 'fedora'
-      skip "Only applicable on RHEL/Fedora family"
-    end
+    skip 'Only applicable on RHEL/Fedora family' unless node['platform_family'] == 'rhel' || node['platform_family'] == 'fedora'
 
     rpm_path = "#{Chef::Config[:file_cache_path]}/rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
 
-    file(rpm_path).wont_exist && package("rabbitmq-server").must_be_installed
+    file(rpm_path).wont_exist && package('rabbitmq-server').must_be_installed
   end
-
 end

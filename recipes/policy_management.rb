@@ -4,7 +4,7 @@
 #
 # Author: Robert Choi <taeilchoi1@gmail.com>
 # Copyright 2013 by Robert Choi
-# Copyright 2013, Opscode, Inc.
+# Copyright 2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe "rabbitmq::default"
+include_recipe 'rabbitmq::default'
 
 node['rabbitmq']['policies'].each do |name, policy|
   rabbitmq_policy name do

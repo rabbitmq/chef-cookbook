@@ -1,5 +1,5 @@
 #
-# Copyright 2012-2013, Opscode, Inc.
+# Copyright 2012-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
 
 require File.expand_path('../support/helpers', __FILE__)
 
-describe "rabbitmq_test::mgmt_console" do
+describe 'rabbitmq_test::mgmt_console' do
   include Helpers::RabbitMQ
 
   it 'enables the rabbitmq_management plugin' do
-    assert(plugin_enabled?("rabbitmq_management"))
+    assert(plugin_enabled?('rabbitmq_management'))
   end
 
   it 'enables the rabbitmq_management_visualiser plugin' do
-    assert(plugin_enabled?("rabbitmq_management_visualiser"))
+    assert(plugin_enabled?('rabbitmq_management_visualiser'))
   end
-
 end

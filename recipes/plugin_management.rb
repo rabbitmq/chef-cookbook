@@ -4,7 +4,7 @@
 # Recipe:: plugin_management
 #
 # Copyright 2013, Grégoire Seux
-# Copyright 2013, Opscode, Inc.
+# Copyright 2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe "rabbitmq::default"
+include_recipe 'rabbitmq::default'
 
 node['rabbitmq']['enabled_plugins'].each do |plugin|
   rabbitmq_plugin plugin do
@@ -31,6 +31,5 @@ end
 node['rabbitmq']['disabled_plugins'].each do |plugin|
   rabbitmq_plugin plugin do
     action :disable
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end

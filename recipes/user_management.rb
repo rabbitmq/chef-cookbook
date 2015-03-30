@@ -4,7 +4,7 @@
 # Recipe:: user_management
 #
 # Copyright 2013, Grégoire Seux
-# Copyright 2013, Opscode, Inc.
+# Copyright 2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe "rabbitmq::default"
-include_recipe "rabbitmq::virtualhost_management"
+include_recipe 'rabbitmq::default'
+include_recipe 'rabbitmq::virtualhost_management'
 
 node['rabbitmq']['enabled_users'].each do |user|
   rabbitmq_user user['name'] do

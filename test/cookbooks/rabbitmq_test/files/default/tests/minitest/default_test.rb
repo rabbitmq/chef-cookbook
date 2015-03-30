@@ -1,5 +1,5 @@
 #
-# Copyright 2012-2013, Opscode, Inc.
+# Copyright 2012-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,11 +16,10 @@
 
 require File.expand_path('../support/helpers', __FILE__)
 
-
-describe "rabbitmq_test::default" do
+describe 'rabbitmq_test::default' do
   include Helpers::RabbitMQ
 
-  #packages
+  # packages
   it 'installs the rabbitmq-server package' do
     if node['rabbitmq']['use_distro_version']
       package('rabbitmq-server').must_be_installed
@@ -29,12 +28,12 @@ describe "rabbitmq_test::default" do
     end
   end
 
-  #directories
+  # directories
   it 'creates the mnesia directory' do
     directory(node['rabbitmq']['mnesiadir']).must_have(:mode, '775').with(:owner, 'rabbitmq').and(:group, 'rabbitmq')
   end
 
-  #file
+  # file
   it 'has the correct config files' do
     file("#{node['rabbitmq']['config_root']}/rabbitmq-env.conf").must_exist.with(:owner, 'root').and(:group, 'root')
     file("#{node['rabbitmq']['config_root']}/rabbitmq.config").must_exist.with(:owner, 'root').and(:group, 'root')
@@ -50,10 +49,10 @@ describe "rabbitmq_test::default" do
   it 'accepts AMQP connections' do
     unless node['rabbitmq']['use_distro_version']
       require 'bunny'
-      b = Bunny.new( :host => "localhost",
-        :port => 5672,
-        :user => node['rabbitmq']['default_user'],
-        :pass => node['rabbitmq']['default_pass'] )
+      b = Bunny.new(:host => 'localhost',
+                    :port => 5672,
+                    :user => node['rabbitmq']['default_user'],
+                    :pass => node['rabbitmq']['default_pass'])
       b.start
       b.stop
     end
