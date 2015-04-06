@@ -35,12 +35,14 @@ def user_exists?(name)
 end
 
 def user_has_tag?(name, tag)
-  tag = '"\[\]"' if tag.nil?
-  cmd = "rabbitmqctl -q list_users | grep \"^#{name}\\b\" | grep #{tag}"
+  tag = [] if tag.nil?
+  tag = tag.to_s.split(' ') unless tag.kind_of?(Array)
+  tag = tag.flatten.to_s.gsub(/\"/, '')
+  cmd = "rabbitmqctl -q list_users | grep \"^#{name}\\b\" | grep \"#{tag}\""
+  Chef::Log.debug "rabbitmq_user_has_tag?: #{cmd}"
   cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
-  Chef::Log.debug "rabbitmq_user_has_tag?: #{cmd}"
   Chef::Log.debug "rabbitmq_user_has_tag?: #{cmd.stdout}"
   begin
     cmd.error!
