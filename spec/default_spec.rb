@@ -56,6 +56,11 @@ describe 'rabbitmq::default' do
       :mode => 00644)
   end
 
+  it 'should set additional rabbitmq config' do
+    node.set['rabbitmq']['additional_rabbit_configs'] = { 'foo' => 'bar' }
+    expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('foo, bar')
+  end
+
   describe 'suse' do
     let(:runner) { ChefSpec::ServerRunner.new(SUSE_OPTS) }
     let(:node) { runner.node }
