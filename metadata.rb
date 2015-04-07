@@ -11,6 +11,7 @@ recipe 'rabbitmq::virtualhost_management', 'Manage virtualhost with node attribu
 recipe 'rabbitmq::user_management', 'Manage users with node attributes'
 
 depends 'erlang', '>= 0.9'
+depends 'python'
 depends 'yum-epel'
 depends 'yum-erlang_solutions'
 
