@@ -10,7 +10,7 @@ v3.12.0 (2015-04-07)
 - specifying ssl #152
 - additional debs and rpms #220
 - umask #219
-- shalq/master typo found #243
+- typo fixed #243
 
 v3.11.0 (2015-02-25)
 ------------------
