@@ -2,6 +2,16 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.12.0 (2015-04-07)
+--------------------
+- Removed yum-epel case statement #236
+- don't put change password in log #237
+- Added pin_distro_version for other platforms #234
+- specifying ssl #152
+- additional debs and rpms #220
+- umask #219
+- typo fixed #243
+
 v3.11.0 (2015-02-25)
 ------------------
 - Fix travis build. #228
