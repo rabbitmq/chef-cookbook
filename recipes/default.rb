@@ -32,6 +32,16 @@ when 'debian'
   # logrotate is a package dependency of rabbitmq-server
   package 'logrotate'
 
+  # dpkg, imma let you finish but don't start services automatically
+  # https://jpetazzo.github.io/2013/10/06/policy-rc-d-do-not-start-services-automatically/
+  execute 'disable auto-start 1/2' do
+    command 'echo exit 101 > /usr/sbin/policy-rc.d'
+  end
+
+  execute 'disable auto-start 2/2' do
+    command 'chmod +x /usr/sbin/policy-rc.d'
+  end
+
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
       action :install
@@ -72,19 +82,10 @@ when 'debian'
       mode 0644
       variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
     end
-
-    service node['rabbitmq']['service_name'] do
-      provider Chef::Provider::Service::Upstart
-      action [:enable, :start]
-      # restart_command "stop #{node['rabbitmq']['service_name']} && start #{node['rabbitmq']['service_name']}"
-    end
   end
 
-  if node['rabbitmq']['job_control'] == 'initd'
-    service node['rabbitmq']['service_name'] do
-      supports :status => true, :restart => true
-      action [:enable, :start]
-    end
+  execute 'undo service disable hack' do
+    command 'echo exit 0 > /usr/sbin/policy-rc.d'
   end
 
 when 'rhel', 'fedora'
@@ -153,14 +154,6 @@ directory node['rabbitmq']['mnesiadir'] do
   recursive true
 end
 
-template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
-  source 'rabbitmq-env.conf.erb'
-  owner 'root'
-  group 'root'
-  mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
-end
-
 template "#{node['rabbitmq']['config']}.config" do
   sensitive true
   source 'rabbitmq.config.erb'
@@ -172,6 +165,14 @@ template "#{node['rabbitmq']['config']}.config" do
     :kernel => format_kernel_parameters,
     :ssl_versions => (format_ssl_versions if node['rabbitmq']['ssl_versions'])
   )
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
+end
+
+template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
+  source 'rabbitmq-env.conf.erb'
+  owner 'root'
+  group 'root'
+  mode 00644
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end
 
@@ -204,4 +205,6 @@ end
 
 service node['rabbitmq']['service_name'] do
   action [:enable, :start]
+  supports :status => true, :restart => true
+  provider Chef::Provider::Service::Upstart if node['rabbitmq']['job_control'] == 'upstart'
 end
