@@ -55,7 +55,7 @@ end
 # does the user have the rights listed on the vhost?
 # empty perm_list means we're checking for any permissions
 def user_has_permissions?(name, vhost, perm_list = nil) # rubocop:disable all
-  vhost = '/' if vhost.nil? # rubocop:enable all
+  vhost = "//" if vhost.nil? # rubocop:enable all
   cmd = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\s\" | awk '$1=\"\"; {print $0}'"
   Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd}"
   cmd = Mixlib::ShellOut.new(cmd)
