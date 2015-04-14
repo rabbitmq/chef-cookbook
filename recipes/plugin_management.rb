@@ -24,7 +24,6 @@ include_recipe 'rabbitmq::default'
 node['rabbitmq']['enabled_plugins'].each do |plugin|
   rabbitmq_plugin plugin do
     action :enable
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
 
