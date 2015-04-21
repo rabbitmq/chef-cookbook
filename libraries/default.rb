@@ -42,5 +42,9 @@ module Opscode
     def format_ssl_versions
       Array(node['rabbitmq']['ssl_versions']).map { |n| "'#{n}'" }.join(',')
     end
+
+    def format_ssl_ciphers
+      Array(node['rabbitmq']['ssl_ciphers']).map { |n| "{#{n}}" }.join(',')
+    end
   end
 end

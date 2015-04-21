@@ -12,9 +12,10 @@
                 {ssl, true},
                 {ssl_opts, [{cacertfile,"<%= node['rabbitmq']['ssl_cacert'] %>"},
                     {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
-                    {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"}<% if @ssl_versions -%>,
-                    {versions,[<%= @ssl_versions %>]}
-                    <% end -%>]}
+                    {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"}
+                    <% if @ssl_versions -%>,{versions,[<%= @ssl_versions %>]}<% end -%>
+                    <% if @ssl_ciphers -%>,{ciphers,[<%= @ssl_ciphers %>]}<% end -%>
+                    ]}
               ]}
   ]},
 <% end %>
@@ -32,9 +33,10 @@
                     {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
                     {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"},
                     {verify,<%= node['rabbitmq']['ssl_verify'] %>},
-                    {fail_if_no_peer_cert,<%= node['rabbitmq']['ssl_fail_if_no_peer_cert'] %>}<% if @ssl_versions -%>,
-                    {versions,[<%= @ssl_versions %>]}
-                    <% end -%>]},
+                    {fail_if_no_peer_cert,<%= node['rabbitmq']['ssl_fail_if_no_peer_cert'] %>}
+                    <% if @ssl_versions -%>,{versions,[<%= @ssl_versions %>]}<% end -%>
+                    <% if @ssl_ciphers -%>,{ciphers,[<%= @ssl_ciphers %>]}<% end -%>
+                    ]},
 <% end %>
 <% if node['rabbitmq']['tcp_listen'] -%>
     {tcp_listen_options, [binary, {packet,<%= node['rabbitmq']['tcp_listen_packet'] %>},
