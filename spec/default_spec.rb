@@ -16,12 +16,32 @@ describe 'rabbitmq::default' do
     expect(chef_run).to create_directory('/var/lib/rabbitmq/mnesia')
   end
 
-  it 'creates a template rabbitmq-env.conf with attributes' do
-    expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq-env.conf').with(
-      :user => 'root',
-      :group => 'root',
-      :source => 'rabbitmq-env.conf.erb',
-      :mode => 00644)
+  describe 'rabbitmq-env.conf' do
+    let(:file) { chef_run.template('/etc/rabbitmq/rabbitmq-env.conf') }
+
+    it 'creates a template rabbitmq-env.conf with attributes' do
+      expect(chef_run).to create_template(file.name).with(
+        :user => 'root',
+        :group => 'root',
+        :source => 'rabbitmq-env.conf.erb',
+        :mode => 00644)
+    end
+
+    it 'has no erl args by default' do
+      [/^SERVER_ADDITIONAL_ERL_ARGS=/,
+       /^CTL_ERL_ARGS=/].each do |line|
+        expect(chef_run).not_to render_file(file.name).with_content(line)
+      end
+    end
+
+    it 'has erl args overridden' do
+      node.set['rabbitmq']['server_additional_erl_args'] = 'test123'
+      node.set['rabbitmq']['ctl_erl_args'] = 'test123'
+      [/^SERVER_ADDITIONAL_ERL_ARGS='test123'/,
+       /^CTL_ERL_ARGS='test123'/].each do |line|
+        expect(chef_run).to render_file(file.name).with_content(line)
+      end
+    end
   end
 
   it 'should create the directory /var/lib/rabbitmq/mnesia' do
