@@ -73,7 +73,14 @@ default['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
 default['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 default['rabbitmq']['ssl_verify'] = 'verify_none'
 default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
+# Specify SSL versions
+# Example:
+#   ['tlsv1.2', 'tlsv1.1']
 default['rabbitmq']['ssl_versions'] = nil
+# Specify SSL ciphers
+# Example:
+#   ['ecdhe_ecdsa,aes_128_cbc,sha256', 'ecdhe_ecdsa,aes_256_cbc,sha']
+default['rabbitmq']['ssl_ciphers'] = nil
 default['rabbitmq']['web_console_ssl'] = false
 default['rabbitmq']['web_console_ssl_port'] = 15_671
 

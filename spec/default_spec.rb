@@ -56,6 +56,27 @@ describe 'rabbitmq::default' do
       :mode => 00644)
   end
 
+  describe 'ssl ciphers' do
+    it 'has no ssl ciphers specified by default' do
+      expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
+        /{ciphers,[{.*}]}/)
+    end
+
+    it 'allows ssl ciphers' do
+      node.set['rabbitmq']['ssl'] = true
+      node.set['rabbitmq']['ssl_ciphers'] = ['ecdhe_ecdsa,aes_128_cbc,sha256', 'ecdhe_ecdsa,aes_256_cbc,sha']
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
+        '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
+    end
+
+    it 'allows web console ssl ciphers' do
+      node.set['rabbitmq']['web_console_ssl'] = true
+      node.set['rabbitmq']['ssl_ciphers'] = ['ecdhe_ecdsa,aes_128_cbc,sha256', 'ecdhe_ecdsa,aes_256_cbc,sha']
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
+        '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
+    end
+  end
+
   describe 'suse' do
     let(:runner) { ChefSpec::ServerRunner.new(SUSE_OPTS) }
     let(:node) { runner.node }
@@ -171,13 +192,6 @@ describe 'rabbitmq::default' do
     it 'installs the rabbitmq-server rpm_package with the default action' do
       expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.4.4-1.noarch.rpm')
       expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.4.4-1.noarch.rpm')
-    end
-
-    it 'includes the `yum-epel` recipe' do
-      expect(chef_run).to include_recipe('yum-epel')
-    end
-    it 'includes the `yum-erlang_solutions` recipe' do
-      expect(chef_run).to include_recipe('yum-erlang_solutions')
     end
 
     describe 'uses distro version' do
