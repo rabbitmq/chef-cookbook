@@ -88,21 +88,26 @@ describe 'rabbitmq::default' do
   describe 'ssl ciphers' do
     it 'has no ssl ciphers specified by default' do
       expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-        /{ciphers,[{.*}]}/)
+                                /{ciphers,[{.*}]}/)
     end
 
     it 'allows ssl ciphers' do
       node.set['rabbitmq']['ssl'] = true
       node.set['rabbitmq']['ssl_ciphers'] = ['ecdhe_ecdsa,aes_128_cbc,sha256', 'ecdhe_ecdsa,aes_256_cbc,sha']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-        '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
+                            '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
     end
 
     it 'allows web console ssl ciphers' do
       node.set['rabbitmq']['web_console_ssl'] = true
       node.set['rabbitmq']['ssl_ciphers'] = ['ecdhe_ecdsa,aes_128_cbc,sha256', 'ecdhe_ecdsa,aes_256_cbc,sha']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-        '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
+                            '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
+    end
+
+    it 'should set additional rabbitmq config' do
+      node.set['rabbitmq']['additional_rabbit_configs'] = { 'foo' => 'bar' }
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('foo, bar')
     end
   end
 

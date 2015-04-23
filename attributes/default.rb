@@ -136,3 +136,4 @@ default['rabbitmq']['disabled_policies'] = []
 
 # conf
 default['rabbitmq']['conf'] = {}
+default['rabbitmq']['additional_rabbit_configs'] = {}
