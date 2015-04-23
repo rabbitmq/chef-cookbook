@@ -18,6 +18,7 @@
 #
 
 def plugin_enabled?(name)
+  ENV['PATH'] = "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
   cmdstr = "rabbitmq-plugins list -e '#{name}\\b'"
   cmd = Mixlib::ShellOut.new(cmdstr)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
