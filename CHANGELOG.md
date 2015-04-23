@@ -2,6 +2,15 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v3.13.0 (2015-04-23)
+--------------------
+- Added ssl_ciphers #255
+- Fix plugin_enabled not having path appended #253
+- Add more support for erlang args #247
+- Open file limit not set correctly #127
+- Additional rabbit configs #217
+- Updated the erlang cookbook dependancy
+
 v3.12.0 (2015-04-07)
 --------------------
 - Removed yum-epel case statement #236
