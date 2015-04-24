@@ -54,4 +54,16 @@ if defined?(ChefSpec)
   def disable_rabbitmq_plugin(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:rabbitmq_plugin, :disable, resource_name)
   end
+
+  def join_cluster(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:rabbitmq_cluster, :join, resource_name)
+  end
+
+  def set_cluster_name(resource_name) # rubocop:disable AccessorMethodName
+    ChefSpec::Matchers::ResourceMatcher.new(:rabbitmq_cluster, :change_cluster_node_type, resource_name)
+  end
+
+  def change_cluster_node_type(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:rabbitmq_cluster, :change_cluster_node_type, resource_name)
+  end
 end
