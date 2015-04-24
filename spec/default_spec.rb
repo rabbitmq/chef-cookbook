@@ -291,13 +291,4 @@ describe 'rabbitmq::default' do
       end
     end
   end
-
-  it 'creates a template rabbitmq.config with attributes' do
-    expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.config').with(
-                          :user => 'root',
-                          :group => 'root',
-                          :source => 'rabbitmq.config.erb',
-                          :mode => 00644
-                        )
-  end
 end
