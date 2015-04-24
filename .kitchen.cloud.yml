@@ -41,13 +41,6 @@ suites:
       rabbitmq:
         use_distro_version: true
     excludes: ["centos-6-5-x64", "centos-7-0-x64"]
-  - name: cluster
-    run_list:
-      - recipe[rabbitmq::default]
-    attributes:
-      rabbitmq:
-        cluster: true
-        cluster_disk_nodes: ['rabbit@localhost']
   - name: lwrps
     run_list:
       - recipe[rabbitmq_test::lwrps]
