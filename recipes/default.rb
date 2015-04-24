@@ -154,6 +154,14 @@ directory node['rabbitmq']['mnesiadir'] do
   recursive true
 end
 
+template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
+  source 'rabbitmq-env.conf.erb'
+  owner 'root'
+  group 'root'
+  mode 00644
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
+end
+
 template "#{node['rabbitmq']['config']}.config" do
   sensitive true
   source 'rabbitmq.config.erb'
@@ -168,7 +176,6 @@ template "#{node['rabbitmq']['config']}.config" do
   )
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end
-
 
 template "/etc/default/#{node['rabbitmq']['service_name']}" do
   source 'default.rabbitmq-server.erb'

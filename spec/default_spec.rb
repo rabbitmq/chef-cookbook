@@ -137,6 +137,14 @@ describe 'rabbitmq::default' do
 
     include_context 'rabbitmq-stubs'
 
+    it 'should autostart via the exit 101' do
+      expect(chef_run).to run_execute('disable auto-start 1/2')
+    end
+
+    it 'should disable the autostart 2/2' do
+      expect(chef_run).to run_execute('disable auto-start 2/2')
+    end
+
     it 'should install the logrotate package' do
       expect(chef_run).to install_package('logrotate')
     end
@@ -147,6 +155,18 @@ describe 'rabbitmq::default' do
 
     it 'installs the rabbitmq-server deb_package with the default action' do
       expect(chef_run).to install_dpkg_package('/tmp/rabbitmq-server_3.4.4-1_all.deb')
+    end
+
+    it 'creates a template rabbitmq-server with attributes' do
+      expect(chef_run).to create_template('/etc/default/rabbitmq-server').with(
+                            :user => 'root',
+                            :group => 'root',
+                            :source => 'default.rabbitmq-server.erb',
+                            :mode => 00644)
+    end
+
+    it 'should undo the service disable hack' do
+      expect(chef_run).to run_execute('undo service disable hack')
     end
 
     describe 'uses distro version' do
@@ -228,6 +248,10 @@ describe 'rabbitmq::default' do
       expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.4.4-1.noarch.rpm')
     end
 
+    it 'includes the `yum-epel` recipe' do
+      expect(chef_run).to include_recipe('yum-epel')
+    end
+
     describe 'uses distro version' do
       before do
         node.set['rabbitmq']['use_distro_version'] = true
@@ -270,10 +294,10 @@ describe 'rabbitmq::default' do
 
   it 'creates a template rabbitmq.config with attributes' do
     expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.config').with(
-      :user => 'root',
-      :group => 'root',
-      :source => 'rabbitmq.config.erb',
-      :mode => 00644
-    )
+                          :user => 'root',
+                          :group => 'root',
+                          :source => 'rabbitmq.config.erb',
+                          :mode => 00644
+                        )
   end
 end
