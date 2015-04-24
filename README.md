@@ -76,7 +76,7 @@ Configure the cluster between the nodes in the `node['rabbitmq']['clustering']['
 * `node['rabbitmq']['cluster']` : Default decision flag of clustering
 * `node['rabbitmq']['erlang_cookie']` : Same erlang cookie is required for the cluster
 * `node['rabbitmq']['clustering']['use\_auto_clustering']` : Default is false. (manual clustering is default)
-* `node['rabbitmq']['clustering']['cluster_name']` : Name of cluster. default value is nil. In case of nil or '' is set for `cluster_name`, first node name in `node['rabbitmq']['clustering']['cluster_nodes']` attribute will be set for manual clustering. for the auto clustering, one of the node name will be set. 
+* `node['rabbitmq']['clustering']['cluster_name']` : Name of cluster. default value is nil. In case of nil or '' is set for `cluster_name`, first node name in `node['rabbitmq']['clustering']['cluster_nodes']` attribute will be set for manual clustering. for the auto clustering, one of the node name will be set.
 * `node['rabbitmq']['clustering']['cluster_nodes']` : List of cluster nodes. it required node name and cluster node type. please refer to example in below.
 
 Attributes example
@@ -207,7 +207,7 @@ Join cluster, set cluster name and change cluster node type.
 - `:join` join in cluster as a manual clustering. node will join in first node of json string data.
 
  - cluster nodes data json format : Data should have all the cluster nodes information.
- 
+
  ```
  [
      {
@@ -265,8 +265,7 @@ For an already running cluster, these actions still require manual intervention:
 - Author:: JJ Asghar (<jj@chef.io>)
 
 ```text
-Copyright (c) 2009-2013, Chef Software, Inc.
-Copyright (c) 2014-2015, Chef Software, Inc.
+Copyright (c) 2009-2015, Chef Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

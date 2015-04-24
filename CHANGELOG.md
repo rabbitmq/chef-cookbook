@@ -2,6 +2,11 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v4.0.0 (2015-04-23)
+--------------------
+- added #238 for clustering depreciating the [rabbitmq-cluster cookbook](https://supermarket.chef.io/cookbooks/rabbitmq-cluster)
+- added #245 for expected Debian family usage
+
 v3.13.0 (2015-04-23)
 --------------------
 - Added ssl_ciphers #255
