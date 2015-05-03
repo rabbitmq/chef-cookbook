@@ -65,10 +65,10 @@ def match_pattern_cluster_status(cluster_status, pattern)
     Chef::Application.fatal!('[rabbitmq_cluster] cluster_status should not be empty')
   end
   match = cluster_status.match(pattern)
-  unless match.nil?
-    match[2]
-  else
+  if match.nil?
     match
+  else
+    match[2]
   end
 end
 
@@ -93,10 +93,10 @@ def disc_nodes(cluster_status)
   pattern = '({disc,\[)(.*?)(\]})'
   result = match_pattern_cluster_status(cluster_status, pattern)
   Chef::Log.debug("[rabbitmq_cluster] disc_nodes : #{result}")
-  unless result.nil?
-    result.split(',')
+  if result.nil?
+    result = []
   else
-    result = Array.new
+    result.split(',')
   end
 end
 
@@ -105,10 +105,10 @@ def ram_nodes(cluster_status)
   pattern = '({ram,\[)(.*?)(\]})'
   result = match_pattern_cluster_status(cluster_status, pattern)
   Chef::Log.debug("[rabbitmq_cluster] ram_nodes : #{result}")
-  unless result.nil?
-    result.split(',')
+  if result.nil?
+    result = []
   else
-    result = Array.new
+    result.split(',')
   end
 end
 
