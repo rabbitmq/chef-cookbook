@@ -78,7 +78,7 @@ end
 
 # Get running nodes
 def running_nodes(cluster_status)
-  pattern = '({running_nodes,\[)(.*?)(\]})'
+  pattern = '({running_nodes,\[\'*)(.*?)(\'*\]})'
   result = match_pattern_cluster_status(cluster_status, pattern)
   Chef::Log.debug("[rabbitmq_cluster] running_nodes : #{result}")
   result.split(',')
@@ -86,7 +86,7 @@ end
 
 # Get disc nodes
 def disc_nodes(cluster_status)
-  pattern = '({disc,\[)(.*?)(\]})'
+  pattern = '({disc,\[\'*)(.*?)(\'*\]})'
   result = match_pattern_cluster_status(cluster_status, pattern)
   Chef::Log.debug("[rabbitmq_cluster] disc_nodes : #{result}")
   result.split(',')
@@ -94,7 +94,7 @@ end
 
 # Get ram nodes
 def ram_nodes(cluster_status)
-  pattern = '({ram,\[)(.*?)(\]})'
+  pattern = '({ram,\[\'*)(.*?)(\'*\]})'
   result = match_pattern_cluster_status(cluster_status, pattern)
   Chef::Log.debug("[rabbitmq_cluster] ram_nodes : #{result}")
   result.split(',')
@@ -109,6 +109,7 @@ def node_name
   cmd.run_command
   cmd.error!
   result = cmd.stdout.chomp
+  result.gsub!(/'/, '')
   Chef::Log.debug("[rabbitmq_cluster] node name : #{result}")
   result
 end
