@@ -42,6 +42,21 @@ describe 'rabbitmq::default' do
         expect(chef_run).to render_file(file.name).with_content(line)
       end
     end
+
+    it 'has no additional_env_settings default' do
+      expect(chef_run).not_to render_file(file.name).with_content(/^# Additional ENV settings/)
+    end
+
+    it 'has additional_env_settings' do
+      node.set['rabbitmq']['additional_env_settings'] = [
+        'USE_LONGNAME=true',
+        'WHATS_ON_THE_TELLY=penguin']
+      [/^WHATS_ON_THE_TELLY=penguin/,
+       /^# Additional ENV settings/,
+       /^USE_LONGNAME=true/].each do |line|
+        expect(chef_run).to render_file(file.name).with_content(line)
+      end
+    end
   end
 
   it 'should create the directory /var/lib/rabbitmq/mnesia' do
@@ -88,21 +103,21 @@ describe 'rabbitmq::default' do
   describe 'ssl ciphers' do
     it 'has no ssl ciphers specified by default' do
       expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-                                /{ciphers,[{.*}]}/)
+        /{ciphers,[{.*}]}/)
     end
 
     it 'allows ssl ciphers' do
       node.set['rabbitmq']['ssl'] = true
       node.set['rabbitmq']['ssl_ciphers'] = ['ecdhe_ecdsa,aes_128_cbc,sha256', 'ecdhe_ecdsa,aes_256_cbc,sha']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-                            '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
+        '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
     end
 
     it 'allows web console ssl ciphers' do
       node.set['rabbitmq']['web_console_ssl'] = true
       node.set['rabbitmq']['ssl_ciphers'] = ['ecdhe_ecdsa,aes_128_cbc,sha256', 'ecdhe_ecdsa,aes_256_cbc,sha']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-                            '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
+        '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
     end
 
     it 'should set additional rabbitmq config' do
@@ -159,10 +174,10 @@ describe 'rabbitmq::default' do
 
     it 'creates a template rabbitmq-server with attributes' do
       expect(chef_run).to create_template('/etc/default/rabbitmq-server').with(
-                            :user => 'root',
-                            :group => 'root',
-                            :source => 'default.rabbitmq-server.erb',
-                            :mode => 00644)
+        :user => 'root',
+        :group => 'root',
+        :source => 'default.rabbitmq-server.erb',
+        :mode => 00644)
     end
 
     it 'should undo the service disable hack' do

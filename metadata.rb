@@ -116,3 +116,9 @@ attribute 'rabbitmq/loopback_users',
   :description => 'A list of users which can only connect over a loopback interface (localhost)',
   :default => nil,
   :type => 'array'
+
+attribute 'rabbitmq/additional_env_settings',
+  :display_name => 'Additional ENV settings',
+  :description => 'A list of lines to append to rabbitmq-env.conf for settings that may not yet be available with existing attributes',
+  :default => nil,
+  :type => 'array'
