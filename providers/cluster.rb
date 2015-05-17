@@ -65,7 +65,8 @@ def match_pattern_cluster_status(cluster_status, pattern)
     Chef::Application.fatal!('[rabbitmq_cluster] cluster_status should not be empty')
   end
   match = cluster_status.match(pattern)
-  match[2]
+  result = match && match[2]
+  result
 end
 
 # Get currently joined cluster name from result string of "rabbitmqctl cluster_status"
@@ -211,10 +212,14 @@ action :set_cluster_name do
   Chef::Application.fatal!('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
   var_cluster_status = cluster_status
   var_cluster_name = new_resource.cluster_name
-  unless current_cluster_name(var_cluster_status) == var_cluster_name
-    unless var_cluster_name.empty?
-      run_rabbitmqctl("set_cluster_name #{var_cluster_name}")
-      Chef::Log.info("[rabbitmq_cluster] Cluster name has been set : #{current_cluster_name(cluster_status)}")
+  if current_cluster_name(var_cluster_status).nil?
+    Chef::Log.warn('[rabbitmq_cluster] Currently not a cluster. Set cluster name will be skipped.')
+  else
+    unless current_cluster_name(var_cluster_status) == var_cluster_name
+      unless var_cluster_name.empty?
+        run_rabbitmqctl("set_cluster_name #{var_cluster_name}")
+        Chef::Log.info("[rabbitmq_cluster] Cluster name has been set : #{current_cluster_name(cluster_status)}")
+      end
     end
   end
 end
