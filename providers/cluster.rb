@@ -80,9 +80,10 @@ end
 # Get running nodes
 def running_nodes(cluster_status)
   pattern = '({running_nodes,\[\'*)(.*?)(\'*\]})'
-  result = match_pattern_cluster_status(cluster_status, pattern)
+  match = match_pattern_cluster_status(cluster_status, pattern)
+  result = match && match.split(',')
   Chef::Log.debug("[rabbitmq_cluster] running_nodes : #{result}")
-  result.split(',')
+  result
 end
 
 # Get disc nodes
@@ -133,7 +134,7 @@ end
 
 # Checking node is joined in cluster
 def joined_cluster?(node_name, cluster_status)
-  running_nodes(cluster_status).include?(node_name)
+  (running_nodes(cluster_status) || '').include?(node_name)
 end
 
 # Join cluster.
