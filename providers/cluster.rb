@@ -60,12 +60,12 @@ def cluster_status
 end
 
 # Match regex pattern from result of rabbitmqctl cluster_status
+# When no match (eg. matching ram nodes when none listed), returns empty string
 def match_pattern_cluster_status(cluster_status, pattern)
   if cluster_status.nil? || cluster_status.to_s.empty?
     Chef::Application.fatal!('[rabbitmq_cluster] cluster_status should not be empty')
   end
-  match = cluster_status.match(pattern)
-  match[2]
+  cluster_status.match(pattern) { |match| match[2] } || ''
 end
 
 # Get currently joined cluster name from result string of "rabbitmqctl cluster_status"
