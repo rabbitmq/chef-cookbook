@@ -103,7 +103,7 @@ end
 # Get node name
 def node_name
   # execute > rabbitmqctl eval 'node().'
-  cmd = 'rabbitmqctl eval "node()."'
+  cmd = 'rabbitmqctl eval "node()." | head -1'
   Chef::Log.debug("[rabbitmq_cluster] Executing #{cmd}")
   cmd = get_shellout(cmd)
   cmd.run_command
