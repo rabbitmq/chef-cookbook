@@ -65,8 +65,7 @@ def match_pattern_cluster_status(cluster_status, pattern)
     Chef::Application.fatal!('[rabbitmq_cluster] cluster_status should not be empty')
   end
   match = cluster_status.match(pattern)
-  result = match && match[2]
-  result
+  match && match[2]
 end
 
 # Get currently joined cluster name from result string of "rabbitmqctl cluster_status"
@@ -81,25 +80,26 @@ end
 def running_nodes(cluster_status)
   pattern = '({running_nodes,\[\'*)(.*?)(\'*\]})'
   match = match_pattern_cluster_status(cluster_status, pattern)
-  result = match && match.split(',')
+  result = match && match.gsub!(/'/, '').split(',')
   Chef::Log.debug("[rabbitmq_cluster] running_nodes : #{result}")
-  result
 end
 
 # Get disc nodes
 def disc_nodes(cluster_status)
   pattern = '({disc,\[\'*)(.*?)(\'*\]})'
-  result = match_pattern_cluster_status(cluster_status, pattern)
+  match = match_pattern_cluster_status(cluster_status, pattern)
+  result = match && match.gsub!(/'/, '').split(',')
   Chef::Log.debug("[rabbitmq_cluster] disc_nodes : #{result}")
-  result.split(',')
+  !result.nil? ? result : []
 end
 
 # Get ram nodes
 def ram_nodes(cluster_status)
   pattern = '({ram,\[\'*)(.*?)(\'*\]})'
-  result = match_pattern_cluster_status(cluster_status, pattern)
+  match = match_pattern_cluster_status(cluster_status, pattern)
+  result = match && match.gsub!(/'/, '').split(',')
   Chef::Log.debug("[rabbitmq_cluster] ram_nodes : #{result}")
-  result.split(',')
+  !result.nil? ? result : []
 end
 
 # Get node name
@@ -110,8 +110,7 @@ def node_name
   cmd = get_shellout(cmd)
   cmd.run_command
   cmd.error!
-  result = cmd.stdout.chomp
-  result.gsub!(/'/, '')
+  result = cmd.stdout.chomp.gsub!(/'/, '')
   Chef::Log.debug("[rabbitmq_cluster] node name : #{result}")
   result
 end
@@ -124,6 +123,7 @@ def current_cluster_node_type(node_name, cluster_status)
   elsif ram_nodes(cluster_status).include?(node_name)
     var_cluster_node_type = 'ram'
   end
+  Chef::Log.debug("[rabbitmq_cluster] current cluster node type : #{var_cluster_node_type}")
   var_cluster_node_type
 end
 
@@ -234,7 +234,7 @@ action :change_cluster_node_type do
   var_cluster_status = cluster_status
   var_node_name = node_name
   var_current_cluster_node_type = current_cluster_node_type(var_node_name, var_cluster_status)
-  var_cluster_node_type = parse_cluster_nodes_string(new_resource.cluster_nodes).select { |node| node['name'] == var_node_name }.first['type'] # ~FC039
+  var_cluster_node_type = parse_cluster_nodes_string(new_resource.cluster_nodes).each { |node| node['name'] == var_node_name }.first['type'] # ~FC039
 
   if var_current_cluster_node_type == var_cluster_node_type
     Chef::Log.warn('[rabbitmq_cluster] Skip changing cluster node type : trying to change to same cluster node type')
