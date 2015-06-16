@@ -2,6 +2,14 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v4.0.1 (2015-06-16)
+--------------------
+- Fix single quote and nil issues with cluster recipe #274
+- Fixed 'rabbitmqctl eval' command for old rabbitmq versions #272
+- Support additional env args #269
+- Add patterns to catch where the node name is surrounded by single-quotes #267
+- Remove the extra curly braces for format_ssl_ciphers #260
+
 v4.0.0 (2015-04-23)
 --------------------
 - added #238 for clustering depreciating the [rabbitmq-cluster cookbook](https://supermarket.chef.io/cookbooks/rabbitmq-cluster)
