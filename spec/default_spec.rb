@@ -110,14 +110,14 @@ describe 'rabbitmq::default' do
       node.set['rabbitmq']['ssl'] = true
       node.set['rabbitmq']['ssl_ciphers'] = ['ecdhe_ecdsa,aes_128_cbc,sha256', 'ecdhe_ecdsa,aes_256_cbc,sha']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-        '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
+                            "{ciphers,['ecdhe_ecdsa,aes_128_cbc,sha256','ecdhe_ecdsa,aes_256_cbc,sha']}")
     end
 
     it 'allows web console ssl ciphers' do
       node.set['rabbitmq']['web_console_ssl'] = true
       node.set['rabbitmq']['ssl_ciphers'] = ['ecdhe_ecdsa,aes_128_cbc,sha256', 'ecdhe_ecdsa,aes_256_cbc,sha']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-        '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
+                            "{ciphers,['ecdhe_ecdsa,aes_128_cbc,sha256','ecdhe_ecdsa,aes_256_cbc,sha']}")
     end
 
     it 'should set additional rabbitmq config' do
@@ -152,14 +152,17 @@ describe 'rabbitmq::default' do
 
     include_context 'rabbitmq-stubs'
 
+    # ~FC005 -- we should ignore this during compile time
     it 'should autostart via the exit 101' do
       expect(chef_run).to run_execute('disable auto-start 1/2')
     end
 
+    # ~FC005 -- we should ignore this during compile time
     it 'should disable the autostart 2/2' do
       expect(chef_run).to run_execute('disable auto-start 2/2')
     end
 
+    # ~FC005 -- we should ignore this during compile time
     it 'should install the logrotate package' do
       expect(chef_run).to install_package('logrotate')
     end
