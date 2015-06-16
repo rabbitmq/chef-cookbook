@@ -44,7 +44,7 @@ module Opscode
     end
 
     def format_ssl_ciphers
-      Array(node['rabbitmq']['ssl_ciphers']).map { |n| "{#{n}}" }.join(',')
+      Array(node['rabbitmq']['ssl_ciphers']).map { |n| "'#{n}'" }.join(',')
     end
   end
 end
