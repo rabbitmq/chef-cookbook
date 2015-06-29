@@ -21,10 +21,10 @@ use_inline_resources
 
 def user_exists?(name)
   cmd = "rabbitmqctl -q list_users |grep '^#{name}\\b'"
+  Chef::Log.debug "rabbitmq_user_exists?: #{cmd}"
   cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
-  Chef::Log.debug "rabbitmq_user_exists?: #{cmd}"
   Chef::Log.debug "rabbitmq_user_exists?: #{cmd.stdout}"
   begin
     cmd.error!
@@ -35,12 +35,14 @@ def user_exists?(name)
 end
 
 def user_has_tag?(name, tag)
-  tag = '"\[\]"' if tag.nil?
-  cmd = "rabbitmqctl -q list_users | grep \"^#{name}\\b\" | grep #{tag}"
+  tag = [] if tag.nil?
+  tag = tag.to_s.split unless tag.kind_of?(Array)
+  tag = tag.flatten.to_s.gsub(/\"/, '')
+  cmd = "rabbitmqctl -q list_users | grep \"^#{name}\\b\" | grep \"#{tag}\""
+  Chef::Log.debug "rabbitmq_user_has_tag?: #{cmd}"
   cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
-  Chef::Log.debug "rabbitmq_user_has_tag?: #{cmd}"
   Chef::Log.debug "rabbitmq_user_has_tag?: #{cmd.stdout}"
   begin
     cmd.error!
@@ -53,19 +55,19 @@ end
 # does the user have the rights listed on the vhost?
 # empty perm_list means we're checking for any permissions
 def user_has_permissions?(name, vhost, perm_list = nil) # rubocop:disable all
-  vhost = '/' if vhost.nil? # rubocop:enable all
-  cmd = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\s\""
+  vhost = "//" if vhost.nil? # rubocop:enable all
+  cmd = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\s\" | awk '$1=\"\"; {print $0}'"
+  Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd}"
   cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
-  Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd}"
   Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd.stdout}"
   Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd.exitstatus}"
   if perm_list.nil? && cmd.stdout.empty? # looking for empty and found nothing
     Chef::Log.debug 'rabbitmq_user_has_permissions?: no permissions found'
     return false
   end
-  if perm_list == cmd.stdout.split.drop(1) # existing match search
+  if perm_list === cmd.stdout.split.drop(1) # existing match search
     Chef::Log.debug 'rabbitmq_user_has_permissions?: matching permissions already found'
     return true
   end
@@ -108,7 +110,7 @@ action :set_permissions do
   perm_list = new_resource.permissions.split
   unless user_has_permissions?(new_resource.user, new_resource.vhost, perm_list)
     vhostopt = "-p #{new_resource.vhost}" unless new_resource.vhost.nil?
-    cmd = "rabbitmqctl set_permissions #{vhostopt} #{new_resource.user} \"#{perm_list.join("\" \"")}\""
+    cmd = %Q(rabbitmqctl set_permissions #{vhostopt} #{new_resource.user} "#{perm_list.join("\" \"")}")
     execute cmd do
       Chef::Log.debug "rabbitmq_user_set_permissions: #{cmd}"
       Chef::Log.info "Setting RabbitMQ user permissions for '#{new_resource.user}' on vhost #{new_resource.vhost}."
