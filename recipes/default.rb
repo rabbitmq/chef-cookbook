@@ -212,6 +212,10 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
   end
 end
 
+if node['rabbitmq']['stomp']
+  include_recipe 'rabbitmq::stomp'
+end
+
 service node['rabbitmq']['service_name'] do
   action [:enable, :start]
   supports :status => true, :restart => true

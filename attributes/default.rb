@@ -98,6 +98,16 @@ default['rabbitmq']['ssl_ciphers'] = nil
 default['rabbitmq']['web_console_ssl'] = false
 default['rabbitmq']['web_console_ssl_port'] = 15_671
 
+#stomp
+default['rabbitmq']['stomp'] = false
+default['rabbitmq']['stomp_port'] = 61613
+default['rabbitmq']['stomp_ssl_port'] = 61614
+default['rabbitmq']['stomp_default_user'] = node['rabbitmq']['default_user']
+default['rabbitmq']['stomp_default_pass'] = node['rabbitmq']['default_pass']
+default['rabbitmq']['stomp_ssl_cert_login'] = false
+default['rabbitmq']['stomp_ssl_cert_login_from'] = 'common_name'
+default['rabbitmq']['stomp_implicit_connect'] = false
+
 # tcp listen options
 default['rabbitmq']['tcp_listen'] = true
 default['rabbitmq']['tcp_listen_packet'] = 'raw'
