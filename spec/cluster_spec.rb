@@ -23,7 +23,7 @@ require 'spec_helper'
 describe 'rabbitmq::cluster' do
   let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
   let(:node) { runner.node }
-  let(:chef_run) do
+  cached(:chef_run) do
     runner.converge(described_recipe)
   end
 

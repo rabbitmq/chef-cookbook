@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'rabbitmq::virtualhost_management' do
   let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
   let(:node) { runner.node }
-  let(:chef_run) do
+  cached(:chef_run) do
     runner.converge(described_recipe)
   end
 

@@ -25,6 +25,7 @@ default['rabbitmq']['server_additional_erl_args'] = nil
 default['rabbitmq']['ctl_erl_args'] = nil
 default['rabbitmq']['mnesiadir'] = '/var/lib/rabbitmq/mnesia'
 default['rabbitmq']['service_name'] = 'rabbitmq-server'
+default['rabbitmq']['manage_service'] = true
 
 # config file location
 # http://www.rabbitmq.com/configure.html#define-environment-variables
