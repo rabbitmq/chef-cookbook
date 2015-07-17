@@ -106,12 +106,14 @@ action :set_permissions do
   Chef::Application.fatal!("rabbitmq_user action :set_permissions fails with non-existant '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
 
   perm_list = new_resource.permissions.split
-  unless user_has_permissions?(new_resource.user, new_resource.vhost, perm_list)
-    vhostopt = "-p #{new_resource.vhost}" unless new_resource.vhost.nil?
+  vhosts = new_resource.vhost.is_a?(Array) ? new_resource.vhost : [new_resource.vhost]
+  vhosts.each do |vhost|
+    next if user_has_permissions?(new_resource.user, vhost, perm_list)
+    vhostopt = "-p #{vhost}" unless vhost.nil?
     cmd = "rabbitmqctl set_permissions #{vhostopt} #{new_resource.user} \"#{perm_list.join("\" \"")}\""
     execute cmd do
       Chef::Log.debug "rabbitmq_user_set_permissions: #{cmd}"
-      Chef::Log.info "Setting RabbitMQ user permissions for '#{new_resource.user}' on vhost #{new_resource.vhost}."
+      Chef::Log.info "Setting RabbitMQ user permissions for '#{new_resource.user}' on vhost #{vhost}."
     end
   end
 end
@@ -119,12 +121,14 @@ end
 action :clear_permissions do
   Chef::Application.fatal!("rabbitmq_user action :clear_permissions fails with non-existant '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
 
-  if user_has_permissions?(new_resource.user, new_resource.vhost)
-    vhostopt = "-p #{new_resource.vhost}" unless new_resource.vhost.nil?
+  vhosts = new_resource.vhost.is_a?(Array) ? new_resource.vhost : [new_resource.vhost]
+  vhosts.each do |vhost|
+    next unless user_has_permissions?(new_resource.user, vhost)
+    vhostopt = "-p #{vhost}" unless vhost.nil?
     cmd = "rabbitmqctl clear_permissions #{vhostopt} #{new_resource.user}"
     execute cmd do
       Chef::Log.debug "rabbitmq_user_clear_permissions: #{cmd}"
-      Chef::Log.info "Clearing RabbitMQ user permissions for '#{new_resource.user}' from vhost #{new_resource.vhost}."
+      Chef::Log.info "Clearing RabbitMQ user permissions for '#{new_resource.user}' from vhost #{vhost}."
     end
   end
 end
