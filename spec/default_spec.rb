@@ -67,11 +67,23 @@ describe 'rabbitmq::default' do
    )
   end
 
-  it 'enables a rabbitmq service' do
+  it 'does not enable a rabbitmq service when manage_service is false' do
+    node.set['rabbitmq']['manage_service'] = false
+    expect(chef_run).not_to enable_service('rabbitmq-server')
+  end
+
+  it 'does not start a rabbitmq service when manage_service is false' do
+    node.set['rabbitmq']['manage_service'] = false
+    expect(chef_run).not_to start_service('rabbitmq-server')
+  end
+
+  it 'enables a rabbitmq service when manage_service is true' do
+    node.set['rabbitmq']['manage_service'] = true
     expect(chef_run).to enable_service('rabbitmq-server')
   end
 
-  it 'start a rabbitmq service' do
+  it 'starts a rabbitmq service when manage_service is true' do
+    node.set['rabbitmq']['manage_service'] = true
     expect(chef_run).to start_service('rabbitmq-server')
   end
 

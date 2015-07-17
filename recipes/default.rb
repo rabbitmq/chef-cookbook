@@ -60,7 +60,7 @@ when 'debian'
   end
 
   # Configure job control
-  if node['rabbitmq']['job_control'] == 'upstart'
+  if node['rabbitmq']['job_control'] == 'upstart' && node['rabbitmq']['manage_service']
     # We start with stock init.d, remove it if we're not using init.d, otherwise leave it alone
     service node['rabbitmq']['service_name'] do
       action [:stop]
@@ -212,8 +212,14 @@ if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing
   end
 end
 
-service node['rabbitmq']['service_name'] do
-  action [:enable, :start]
-  supports :status => true, :restart => true
-  provider Chef::Provider::Service::Upstart if node['rabbitmq']['job_control'] == 'upstart'
+if node['rabbitmq']['manage_service']
+  service node['rabbitmq']['service_name'] do
+    action [:enable, :start]
+    supports :status => true, :restart => true
+    provider Chef::Provider::Service::Upstart if node['rabbitmq']['job_control'] == 'upstart'
+  end
+else
+  service node['rabbitmq']['service_name'] do
+    action :nothing
+  end
 end
