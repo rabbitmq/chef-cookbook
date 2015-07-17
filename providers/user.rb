@@ -34,8 +34,8 @@ def user_exists?(name)
   end
 end
 
-def user_has_tag?(name, tag)
-  cmd = "rabbitmqctl -q list_users"
+def user_has_tag?(name, tag) # rubocop:disable all
+  cmd = 'rabbitmqctl -q list_users'
   cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command

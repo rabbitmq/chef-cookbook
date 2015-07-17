@@ -2,7 +2,11 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
-v4.0.1 (2015-06-16)
+v4.1.2 (2015-06-16)
+--------------------
+- Stupid Rubocop
+
+v4.1.1 (2015-06-16)
 --------------------
 - Fix single quote and nil issues with cluster recipe #274
 - Fixed 'rabbitmqctl eval' command for old rabbitmq versions #272
