@@ -2,6 +2,15 @@ rabbitmq Cookbook CHANGELOG
 ===========================
 This file is used to list changes made in each version of the rabbitmq cookbook.
 
+v4.1.1 (2015-07-17)
+--------------------
+- Allow for flexiable SSL cipher formats #280
+- Use gsub instead of gsub! #284
+- Support rabbitmq_user with multiple vhosts. #279
+- Fix exception when first node is launched. Fixes issue #285 #286
+- Allow the service to be manually managed #281
+- Fix user_has_tag? issue when name and tag are the same #140
+
 v4.0.1 (2015-06-16)
 --------------------
 - Fix single quote and nil issues with cluster recipe #274
