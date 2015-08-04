@@ -50,6 +50,10 @@
 <% else -%>
    {tcp_listeners, []},
 <% end %>
+
+<% if node['rabbitmq']['log_levels'] -%>
+    {log_levels, [<%= node['rabbitmq']['log_levels'].map{ |key, value| "{ #{key}, #{value} }"}.join(', ') %>]},
+<% end %>
 <% if node['rabbitmq']['disk_free_limit_relative'] -%>
     {disk_free_limit, {mem_relative, <%= node['rabbitmq']['disk_free_limit_relative'] %>}},
 <% end %>

@@ -71,6 +71,9 @@ default['rabbitmq']['clustering']['master_node_name'] = 'rabbit@rabbit1'
 # - Cluster node type : disc | ram
 default['rabbitmq']['clustering']['cluster_node_type'] = 'disc'
 
+# log levels
+default['rabbitmq']['log_levels'] = { 'connection' => 'info' }
+
 # resource usage
 default['rabbitmq']['disk_free_limit_relative'] = nil
 default['rabbitmq']['vm_memory_high_watermark'] = nil
