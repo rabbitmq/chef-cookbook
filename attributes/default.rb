@@ -12,7 +12,7 @@ default['rabbitmq']['deb_package_url'] = "https://www.rabbitmq.com/releases/rabb
 default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
 default['rabbitmq']['rpm_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/"
 
-default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-R14B-1.el6.noarch.rpm?raw=true'
+default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-R16B03-1.noarch.rpm?raw=true'
 default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/'
 
 # being nil, the rabbitmq defaults will be used
