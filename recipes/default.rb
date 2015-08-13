@@ -159,7 +159,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   owner 'root'
   group 'root'
   mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
 template "#{node['rabbitmq']['config']}.config" do
@@ -174,7 +174,7 @@ template "#{node['rabbitmq']['config']}.config" do
     :ssl_versions => (format_ssl_versions if node['rabbitmq']['ssl_versions']),
     :ssl_ciphers => (format_ssl_ciphers if node['rabbitmq']['ssl_ciphers'])
   )
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
 template "/etc/default/#{node['rabbitmq']['service_name']}" do
@@ -182,7 +182,7 @@ template "/etc/default/#{node['rabbitmq']['service_name']}" do
   owner 'root'
   group 'root'
   mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
 if File.exist?(node['rabbitmq']['erlang_cookie_path']) && File.readable?((node['rabbitmq']['erlang_cookie_path']))
