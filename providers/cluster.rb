@@ -54,7 +54,7 @@ def cluster_status
   cmd = get_shellout(cmd)
   cmd.run_command
   cmd.error!
-  result = cmd.stdout.split(/\n/, 2).last.squeeze(' ').gsub(/\n/, '').gsub('...done.', '')
+  result = cmd.stdout.split(/\n/, 2).last.squeeze(' ').gsub(/\n */, '').gsub('...done.', '')
   Chef::Log.debug("[rabbitmq_cluster] rabbitmqctl cluster_status : #{result}")
   result
 end
