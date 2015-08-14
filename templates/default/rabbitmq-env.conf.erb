@@ -18,7 +18,6 @@ export ERL_EPMD_ADDRESS=<%= node['rabbitmq']['erl_networking_bind_address'] %>
 <% if node['rabbitmq']['config'] -%>CONFIG_FILE=<%= node['rabbitmq']['config'] %><% end %>
 <% if node['rabbitmq']['logdir'] -%>LOG_BASE=<%= node['rabbitmq']['logdir'] %><% end %>
 <% if node['rabbitmq']['mnesiadir'] -%>MNESIA_BASE=<%= node['rabbitmq']['mnesiadir'] %><% end %>
-<% if node['rabbitmq']['open_file_limit'] -%>ulimit -n <%= node['rabbitmq']['open_file_limit'] %><% end %>
 <% if node['rabbitmq']['server_additional_erl_args'] -%>SERVER_ADDITIONAL_ERL_ARGS='<%= node['rabbitmq']['server_additional_erl_args'] %>'<% end %>
 <% if node['rabbitmq']['ctl_erl_args'] -%>CTL_ERL_ARGS='<%= node['rabbitmq']['ctl_erl_args'] %>'<% end %>
 <% if node['rabbitmq']['additional_env_settings'] -%>
