@@ -40,7 +40,7 @@ def user_has_tag?(name, tag) # rubocop:disable all
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
   user_list = cmd.stdout
-  tags = user_list.match(/^#{name}\s+\[(.+*)\]/)[1].split
+  tags = user_list.match(/^#{name}\s+\[(.*?)\]/)[1].split
   Chef::Log.debug "rabbitmq_user_has_tag?: #{cmd}"
   Chef::Log.debug "rabbitmq_user_has_tag?: #{cmd.stdout}"
   Chef::Log.debug "rabbitmq_user_has_tag?: #{name} has tags: #{tags}"
