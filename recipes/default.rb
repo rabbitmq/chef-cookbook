@@ -29,6 +29,14 @@ include_recipe 'erlang'
 ## Install the package
 case node['platform_family']
 when 'debian'
+
+  template '/etc/apt/apt.conf.d/90forceyes' do
+    source '90forceyes.erb'
+    owner 'root'
+    group 'root'
+    mode '0644'
+  end
+
   # logrotate is a package dependency of rabbitmq-server
   package 'logrotate'
 
