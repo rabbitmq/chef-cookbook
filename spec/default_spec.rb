@@ -162,6 +162,10 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
+    it 'creates a template for 90forceyes' do
+      expect(chef_run).to create_template('/etc/apt/apt.conf.d/90forceyes')
+    end
+
     include_context 'rabbitmq-stubs'
 
     # ~FC005 -- we should ignore this during compile time
