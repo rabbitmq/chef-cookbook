@@ -35,3 +35,12 @@ suites:
                assume_yes: true
                force-yes: true
     excludes: ["centos-6.5", "centos-7.0"]
+  - name: default-force-yes-false
+    run_list:
+      - recipe[rabbitmq::default]
+    attributes:
+           apt:
+             confd:
+               assume_yes: false
+               force-yes: false
+    excludes: ["centos-6.5", "centos-7.0"]
