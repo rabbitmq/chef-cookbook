@@ -131,6 +131,9 @@ when 'smartos'
   default['rabbitmq']['config_root'] = '/opt/local/etc/rabbitmq'
   default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq"
   default['rabbitmq']['erlang_cookie_path'] = '/var/db/rabbitmq/.erlang.cookie'
+when 'debian'
+  default['apt']['confd']['assume_yes'] = false
+  default['apt']['confd']['force-yes'] = false
 end
 
 # heartbeat
