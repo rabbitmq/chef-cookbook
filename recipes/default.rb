@@ -225,6 +225,7 @@ if node['rabbitmq']['manage_service']
     action [:enable, :start]
     supports :status => true, :restart => true
     provider Chef::Provider::Service::Upstart if node['rabbitmq']['job_control'] == 'upstart'
+    provider Chef::Provider::Service::Init if node['rabbitmq']['job_control'] == 'init'
   end
 else
   service node['rabbitmq']['service_name'] do
