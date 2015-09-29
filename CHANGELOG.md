@@ -1,6 +1,9 @@
 # rabbitmq Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the rabbitmq cookbook.
+## v4.3.0 (2015-08-28)
+- Updated rabbitmq to 3.5.5
+- Updated the tests for 3.5.5
 
 ## v4.2.0 (2015-08-28)
 - Updated the CHANGELOG.md formatting
