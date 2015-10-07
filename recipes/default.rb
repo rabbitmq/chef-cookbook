@@ -42,12 +42,9 @@ when 'debian'
 
   # dpkg, imma let you finish but don't start services automatically
   # https://jpetazzo.github.io/2013/10/06/policy-rc-d-do-not-start-services-automatically/
-  execute 'disable auto-start 1/2' do
-    command 'echo exit 101 > /usr/sbin/policy-rc.d'
-  end
-
-  execute 'disable auto-start 2/2' do
-    command 'chmod +x /usr/sbin/policy-rc.d'
+  file '/usr/sbin/policy-rc.d' do
+    content 'exit 101'
+    mode '0700'
   end
 
   if node['rabbitmq']['use_distro_version']
