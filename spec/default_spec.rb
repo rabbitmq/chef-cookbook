@@ -184,11 +184,11 @@ describe 'rabbitmq::default' do
     end
 
     it 'creates a rabbitmq-server deb in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.5.5-1_all.deb')
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.5.5-3_all.deb')
     end
 
     it 'installs the rabbitmq-server deb_package with the default action' do
-      expect(chef_run).to install_dpkg_package('/tmp/rabbitmq-server_3.5.5-1_all.deb')
+      expect(chef_run).to install_dpkg_package('/tmp/rabbitmq-server_3.5.5-3_all.deb')
     end
 
     it 'creates a template rabbitmq-server with attributes' do
