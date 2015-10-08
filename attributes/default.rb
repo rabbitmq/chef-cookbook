@@ -6,7 +6,7 @@ default['rabbitmq']['use_distro_version'] = false
 default['rabbitmq']['pin_distro_version'] = false
 
 # provide options to override download urls and package names
-default['rabbitmq']['deb_package'] = "rabbitmq-server_#{node['rabbitmq']['version']}-3_all.deb"
+default['rabbitmq']['deb_package'] = "rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
 default['rabbitmq']['deb_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/"
 
 default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
