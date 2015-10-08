@@ -1,3 +1,6 @@
+# Use Travis's cointainer based infrastructure
+sudo: false
+
 language: ruby
 bundler_args: --without kitchen_vagrant
 rvm:
