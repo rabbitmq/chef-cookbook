@@ -1,6 +1,10 @@
 # rabbitmq Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the rabbitmq cookbook.
+
+## v4.4.0 (2015-10-12)
+- Provision 3.5.6 by default #315
+
 ## v4.3.2 (2015-10-08)
 - Revert "Upgrade to -3_all.deb" #312
 
