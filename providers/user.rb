@@ -90,7 +90,7 @@ action :add do
     new_password = new_resource.password.gsub("'", "'\\\\''")
     cmd = "rabbitmqctl add_user #{new_resource.user} '#{new_password}'"
     execute "rabbitmqctl add_user #{new_resource.user}" do # ~FC009
-      sensitive true
+      sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
       command cmd
       Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
     end
@@ -166,7 +166,7 @@ action :change_password do
   if user_exists?(new_resource.user)
     cmd = "rabbitmqctl change_password #{new_resource.user} #{new_resource.password}"
     execute "rabbitmqctl change_password #{new_resource.user}" do # ~FC009
-      sensitive true
+      sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
       command cmd
       Chef::Log.debug "rabbitmq_user_change_password: #{cmd}"
       Chef::Log.info "Editing RabbitMQ user '#{new_resource.user}'."

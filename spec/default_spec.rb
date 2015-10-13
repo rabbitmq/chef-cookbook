@@ -110,6 +110,12 @@ describe 'rabbitmq::default' do
       :group => 'root',
       :source => 'rabbitmq.config.erb',
       :mode => 00644)
+
+    if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
+      expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.config').with(:sensitive => true)
+    else
+      expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.config').with(:sensitive => false)
+    end
   end
 
   describe 'ssl ciphers' do
