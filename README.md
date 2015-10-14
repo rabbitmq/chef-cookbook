@@ -75,7 +75,7 @@ Configure the cluster between the nodes in the `node['rabbitmq']['clustering']['
 #### Attributes that related to clustering
 * `node['rabbitmq']['cluster']` : Default decision flag of clustering
 * `node['rabbitmq']['erlang_cookie']` : Same erlang cookie is required for the cluster
-* `node['rabbitmq']['clustering']['use\_auto_clustering']` : Default is false. (manual clustering is default)
+* `node['rabbitmq']['clustering']['use_auto_clustering']` : Default is false. (manual clustering is default)
 * `node['rabbitmq']['clustering']['cluster_name']` : Name of cluster. default value is nil. In case of nil or '' is set for `cluster_name`, first node name in `node['rabbitmq']['clustering']['cluster_nodes']` attribute will be set for manual clustering. for the auto clustering, one of the node name will be set.
 * `node['rabbitmq']['clustering']['cluster_nodes']` : List of cluster nodes. it required node name and cluster node type. please refer to example in below.
 
