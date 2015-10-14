@@ -24,6 +24,14 @@ Installs `rabbitmq-server` from RabbitMQ.com via direct download of the installa
 The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['cluster']` attribute to `true`, `['rabbitmq']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
+```ruby
+node['rabbitmq']['ssl'] = true
+node['rabbitmq']['ssl_cacert'] = '/path/to/cacert.pem'
+node['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
+node['rabbitmq']['ssl_key'] = '/path/to/key.pem'
+```
+
+A full list of SSL attributes can be found in [attributes/default.rb](attributes/default.rb).
 
 #### Attributes
 
@@ -75,7 +83,7 @@ Configure the cluster between the nodes in the `node['rabbitmq']['clustering']['
 #### Attributes that related to clustering
 * `node['rabbitmq']['cluster']` : Default decision flag of clustering
 * `node['rabbitmq']['erlang_cookie']` : Same erlang cookie is required for the cluster
-* `node['rabbitmq']['clustering']['use\_auto_clustering']` : Default is false. (manual clustering is default)
+* `node['rabbitmq']['clustering']['use_auto_clustering']` : Default is false. (manual clustering is default)
 * `node['rabbitmq']['clustering']['cluster_name']` : Name of cluster. default value is nil. In case of nil or '' is set for `cluster_name`, first node name in `node['rabbitmq']['clustering']['cluster_nodes']` attribute will be set for manual clustering. for the auto clustering, one of the node name will be set.
 * `node['rabbitmq']['clustering']['cluster_nodes']` : List of cluster nodes. it required node name and cluster node type. please refer to example in below.
 
