@@ -24,6 +24,14 @@ Installs `rabbitmq-server` from RabbitMQ.com via direct download of the installa
 The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['cluster']` attribute to `true`, `['rabbitmq']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
+```ruby
+node['rabbitmq']['ssl'] = true
+node['rabbitmq']['ssl_cacert'] = '/path/to/cacert.pem'
+node['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
+node['rabbitmq']['ssl_key'] = '/path/to/key.pem'
+```
+
+A full list of SSL attributes can be found in [attributes/default.rb](attributes/default.rb).
 
 #### Attributes
 
