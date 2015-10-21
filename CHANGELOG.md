@@ -1,287 +1,452 @@
-# rabbitmq Cookbook CHANGELOG
+# Change Log
 
-This file is used to list changes made in each version of the rabbitmq cookbook.
+## [Unreleased](https://github.com/jjasghar/rabbitmq/tree/HEAD)
 
-## v4.4.0 (2015-10-12)
-- Provision 3.5.6 by default #315
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.4.0...HEAD)
 
-## v4.3.2 (2015-10-08)
-- Revert "Upgrade to -3_all.deb" #312
+**Merged pull requests:**
 
-## v4.3.1 (2015-10-08)
-- Upgrade to -3_all.deb #310
+- Readme improvements [\#318](https://github.com/jjasghar/rabbitmq/pull/318) ([Fitzsimmons](https://github.com/Fitzsimmons))
 
-## v4.3.0 (2015-10-08)
-- Updated rabbitmq to 3.5.5
-- Updated the tests for 3.5.5
-- enable to configure log_levels #291
-- Updated `.travis.yml`
+## [v4.4.0](https://github.com/jjasghar/rabbitmq/tree/v4.4.0) (2015-10-12)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.3.2...v4.4.0)
 
-## v4.2.0 (2015-08-28)
-- Updated the CHANGELOG.md formatting
-- PR #295
-- PR #290
-- PR #294
-- PR #293
-- PR #292
-- PR #296
-- PR #297
+**Merged pull requests:**
 
-## v4.1.2 (2015-06-16)
-- Stupid Rubocop
+- Provision 3.5.6 by default [\#315](https://github.com/jjasghar/rabbitmq/pull/315) ([michaelklishin](https://github.com/michaelklishin))
 
-## v4.1.1 (2015-07-17)
-- Allow for flexiable SSL cipher formats #280
-- Use gsub instead of gsub! #284
-- Support rabbitmq_user with multiple vhosts. #279
-- Fix exception when first node is launched. Fixes issue #285 #286
-- Allow the service to be manually managed #281
-- Fix user_has_tag? issue when name and tag are the same #140
+## [v4.3.2](https://github.com/jjasghar/rabbitmq/tree/v4.3.2) (2015-10-08)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.3.1...v4.3.2)
 
-## v4.0.1 (2015-06-16)
-- Fix single quote and nil issues with cluster recipe #274
-- Fixed 'rabbitmqctl eval' command for old rabbitmq versions #272
-- Support additional env args #269
-- Add patterns to catch where the node name is surrounded by single-quotes #267
-- Remove the extra curly braces for format_ssl_ciphers #260
+**Merged pull requests:**
 
-## v4.0.0 (2015-04-23)
-- added #238 for clustering depreciating the [rabbitmq-cluster cookbook](https://supermarket.chef.io/cookbooks/rabbitmq-cluster)
-- added #245 for expected Debian family usage
+- Revert "Upgrade to -3\_all.deb" [\#312](https://github.com/jjasghar/rabbitmq/pull/312) ([jjasghar](https://github.com/jjasghar))
 
-## v3.13.0 (2015-04-23)
-- Added ssl_ciphers #255
-- Fix plugin_enabled not having path appended #253
-- Add more support for erlang args #247
-- Open file limit not set correctly #127
-- Additional rabbit configs #217
-- Updated the erlang cookbook dependancy
+## [v4.3.1](https://github.com/jjasghar/rabbitmq/tree/v4.3.1) (2015-10-08)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.3.0...v4.3.1)
 
-## v3.12.0 (2015-04-07)
-- Removed yum-epel case statement #236
-- don't put change password in log #237
-- Added pin_distro_version for other platforms #234
-- specifying ssl #152
-- additional debs and rpms #220
-- umask #219
-- typo fixed #243
+**Merged pull requests:**
 
-## v3.11.0 (2015-02-25)
-- Fix travis build. #228
-- Update Contributing file with new links and help. #229
-- Change module back to Opscode. #231
-- Update for 3.4.4 #223
-- Exclude CentOS 6/7 from distro version suite (no or broken upstream)
+- Upgrade to -3\_all.deb [\#310](https://github.com/jjasghar/rabbitmq/pull/310) ([jdrago999](https://github.com/jdrago999))
 
-## v3.10.0 (2015-02-05)
-Song of this Release: [First Person Shooter](http://www.pandora.com/celldweller/soundtrack-for-voices-in-my-head-vol-02/1st-person-shooter) by Celldweller
+## [v4.3.0](https://github.com/jjasghar/rabbitmq/tree/v4.3.0) (2015-10-08)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.2.2...v4.3.0)
 
-- Add more chefspec tests #193
-- initial enforcement of Gemfile.lock #213
-- add support for loopback users #212
-- CentOS 7 support #214
-- changed regex behavior for guard command on set user permission resource #215
+**Merged pull requests:**
 
-## v3.9.0 (2015-01-28)
-Song of this Release: [Cascade](http://www.pandora.com/hyper/we-control/cascade) by Hyper
+- updated for 3.5.5 of rabbitmq [\#308](https://github.com/jjasghar/rabbitmq/pull/308) ([jjasghar](https://github.com/jjasghar))
+- enable to configure log\_levels [\#291](https://github.com/jjasghar/rabbitmq/pull/291) ([nipe0324](https://github.com/nipe0324))
 
-- Moved the service enable and start to the bottom of the default recipe so you can change variables around. Issue #201
-- syntax typos #208
-- LWRP for managing RabbitMQ parameters #207
-- Distro version pinning #211
+## [v4.2.2](https://github.com/jjasghar/rabbitmq/tree/v4.2.2) (2015-09-08)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.2.1...v4.2.2)
 
-## v3.8.0 (2015-01-07)
-Song of this Release: Sunlight (2011) by by Modestep
+**Merged pull requests:**
 
-- Update to `3.4.3` release of rabbitmq
-- Updated from 12.04 to 14.04 for Ubuntu Specs
+- logic around the apt-force-yes. [\#302](https://github.com/jjasghar/rabbitmq/pull/302) ([jjasghar](https://github.com/jjasghar))
 
-## v3.7.0 (2014-12-18)
-- #185 Updated cloud kitchen.yml
-- #186 Updated chefspec for multiple oses
-- #180 Instead of defaulting to :upgrade we default to :install with the a pinned version number
-- #187 Updating Readme
-- #184 Supports setting rabbitmq config file to a different path
+## [v4.2.1](https://github.com/jjasghar/rabbitmq/tree/v4.2.1) (2015-09-08)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.2.0...v4.2.1)
 
-## v3.6.0 (2014-12-9)
-- #161 Community plugins
-- #158 Adds policy apply_to option
-- #151 make config file template source cookbook configurable
-- #121 COOK-4694 Remove service restart for vhost mgmnt
+**Merged pull requests:**
 
-## v3.5.1 (2014-12-5)
-- #176 Chef-client 12 released and the `PATH` attribute was removed.
+- Fix for Issue 301 [\#301](https://github.com/jjasghar/rabbitmq/pull/301) ([jjasghar](https://github.com/jjasghar))
 
-## v3.5.0 (2014-12-2)
-Song of this Release: 0 to 100/The Catchup by Drake
+## [v4.2.0](https://github.com/jjasghar/rabbitmq/tree/v4.2.0) (2015-08-28)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.1.2...v4.2.0)
 
-- Updated for the new release of RabbitMQ release 3.4.2
-- Removed the Centos 5.10 from integration testing
-- Updated the Gemfile for testing
-- #87 expose the heartbeat configuration parameter
-- #168 Initial Chefspec
-- #166 Updated to 3.4.2 release
-- d1bfae8 Rubocop'd all the things
-- ccf42a3 Started to get Travis to be our gatekeeper
-- #172 Updates ['rabbitmq']['config'] to use ['rabbitmq']['config_root'] attribute
-- #123 Add raw configuration for rabbitmq.erb
+**Closed issues:**
 
-## v3.4.0 (2014-11-23)
-- Updated the RuboCop camel case
-- Make rabbitmq service restart immediately
-- Add sensitive flag for resources that expose passwords in log
-- Issue: #153
-- move serverspec v1 tests to use busser-rspec
-- Adding switch to make TCP listeners optional
-- Update user.rb
-- Update default.rb
-- Merge branch 'pr-128'
-- add serverspec tests for plugin lwrp
-- Plugin provider. fixes #141
-- Add test that fails if plugin notifications aren't working properly.
+- Server failing unable to restart, able to restart when resetting queues [\#289](https://github.com/jjasghar/rabbitmq/issues/289)
+- ulimit won't work if the current user doesnot have the limit higher or equal to 'rabbitmq' user [\#250](https://github.com/jjasghar/rabbitmq/issues/250)
 
-## v3.3.0 (2014-08-28)
-- Bump default rabbitmq-server version to 3.3.5
-- [COOK-4641] - remove setsid calls in service resource
-- Testing updates
-- Minor documentation fix re: rabbitmq_policy usage
+**Merged pull requests:**
 
-## v3.2.2 (2014-05-07)
-- [COOK-2676] - Fixing startup issue when cluster mode is enabled
+- Updates for 4.2.0 [\#298](https://github.com/jjasghar/rabbitmq/pull/298) ([jjasghar](https://github.com/jjasghar))
+- rabbitmq.community\_plugins default should be {} [\#297](https://github.com/jjasghar/rabbitmq/pull/297) ([michaelklishin](https://github.com/michaelklishin))
+- Fix regex in user.rb [\#296](https://github.com/jjasghar/rabbitmq/pull/296) ([jdrago999](https://github.com/jdrago999))
+- Delay start of RabbitMQ on template changes [\#295](https://github.com/jjasghar/rabbitmq/pull/295) ([jschneiderhan](https://github.com/jschneiderhan))
+- esl-erlang-compat now provides Erlang R16B03-1 [\#294](https://github.com/jjasghar/rabbitmq/pull/294) ([michaelklishin](https://github.com/michaelklishin))
+- Provision 3.5.4 by default [\#293](https://github.com/jjasghar/rabbitmq/pull/293) ([michaelklishin](https://github.com/michaelklishin))
+- removing ulimit from rabbitmq-env.conf [\#292](https://github.com/jjasghar/rabbitmq/pull/292) ([jordant](https://github.com/jordant))
+- Fixed rabbitmq cluster\_status parsing when node list takes multiple lines. [\#290](https://github.com/jjasghar/rabbitmq/pull/290) ([jperville](https://github.com/jperville))
+
+## [v4.1.2](https://github.com/jjasghar/rabbitmq/tree/v4.1.2) (2015-07-17)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.1.1...v4.1.2)
+
+**Closed issues:**
+
+- cluster resource : possible bug in running\_nodes method [\#285](https://github.com/jjasghar/rabbitmq/issues/285)
+- cluster resource : possible bug in node\_name method [\#282](https://github.com/jjasghar/rabbitmq/issues/282)
+
+## [v4.1.1](https://github.com/jjasghar/rabbitmq/tree/v4.1.1) (2015-07-17)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.0.1...v4.1.1)
+
+**Closed issues:**
+
+- Feature Request: Support rabbitmq\_user with multiple vhosts. [\#278](https://github.com/jjasghar/rabbitmq/issues/278)
+
+**Merged pull requests:**
+
+- Fix exception when first node is launched. Fixes issue \#285 [\#286](https://github.com/jjasghar/rabbitmq/pull/286) ([alexpop](https://github.com/alexpop))
+- Use gsub instead of gsub! [\#284](https://github.com/jjasghar/rabbitmq/pull/284) ([stevedomin](https://github.com/stevedomin))
+- Allow the service to be manually managed [\#281](https://github.com/jjasghar/rabbitmq/pull/281) ([joshgarnett](https://github.com/joshgarnett))
+- Allow for flexiable SSL cipher formats [\#280](https://github.com/jjasghar/rabbitmq/pull/280) ([kramvan1](https://github.com/kramvan1))
+- Support rabbitmq\_user with multiple vhosts. [\#279](https://github.com/jjasghar/rabbitmq/pull/279) ([jemc](https://github.com/jemc))
+- Changes from let to cached [\#277](https://github.com/jjasghar/rabbitmq/pull/277) ([jjasghar](https://github.com/jjasghar))
+
+## [v4.0.1](https://github.com/jjasghar/rabbitmq/tree/v4.0.1) (2015-06-16)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.0.0...v4.0.1)
+
+**Closed issues:**
+
+- wrapper cookbook - node\['rabbitmq'\]\['deb\_package\_url\] has not been overrided during  execution phase [\#270](https://github.com/jjasghar/rabbitmq/issues/270)
+
+**Merged pull requests:**
+
+- Changes for 4.0.1 to be pushed. [\#275](https://github.com/jjasghar/rabbitmq/pull/275) ([jjasghar](https://github.com/jjasghar))
+- Fix single quote and nil issues with cluster recipe [\#274](https://github.com/jjasghar/rabbitmq/pull/274) ([dude051](https://github.com/dude051))
+- Fixed 'rabbitmqctl eval' command for old rabbitmq versions [\#272](https://github.com/jjasghar/rabbitmq/pull/272) ([XiangYao](https://github.com/XiangYao))
+- Support additional env args [\#269](https://github.com/jjasghar/rabbitmq/pull/269) ([krtyyy](https://github.com/krtyyy))
+- Add patterns to catch where the node name is surrounded by single-quotes [\#267](https://github.com/jjasghar/rabbitmq/pull/267) ([monkey1016](https://github.com/monkey1016))
+- Remove the extra curly braces for format\_ssl\_ciphers [\#260](https://github.com/jjasghar/rabbitmq/pull/260) ([wenchma](https://github.com/wenchma))
+
+## [v4.0.0](https://github.com/jjasghar/rabbitmq/tree/v4.0.0) (2015-04-24)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.13.0...v4.0.0)
+
+**Closed issues:**
+
+- Unable to set/override default\_user/pass [\#245](https://github.com/jjasghar/rabbitmq/issues/245)
+
+**Merged pull requests:**
+
+- 4.0.0 release [\#257](https://github.com/jjasghar/rabbitmq/pull/257) ([jjasghar](https://github.com/jjasghar))
+- allowing to clear a policy which is created in a vhost [\#203](https://github.com/jjasghar/rabbitmq/pull/203) ([cvasii](https://github.com/cvasii))
+
+## [v3.13.0](https://github.com/jjasghar/rabbitmq/tree/v3.13.0) (2015-04-23)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.12.0...v3.13.0)
+
+**Merged pull requests:**
+
+- 3.13.0 [\#256](https://github.com/jjasghar/rabbitmq/pull/256) ([jjasghar](https://github.com/jjasghar))
+- Added ssl\_ciphers [\#255](https://github.com/jjasghar/rabbitmq/pull/255) ([kramvan1](https://github.com/kramvan1))
+- Fix plugin\_enabled not having path appended [\#253](https://github.com/jjasghar/rabbitmq/pull/253) ([Itxaka](https://github.com/Itxaka))
+- Fix \#245 [\#252](https://github.com/jjasghar/rabbitmq/pull/252) ([cheeseplus](https://github.com/cheeseplus))
+- Add more support for erlang args [\#247](https://github.com/jjasghar/rabbitmq/pull/247) ([kramvan1](https://github.com/kramvan1))
+
+## [v3.12.0](https://github.com/jjasghar/rabbitmq/tree/v3.12.0) (2015-04-07)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.11.0...v3.12.0)
+
+**Closed issues:**
+
+- seems cookbook is unable to set/override default username & password \#245 [\#246](https://github.com/jjasghar/rabbitmq/issues/246)
+- Oops [\#242](https://github.com/jjasghar/rabbitmq/issues/242)
+- metadata.rb is missing in rabbitmq 3.10.0 cookbook [\#233](https://github.com/jjasghar/rabbitmq/issues/233)
+- Installation fails if you decide to install erlang from sources [\#224](https://github.com/jjasghar/rabbitmq/issues/224)
+- 3.4.4 has been released.  [\#222](https://github.com/jjasghar/rabbitmq/issues/222)
+- Use default version not working in CentOS [\#218](https://github.com/jjasghar/rabbitmq/issues/218)
+- No changelog for 3.10 [\#216](https://github.com/jjasghar/rabbitmq/issues/216)
+- When updating the user attributes or the policy attributes they are not taken into consideration if the resource already exists [\#205](https://github.com/jjasghar/rabbitmq/issues/205)
+- rabbitmq-server can't be started when selinux is enforcing on redhat 7 [\#200](https://github.com/jjasghar/rabbitmq/issues/200)
+- erlang broken [\#199](https://github.com/jjasghar/rabbitmq/issues/199)
+- Replace the hard links for package sources with attributes [\#192](https://github.com/jjasghar/rabbitmq/issues/192)
+- Centos 7.0 support [\#189](https://github.com/jjasghar/rabbitmq/issues/189)
+- cannot\_read\_enabled\_plugins\_file - eacces [\#182](https://github.com/jjasghar/rabbitmq/issues/182)
+- loopback\_users cannot be configured [\#159](https://github.com/jjasghar/rabbitmq/issues/159)
+- .erlang.cookie is ignored [\#137](https://github.com/jjasghar/rabbitmq/issues/137)
+- Configuring default\_user and default\_pass in rabbitmq.config  is insecure [\#136](https://github.com/jjasghar/rabbitmq/issues/136)
+- policy provider does not support apply-to [\#135](https://github.com/jjasghar/rabbitmq/issues/135)
+- Kernel parameters errors [\#124](https://github.com/jjasghar/rabbitmq/issues/124)
+
+**Merged pull requests:**
+
+- 3.12.0 [\#249](https://github.com/jjasghar/rabbitmq/pull/249) ([jjasghar](https://github.com/jjasghar))
+- Fix command error in provider/user.rb [\#243](https://github.com/jjasghar/rabbitmq/pull/243) ([shalq](https://github.com/shalq))
+- \[\#125\] - Enhancing clustering functionality [\#238](https://github.com/jjasghar/rabbitmq/pull/238) ([sunggun-yu](https://github.com/sunggun-yu))
+- don't put change password in log [\#237](https://github.com/jjasghar/rabbitmq/pull/237) ([kramvan1](https://github.com/kramvan1))
+- Remove yum-epel case statement. [\#236](https://github.com/jjasghar/rabbitmq/pull/236) ([cmluciano](https://github.com/cmluciano))
+- Added pin\_distro\_version for other platforms [\#234](https://github.com/jjasghar/rabbitmq/pull/234) ([kramvan1](https://github.com/kramvan1))
+- addition of attributes for downloading deb, rpm and esl-erlang-compat [\#220](https://github.com/jjasghar/rabbitmq/pull/220) ([dannietjoh](https://github.com/dannietjoh))
+- umask [\#219](https://github.com/jjasghar/rabbitmq/pull/219) ([cmluciano](https://github.com/cmluciano))
+- Additional rabbit configs [\#217](https://github.com/jjasghar/rabbitmq/pull/217) ([jacyzon](https://github.com/jacyzon))
+- Allow specifying allowed ssl protocol versions via attributes [\#152](https://github.com/jjasghar/rabbitmq/pull/152) ([JonathanTron](https://github.com/JonathanTron))
+- Open file limit not set correctly [\#127](https://github.com/jjasghar/rabbitmq/pull/127) ([jessedavis](https://github.com/jessedavis))
+
+## [v3.11.0](https://github.com/jjasghar/rabbitmq/tree/v3.11.0) (2015-02-26)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.10.0...v3.11.0)
+
+**Closed issues:**
+
+- Recipe stops server to change erlang cookie even when it's not necessary [\#232](https://github.com/jjasghar/rabbitmq/issues/232)
+- Type Error with newest code [\#227](https://github.com/jjasghar/rabbitmq/issues/227)
+- Add support for multiple nodes on one machine [\#225](https://github.com/jjasghar/rabbitmq/issues/225)
+
+**Merged pull requests:**
+
+- Change module back to Opscode. [\#231](https://github.com/jjasghar/rabbitmq/pull/231) ([cmluciano](https://github.com/cmluciano))
+- Update Contributing file with new links and help. [\#229](https://github.com/jjasghar/rabbitmq/pull/229) ([cmluciano](https://github.com/cmluciano))
+- Fix travis build. [\#228](https://github.com/jjasghar/rabbitmq/pull/228) ([cmluciano](https://github.com/cmluciano))
+- 3.4.4 was released and this is the update [\#223](https://github.com/jjasghar/rabbitmq/pull/223) ([jjasghar](https://github.com/jjasghar))
+
+## [v3.10.0](https://github.com/jjasghar/rabbitmq/tree/v3.10.0) (2015-02-05)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.9.0...v3.10.0)
+
+**Closed issues:**
+
+- version pining does not work by default with use\_distro\_version [\#210](https://github.com/jjasghar/rabbitmq/issues/210)
+
+**Merged pull requests:**
+
+- changed regex behavior for guard command on set user permission resource  [\#215](https://github.com/jjasghar/rabbitmq/pull/215) ([fnicholas](https://github.com/fnicholas))
+- CentOS 7 support [\#214](https://github.com/jjasghar/rabbitmq/pull/214) ([jjasghar](https://github.com/jjasghar))
+- inital enforcement of Gemfile.lock [\#213](https://github.com/jjasghar/rabbitmq/pull/213) ([jjasghar](https://github.com/jjasghar))
+- \*  add support for looback users [\#212](https://github.com/jjasghar/rabbitmq/pull/212) ([sethcall](https://github.com/sethcall))
+- Add more chefspec tests [\#193](https://github.com/jjasghar/rabbitmq/pull/193) ([wenchma](https://github.com/wenchma))
+
+## [v3.9.0](https://github.com/jjasghar/rabbitmq/tree/v3.9.0) (2015-01-28)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.8.0...v3.9.0)
+
+**Closed issues:**
+
+- Can't successfully rerun the cookbook if set the wrong parameter the first time [\#201](https://github.com/jjasghar/rabbitmq/issues/201)
+- New version 3.4.3 released [\#195](https://github.com/jjasghar/rabbitmq/issues/195)
+- More chefspec test coverage [\#190](https://github.com/jjasghar/rabbitmq/issues/190)
+
+**Merged pull requests:**
+
+- Distro version pinning [\#211](https://github.com/jjasghar/rabbitmq/pull/211) ([kramvan1](https://github.com/kramvan1))
+- syntax typos [\#208](https://github.com/jjasghar/rabbitmq/pull/208) ([stensonb](https://github.com/stensonb))
+- LWRP for managing RabbitMQ parameters [\#207](https://github.com/jjasghar/rabbitmq/pull/207) ([portertech](https://github.com/portertech))
+- Fix for Issue \#201 [\#202](https://github.com/jjasghar/rabbitmq/pull/202) ([jjasghar](https://github.com/jjasghar))
+
+## [v3.8.0](https://github.com/jjasghar/rabbitmq/tree/v3.8.0) (2015-01-08)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.7.0...v3.8.0)
+
+**Closed issues:**
+
+- Wrong service provider used on Linux Mint [\#194](https://github.com/jjasghar/rabbitmq/issues/194)
+- undefined method `sensitive' for Chef::Resource::Execute [\#191](https://github.com/jjasghar/rabbitmq/issues/191)
+- Chef \>= 11.14.0 requirement [\#183](https://github.com/jjasghar/rabbitmq/issues/183)
+- Change the rabbitmq config file path via cookbook will not take effect [\#157](https://github.com/jjasghar/rabbitmq/issues/157)
+
+**Merged pull requests:**
+
+- 3.4.3 release [\#196](https://github.com/jjasghar/rabbitmq/pull/196) ([jjasghar](https://github.com/jjasghar))
+
+## [v3.7.0](https://github.com/jjasghar/rabbitmq/tree/v3.7.0) (2014-12-18)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.6.0...v3.7.0)
+
+**Closed issues:**
+
+- RabbitMQ should get pinned on Debian based systems [\#178](https://github.com/jjasghar/rabbitmq/issues/178)
+
+**Merged pull requests:**
+
+- Updating Readme [\#187](https://github.com/jjasghar/rabbitmq/pull/187) ([jjasghar](https://github.com/jjasghar))
+- Added Three different os supports [\#186](https://github.com/jjasghar/rabbitmq/pull/186) ([jjasghar](https://github.com/jjasghar))
+- Updating kitchen configs and fixing tests [\#185](https://github.com/jjasghar/rabbitmq/pull/185) ([cheeseplus](https://github.com/cheeseplus))
+- Supports setting rabbitmq config file to a different path [\#184](https://github.com/jjasghar/rabbitmq/pull/184) ([wenchma](https://github.com/wenchma))
+- Better upgrade and distro package installation. [\#180](https://github.com/jjasghar/rabbitmq/pull/180) ([jjasghar](https://github.com/jjasghar))
+
+## [v3.6.0](https://github.com/jjasghar/rabbitmq/tree/v3.6.0) (2014-12-09)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.5.1...v3.6.0)
+
+**Fixed bugs:**
+
+- Foodcritic failures [\#163](https://github.com/jjasghar/rabbitmq/issues/163)
+
+**Closed issues:**
+
+- Restarts after vhost creation [\#179](https://github.com/jjasghar/rabbitmq/issues/179)
+- undefined method `path' for Chef::Resource::Execute [\#175](https://github.com/jjasghar/rabbitmq/issues/175)
+- enabled\_plugins file permissions issue [\#174](https://github.com/jjasghar/rabbitmq/issues/174)
+- rabbitmq doesn't support package upgrade [\#143](https://github.com/jjasghar/rabbitmq/issues/143)
+- chef run fails when using upstart [\#134](https://github.com/jjasghar/rabbitmq/issues/134)
+
+**Merged pull requests:**
+
+- Community plugins [\#161](https://github.com/jjasghar/rabbitmq/pull/161) ([dggc](https://github.com/dggc))
+- Adds policy apply\_to option [\#158](https://github.com/jjasghar/rabbitmq/pull/158) ([hufman](https://github.com/hufman))
+- make config file template source cookbook configurable [\#151](https://github.com/jjasghar/rabbitmq/pull/151) ([mgreensmith](https://github.com/mgreensmith))
+- COOK-4694 Remove service restart for vhost mgmnt [\#121](https://github.com/jjasghar/rabbitmq/pull/121) ([kamaradclimber](https://github.com/kamaradclimber))
+
+## [v3.5.1](https://github.com/jjasghar/rabbitmq/tree/v3.5.1) (2014-12-05)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.5.0...v3.5.1)
+
+**Closed issues:**
+
+- New Rabbitmq release [\#165](https://github.com/jjasghar/rabbitmq/issues/165)
+
+**Merged pull requests:**
+
+- Removing the PATH from the execute resource [\#176](https://github.com/jjasghar/rabbitmq/pull/176) ([jjasghar](https://github.com/jjasghar))
+
+## [v3.5.0](https://github.com/jjasghar/rabbitmq/tree/v3.5.0) (2014-12-02)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.4.0...v3.5.0)
+
+**Fixed bugs:**
+
+- Default for heartbeat is set higher then suggested [\#169](https://github.com/jjasghar/rabbitmq/issues/169)
+
+**Closed issues:**
+
+- Working with queues [\#173](https://github.com/jjasghar/rabbitmq/issues/173)
+- Readme doesn't have 3.4.0 release [\#164](https://github.com/jjasghar/rabbitmq/issues/164)
+- \['rabbitmq'\]\['config'\] should not be hard coding again [\#155](https://github.com/jjasghar/rabbitmq/issues/155)
+- Failed to connect to rabbitmq many times during openstack deployemnt [\#153](https://github.com/jjasghar/rabbitmq/issues/153)
+- Breaks in Chef 10 [\#149](https://github.com/jjasghar/rabbitmq/issues/149)
+- Add sensitive flag for resources that expose passwords in log [\#147](https://github.com/jjasghar/rabbitmq/issues/147)
+- Documentation Fix - Rabbitmq\_policy resource definition incorrect [\#133](https://github.com/jjasghar/rabbitmq/issues/133)
+
+**Merged pull requests:**
+
+- Updates \['rabbitmq'\]\['config'\] to use \['rabbitmq'\]\['config\_root'\] attribute [\#172](https://github.com/jjasghar/rabbitmq/pull/172) ([wenchma](https://github.com/wenchma))
+- Changed the default heartbeat [\#170](https://github.com/jjasghar/rabbitmq/pull/170) ([jjasghar](https://github.com/jjasghar))
+- Chefspec update [\#168](https://github.com/jjasghar/rabbitmq/pull/168) ([jjasghar](https://github.com/jjasghar))
+- Updated to 3.4.2 release [\#166](https://github.com/jjasghar/rabbitmq/pull/166) ([jjasghar](https://github.com/jjasghar))
+- Add raw configuration for rabbitmq.erb [\#123](https://github.com/jjasghar/rabbitmq/pull/123) ([kYann](https://github.com/kYann))
+-  expose the heartbeat configuration parameter [\#87](https://github.com/jjasghar/rabbitmq/pull/87) ([kisoku](https://github.com/kisoku))
+
+## [v3.4.0](https://github.com/jjasghar/rabbitmq/tree/v3.4.0) (2014-11-23)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/pull...v3.4.0)
+
+## [pull](https://github.com/jjasghar/rabbitmq/tree/pull) (2014-11-23)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.3.0...pull)
+
+**Closed issues:**
+
+- Intermittent notifies issue with plugin provider [\#141](https://github.com/jjasghar/rabbitmq/issues/141)
+
+**Merged pull requests:**
+
+- Updated the RuboCop camel case [\#162](https://github.com/jjasghar/rabbitmq/pull/162) ([jjasghar](https://github.com/jjasghar))
+- Make rabbitmq service restart immediately [\#154](https://github.com/jjasghar/rabbitmq/pull/154) ([wenchma](https://github.com/wenchma))
+- Adding switch to make TCP listeners optional [\#150](https://github.com/jjasghar/rabbitmq/pull/150) ([frankwis](https://github.com/frankwis))
+- Add sensitive flag for resources that expose passwords in log [\#148](https://github.com/jjasghar/rabbitmq/pull/148) ([kramvan1](https://github.com/kramvan1))
+- 141 plugin notify fix [\#142](https://github.com/jjasghar/rabbitmq/pull/142) ([caryp](https://github.com/caryp))
+- Fix user\_has\_tag? issue when name and tag are the same [\#140](https://github.com/jjasghar/rabbitmq/pull/140) ([shunwen](https://github.com/shunwen))
+
+## [v3.3.0](https://github.com/jjasghar/rabbitmq/tree/v3.3.0) (2014-08-28)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.2.2...v3.3.0)
+
+**Merged pull requests:**
+
+- test-kitchen updates - porting to serverspec, added cluster suites [\#138](https://github.com/jjasghar/rabbitmq/pull/138) ([kennonkwok](https://github.com/kennonkwok))
+- update rabbitmq\_policy definition to properly enter params [\#132](https://github.com/jjasghar/rabbitmq/pull/132) ([zarry](https://github.com/zarry))
+- Make cluster nodes list more deterministic [\#128](https://github.com/jjasghar/rabbitmq/pull/128) ([dgivens](https://github.com/dgivens))
+- Fix restarts on erlang cookie setting \(again\) [\#120](https://github.com/jjasghar/rabbitmq/pull/120) ([kennonkwok](https://github.com/kennonkwok))
+
+## [v3.2.2](https://github.com/jjasghar/rabbitmq/tree/v3.2.2) (2014-05-08)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.2.0...v3.2.2)
+
+## [v3.2.0](https://github.com/jjasghar/rabbitmq/tree/v3.2.0) (2014-04-24)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.1.0...v3.2.0)
+
+## [v3.1.0](https://github.com/jjasghar/rabbitmq/tree/v3.1.0) (2014-03-28)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.0.4...v3.1.0)
+
+## [v3.0.4](https://github.com/jjasghar/rabbitmq/tree/v3.0.4) (2014-03-19)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.0.2...v3.0.4)
+
+## [v3.0.2](https://github.com/jjasghar/rabbitmq/tree/v3.0.2) (2014-02-28)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.0.0...v3.0.2)
+
+## [v3.0.0](https://github.com/jjasghar/rabbitmq/tree/v3.0.0) (2014-02-28)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v2.4.2...v3.0.0)
+
+## [v2.4.2](https://github.com/jjasghar/rabbitmq/tree/v2.4.2) (2014-02-27)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v2.4.0...v2.4.2)
+
+## [v2.4.0](https://github.com/jjasghar/rabbitmq/tree/v2.4.0) (2014-02-14)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v2.3.2...v2.4.0)
+
+## [v2.3.2](https://github.com/jjasghar/rabbitmq/tree/v2.3.2) (2013-10-08)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v2.3.0...v2.3.2)
+
+**Merged pull requests:**
+
+- \[COOK-3633\] Notify stop, log, and start from the template resource [\#86](https://github.com/jjasghar/rabbitmq/pull/86) ([sethvargo](https://github.com/sethvargo))
+- \[COOK-3606\] remove trailing \n from erlang cookie file contents [\#84](https://github.com/jjasghar/rabbitmq/pull/84) ([portertech](https://github.com/portertech))
+
+## [v2.3.0](https://github.com/jjasghar/rabbitmq/tree/v2.3.0) (2013-08-28)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/2.1.2...v2.3.0)
+
+**Merged pull requests:**
+
+- Don't log RabbitMQ passwords. [\#62](https://github.com/jjasghar/rabbitmq/pull/62) ([jakedavis](https://github.com/jakedavis))
+- Add attribute to bind erlang networking to localhost. [\#46](https://github.com/jjasghar/rabbitmq/pull/46) ([abecciu](https://github.com/abecciu))
+
+## [2.1.2](https://github.com/jjasghar/rabbitmq/tree/2.1.2) (2013-06-10)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/2.1.0...2.1.2)
+
+**Merged pull requests:**
+
+- Cook 3099 [\#60](https://github.com/jjasghar/rabbitmq/pull/60) ([btm](https://github.com/btm))
+- COOK-3099 [\#59](https://github.com/jjasghar/rabbitmq/pull/59) ([stensonb](https://github.com/stensonb))
+- \[COOK-3079\] Use word-boundaries to delimit in permission grep [\#58](https://github.com/jjasghar/rabbitmq/pull/58) ([vhata](https://github.com/vhata))
+- \[COOK-3078\] Escape and quote password before using [\#57](https://github.com/jjasghar/rabbitmq/pull/57) ([vhata](https://github.com/vhata))
+
+## [2.1.0](https://github.com/jjasghar/rabbitmq/tree/2.1.0) (2013-05-28)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/2.0.0...2.1.0)
+
+**Merged pull requests:**
+
+- foodcritic  alerts fixes [\#52](https://github.com/jjasghar/rabbitmq/pull/52) ([ranjib](https://github.com/ranjib))
+- Make clustering work [\#48](https://github.com/jjasghar/rabbitmq/pull/48) ([tchoi80](https://github.com/tchoi80))
+- \[COOK-2575\] add LWRP for setting policies [\#43](https://github.com/jjasghar/rabbitmq/pull/43) ([robertchoi8099](https://github.com/robertchoi8099))
+
+## [2.0.0](https://github.com/jjasghar/rabbitmq/tree/2.0.0) (2013-03-22)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/1.8.0...2.0.0)
+
+**Merged pull requests:**
+
+- \[COOK-2391\] Added support for verify verify\_peer and fail\_if\_no\_peer\_cert true [\#38](https://github.com/jjasghar/rabbitmq/pull/38) ([portertech](https://github.com/portertech))
+- COOK-2211 New way to manage virtualhosts [\#33](https://github.com/jjasghar/rabbitmq/pull/33) ([kamaradclimber](https://github.com/kamaradclimber))
+
+## [1.8.0](https://github.com/jjasghar/rabbitmq/tree/1.8.0) (2013-01-08)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/1.7.0...1.8.0)
+
+**Merged pull requests:**
+
+- add disk\_free\_limit \(mem\_relative\) and vm\_memory\_high\_watermark settings [\#30](https://github.com/jjasghar/rabbitmq/pull/30) ([dcrosta](https://github.com/dcrosta))
+
+## [1.7.0](https://github.com/jjasghar/rabbitmq/tree/1.7.0) (2012-12-17)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/1.6.4...1.7.0)
+
+**Merged pull requests:**
+
+- Cook 1850: Add Oracle support to RabbitMQ [\#26](https://github.com/jjasghar/rabbitmq/pull/26) ([tas50](https://github.com/tas50))
+
+## [1.6.4](https://github.com/jjasghar/rabbitmq/tree/1.6.4) (2012-10-20)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/1.6.2...1.6.4)
+
+**Merged pull requests:**
+
+- COOK-1493 fix system callout to properly determine if plugin is enabled [\#12](https://github.com/jjasghar/rabbitmq/pull/12) ([bignastybryce](https://github.com/bignastybryce))
+
+## [1.6.2](https://github.com/jjasghar/rabbitmq/tree/1.6.2) (2012-09-17)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/1.6.0...1.6.2)
+
+**Merged pull requests:**
+
+- \[COOK-1552\] removed rogue single quote from rabbitmq ssl configuration [\#18](https://github.com/jjasghar/rabbitmq/pull/18) ([portertech](https://github.com/portertech))
+
+## [1.6.0](https://github.com/jjasghar/rabbitmq/tree/1.6.0) (2012-09-14)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/1.5.0...1.6.0)
+
+**Merged pull requests:**
+
+- COOK-1503 Recipe to enable web management console [\#15](https://github.com/jjasghar/rabbitmq/pull/15) ([bignastybryce](https://github.com/bignastybryce))
+- COOK-1501 Allow installation from yum [\#14](https://github.com/jjasghar/rabbitmq/pull/14) ([bignastybryce](https://github.com/bignastybryce))
+- apt cookbook 1.4.4 now does this automatically [\#13](https://github.com/jjasghar/rabbitmq/pull/13) ([mattray](https://github.com/mattray))
+
+## [1.5.0](https://github.com/jjasghar/rabbitmq/tree/1.5.0) (2012-07-12)
+**Merged pull requests:**
+
+- COOK-1386 [\#9](https://github.com/jjasghar/rabbitmq/pull/9) ([mattray](https://github.com/mattray))
+- COOK-1331 adding LWRP for enabling/disabling plugins [\#5](https://github.com/jjasghar/rabbitmq/pull/5) ([jschneiderhan](https://github.com/jschneiderhan))
+- \[COOK-1219\] immediately restart rabbitmq after changing configuration [\#2](https://github.com/jjasghar/rabbitmq/pull/2) ([portertech](https://github.com/portertech))
+- Add support for Amazon Linux \(i.e. "amazon"\) [\#1](https://github.com/jjasghar/rabbitmq/pull/1) ([jordandm](https://github.com/jordandm))
 
 
-## v3.2.0 (2014-04-23)
-- [COOK-4517] - Add cluster partition handling attribute to the cookbook
 
-## v3.1.0 (2014-03-27)
-- [COOK-4459] - added missing dependency package logrotate
-- [COOK-4279] - Addition of ssl_opts in rabbitmq.config when web_console_ssl is enabled
-
-## v3.0.4 (2014-03-19)
-- [COOK-4431] - RPM / DEB package installs now use the rabbit version you specify
-- [COOK-4438] - rabbitmq_policy resource breaks if you use rabbitmq version >= 3.2
-
-
-## v3.0.2 (2014-02-27)
-- [COOK-4384] Add ChefSpec Custom Matchers for LWRPs
-
-
-## v3.0.0 (2014-02-27)
-[COOK-4369] - use_inline_resources
-
-
-## v2.4.2 (2014-02-27)
-[COOK-4280] Upstart script properly waits until the server is started
-
-
-## v2.4.0 (2014-02-14)
-- [COOK-4050] - Do not force failure in rabbitmq_user
-- [COOK-4088] - Update rabbitmq.config for port ranges
-- Updating test harness. Fixing style cops
-
-
-## v2.3.2
-### Bug
-- **[COOK-3678](https://tickets.chef.io/browse/COOK-3678)** - Fix an issue where a RabbitMQ policy resource with vhost arguments emits unexpected restart notification
-- **[COOK-3606](https://tickets.chef.io/browse/COOK-3606)** - Fix erlang cookie comparison
-- **[COOK-3512](https://tickets.chef.io/browse/COOK-3512)** - Define rabbitmq service on SUSE
-
-### New Feature
-- **[COOK-3538](https://tickets.chef.io/browse/COOK-3538)** - Configure web management console to use SSL
-
-
-## v2.3.0
-
-### Improvement
-- **[COOK-3369](https://tickets.chef.io/browse/COOK-3369)** - Add SUSE support
-- **[COOK-3320](https://tickets.chef.io/browse/COOK-3320)** - Configure bind and cluster over a specified addr
-- **[COOK-3138](https://tickets.chef.io/browse/COOK-3138)** - Do not log RabbitMQ password
-- **[COOK-2803](https://tickets.chef.io/browse/COOK-2803)** - Bind erlang networking to localhost (attribute-driven)
-
-## v2.2.0
-### Improvement
-- Greatly expanded Test Kitchen coverage and platform support
-- added support for disabling policies and virtualhosts through attributes
-- added support for using with the erlang::esl recipe
-- [COOK-2705]: Add ability to change tcp_listen_options in config
-- [COOK-2397]: Added upstart support to rabbitmq cookbook
-- [COOK-2830]: Use a notify for server restart, instead of defining a new service
-- [COOK-3384]: Added ability to change user password
-- [COOK-3489]: Add attribute to set open file limit
-
-### Bug
-- [COOK-3011]: Incorrect apt source test causes Chef run to fail on Ubuntu
-- [COOK-3438]: RabbitMQ fixes for Fedora 19
-
-## v2.1.2
-### Improvement
-- [COOK-3099]: policy resource should support optional vhost argument
-
-### Bug
-
-- [COOK-3078]: rabbitmq password is not quoted or escaped on add_user
-- [COOK-3079]: rabbitmq permissions check doesn't match, resulting in non-idempotency
-
-## v2.1.0
-### Bug
-- [COOK-2828]: Rabbitmq Clustering doesn't work properly
-- [COOK-2975]: rabbitmq has foodcritic failures
-
-### New Feature
-- [COOK-2575]: LWRP for setting policies
-
-## v2.0.0
-- Major v2.0 changes are documented in the README.
-- [COOK-2391] - Added support for verify verify_peer and fail_if_no_peer_cert true
-- [COOK-2153] - Fix of user LWRP
-- [COOK-2180] - Plugin management via node attributes
-- [COOK-2201] - Use the proper syntax when using rabbitmq 3.0 instead of 2.x
-- [COOK-2210] - User management via node attributes
-- [COOK-2211] - Virtualhost management via node attributes
-- [COOK-2235] - RabbitMQ bin path isn't necessarily part of PATH for the plugin provider
-- [COOK-2392] - correctly configure a rabbitmq cluster
-- [COOK-2366] - Default recipe doesn't create mnesia dir
-- [COOK-2416] - Add support for clearing tags.
-
-## v1.8.0
-- [COOK-2151] - Add config options for `disk_free_limit` and `vm_memory_high_watermark` via attributes
-
-## v1.7.0
-- [COOK-1850] - oracle linux support
-- [COOK-1873] - add `set_user_tag` action to `rabbitmq_user` LWRP
-- [COOK-1878] - :immediately action causes clustering to fail
-- [COOK-1888] - smartos support
-
-## v1.6.4
-- [COOK-1684] - Unify behavior of debian and rhel clones in the rabbitmq cookbook
-- [COOK-1724] - enable using the distro release of rabbitmq instead of the RabbitMQ.org version
-
-## v1.6.2
-- [COOK-1552] - removed rogue single quote from rabbitmq ssl configuration
-
-## v1.6.0
-- [COOK-1496] - explicitly include the apt recipe
-- [COOK-1501] - Allow user to enable yum-based installation of rabbitmq via an attribute
-- [COOK-1503] - Recipe to enable rabbitmq web management console
-
-## v1.5.0
-This version requires apt cookbook v1.4.4 (reflected in metadata).
-
-- [COOK-1216] - add amazon linux to RHELish platforms
-- [COOK-1217] - specify version, for RHELish platforms
-- [COOK-1219] - immediately restart service on config update
-- [COOK-1317] - fix installation of old version from ubuntu APT repo
-- [COOK-1331] - LWRP for enabling/disabling rabbitmq plugins
-- [COOK-1386] - increment rabbitmq version to 2.8.4
-- [COOK-1432] - resolve foodcritic warnings
-- [COOK-1438] - add fedora to RHELish platforms
-
-## v1.4.1
-- [COOK-1386] - Bumped version to 2.8.4
-- rabbitmq::default now includes erlang::default
-
-## v1.4.0
-- [COOK-911] - Auto clustering support
-
-## v1.3.2
-- [COOK-585] - manage rabbitmq-server service
+\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
