@@ -91,6 +91,12 @@ attribute 'rabbitmq/disabled_users',
   :default => [],
   :type => 'array'
 
+attribute 'rabbitmq/auth_backends',
+  :display_name => 'Auth backends',
+  :description => 'List of auth backends that will be used for authentification',
+  :default => nil,
+  :type => 'array'
+
 attribute 'rabbitmq/enabled_plugins',
   :display_name => 'Enabled plugins',
   :description => 'List all plugins that will be activated',
