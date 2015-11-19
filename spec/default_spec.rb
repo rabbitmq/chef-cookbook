@@ -138,6 +138,22 @@ describe 'rabbitmq::default' do
     end
   end
 
+  describe 'tcp_listen_linger' do
+    it 'default linger option' do
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {true,0}}')
+    end
+
+    it 'false linger option' do
+      node.set['rabbitmq']['tcp_listen_linger'] = false
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {false,0}}')
+    end
+
+    it 'linger option variable timeout' do
+      node.set['rabbitmq']['tcp_listen_linger_timeout'] = 5
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {true,5}}')
+    end
+  end
+
   describe 'suse' do
     let(:runner) { ChefSpec::ServerRunner.new(SUSE_OPTS) }
     let(:node) { runner.node }
