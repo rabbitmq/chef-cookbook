@@ -110,6 +110,8 @@ default['rabbitmq']['tcp_listen_backlog'] = 128
 default['rabbitmq']['tcp_listen_nodelay'] = true
 default['rabbitmq']['tcp_listen_exit_on_close'] = false
 default['rabbitmq']['tcp_listen_keepalive'] = false
+default['rabbitmq']['tcp_listen_linger'] = true
+default['rabbitmq']['tcp_listen_linger_timeout'] = 0
 
 # virtualhosts
 default['rabbitmq']['virtualhosts'] = []
