@@ -1,8 +1,15 @@
 # Change Log
 
-## [v4.5.0](https://github.com/jjasghar/rabbitmq/tree/HEAD) (2015-11-24)
+## [Unreleased](https://github.com/jjasghar/rabbitmq/tree/HEAD)
 
-[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.4.0...HEAD)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.5.0...HEAD)
+
+**Merged pull requests:**
+
+- Fix the missing comma in rabbitmq config [\#324](https://github.com/jjasghar/rabbitmq/pull/324) ([mgosalia](https://github.com/mgosalia))
+
+## [v4.5.0](https://github.com/jjasghar/rabbitmq/tree/v4.5.0) (2015-11-24)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.4.0...v4.5.0)
 
 **Closed issues:**
 
@@ -21,6 +28,7 @@
 
 **Merged pull requests:**
 
+- 4.5.0 [\#323](https://github.com/jjasghar/rabbitmq/pull/323) ([jjasghar](https://github.com/jjasghar))
 - Enable chef setting for tcp\_listen linger option [\#321](https://github.com/jjasghar/rabbitmq/pull/321) ([mgosalia](https://github.com/mgosalia))
 - Readme improvements [\#318](https://github.com/jjasghar/rabbitmq/pull/318) ([Fitzsimmons](https://github.com/Fitzsimmons))
 - Allow the partition handling to be set even if we are not using auto clustering [\#307](https://github.com/jjasghar/rabbitmq/pull/307) ([joshgarnett](https://github.com/joshgarnett))
