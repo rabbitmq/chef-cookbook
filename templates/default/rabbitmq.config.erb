@@ -49,7 +49,7 @@
                                   {nodelay,<%= node['rabbitmq']['tcp_listen_nodelay'] %>},
                                   {exit_on_close,<%= node['rabbitmq']['tcp_listen_exit_on_close'] %>},
                                   {keepalive,<%= node['rabbitmq']['tcp_listen_keepalive'] %>},
-                                  {linger, {<%= node['rabbitmq']['tcp_listen_linger'] %>,<%= node['rabbitmq']['tcp_listen_linger_timeout'] %>}}]}
+                                  {linger, {<%= node['rabbitmq']['tcp_listen_linger'] %>,<%= node['rabbitmq']['tcp_listen_linger_timeout'] %>}}]},
 <% else -%>
    {tcp_listeners, []},
 <% end %>
