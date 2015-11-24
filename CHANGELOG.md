@@ -4,9 +4,26 @@
 
 [Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.4.0...HEAD)
 
+**Closed issues:**
+
+- Upgrade to "-3\_all.deb" [\#311](https://github.com/jjasghar/rabbitmq/issues/311)
+- Changelog missing entries for 4.2.1 and 4.2.2 [\#306](https://github.com/jjasghar/rabbitmq/issues/306)
+- Logrotate Error on Ubuntu 14.04 [\#283](https://github.com/jjasghar/rabbitmq/issues/283)
+- 'node\_name' method bug in cluster.rb recipe [\#271](https://github.com/jjasghar/rabbitmq/issues/271)
+- RabbitMQ 3.5.2  [\#266](https://github.com/jjasghar/rabbitmq/issues/266)
+- Error for clustering cluster\_nodes use with cluster.rb [\#265](https://github.com/jjasghar/rabbitmq/issues/265)
+- Recreate kitchen tests for Clustering [\#258](https://github.com/jjasghar/rabbitmq/issues/258)
+- CHEF-3694 warnings [\#221](https://github.com/jjasghar/rabbitmq/issues/221)
+- Not able to clear a policy which was created in a vhost [\#204](https://github.com/jjasghar/rabbitmq/issues/204)
+- RabbitMQ Auto-Clustering [\#156](https://github.com/jjasghar/rabbitmq/issues/156)
+- Add missing attribute `rabbitmq.hipe\_compile` [\#146](https://github.com/jjasghar/rabbitmq/issues/146)
+- nodes not joining cluster  [\#125](https://github.com/jjasghar/rabbitmq/issues/125)
+
 **Merged pull requests:**
 
+- Enable chef setting for tcp\_listen linger option [\#321](https://github.com/jjasghar/rabbitmq/pull/321) ([mgosalia](https://github.com/mgosalia))
 - Readme improvements [\#318](https://github.com/jjasghar/rabbitmq/pull/318) ([Fitzsimmons](https://github.com/Fitzsimmons))
+- Allow the partition handling to be set even if we are not using auto clustering [\#307](https://github.com/jjasghar/rabbitmq/pull/307) ([joshgarnett](https://github.com/joshgarnett))
 
 ## [v4.4.0](https://github.com/jjasghar/rabbitmq/tree/v4.4.0) (2015-10-12)
 [Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.3.2...v4.4.0)
