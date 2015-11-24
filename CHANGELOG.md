@@ -1,6 +1,6 @@
 # Change Log
 
-## [v4.5.0](https://github.com/jjasghar/rabbitmq/tree/HEAD)
+## [v4.5.0](https://github.com/jjasghar/rabbitmq/tree/HEAD) (2015-11-24)
 
 [Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.4.0...HEAD)
 
