@@ -57,8 +57,10 @@ when 'debian'
       source deb_package
       action :create_if_missing
     end
-    dpkg_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" do
-      action :install
+    package 'rabbitmq-server' do
+      provider Chef::Provider::Package::Dpkg
+      source ::File.join(Chef::Config[:file_cache_path], node['rabbitmq']['deb_package'])
+      action :upgrade
     end
   end
 
