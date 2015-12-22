@@ -13,6 +13,7 @@ recipe 'rabbitmq::user_management', 'Manage users with node attributes'
 depends 'erlang', '~> 1.5.0'
 depends 'yum-epel'
 depends 'yum-erlang_solutions'
+depends 'dpkg_autostart'
 
 supports 'debian'
 supports 'ubuntu'
