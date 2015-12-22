@@ -185,16 +185,6 @@ describe 'rabbitmq::default' do
     include_context 'rabbitmq-stubs'
 
     # ~FC005 -- we should ignore this during compile time
-    it 'should autostart via the exit 101' do
-      expect(chef_run).to run_execute('disable auto-start 1/2')
-    end
-
-    # ~FC005 -- we should ignore this during compile time
-    it 'should disable the autostart 2/2' do
-      expect(chef_run).to run_execute('disable auto-start 2/2')
-    end
-
-    # ~FC005 -- we should ignore this during compile time
     it 'should install the logrotate package' do
       expect(chef_run).to install_package('logrotate')
     end
@@ -204,7 +194,7 @@ describe 'rabbitmq::default' do
     end
 
     it 'installs the rabbitmq-server deb_package with the default action' do
-      expect(chef_run).to install_dpkg_package('/tmp/rabbitmq-server_3.5.6-1_all.deb')
+      expect(chef_run).to upgrade_package('rabbitmq-server')
     end
 
     it 'creates a template rabbitmq-server with attributes' do
@@ -213,10 +203,6 @@ describe 'rabbitmq::default' do
         :group => 'root',
         :source => 'default.rabbitmq-server.erb',
         :mode => 00644)
-    end
-
-    it 'should undo the service disable hack' do
-      expect(chef_run).to run_execute('undo service disable hack')
     end
 
     describe 'uses distro version' do
