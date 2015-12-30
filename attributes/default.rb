@@ -145,13 +145,13 @@ end
 default['rabbitmq']['heartbeat'] = 580
 
 # Example HA policies
-default['rabbitmq']['policies']['ha-all']['pattern'] = '^(?!amq\\.).*'
-default['rabbitmq']['policies']['ha-all']['params'] = { 'ha-mode' => 'all' }
-default['rabbitmq']['policies']['ha-all']['priority'] = 0
+# default['rabbitmq']['policies']['ha-all']['pattern'] = '^(?!amq\\.).*'
+# default['rabbitmq']['policies']['ha-all']['params'] = { 'ha-mode' => 'all' }
+# default['rabbitmq']['policies']['ha-all']['priority'] = 0
 
-default['rabbitmq']['policies']['ha-two']['pattern'] = "^two\."
-default['rabbitmq']['policies']['ha-two']['params'] = { 'ha-mode' => 'exactly', 'ha-params' => 2 }
-default['rabbitmq']['policies']['ha-two']['priority'] = 1
+# default['rabbitmq']['policies']['ha-two']['pattern'] = "^two\."
+# default['rabbitmq']['policies']['ha-two']['params'] = { 'ha-mode' => 'exactly', 'ha-params' => 2 }
+# default['rabbitmq']['policies']['ha-two']['priority'] = 1
 
 default['rabbitmq']['disabled_policies'] = []
 
