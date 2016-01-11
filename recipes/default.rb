@@ -57,12 +57,12 @@ when 'debian'
     end
   else
     # we need to download the package
-    deb_package = "#{node['rabbitmq']['deb_package_url']}#{node['rabbitmq']['deb_package']}" % { version: node['rabbitmq']['version'] }
-    remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" % { version: node['rabbitmq']['version'] } do
+    deb_package = "#{node['rabbitmq']['deb_package_url']}#{node['rabbitmq']['deb_package']}" % { :version => node['rabbitmq']['version'] }
+    remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" % { :version => node['rabbitmq']['version'] } do
       source deb_package
       action :create_if_missing
     end
-    dpkg_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" % { version: node['rabbitmq']['version'] } do
+    dpkg_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" % { :version => node['rabbitmq']['version'] } do
       action :install
     end
   end
@@ -112,13 +112,13 @@ when 'rhel', 'fedora'
     end
   else
     # We need to download the rpm
-    rpm_package = "#{node['rabbitmq']['rpm_package_url']}#{node['rabbitmq']['rpm_package']}" % { version: node['rabbitmq']['version'] }
+    rpm_package = "#{node['rabbitmq']['rpm_package_url']}#{node['rabbitmq']['rpm_package']}" % { :version => node['rabbitmq']['version'] }
 
-    remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}" % { version: node['rabbitmq']['version'] } do
+    remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}" % { :version => node['rabbitmq']['version'] } do
       source rpm_package
       action :create_if_missing
     end
-    rpm_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}" % { version: node['rabbitmq']['version'] }
+    rpm_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}" % { :version => node['rabbitmq']['version'] }
   end
 
 when 'suse'
