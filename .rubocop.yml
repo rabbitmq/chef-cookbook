@@ -18,3 +18,7 @@ MethodLength:
 
 Style/FileName:
   Enabled: false
+
+Style/FormatString:
+  Exclude:
+    - 'recipes/default.rb'
