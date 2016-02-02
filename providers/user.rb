@@ -20,7 +20,7 @@
 use_inline_resources
 
 def user_exists?(name)
-  cmd = "rabbitmqctl -q list_users |grep '^#{name}\\b'"
+  cmd = "rabbitmqctl -q list_users |grep '^#{name}\\s'"
   cmd = Mixlib::ShellOut.new(cmd)
   cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
