@@ -139,8 +139,8 @@ def joined_cluster?(node_name, cluster_status)
 end
 
 # Join cluster.
-def join_cluster(cluster_name)
-  cmd = "rabbitmqctl join_cluster --ram #{cluster_name}"
+def join_cluster(cluster_name, type)
+  cmd = "rabbitmqctl join_cluster #{type == 'ram' ? '--ram' : ''} #{cluster_name}".squeeze(' ')
   Chef::Log.debug("[rabbitmq_cluster] Executing #{cmd}")
   cmd = get_shellout(cmd)
   cmd.run_command
@@ -195,6 +195,7 @@ action :join do
   var_cluster_status = cluster_status
   var_node_name = node_name
   var_node_name_to_join = parse_cluster_nodes_string(new_resource.cluster_nodes).first['name']
+  var_node_type = parse_cluster_nodes_string(new_resource.cluster_nodes).first['type']
 
   if var_node_name == var_node_name_to_join
     Chef::Log.warn('[rabbitmq_cluster] Trying to join cluster node itself. Joining cluster will be skipped.')
@@ -202,9 +203,9 @@ action :join do
     Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{current_cluster_name(var_cluster_status)}. Joining cluster will be skipped.")
   else
     run_rabbitmqctl('stop_app')
-    join_cluster(var_node_name_to_join)
+    join_cluster(var_node_name_to_join, var_node_type)
     run_rabbitmqctl('start_app')
-    Chef::Log.info("[rabbitmq_cluster] Node #{var_node_name} joined in #{var_node_name_to_join}")
+    Chef::Log.info("[rabbitmq_cluster] Node #{var_node_name} joined in #{var_node_name_to_join} with type #{var_node_type}")
     Chef::Log.info(cluster_status)
   end
 end

@@ -18,3 +18,6 @@ MethodLength:
 
 Style/FileName:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 16
