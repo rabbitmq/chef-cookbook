@@ -171,7 +171,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
 end
 
 template "#{node['rabbitmq']['config']}.config" do
-  sensitive true
+  sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
   source 'rabbitmq.config.erb'
   cookbook node['rabbitmq']['config_template_cookbook']
   owner 'root'
