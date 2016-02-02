@@ -1,8 +1,22 @@
 # Change Log
 
-## [Unreleased](https://github.com/jjasghar/rabbitmq/tree/HEAD)
+## [v4.6.0](https://github.com/jjasghar/rabbitmq/tree/v4.6.0) (2016-02-02)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.5.1...v4.6.0)
 
-[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.5.0...HEAD)
+**Closed issues:**
+
+- Problems getting erlang 1.5.x version on Ubuntu 14.04 [\#336](https://github.com/jjasghar/rabbitmq/issues/336)
+- node type is being ignored when joining a cluster [\#326](https://github.com/jjasghar/rabbitmq/issues/326)
+- Chef restarts RabbitMQ because it always set the permissions to all the users when it runs [\#197](https://github.com/jjasghar/rabbitmq/issues/197)
+
+**Merged pull requests:**
+
+- Fix user grep command to match whitespace [\#331](https://github.com/jjasghar/rabbitmq/pull/331) ([gerr1t](https://github.com/gerr1t))
+- fix hardcoded --ram node type for cluster join [\#327](https://github.com/jjasghar/rabbitmq/pull/327) ([scalp42](https://github.com/scalp42))
+- NO-REF Check chef client version before calling sensitive [\#317](https://github.com/jjasghar/rabbitmq/pull/317) ([XiangYao](https://github.com/XiangYao))
+
+## [v4.5.1](https://github.com/jjasghar/rabbitmq/tree/v4.5.1) (2015-11-24)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.5.0...v4.5.1)
 
 **Merged pull requests:**
 
