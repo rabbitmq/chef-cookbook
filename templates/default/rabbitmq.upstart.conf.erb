@@ -19,7 +19,7 @@ pre-start script
     fi
 end script
 
-exec /usr/sbin/rabbitmq-server > /var/log/rabbitmq/startup_log \
-                              2> /var/log/rabbitmq/startup_err
+exec /usr/sbin/rabbitmq-server > /var/log/rabbitmq/startup.log \
+                              2> /var/log/rabbitmq/startup_err.log
 
 post-start exec /usr/sbin/rabbitmqctl wait $RABBITMQ_PID_FILE >/dev/null 2>&1
