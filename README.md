@@ -21,7 +21,7 @@ The release was tested with (rabbitmq.com/distro version), from the [kitchen.yml
 ### default
 Installs `rabbitmq-server` from RabbitMQ.com via direct download of the installation package or using the distribution version. Depending on your distribution, the provided version may be quite old so they are disabled by default. If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`. You may override the download URL attribute `['rabbitmq']['package']` if you wish to use a local mirror.
 
-The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['cluster']` attribute to `true`, `['rabbitmq']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
+The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['clustering']['enabled']` attribute to `true`, `['rabbitmq']['clustering']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
 ```ruby
@@ -81,7 +81,7 @@ Configure the cluster between the nodes in the `node['rabbitmq']['clustering']['
 * Manual clustering : Configure the cluster by executing `rabbitmqctl join_cluster` command.
 
 #### Attributes that related to clustering
-* `node['rabbitmq']['cluster']` : Default decision flag of clustering
+* `node['rabbitmq']['clustering']['enable']` : Default decision flag of clustering
 * `node['rabbitmq']['erlang_cookie']` : Same erlang cookie is required for the cluster
 * `node['rabbitmq']['clustering']['use_auto_clustering']` : Default is false. (manual clustering is default)
 * `node['rabbitmq']['clustering']['cluster_name']` : Name of cluster. default value is nil. In case of nil or '' is set for `cluster_name`, first node name in `node['rabbitmq']['clustering']['cluster_nodes']` attribute will be set for manual clustering. for the auto clustering, one of the node name will be set.
@@ -89,9 +89,9 @@ Configure the cluster between the nodes in the `node['rabbitmq']['clustering']['
 
 Attributes example
 ```ruby
-node['rabbitmq']['cluster'] = true
+node['rabbitmq']['clustering']['enable'] = true
 node['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
-node['rabbitmq']['cluster_partition_handling'] = 'ignore'
+node['rabbitmq']['clustering']['cluster_partition_handling'] = 'ignore'
 node['rabbitmq']['clustering']['use_auto_clustering'] = false
 node['rabbitmq']['clustering']['cluster_name'] = 'seoul_tokyo_newyork'
 node['rabbitmq']['clustering']['cluster_nodes'] = [

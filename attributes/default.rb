@@ -16,9 +16,9 @@ default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-R16B03-1.noarch.r
 default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/'
 
 # being nil, the rabbitmq defaults will be used
-default['rabbitmq']['nodename']  = nil
-default['rabbitmq']['address']  = nil
-default['rabbitmq']['port']  = nil
+default['rabbitmq']['nodename'] = nil
+default['rabbitmq']['address'] = nil
+default['rabbitmq']['port'] = nil
 default['rabbitmq']['config'] = nil
 default['rabbitmq']['logdir'] = nil
 default['rabbitmq']['server_additional_erl_args'] = nil
@@ -33,6 +33,7 @@ default['rabbitmq']['manage_service'] = true
 default['rabbitmq']['config_root'] = '/etc/rabbitmq'
 default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq"
 default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
+default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 # override this if you wish to provide `rabbitmq.config.erb` in your own wrapper cookbook
 default['rabbitmq']['config_template_cookbook'] = 'rabbitmq'
 
@@ -54,10 +55,8 @@ default['rabbitmq']['kernel']['inet_dist_listen_max'] = nil
 default['rabbitmq']['kernel']['inet_dist_use_interface'] = nil
 
 # clustering
-default['rabbitmq']['cluster'] = false
-default['rabbitmq']['cluster_disk_nodes'] = []
-default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
-default['rabbitmq']['cluster_partition_handling'] = 'ignore'
+default['rabbitmq']['clustering']['enable'] = false
+default['rabbitmq']['clustering']['cluster_partition_handling'] = 'ignore'
 
 default['rabbitmq']['clustering']['use_auto_clustering'] = false
 default['rabbitmq']['clustering']['cluster_name'] = nil
@@ -105,7 +104,7 @@ default['rabbitmq']['web_console_ssl_port'] = 15_671
 # tcp listen options
 default['rabbitmq']['tcp_listen'] = true
 default['rabbitmq']['tcp_listen_packet'] = 'raw'
-default['rabbitmq']['tcp_listen_reuseaddr']  = true
+default['rabbitmq']['tcp_listen_reuseaddr'] = true
 default['rabbitmq']['tcp_listen_backlog'] = 128
 default['rabbitmq']['tcp_listen_nodelay'] = true
 default['rabbitmq']['tcp_listen_exit_on_close'] = false

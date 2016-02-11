@@ -23,13 +23,11 @@
   {ssl, [{versions, [<%= @ssl_versions %>]}]},
 <% end %>
   {rabbit, [
-<% if node['rabbitmq']['cluster'] && node['rabbitmq']['cluster_disk_nodes'] -%>
-    <%if node['rabbitmq']['clustering']['use_auto_clustering']-%>
-    {cluster_nodes, {[<%= node['rabbitmq']['clustering']['cluster_nodes'].map { |n| "'#{n['name']}'"}.join(',') %>], disc}},
+<% if node['rabbitmq']['clustering']['enable'] -%>
+    <%if node['rabbitmq']['clustering']['use_auto_clustering'] -%>
+    {cluster_nodes, {[<%= node['rabbitmq']['clustering']['cluster_nodes'].map { |n| "'#{n}'"}.join(',') %>], disc}},
     <% end %>
-    <%if node['rabbitmq']['clustering']['cluster_partition_handling'] != 'ignore' -%>
-    {cluster_partition_handling,<%= node['rabbitmq']['cluster_partition_handling'] %>},
-    <% end %>
+    {cluster_partition_handling,<%= node['rabbitmq']['clustering']['cluster_partition_handling'] %>},
 <% end %>
 <% if node['rabbitmq']['ssl'] -%>
     {ssl_listeners, [<%= node['rabbitmq']['ssl_port'] %>]},

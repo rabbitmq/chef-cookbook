@@ -31,7 +31,7 @@ node['rabbitmq']['enabled_users'].each do |user|
     tag user['tag']
     action :set_tags
   end
-  user['rights'].each  do |r|
+  user['rights'].each do |r|
     rabbitmq_user user['name'] do
       vhost r['vhost']
       permissions "#{r['conf']} #{r['write']} #{r['read']}"

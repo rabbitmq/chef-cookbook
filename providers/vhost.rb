@@ -45,7 +45,7 @@ end
 
 action :delete do
   if vhost_exists?(new_resource.vhost)
-    cmd =  "rabbitmqctl delete_vhost #{new_resource.vhost}"
+    cmd = "rabbitmqctl delete_vhost #{new_resource.vhost}"
     execute cmd do
       Chef::Log.debug "rabbitmq_vhost_delete: #{cmd}"
       Chef::Log.info "Deleting RabbitMQ vhost '#{new_resource.vhost}'."

@@ -22,7 +22,7 @@ module Opscode
     # This method does some of the yuckiness of formatting parameters properly
     # for rendering into the rabbit.config template.
     def format_kernel_parameters  # rubocop:disable all
-      rendered = []   # rubocop:enable all
+      rendered = [] # rubocop:enable all
       kernel = node['rabbitmq']['kernel'].dup
 
       # This parameter is special and needs commas instead of periods.
