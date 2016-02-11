@@ -90,6 +90,15 @@ when 'debian'
       mode 0644
       variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
     end
+
+    template '/etc/logrotate.d/rabbitmq-server' do
+      source 'logrotate.rabbitmq-server.erb'
+      owner 'root'
+      group 'root'
+      mode '0644'
+    end
+    
+
   end
 
   execute 'undo service disable hack' do
