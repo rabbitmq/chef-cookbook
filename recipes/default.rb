@@ -187,12 +187,12 @@ template "/etc/default/#{node['rabbitmq']['service_name']}" do
 end
 
 if File.exist?(node['rabbitmq']['erlang_cookie_path']) && File.readable?((node['rabbitmq']['erlang_cookie_path']))
-  existing_erlang_key =  File.read(node['rabbitmq']['erlang_cookie_path']).strip
+  existing_erlang_key = File.read(node['rabbitmq']['erlang_cookie_path']).strip
 else
   existing_erlang_key = ''
 end
 
-if node['rabbitmq']['cluster'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
+if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
   log "stop #{node['rabbitmq']['service_name']} to change erlang cookie" do
     notifies :stop, "service[#{node['rabbitmq']['service_name']}]", :immediately
   end

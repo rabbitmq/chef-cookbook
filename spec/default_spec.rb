@@ -60,11 +60,12 @@ describe 'rabbitmq::default' do
   end
 
   it 'should create the directory /var/lib/rabbitmq/mnesia' do
-    expect(chef_run).to create_directory('/var/lib/rabbitmq/mnesia').with(
-      :user => 'rabbitmq',
-      :group => 'rabbitmq',
-      :mode => '775'
-   )
+    expect(chef_run).to create_directory('/var/lib/rabbitmq/mnesia')
+      .with(
+        :user => 'rabbitmq',
+        :group => 'rabbitmq',
+        :mode => '775'
+      )
   end
 
   it 'does not enable a rabbitmq service when manage_service is false' do
