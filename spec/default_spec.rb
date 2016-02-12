@@ -247,7 +247,7 @@ describe 'rabbitmq::default' do
       end
 
       it 'should create an upstart config' do
-        expect(chef_run).to create_template('/etc/init/#{chef_run.node['rabbitmq']['service_name']}.conf').with(
+        expect(chef_run).to create_template("/etc/init/#{ chef_run.node['rabbitmq']['service_name'] }.conf").with(
           :source => 'rabbitmq.upstart.conf.erb',
           :owner => 'root',
           :group => 'root',
@@ -256,7 +256,7 @@ describe 'rabbitmq::default' do
       end
 
       it 'should create a logrotate config' do
-        expect(chef_run).to create_template('/etc/logrotate.d/#{chef_run.node['rabbitmq']['service_name']}').with(
+        expect(chef_run).to create_template("/etc/logrotate.d/#{ chef_run.node['rabbitmq']['service_name'] }").with(
           :source => 'logrotate.rabbitmq-server.erb',
           :owner => 'root',
           :group => 'root',

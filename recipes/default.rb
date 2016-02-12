@@ -28,128 +28,128 @@ include_recipe 'erlang'
 
 ## Install the package
 case node['platform_family']
-  when 'debian'
+when 'debian'
 
-    template '/etc/apt/apt.conf.d/90forceyes' do
-      source '90forceyes.erb'
-      owner 'root'
-      group 'root'
-      mode '0644'
-    end
+  template '/etc/apt/apt.conf.d/90forceyes' do
+    source '90forceyes.erb'
+    owner 'root'
+    group 'root'
+    mode '0644'
+  end
 
-    # logrotate is a package dependency of rabbitmq-server
-    package 'logrotate'
+  # logrotate is a package dependency of rabbitmq-server
+  package 'logrotate'
 
-    # dpkg, imma let you finish but don't start services automatically
-    # https://jpetazzo.github.io/2013/10/06/policy-rc-d-do-not-start-services-automatically/
-    execute 'disable auto-start 1/2' do
-      command 'echo exit 101 > /usr/sbin/policy-rc.d'
-    end
+  # dpkg, imma let you finish but don't start services automatically
+  # https://jpetazzo.github.io/2013/10/06/policy-rc-d-do-not-start-services-automatically/
+  execute 'disable auto-start 1/2' do
+    command 'echo exit 101 > /usr/sbin/policy-rc.d'
+  end
 
-    execute 'disable auto-start 2/2' do
-      command 'chmod +x /usr/sbin/policy-rc.d'
-    end
+  execute 'disable auto-start 2/2' do
+    command 'chmod +x /usr/sbin/policy-rc.d'
+  end
 
-    if node['rabbitmq']['use_distro_version']
-      package 'rabbitmq-server' do
-        action :install
-        version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
-      end
-    else
-      # we need to download the package
-      deb_package = "#{node['rabbitmq']['deb_package_url']}#{node['rabbitmq']['deb_package']}"
-      remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" do
-        source deb_package
-        action :create_if_missing
-      end
-      dpkg_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" do
-        action :install
-      end
-    end
-
-    # Configure job control
-    if node['rabbitmq']['job_control'] == 'upstart' && node['rabbitmq']['manage_service']
-      # We start with stock init.d, remove it if we're not using init.d, otherwise leave it alone
-      service node['rabbitmq']['service_name'] do
-        action [:stop]
-        only_if { File.exist?('/etc/init.d/rabbitmq-server') }
-      end
-
-      execute 'remove rabbitmq init.d command' do
-        command 'update-rc.d -f rabbitmq-server remove'
-      end
-
-      file '/etc/init.d/rabbitmq-server' do
-        action :delete
-      end
-
-      template "/etc/init/#{node['rabbitmq']['service_name']}.conf" do
-        source 'rabbitmq.upstart.conf.erb'
-        owner 'root'
-        group 'root'
-        mode 0644
-        variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
-      end
-
-      template '/etc/logrotate.d/rabbitmq-server' do
-        source 'logrotate.rabbitmq-server.erb'
-        owner 'root'
-        group 'root'
-        mode '0644'
-      end
-    end
-
-    execute 'undo service disable hack' do
-      command 'echo exit 0 > /usr/sbin/policy-rc.d'
-    end
-
-  when 'rhel', 'fedora'
-    # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
-    if node['erlang']['install_method'] == 'esl'
-      remote_file "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm" do
-        source "#{node['rabbitmq']['esl-erlang_package_url']}#{node['rabbitmq']['esl-erlang_package']}"
-      end
-      rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
-    end
-
-    if node['rabbitmq']['use_distro_version']
-      package 'rabbitmq-server' do
-        action :install
-        version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
-      end
-    else
-      # We need to download the rpm
-      rpm_package = "#{node['rabbitmq']['rpm_package_url']}#{node['rabbitmq']['rpm_package']}"
-
-      remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}" do
-        source rpm_package
-        action :create_if_missing
-      end
-      rpm_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}"
-    end
-
-  when 'suse'
-    # rabbitmq-server-plugins needs to be first so they both get installed
-    # from the right repository. Otherwise, zypper will stop and ask for a
-    # vendor change.
-    package 'rabbitmq-server-plugins' do
-      action :install
-      version node['rabbitmq']['version']
-    end
+  if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
       action :install
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
+  else
+    # we need to download the package
+    deb_package = "#{node['rabbitmq']['deb_package_url']}#{node['rabbitmq']['deb_package']}"
+    remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" do
+      source deb_package
+      action :create_if_missing
+    end
+    dpkg_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" do
+      action :install
+    end
+  end
 
-  when 'smartos'
-    package 'rabbitmq'do
+  # Configure job control
+  if node['rabbitmq']['job_control'] == 'upstart' && node['rabbitmq']['manage_service']
+    # We start with stock init.d, remove it if we're not using init.d, otherwise leave it alone
+    service node['rabbitmq']['service_name'] do
+      action [:stop]
+      only_if { File.exist?('/etc/init.d/rabbitmq-server') }
+    end
+
+    execute 'remove rabbitmq init.d command' do
+      command 'update-rc.d -f rabbitmq-server remove'
+    end
+
+    file '/etc/init.d/rabbitmq-server' do
+      action :delete
+    end
+
+    template "/etc/init/#{node['rabbitmq']['service_name']}.conf" do
+      source 'rabbitmq.upstart.conf.erb'
+      owner 'root'
+      group 'root'
+      mode 0644
+      variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
+    end
+
+    template '/etc/logrotate.d/rabbitmq-server' do
+      source 'logrotate.rabbitmq-server.erb'
+      owner 'root'
+      group 'root'
+      mode '0644'
+    end
+  end
+
+  execute 'undo service disable hack' do
+    command 'echo exit 0 > /usr/sbin/policy-rc.d'
+  end
+
+when 'rhel', 'fedora'
+  # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
+  if node['erlang']['install_method'] == 'esl'
+    remote_file "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm" do
+      source "#{node['rabbitmq']['esl-erlang_package_url']}#{node['rabbitmq']['esl-erlang_package']}"
+    end
+    rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
+  end
+
+  if node['rabbitmq']['use_distro_version']
+    package 'rabbitmq-server' do
       action :install
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
+  else
+    # We need to download the rpm
+    rpm_package = "#{node['rabbitmq']['rpm_package_url']}#{node['rabbitmq']['rpm_package']}"
 
-    service 'epmd' do
-      action :start
+    remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}" do
+      source rpm_package
+      action :create_if_missing
     end
+    rpm_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}"
+  end
+
+when 'suse'
+  # rabbitmq-server-plugins needs to be first so they both get installed
+  # from the right repository. Otherwise, zypper will stop and ask for a
+  # vendor change.
+  package 'rabbitmq-server-plugins' do
+    action :install
+    version node['rabbitmq']['version']
+  end
+  package 'rabbitmq-server' do
+    action :install
+    version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
+  end
+
+when 'smartos'
+  package 'rabbitmq'do
+    action :install
+    version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
+  end
+
+  service 'epmd' do
+    action :start
+  end
 end
 
 if node['rabbitmq']['logdir']
