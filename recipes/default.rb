@@ -91,11 +91,15 @@ when 'debian'
       variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
     end
 
-    template '/etc/logrotate.d/rabbitmq-server' do
-      source 'logrotate.rabbitmq-server.erb'
-      owner 'root'
-      group 'root'
-      mode '0644'
+    logrotate_app 'rabbitmq-server' do
+      cookbook "logrotate"
+      path "/var/log/rabbitmq/*.log"
+      frequency "weekly"
+      rotate node['rabbitmq']['logrotate']['rotate_count']
+      create "644 root adm"
+      options ['compress', 'delaycompress', 'notifempty', 'missingok']
+      sharedscripts true
+      postrotate ["/usr/sbin/rabbitmqctl -q rotate_logs > /dev/null"]
     end
   end
 

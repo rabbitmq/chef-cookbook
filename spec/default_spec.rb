@@ -239,7 +239,6 @@ describe 'rabbitmq::default' do
       end
     end
 
-
     describe 'upstart job control' do
       before do
         node.set['rabbitmq']['job_control'] = 'upstart'
@@ -263,9 +262,7 @@ describe 'rabbitmq::default' do
           :mode => 00644
           )
       end
-    
     end
-
   end
 
   describe 'redhat' do
@@ -375,8 +372,4 @@ describe 'rabbitmq::default' do
       end
     end
   end
-
-
-
-
 end

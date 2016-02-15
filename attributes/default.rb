@@ -158,3 +158,8 @@ default['rabbitmq']['disabled_policies'] = []
 # conf
 default['rabbitmq']['conf'] = {}
 default['rabbitmq']['additional_rabbit_configs'] = {}
+
+
+# logrotate
+default['rabbitmq']['logrotate']['rotate_count'] = 20
+
