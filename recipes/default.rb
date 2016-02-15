@@ -92,14 +92,14 @@ when 'debian'
     end
 
     logrotate_app 'rabbitmq-server' do
-      cookbook "logrotate"
-      path "/var/log/rabbitmq/*.log"
-      frequency "weekly"
+      cookbook 'logrotate'
+      path '/var/log/rabbitmq/*.log'
+      frequency 'weekly'
       rotate node['rabbitmq']['logrotate']['rotate_count']
-      create "644 root adm"
-      options ['compress', 'delaycompress', 'notifempty', 'missingok']
+      create '644 root adm'
+      options %w(compress delaycompress notifempty missingok)
       sharedscripts true
-      postrotate ["/usr/sbin/rabbitmqctl -q rotate_logs > /dev/null"]
+      postrotate ['/usr/sbin/rabbitmqctl -q rotate_logs > /dev/null']
     end
   end
 
