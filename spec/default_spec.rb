@@ -259,7 +259,7 @@ describe 'rabbitmq::default' do
           :source => 'logrotate.erb',
           :owner => 'root',
           :group => 'root',
-          :mode => 420
+          :mode => '0440'
           )
       end
     end
