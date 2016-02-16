@@ -256,10 +256,10 @@ describe 'rabbitmq::default' do
 
       it 'should create a logrotate config' do
         expect(chef_run).to create_template("/etc/logrotate.d/#{ chef_run.node['rabbitmq']['service_name'] }").with(
-          :source => 'logrotate.rabbitmq-server.erb',
+          :source => 'logrotate.erb',
           :owner => 'root',
           :group => 'root',
-          :mode => 00644
+          :mode => 420
           )
       end
     end
