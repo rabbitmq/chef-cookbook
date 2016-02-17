@@ -61,9 +61,11 @@ end
 action :clear do
   if parameter_exists?(new_resource.vhost, new_resource.parameter)
     parameter = "#{new_resource.component} #{new_resource.parameter}"
-
+    
+    cmd = "rabbitmqctl clear_parameter #{parameter}"
+    cmd << " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
     execute "clear_parameter #{parameter}" do
-      command "rabbitmqctl clear_parameter #{parameter}"
+      command cmd
     end
 
     new_resource.updated_by_last_action(true)
