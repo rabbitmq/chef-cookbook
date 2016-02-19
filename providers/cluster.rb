@@ -138,6 +138,10 @@ def joined_cluster?(node_name, cluster_status)
   (running_nodes(cluster_status) || '').include?(node_name)
 end
 
+# Custom exception for join errors
+class JoinError < StandardError
+end
+
 # Join cluster.
 def join_cluster(cluster_name, type)
   cmd = "rabbitmqctl join_cluster #{type == 'ram' ? '--ram' : ''} #{cluster_name}".squeeze(' ')
@@ -155,7 +159,8 @@ def join_cluster(cluster_name, type)
     elsif err.include?('cannot_cluster_node_with_itself')
       Chef::Log.info('[rabbitmq_cluster] Cannot cluster node itself, error will be ignored.')
     else
-      Chef::Application.fatal!("[rabbitmq_cluster] #{err}")
+      # Don't fatal here, raise JoinError so that Rabbit can be restarted for the next run
+      raise JoinError, err
     end
   end
 end
@@ -203,8 +208,16 @@ action :join do
     Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{current_cluster_name(var_cluster_status)}. Joining cluster will be skipped.")
   else
     run_rabbitmqctl('stop_app')
-    join_cluster(var_node_name_to_join, var_node_type)
-    run_rabbitmqctl('start_app')
+
+    # Catch JoinError so that we can leave Rabbit started, if possible
+    begin
+      join_cluster(var_node_name_to_join, var_node_type)
+    rescue JoinError => exc
+      Chef::Application.fatal!("[rabbitmq_cluster] #{exc.message}")
+    ensure
+      run_rabbitmqctl('start_app')
+    end
+
     Chef::Log.info("[rabbitmq_cluster] Node #{var_node_name} joined in #{var_node_name_to_join} with type #{var_node_type}")
     Chef::Log.info(cluster_status)
   end
