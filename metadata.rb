@@ -46,6 +46,11 @@ attribute 'rabbitmq/config',
   :display_name => 'RabbitMQ config file to load',
   :description => 'Path to the rabbitmq.config file, if any.'
 
+attribute 'rabbitmq/config_template_cookbook',
+  :display_name => 'Cookbook to load rabbitmq.config.erb from',
+  :description => 'Override this if you wish to provide rabbitmq.config.erb in your own wrapper cookbook.',
+  :default => 'rabbitmq'
+
 attribute 'rabbitmq/logdir',
   :display_name => 'RabbitMQ log directory',
   :description => 'Path to the directory for log files.'
