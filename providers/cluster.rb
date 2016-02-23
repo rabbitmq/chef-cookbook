@@ -199,7 +199,7 @@ action :join do
 
   if var_node_name == var_node_name_to_join
     Chef::Log.warn('[rabbitmq_cluster] Trying to join cluster node itself. Joining cluster will be skipped.')
-  elsif joined_cluster?(var_node_name_to_join, var_cluster_status)
+  elsif joined_cluster?(var_node_name, var_cluster_status)
     Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{current_cluster_name(var_cluster_status)}. Joining cluster will be skipped.")
   else
     run_rabbitmqctl('stop_app')
