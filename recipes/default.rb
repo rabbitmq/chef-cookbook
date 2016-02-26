@@ -83,6 +83,18 @@ when 'debian'
       action :delete
     end
 
+    include_recipe 'logrotate'
+
+    logrotate_app 'rabbitmq-server' do
+      path '/var/log/rabbitmq/*.log'
+      enable true
+      rotate 20
+      frequency 'weekly'
+      options ['missingok', 'notifempty', 'delaycompress']
+      sharedscripts true
+      postrotate '/usr/sbin/rabbitmqctl rotate_logs > /dev/null'
+    end
+
     template "/etc/init/#{node['rabbitmq']['service_name']}.conf" do
       source 'rabbitmq.upstart.conf.erb'
       owner 'root'
