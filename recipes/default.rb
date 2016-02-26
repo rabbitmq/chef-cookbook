@@ -90,7 +90,7 @@ when 'debian'
       enable true
       rotate 20
       frequency 'weekly'
-      options %w[missingok notifempty delaycompress]
+      options %w(missingok notifempty delaycompress)
       sharedscripts true
       postrotate '/usr/sbin/rabbitmqctl rotate_logs > /dev/null'
     end
