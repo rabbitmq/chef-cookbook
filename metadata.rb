@@ -17,6 +17,7 @@ depends 'erlang'
 depends 'yum-epel'
 depends 'yum-erlang_solutions'
 depends 'dpkg_autostart'
+depends 'logrotate'
 
 supports 'centos', '>= 7.0'
 supports 'debian', '>= 8.0'
