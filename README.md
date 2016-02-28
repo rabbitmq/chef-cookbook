@@ -71,6 +71,25 @@ Enables any policies listed in the `node['rabbitmq']['policies']` and disables a
 
 ### user_management
 Enables any users listed in the `node['rabbitmq']['enabled_users']` and disables any listed in `node['rabbitmq']['disabled_users']` attributes.
+You can provide user credentials, the vhosts that they need to have access to and the permissions that should be allocated to each user.
+
+```ruby
+node['rabbitmq']['enabled_users'] = [
+    {
+        :name => 'kitten',
+        :password => 'kitten',
+        :tag => 'leader',
+        :rights => [
+            {
+                :vhost => ['/', 'nova'],
+                :conf => '.*',
+                :write => '.*',
+                :read => '.*'
+            }
+        ]
+    }
+]
+```
 
 ### virtualhost_management
 Enables any vhosts listed in the `node['rabbitmq']['virtualhosts']` and disables any listed in `node['rabbitmq']['disabled_virtualhosts']` attributes.
