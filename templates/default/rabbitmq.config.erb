@@ -60,6 +60,13 @@
 <% if node['rabbitmq']['disk_free_limit_relative'] -%>
     {disk_free_limit, {mem_relative, <%= node['rabbitmq']['disk_free_limit_relative'] %>}},
 <% end %>
+<% if node['rabbitmq']['disk_free_limit'] %>
+    <% if node['rabbitmq']['disk_free_limit'].is_a? String %>
+    {disk_free_limit, "<%= node['rabbitmq']['disk_free_limit'] %>"},
+    <%elsif node['rabbitmq']['disk_free_limit'].is_a? Integer %>
+    {disk_free_limit, <%= node['rabbitmq']['disk_free_limit'] %>},
+    <% end %>
+<% end %>
 <% if node['rabbitmq']['vm_memory_high_watermark'] -%>
     {vm_memory_high_watermark, <%= node['rabbitmq']['vm_memory_high_watermark'] %>},
 <% end %>
