@@ -46,5 +46,9 @@ module Opscode
     def format_ssl_ciphers
       Array(node['rabbitmq']['ssl_ciphers']).join(',')
     end
+
+    def shell_environment
+      { 'HOME' => ENV.fetch('HOME', '/var/lib/rabbitmq') }
+    end
   end
 end
