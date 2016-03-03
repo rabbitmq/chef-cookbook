@@ -25,12 +25,11 @@ cluster_nodes = node['rabbitmq']['clustering']['cluster_nodes']
 cluster_nodes = cluster_nodes.to_json
 
 if node['rabbitmq']['cluster']
-  # Manual clustering
-  unless node['rabbitmq']['clustering']['use_auto_clustering']
-    # Join in cluster
-    rabbitmq_cluster cluster_nodes do
-      action :join
-    end
+  # Manual clustering 
+  # Join in cluster
+  rabbitmq_cluster cluster_nodes do
+    action :join
+    not_if { node['rabbitmq']['clustering']['use_auto_clustering'] }
   end
   # Set cluster name : It will be skipped once same cluster name has been set in the cluster.
   rabbitmq_cluster cluster_nodes do
