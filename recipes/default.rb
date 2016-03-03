@@ -146,7 +146,7 @@ when 'smartos'
 
 end
 
-directory node['rabbitmq']['logdir'] do
+directory "#{node['rabbitmq']['logdir']}" do
   owner 'rabbitmq'
   group 'rabbitmq'
   mode '775'

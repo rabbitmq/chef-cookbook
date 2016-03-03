@@ -98,10 +98,10 @@ end
 
 action :delete do
   cmd = "rabbitmqctl delete_user"
-  execute "cmd #{new_resource.user}" do
+  execute "#{cmd} #{new_resource.user}" do
     Chef::Log.debug "rabbitmq_user_delete: #{cmd} #{new_resource.user}"
     Chef::Log.info "Deleting RabbitMQ user '#{new_resource.user}'."
-    not_if { user_exists?(new_resource.user) }
+    only_if { user_exists?(new_resource.user) }
   end
 end
 
