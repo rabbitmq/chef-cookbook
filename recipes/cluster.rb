@@ -25,7 +25,7 @@ cluster_nodes = node['rabbitmq']['clustering']['cluster_nodes']
 cluster_nodes = cluster_nodes.to_json
 
 if node['rabbitmq']['cluster']
-  # Manual clustering 
+  # Manual clustering
   # Join in cluster
   rabbitmq_cluster cluster_nodes do
     action :join

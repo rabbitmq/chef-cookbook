@@ -146,7 +146,7 @@ when 'smartos'
 
 end
 
-if node['rabbitmq']['logdir'] 
+if node['rabbitmq']['logdir']
   directory node['rabbitmq']['logdir'] do
     owner 'rabbitmq'
     group 'rabbitmq'
