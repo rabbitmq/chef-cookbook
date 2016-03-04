@@ -79,31 +79,29 @@ def user_has_permissions?(name, vhost, perm_list = nil) # rubocop:disable all
 end
 
 action :add do
-  unless user_exists?(new_resource.user)
-    Chef::Application.fatal!('rabbitmq_user with action :add requires a non-nil/empty password.') if new_resource.password.nil? || new_resource.password.empty?
+  Chef::Application.fatal!('rabbitmq_user with action :add requires a non-nil/empty password.') if new_resource.password.nil? || new_resource.password.empty?
 
-    # To escape single quotes in a shell, you have to close the surrounding single quotes, add
-    # in an escaped single quote, and then re-open the original single quotes.
-    # Since this string is interpolated once by ruby, and then a second time by the shell, we need
-    # to escape the escape character ('\') twice.  This is why the following is such a mess
-    # of leaning toothpicks:
-    new_password = new_resource.password.gsub("'", "'\\\\''")
-    cmd = "rabbitmqctl add_user #{new_resource.user} '#{new_password}'"
-    execute "rabbitmqctl add_user #{new_resource.user}" do # ~FC009
-      sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
-      command cmd
-      Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
-    end
+  # To escape single quotes in a shell, you have to close the surrounding single quotes, add
+  # in an escaped single quote, and then re-open the original single quotes.
+  # Since this string is interpolated once by ruby, and then a second time by the shell, we need
+  # to escape the escape character ('\') twice.  This is why the following is such a mess
+  # of leaning toothpicks:
+  new_password = new_resource.password.gsub("'", "'\\\\''")
+  cmd = "rabbitmqctl add_user #{new_resource.user} '#{new_password}'"
+  execute "rabbitmqctl add_user #{new_resource.user}" do # ~FC009
+    sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
+    command cmd
+    Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
+    not_if { user_exists?(new_resource.user) }
   end
 end
 
 action :delete do
-  if user_exists?(new_resource.user)
-    cmd = "rabbitmqctl delete_user #{new_resource.user}"
-    execute cmd do
-      Chef::Log.debug "rabbitmq_user_delete: #{cmd}"
-      Chef::Log.info "Deleting RabbitMQ user '#{new_resource.user}'."
-    end
+  cmd = 'rabbitmqctl delete_user'
+  execute "#{cmd} #{new_resource.user}" do
+    Chef::Log.debug "rabbitmq_user_delete: #{cmd} #{new_resource.user}"
+    Chef::Log.info "Deleting RabbitMQ user '#{new_resource.user}'."
+    only_if { user_exists?(new_resource.user) }
   end
 end
 

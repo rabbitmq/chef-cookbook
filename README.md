@@ -256,7 +256,6 @@ rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbi
 end
 ```
 
-
 ## Limitations
 
 For an already running cluster, these actions still require manual intervention:
