@@ -20,13 +20,15 @@
 
 require 'shellwords'
 
+include Opscode::RabbitMQ
+
 def policy_exists?(vhost, name)
   cmd = 'rabbitmqctl list_policies'
   cmd << " -p #{Shellwords.escape vhost}" unless vhost.nil?
   cmd << " |grep '#{name}\\b'"
 
   cmd = Mixlib::ShellOut.new(cmd)
-  cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
+  cmd.environment = shell_environment
   cmd.run_command
   begin
     cmd.error!
@@ -66,6 +68,7 @@ action :set do
 
     execute "set_policy #{new_resource.policy}" do
       command cmd
+      environment shell_environment
     end
 
     new_resource.updated_by_last_action(true)
@@ -79,6 +82,7 @@ action :clear do
     cmd << " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
     execute "clear_policy #{new_resource.policy}" do
       command cmd
+      environment shell_environment
     end
 
     new_resource.updated_by_last_action(true)
@@ -89,6 +93,7 @@ end
 action :list do
   execute 'list_policies' do
     command 'rabbitmqctl list_policies'
+    environment shell_environment
   end
 
   new_resource.updated_by_last_action(true)

@@ -18,6 +18,7 @@
 # limitations under the License.
 #
 
+include Opscode::RabbitMQ
 include Chef::Mixin::ShellOut
 
 use_inline_resources
@@ -25,7 +26,7 @@ use_inline_resources
 # Get ShellOut
 def get_shellout(cmd)
   sh_cmd = Mixlib::ShellOut.new(cmd)
-  sh_cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
+  sh_cmd.environment = shell_environment
   sh_cmd
 end
 

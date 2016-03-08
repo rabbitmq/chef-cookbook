@@ -20,13 +20,15 @@
 
 require 'shellwords'
 
+include Opscode::RabbitMQ
+
 def parameter_exists?(vhost, name)
   cmd = 'rabbitmqctl list_parameters'
   cmd << " -p #{Shellwords.escape vhost}" unless vhost.nil?
   cmd << " |grep '#{name}\\b'"
 
   cmd = Mixlib::ShellOut.new(cmd)
-  cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
+  cmd.environment = shell_environment
   cmd.run_command
   begin
     cmd.error!
@@ -51,6 +53,7 @@ action :set do
 
     execute "set_parameter #{parameter}" do
       command cmd
+      environment shell_environment
     end
 
     new_resource.updated_by_last_action(true)
@@ -64,6 +67,7 @@ action :clear do
 
     execute "clear_parameter #{parameter}" do
       command "rabbitmqctl clear_parameter #{parameter}"
+      environment shell_environment
     end
 
     new_resource.updated_by_last_action(true)
@@ -74,6 +78,7 @@ end
 action :list do
   execute 'list_parameters' do
     command 'rabbitmqctl list_parameters'
+    environment shell_environment
   end
 
   new_resource.updated_by_last_action(true)
