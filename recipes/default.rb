@@ -90,6 +90,17 @@ when 'debian'
       mode 0644
       variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
     end
+
+    logrotate_app 'rabbitmq-server' do
+      cookbook 'logrotate'
+      path '/var/log/rabbitmq/*.log'
+      frequency 'weekly'
+      rotate node['rabbitmq']['logrotate']['rotate_count']
+      create '644 root adm'
+      options %w(compress delaycompress notifempty missingok)
+      sharedscripts true
+      postrotate ['/usr/sbin/rabbitmqctl -q rotate_logs > /dev/null']
+    end
   end
 
   execute 'undo service disable hack' do
@@ -143,7 +154,6 @@ when 'smartos'
   service 'epmd' do
     action :start
   end
-
 end
 
 if node['rabbitmq']['logdir']

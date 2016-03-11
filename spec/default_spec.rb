@@ -239,6 +239,31 @@ describe 'rabbitmq::default' do
         expect(chef_run).to install_package('logrotate')
       end
     end
+
+    describe 'upstart job control' do
+      before do
+        node.set['rabbitmq']['job_control'] = 'upstart'
+        node.set['rabbitmq']['manage_service'] = true
+      end
+
+      it 'should create an upstart config' do
+        expect(chef_run).to create_template("/etc/init/#{ chef_run.node['rabbitmq']['service_name'] }.conf").with(
+          :source => 'rabbitmq.upstart.conf.erb',
+          :owner => 'root',
+          :group => 'root',
+          :mode => 00644
+          )
+      end
+
+      it 'should create a logrotate config' do
+        expect(chef_run).to create_template("/etc/logrotate.d/#{ chef_run.node['rabbitmq']['service_name'] }").with(
+          :source => 'logrotate.erb',
+          :owner => 'root',
+          :group => 'root',
+          :mode => '0440'
+          )
+      end
+    end
   end
 
   describe 'redhat' do
