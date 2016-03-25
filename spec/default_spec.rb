@@ -181,7 +181,7 @@ describe 'rabbitmq::default' do
     let(:runner) { ChefSpec::ServerRunner.new(UBUNTU_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
-      node.set['rabbitmq']['version'] = '3.5.6'
+      node.set['rabbitmq']['version'] = '3.6.1'
       runner.converge(described_recipe)
     end
 
@@ -197,7 +197,7 @@ describe 'rabbitmq::default' do
     end
 
     it 'creates a rabbitmq-server deb in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.5.6-1_all.deb')
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.6.1-1_all.deb')
     end
 
     it 'installs the rabbitmq-server deb_package with the default action' do
@@ -235,13 +235,13 @@ describe 'rabbitmq::default' do
     end
 
     it 'creates a rabbitmq-server rpm in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.5.6-1.noarch.rpm')
-      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.5.6-1.noarch.rpm')
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
+      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
     end
 
     it 'installs the rabbitmq-server rpm_package with the default action' do
-      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.5.6-1.noarch.rpm')
-      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.5.6-1.noarch.rpm')
+      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
+      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
     end
 
     describe 'uses distro version' do
@@ -282,13 +282,13 @@ describe 'rabbitmq::default' do
     end
 
     it 'creates a rabbitmq-server rpm in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.5.6-1.noarch.rpm')
-      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.5.6-1.noarch.rpm')
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
+      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
     end
 
     it 'installs the rabbitmq-server rpm_package with the default action' do
-      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.5.6-1.noarch.rpm')
-      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.5.6-1.noarch.rpm')
+      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
+      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
     end
 
     it 'includes the `yum-epel` recipe' do
@@ -310,18 +310,18 @@ describe 'rabbitmq::default' do
     let(:runner) { ChefSpec::ServerRunner.new(FEDORA_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
-      node.set['rabbitmq']['version'] = '3.5.6'
+      node.set['rabbitmq']['version'] = '3.6.1'
       runner.converge(described_recipe)
     end
 
     it 'creates a rabbitmq-server rpm in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.5.6-1.noarch.rpm')
-      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.5.6-1.noarch.rpm')
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
+      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
     end
 
     it 'installs the rabbitmq-server rpm_package with the default action' do
-      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.5.6-1.noarch.rpm')
-      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.5.6-1.noarch.rpm')
+      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
+      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
     end
 
     describe 'uses distro version' do
