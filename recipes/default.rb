@@ -40,14 +40,9 @@ when 'debian'
   # logrotate is a package dependency of rabbitmq-server
   package 'logrotate'
 
-  # dpkg, imma let you finish but don't start services automatically
-  # https://jpetazzo.github.io/2013/10/06/policy-rc-d-do-not-start-services-automatically/
-  execute 'disable auto-start 1/2' do
-    command 'echo exit 101 > /usr/sbin/policy-rc.d'
-  end
-
-  execute 'disable auto-start 2/2' do
-    command 'chmod +x /usr/sbin/policy-rc.d'
+  # => Prevent Debian systems from automatically starting RabbitMQ after dpkg install
+  dpkg_autostart node['rabbitmq']['service_name'] do
+    allow false
   end
 
   if node['rabbitmq']['use_distro_version']
@@ -62,8 +57,10 @@ when 'debian'
       source deb_package
       action :create_if_missing
     end
-    dpkg_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" do
-      action :install
+    package 'rabbitmq-server' do
+      provider Chef::Provider::Package::Dpkg
+      source ::File.join(Chef::Config[:file_cache_path], node['rabbitmq']['deb_package'])
+      action :upgrade
     end
   end
 
@@ -90,10 +87,6 @@ when 'debian'
       mode 0644
       variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
     end
-  end
-
-  execute 'undo service disable hack' do
-    command 'echo exit 0 > /usr/sbin/policy-rc.d'
   end
 
 when 'rhel', 'fedora'
