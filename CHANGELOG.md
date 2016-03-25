@@ -1,5 +1,30 @@
 # Change Log
 
+## [v4.7.0](https://github.com/jjasghar/rabbitmq/tree/v4.7.0) (2016-03-25)
+
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.6.0...v4.7.0)
+
+**Closed issues:**
+
+- Nodes try to rejoin cluster when first listed node is down [\#347](https://github.com/jjasghar/rabbitmq/issues/347)
+- Logrotating [\#338](https://github.com/jjasghar/rabbitmq/issues/338)
+- rabbitmq\_plugin\[rabbitmq\_management\] erlexec: HOME must be set [\#334](https://github.com/jjasghar/rabbitmq/issues/334)
+- Is "notifies restart" necessary for enabling or disabling a policy? [\#319](https://github.com/jjasghar/rabbitmq/issues/319)
+- Alternate restarts fail on CentOS [\#264](https://github.com/jjasghar/rabbitmq/issues/264)
+- rabbitmq-server fail to start after setting the cipher suites [\#259](https://github.com/jjasghar/rabbitmq/issues/259)
+- Add auth\_backends attribute [\#230](https://github.com/jjasghar/rabbitmq/issues/230)
+
+**Merged pull requests:**
+
+- Pass a HOME environment variable to all rabbitmq execute blocks [\#352](https://github.com/jjasghar/rabbitmq/pull/352) ([RoboticCheese](https://github.com/RoboticCheese))
+- added an example to the "user\_management" section. [\#350](https://github.com/jjasghar/rabbitmq/pull/350) ([farshidce](https://github.com/farshidce))
+- Fix check for whether node has joined cluster [\#348](https://github.com/jjasghar/rabbitmq/pull/348) ([ccrebolder](https://github.com/ccrebolder))
+- Update metadata.rb with config\_template\_cookbook [\#345](https://github.com/jjasghar/rabbitmq/pull/345) ([jgonera](https://github.com/jgonera))
+- simplified clustering logic [\#340](https://github.com/jjasghar/rabbitmq/pull/340) ([jklare](https://github.com/jklare))
+- Package install logrotate for \*.log [\#339](https://github.com/jjasghar/rabbitmq/pull/339) ([ptqa](https://github.com/ptqa))
+- Debian Fixes [\#330](https://github.com/jjasghar/rabbitmq/pull/330) ([bdwyertech](https://github.com/bdwyertech))
+- Use init if job\_control uses init. [\#303](https://github.com/jjasghar/rabbitmq/pull/303) ([rogerhu](https://github.com/rogerhu))
+
 ## [v4.6.0](https://github.com/jjasghar/rabbitmq/tree/v4.6.0) (2016-02-02)
 [Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.5.1...v4.6.0)
 
@@ -11,6 +36,7 @@
 
 **Merged pull requests:**
 
+- v4.6.0 prep work [\#337](https://github.com/jjasghar/rabbitmq/pull/337) ([jjasghar](https://github.com/jjasghar))
 - Fix user grep command to match whitespace [\#331](https://github.com/jjasghar/rabbitmq/pull/331) ([gerr1t](https://github.com/gerr1t))
 - fix hardcoded --ram node type for cluster join [\#327](https://github.com/jjasghar/rabbitmq/pull/327) ([scalp42](https://github.com/scalp42))
 - NO-REF Check chef client version before calling sensitive [\#317](https://github.com/jjasghar/rabbitmq/pull/317) ([XiangYao](https://github.com/XiangYao))
