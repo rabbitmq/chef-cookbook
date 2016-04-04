@@ -17,14 +17,12 @@
 # limitations under the License.
 #
 
-include Opscode::RabbitMQ
-
 use_inline_resources
 
 def user_exists?(name)
   cmd = "rabbitmqctl -q list_users |grep '^#{name}\\s'"
   cmd = Mixlib::ShellOut.new(cmd)
-  cmd.environment = shell_environment
+  cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
   Chef::Log.debug "rabbitmq_user_exists?: #{cmd}"
   Chef::Log.debug "rabbitmq_user_exists?: #{cmd.stdout}"
@@ -39,7 +37,7 @@ end
 def user_has_tag?(name, tag) # rubocop:disable all
   cmd = 'rabbitmqctl -q list_users'
   cmd = Mixlib::ShellOut.new(cmd)
-  cmd.environment = shell_environment
+  cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
   user_list = cmd.stdout
   tags = user_list.match(/^#{name}\s+\[(.*?)\]/)[1].split
@@ -63,7 +61,7 @@ def user_has_permissions?(name, vhost, perm_list = nil) # rubocop:disable all
   vhost = '/' if vhost.nil? # rubocop:enable all
   cmd = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\s\""
   cmd = Mixlib::ShellOut.new(cmd)
-  cmd.environment = shell_environment
+  cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   cmd.run_command
   Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd}"
   Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd.stdout}"
@@ -94,7 +92,6 @@ action :add do
     execute "rabbitmqctl add_user #{new_resource.user}" do # ~FC009
       sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
       command cmd
-      environment shell_environment
       Chef::Log.info "Adding RabbitMQ user '#{new_resource.user}'."
     end
   end
@@ -104,7 +101,6 @@ action :delete do
   if user_exists?(new_resource.user)
     cmd = "rabbitmqctl delete_user #{new_resource.user}"
     execute cmd do
-      environment shell_environment
       Chef::Log.debug "rabbitmq_user_delete: #{cmd}"
       Chef::Log.info "Deleting RabbitMQ user '#{new_resource.user}'."
     end
@@ -121,7 +117,6 @@ action :set_permissions do
     vhostopt = "-p #{vhost}" unless vhost.nil?
     cmd = "rabbitmqctl set_permissions #{vhostopt} #{new_resource.user} \"#{perm_list.join("\" \"")}\""
     execute cmd do
-      environment shell_environment
       Chef::Log.debug "rabbitmq_user_set_permissions: #{cmd}"
       Chef::Log.info "Setting RabbitMQ user permissions for '#{new_resource.user}' on vhost #{vhost}."
     end
@@ -137,7 +132,6 @@ action :clear_permissions do
     vhostopt = "-p #{vhost}" unless vhost.nil?
     cmd = "rabbitmqctl clear_permissions #{vhostopt} #{new_resource.user}"
     execute cmd do
-      environment shell_environment
       Chef::Log.debug "rabbitmq_user_clear_permissions: #{cmd}"
       Chef::Log.info "Clearing RabbitMQ user permissions for '#{new_resource.user}' from vhost #{vhost}."
     end
@@ -150,7 +144,6 @@ action :set_tags do
   unless user_has_tag?(new_resource.user, new_resource.tag)
     cmd = "rabbitmqctl set_user_tags #{new_resource.user} #{new_resource.tag}"
     execute cmd do
-      environment shell_environment
       Chef::Log.debug "rabbitmq_user_set_tags: #{cmd}"
       Chef::Log.info "Setting RabbitMQ user '#{new_resource.user}' tags '#{new_resource.tag}'"
     end
@@ -163,7 +156,6 @@ action :clear_tags do
   unless user_has_tag?(new_resource.user, '"\[\]"')
     cmd = "rabbitmqctl set_user_tags #{new_resource.user}"
     execute cmd do
-      environment shell_environment
       Chef::Log.debug "rabbitmq_user_clear_tags: #{cmd}"
       Chef::Log.info "Clearing RabbitMQ user '#{new_resource.user}' tags."
     end
@@ -176,7 +168,6 @@ action :change_password do
     execute "rabbitmqctl change_password #{new_resource.user}" do # ~FC009
       sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
       command cmd
-      environment shell_environment
       Chef::Log.debug "rabbitmq_user_change_password: #{cmd}"
       Chef::Log.info "Editing RabbitMQ user '#{new_resource.user}'."
     end
