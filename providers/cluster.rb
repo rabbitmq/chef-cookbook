@@ -135,7 +135,7 @@ end
 
 # Checking node is joined in cluster
 def joined_cluster?(node_name, cluster_status)
-  (running_nodes(cluster_status) || '').include?(node_name)
+  (running_nodes(cluster_status) || '').include?(node_name) && running_nodes(cluster_status).split(',').count > 1
 end
 
 # Join cluster.
