@@ -243,7 +243,7 @@ action :change_cluster_node_type do
     Chef::Log.warn('[rabbitmq_cluster] Skip changing cluster node type : trying to change to same cluster node type')
     node_type_changeable = false
   else
-    if var_cluster_node_type == 'ram'
+    if var_cluster_node_type == 'ram' # rubocop:disable all
       if var_current_cluster_node_type == 'disc' && disc_nodes(var_cluster_status).length < 2
         Chef::Log.warn('[rabbitmq_cluster] At least one disc node is required for rabbitmq cluster. Changing cluster node type will be ignored.')
         node_type_changeable = false

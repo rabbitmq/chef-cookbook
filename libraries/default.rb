@@ -26,7 +26,7 @@ module Opscode
       kernel = node['rabbitmq']['kernel'].dup
 
       # This parameter is special and needs commas instead of periods.
-      rendered << "{inet_dist_use_interface, {#{kernel[:inet_dist_use_interface].gsub(/\./, ',')}}}" if kernel[:inet_dist_use_interface]
+      rendered << "{inet_dist_use_interface, {#{kernel[:inet_dist_use_interface].tr('.', ',')}}}" if kernel[:inet_dist_use_interface]
       kernel.delete(:inet_dist_use_interface)
 
       # Otherwise, we can just render it nicely as Erlang wants. This
