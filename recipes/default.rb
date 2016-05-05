@@ -20,7 +20,7 @@
 #
 
 #
-class Chef::Resource # rubocop:disable all
+class Chef::Resource
   include Opscode::RabbitMQ # rubocop:enable all
 end
 
@@ -136,7 +136,7 @@ when 'suse'
   end
 
 when 'smartos'
-  package 'rabbitmq'do
+  package 'rabbitmq' do
     action :install
     version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
   end
@@ -194,11 +194,11 @@ template "/etc/default/#{node['rabbitmq']['service_name']}" do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
-if File.exist?(node['rabbitmq']['erlang_cookie_path']) && File.readable?((node['rabbitmq']['erlang_cookie_path']))
-  existing_erlang_key = File.read(node['rabbitmq']['erlang_cookie_path']).strip
-else
-  existing_erlang_key = ''
-end
+existing_erlang_key = if File.exist?(node['rabbitmq']['erlang_cookie_path']) && File.readable?((node['rabbitmq']['erlang_cookie_path']))
+                        File.read(node['rabbitmq']['erlang_cookie_path']).strip
+                      else
+                        ''
+                      end
 
 if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
   log "stop #{node['rabbitmq']['service_name']} to change erlang cookie" do
