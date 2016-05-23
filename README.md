@@ -20,7 +20,7 @@ The release was tested with (rabbitmq.com/distro version), from the [kitchen.yml
 ### default
 Installs `rabbitmq-server` from RabbitMQ.com via direct download of the installation package or using the distribution version. Depending on your distribution, the provided version may be quite old so they are disabled by default. If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`. You may override the download URL attribute `['rabbitmq']['package']` if you wish to use a local mirror.
 
-The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['clustering']['enabled']` attribute to `true`, `['rabbitmq']['clustering']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
+The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['clustering']['enable']` attribute to `true`, `['rabbitmq']['clustering']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
 ```ruby
