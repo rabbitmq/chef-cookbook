@@ -10,6 +10,9 @@ recipe 'rabbitmq::plugin_management', 'Manage plugins with node attributes'
 recipe 'rabbitmq::virtualhost_management', 'Manage virtualhost with node attributes'
 recipe 'rabbitmq::user_management', 'Manage users with node attributes'
 
+issues_url 'https://github.com/jjasghar/rabbitmq/issues'
+source_url 'https://github.com/jjasghar/rabbitmq/'
+
 depends 'erlang'
 depends 'yum-epel'
 depends 'yum-erlang_solutions'
