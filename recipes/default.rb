@@ -60,7 +60,7 @@ when 'debian'
     package 'rabbitmq-server' do
       provider Chef::Provider::Package::Dpkg
       source ::File.join(Chef::Config[:file_cache_path], node['rabbitmq']['deb_package'])
-      action :upgrade
+      action :install
     end
   end
 

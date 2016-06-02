@@ -18,7 +18,6 @@
 # limitations under the License.
 #
 
-include Opscode::RabbitMQ
 include Chef::Mixin::ShellOut
 
 use_inline_resources
@@ -26,7 +25,7 @@ use_inline_resources
 # Get ShellOut
 def get_shellout(cmd)
   sh_cmd = Mixlib::ShellOut.new(cmd)
-  sh_cmd.environment = shell_environment
+  sh_cmd.environment['HOME'] = ENV.fetch('HOME', '/root')
   sh_cmd
 end
 
@@ -136,7 +135,7 @@ end
 
 # Checking node is joined in cluster
 def joined_cluster?(node_name, cluster_status)
-  (running_nodes(cluster_status) || '').include?(node_name)
+  (running_nodes(cluster_status) || '').include?(node_name) && running_nodes(cluster_status).split(',').count > 1
 end
 
 # Join cluster.
@@ -237,7 +236,7 @@ action :change_cluster_node_type do
   var_cluster_status = cluster_status
   var_node_name = node_name
   var_current_cluster_node_type = current_cluster_node_type(var_node_name, var_cluster_status)
-  var_cluster_node_type = parse_cluster_nodes_string(new_resource.cluster_nodes).each { |node| node['name'] == var_node_name }.first['type'] # ~FC039
+  var_cluster_node_type = parse_cluster_nodes_string(new_resource.cluster_nodes).select { |node| node['name'] == var_node_name }.first['type'] # ~FC039
 
   if var_current_cluster_node_type == var_cluster_node_type
     Chef::Log.warn('[rabbitmq_cluster] Skip changing cluster node type : trying to change to same cluster node type')
