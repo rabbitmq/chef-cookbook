@@ -96,8 +96,10 @@ default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
 #   ['tlsv1.2', 'tlsv1.1']
 default['rabbitmq']['ssl_versions'] = nil
 # Specify SSL ciphers
-# Example:
-#   ['ecdhe_ecdsa,aes_128_cbc,sha256', 'ecdhe_ecdsa,aes_256_cbc,sha']
+# Examples:
+# ['{ecdhe_ecdsa,aes_128_cbc,sha256}', '{ecdhe_ecdsa,aes_256_cbc,sha}']
+# or in OpenSSL format:
+# ['"ECDHE-ECDSA-AES128-SHA256"', '"ECDHE-ECDSA-AES256-SHA"']
 default['rabbitmq']['ssl_ciphers'] = nil
 default['rabbitmq']['web_console_ssl'] = false
 default['rabbitmq']['web_console_ssl_port'] = 15_671
