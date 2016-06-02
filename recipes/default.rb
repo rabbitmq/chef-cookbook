@@ -40,6 +40,10 @@ when 'debian'
   # logrotate is a package dependency of rabbitmq-server
   package 'logrotate'
 
+  # socat is a package dependency of rabbitmq-server
+  package 'socat'
+
+
   # => Prevent Debian systems from automatically starting RabbitMQ after dpkg install
   dpkg_autostart node['rabbitmq']['service_name'] do
     allow false
@@ -90,6 +94,10 @@ when 'debian'
   end
 
 when 'rhel', 'fedora'
+
+  # socat is a package dependency of rabbitmq-server
+  package 'socat'
+
   # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
   if node['erlang']['install_method'] == 'esl'
     remote_file "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm" do
