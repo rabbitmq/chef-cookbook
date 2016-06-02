@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'chef'
 gem 'chefspec'
+gem 'github_changelog_generator'
 
 group :lint do
   gem 'foodcritic'

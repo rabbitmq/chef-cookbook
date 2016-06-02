@@ -1,7 +1,29 @@
 # Change Log
 
-## [v4.7.0](https://github.com/jjasghar/rabbitmq/tree/v4.7.0) (2016-03-25)
+## [v4.8.0](https://github.com/jjasghar/rabbitmq/tree/v4.8.0)  (2016-06-02)
 
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.7.0...v4.8.0)
+
+**Closed issues:**
+
+- undefined method `node\_type' for Custom resource rabbitmq\_cluster from cookbook rabbitmq [\#366](https://github.com/jjasghar/rabbitmq/issues/366)
+- esl-erlang-compat is not needed for 'esl install method' [\#360](https://github.com/jjasghar/rabbitmq/issues/360)
+- RabbitMQ 3.6.2 will have a dependency on socat [\#355](https://github.com/jjasghar/rabbitmq/issues/355)
+- Cluster LWRP :join action leaves Rabbit stopped on join error [\#344](https://github.com/jjasghar/rabbitmq/issues/344)
+- Wrong method in set\_cluster\_name matcher [\#342](https://github.com/jjasghar/rabbitmq/issues/342)
+- Duplicate attributes \['cluster\_disk\_nodes'\] vs \['clustering'\]\['cluster\_nodes'\] [\#268](https://github.com/jjasghar/rabbitmq/issues/268)
+
+**Merged pull requests:**
+
+- Updated to cookstyle [\#373](https://github.com/jjasghar/rabbitmq/pull/373) ([jjasghar](https://github.com/jjasghar))
+- Added socat [\#372](https://github.com/jjasghar/rabbitmq/pull/372) ([jjasghar](https://github.com/jjasghar))
+- Fix set\_cluster\_name ChefSpec matcher [\#371](https://github.com/jjasghar/rabbitmq/pull/371) ([josacar](https://github.com/josacar))
+- Update cipher examples [\#370](https://github.com/jjasghar/rabbitmq/pull/370) ([yoshiwaan](https://github.com/yoshiwaan))
+- fix cluster\_nodes config line syntax when using auto clustering [\#368](https://github.com/jjasghar/rabbitmq/pull/368) ([devsibwarra](https://github.com/devsibwarra))
+- Fix typo in name of rabbitmq clustering enable attribute [\#367](https://github.com/jjasghar/rabbitmq/pull/367) ([jperville](https://github.com/jperville))
+- Restart Rabbit on cluster join error, resolves \#344 [\#346](https://github.com/jjasghar/rabbitmq/pull/346) ([CVTJNII](https://github.com/CVTJNII))
+
+## [v4.7.0](https://github.com/jjasghar/rabbitmq/tree/v4.7.0) (2016-03-25)
 [Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v4.6.0...v4.7.0)
 
 **Closed issues:**
@@ -16,6 +38,7 @@
 
 **Merged pull requests:**
 
+- 4.7.0 prep [\#354](https://github.com/jjasghar/rabbitmq/pull/354) ([jjasghar](https://github.com/jjasghar))
 - Pass a HOME environment variable to all rabbitmq execute blocks [\#352](https://github.com/jjasghar/rabbitmq/pull/352) ([RoboticCheese](https://github.com/RoboticCheese))
 - added an example to the "user\_management" section. [\#350](https://github.com/jjasghar/rabbitmq/pull/350) ([farshidce](https://github.com/farshidce))
 - Fix check for whether node has joined cluster [\#348](https://github.com/jjasghar/rabbitmq/pull/348) ([ccrebolder](https://github.com/ccrebolder))
@@ -346,7 +369,7 @@
 - Removing the PATH from the execute resource [\#176](https://github.com/jjasghar/rabbitmq/pull/176) ([jjasghar](https://github.com/jjasghar))
 
 ## [v3.5.0](https://github.com/jjasghar/rabbitmq/tree/v3.5.0) (2014-12-02)
-[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.4.0...v3.5.0)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/pull...v3.5.0)
 
 **Fixed bugs:**
 
@@ -371,11 +394,11 @@
 - Add raw configuration for rabbitmq.erb [\#123](https://github.com/jjasghar/rabbitmq/pull/123) ([kYann](https://github.com/kYann))
 -  expose the heartbeat configuration parameter [\#87](https://github.com/jjasghar/rabbitmq/pull/87) ([kisoku](https://github.com/kisoku))
 
-## [v3.4.0](https://github.com/jjasghar/rabbitmq/tree/v3.4.0) (2014-11-23)
-[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/pull...v3.4.0)
-
 ## [pull](https://github.com/jjasghar/rabbitmq/tree/pull) (2014-11-23)
-[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.3.0...pull)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.4.0...pull)
+
+## [v3.4.0](https://github.com/jjasghar/rabbitmq/tree/v3.4.0) (2014-11-23)
+[Full Changelog](https://github.com/jjasghar/rabbitmq/compare/v3.3.0...v3.4.0)
 
 **Closed issues:**
 
