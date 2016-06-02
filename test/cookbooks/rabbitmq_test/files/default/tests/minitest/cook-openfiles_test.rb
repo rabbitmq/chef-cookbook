@@ -18,7 +18,7 @@ describe 'rabbitmq_test::cook-openfiles' do
 
   it 'properly sets open_file_limit' do
     if node['rabbitmq']['open_file_limit']
-      command("grep 'Max open files' /proc/$(sudo pgrep -u rabbitmq beam)/limits | awk '{print $5}'").stdout.chomp == "#{node['rabbitmq']['open_file_limit']}"
+      command("grep 'Max open files' /proc/$(sudo pgrep -u rabbitmq beam)/limits | awk '{print $5}'").stdout.chomp == (node['rabbitmq']['open_file_limit']).to_s
     end
   end
 end
