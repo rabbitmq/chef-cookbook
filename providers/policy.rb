@@ -51,11 +51,11 @@ action :set do
     new_resource.params.each do |key, value|
       cmd << ',' unless first_param
 
-      if value.is_a? String
-        cmd << "\"#{key}\":\"#{value}\""
-      else
-        cmd << "\"#{key}\":#{value}"
-      end
+      cmd << if value.is_a? String
+               "\"#{key}\":\"#{value}\""
+             else
+               "\"#{key}\":#{value}"
+             end
       first_param = false
     end
 
@@ -63,7 +63,7 @@ action :set do
     if node['rabbitmq']['version'] >= '3.2.0'
       cmd << " --priority #{new_resource.priority}" if new_resource.priority
     else
-      cmd << " #{new_resource.priority}" if new_resource.priority
+      cmd << " #{new_resource.priority}" if new_resource.priority # rubocop:disable all
     end
 
     execute "set_policy #{new_resource.policy}" do

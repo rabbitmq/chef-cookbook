@@ -3,11 +3,14 @@ require 'rubocop/rake_task'
 require 'foodcritic'
 require 'kitchen'
 require 'chefspec'
+require 'cookstyle'
 
 # Style tests. Rubocop and Foodcritic
 namespace :style do
   desc 'Run Ruby style checks'
-  RuboCop::RakeTask.new(:ruby)
+  RuboCop::RakeTask.new do |task|
+    task.options << '--display-cop-names'
+  end
 
   desc 'Run Chef style checks'
   FoodCritic::Rake::LintTask.new(:chef) do |t|
