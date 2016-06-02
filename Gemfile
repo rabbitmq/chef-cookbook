@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'chef'
 gem 'chefspec'
 gem 'github_changelog_generator'
+gem 'kitchen-digitalocean'
 
 group :lint do
   gem 'foodcritic'
@@ -29,7 +30,6 @@ group :kitchen_docker do
 end
 
 group :kitchen_cloud do
-  gem 'kitchen-digitalocean'
   gem 'kitchen-ec2'
   gem 'kitchen-openstack'
 end
