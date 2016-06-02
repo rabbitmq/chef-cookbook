@@ -96,7 +96,7 @@ when 'debian'
 when 'rhel', 'fedora'
 
   # socat is a package dependency of rabbitmq-server
-  package 'socat
+  package 'socat'
 
   # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
   if node['erlang']['install_method'] == 'esl'
