@@ -25,7 +25,7 @@
   {rabbit, [
 <% if node['rabbitmq']['clustering']['enable'] -%>
     <%if node['rabbitmq']['clustering']['use_auto_clustering'] -%>
-    {cluster_nodes, {[<%= node['rabbitmq']['clustering']['cluster_nodes'].map { |n| "'#{n}'"}.join(',') %>], disc}},
+    {cluster_nodes, {[<%= node['rabbitmq']['clustering']['cluster_nodes'].map { |n| "'#{n['name']}'"}.join(',') %>], disc}},
     <% end %>
     {cluster_partition_handling,<%= node['rabbitmq']['clustering']['cluster_partition_handling'] %>},
 <% end %>
