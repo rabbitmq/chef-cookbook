@@ -22,6 +22,8 @@ require 'shellwords'
 
 include Opscode::RabbitMQ
 
+use_inline_resources
+
 def policy_exists?(vhost, name)
   cmd = 'rabbitmqctl list_policies'
   cmd << " -p #{Shellwords.escape vhost}" unless vhost.nil?
