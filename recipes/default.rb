@@ -43,7 +43,6 @@ when 'debian'
   # socat is a package dependency of rabbitmq-server
   package 'socat'
 
-
   # => Prevent Debian systems from automatically starting RabbitMQ after dpkg install
   dpkg_autostart node['rabbitmq']['service_name'] do
     allow false
