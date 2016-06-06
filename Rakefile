@@ -8,7 +8,7 @@ require 'cookstyle'
 # Style tests. Rubocop and Foodcritic
 namespace :style do
   desc 'Run Ruby style checks'
-  RuboCop::RakeTask.new do |task|
+  RuboCop::RakeTask.new(:ruby) do |task|
     task.options << '--display-cop-names'
   end
 
