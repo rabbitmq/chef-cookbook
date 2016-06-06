@@ -19,6 +19,8 @@
 
 include Opscode::RabbitMQ
 
+use_inline_resources
+
 def vhost_exists?(name)
   cmd = "rabbitmqctl -q list_vhosts | grep ^#{name}$"
   cmd = Mixlib::ShellOut.new(cmd)

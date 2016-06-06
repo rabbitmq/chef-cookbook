@@ -22,6 +22,8 @@ require 'shellwords'
 
 include Opscode::RabbitMQ
 
+use_inline_resources
+
 def parameter_exists?(vhost, name)
   cmd = 'rabbitmqctl list_parameters'
   cmd << " -p #{Shellwords.escape vhost}" unless vhost.nil?
