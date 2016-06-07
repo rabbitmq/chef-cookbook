@@ -6,36 +6,40 @@ ChefSpec::Coverage.start!
 
 require 'chef/application'
 
+# rubocop:disable all
+
 LOG_LEVEL = :fatal
 SUSE_OPTS = {
   :platform => 'suse',
   :version => '11.3',
   :log_level => LOG_LEVEL
-}.freeze
+}
 REDHAT_OPTS = {
   :platform => 'redhat',
   :version => '6.5',
   :log_level => LOG_LEVEL,
   :file_cache_path => '/tmp'
-}.freeze
+}
 UBUNTU_OPTS = {
   :platform => 'ubuntu',
   :version => '14.04',
   :log_level => LOG_LEVEL,
   :file_cache_path => '/tmp'
-}.freeze
+}
 CENTOS_OPTS = {
   :platform => 'centos',
   :version => '7.0',
   :log_level => LOG_LEVEL,
   :file_cache_path => '/tmp'
-}.freeze
+}
 FEDORA_OPTS = {
   :platform => 'fedora',
   :version => '20',
   :log_level => LOG_LEVEL,
   :file_cache_path => '/tmp'
-}.freeze
+}
+
+# rubocop:enable all
 
 shared_context 'rabbitmq-stubs' do
   before do
