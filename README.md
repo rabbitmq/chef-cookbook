@@ -15,6 +15,9 @@ The release was tested with (rabbitmq.com/distro version), from the [kitchen.yml
 - Ubuntu 15.10
 - Debian 8.0
 
+We are starting to test with Ubuntu 16.04, though we have not fully vetted support yet.
+Use at your own risk, if you do find something please report [here](https://github.com/jjasghar/rabbitmq/issues/379).
+
 ## Recipes
 
 ### default
