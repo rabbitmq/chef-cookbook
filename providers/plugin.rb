@@ -22,8 +22,7 @@ include Opscode::RabbitMQ
 def plugin_enabled?(name)
   ENV['PATH'] = "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
   cmdstr = "rabbitmq-plugins list -e '#{name}\\b'"
-  cmd = Mixlib::ShellOut.new(cmdstr)
-  cmd.environment = shell_environment
+  cmd = Mixlib::ShellOut.new(cmdstr, :env => shell_environment)
   cmd.run_command
   Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmdstr}"
   Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmd.stdout}"

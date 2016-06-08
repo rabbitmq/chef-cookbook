@@ -23,8 +23,7 @@ use_inline_resources
 
 def user_exists?(name)
   cmd = "rabbitmqctl -q list_users |grep '^#{name}\\s'"
-  cmd = Mixlib::ShellOut.new(cmd)
-  cmd.environment = shell_environment
+  cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
   cmd.run_command
   Chef::Log.debug "rabbitmq_user_exists?: #{cmd}"
   Chef::Log.debug "rabbitmq_user_exists?: #{cmd.stdout}"
@@ -38,8 +37,7 @@ end
 
 def user_has_tag?(name, tag)
   cmd = 'rabbitmqctl -q list_users'
-  cmd = Mixlib::ShellOut.new(cmd)
-  cmd.environment = shell_environment
+  cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
   cmd.run_command
   user_list = cmd.stdout
   tags = user_list.match(/^#{name}\s+\[(.*?)\]/)[1].split
@@ -62,8 +60,7 @@ end
 def user_has_permissions?(name, vhost, perm_list = nil)
   vhost = '/' if vhost.nil? # rubocop:enable all
   cmd = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\s\""
-  cmd = Mixlib::ShellOut.new(cmd)
-  cmd.environment = shell_environment
+  cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
   cmd.run_command
   Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd}"
   Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd.stdout}"
