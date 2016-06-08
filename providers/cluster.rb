@@ -25,8 +25,7 @@ use_inline_resources
 
 # Get ShellOut
 def get_shellout(cmd)
-  sh_cmd = Mixlib::ShellOut.new(cmd)
-  sh_cmd.environment = shell_environment
+  sh_cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
   sh_cmd
 end
 
