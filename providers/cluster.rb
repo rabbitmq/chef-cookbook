@@ -209,21 +209,21 @@ action :join do
     Chef::Log.warn("[rabbitmq_cluster] Node is already member of your desired cluster #{current_cluster_name(var_cluster_status)}. Joining cluster will be skipped.")
   else
     if joined_cluster?(var_node_name, var_cluster_status) && current_cluster_name(var_cluster_status) != var_cluster_name
-       unless var_cluster_name.nil?
-          Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{current_cluster_name(var_cluster_status)}. Rejoining the desired cluster.")
-       end
-    else
-       run_rabbitmqctl('stop_app')
-
-       # Catch JoinError so that we can leave Rabbit started, if possible
-       begin
-          join_cluster(var_node_name_to_join, var_node_type)
-       rescue JoinError => exc
-          Chef::Application.fatal!("[rabbitmq_cluster] #{exc.message}")
-       ensure
-          run_rabbitmqctl('start_app')
-       end
+      unless var_cluster_name.nil?
+        Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{current_cluster_name(var_cluster_status)}. Rejoining the desired cluster.")
+      end
     end
+    run_rabbitmqctl('stop_app')
+
+    # Catch JoinError so that we can leave Rabbit started, if possible
+    begin
+      join_cluster(var_node_name_to_join, var_node_type)
+    rescue JoinError => exc
+      Chef::Application.fatal!("[rabbitmq_cluster] #{exc.message}")
+    ensure
+      run_rabbitmqctl('start_app')
+    end
+
     Chef::Log.info("[rabbitmq_cluster] Node #{var_node_name} joined in #{var_node_name_to_join} with type #{var_node_type}")
     Chef::Log.info(cluster_status)
   end
