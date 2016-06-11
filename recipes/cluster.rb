@@ -28,6 +28,7 @@ cluster_nodes = cluster_nodes.to_json
 unless node['rabbitmq']['clustering']['use_auto_clustering']
   # Join in cluster
   rabbitmq_cluster cluster_nodes do
+    cluster_name node['rabbitmq']['clustering']['cluster_name']
     action :join
   end
 end
