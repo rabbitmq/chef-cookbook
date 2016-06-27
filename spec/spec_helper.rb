@@ -8,34 +8,34 @@ require 'chef/application'
 
 # rubocop:disable all
 
-LOG_LEVEL = :fatal
+LOGLEVEL = :fatal
 SUSE_OPTS = {
   :platform => 'suse',
   :version => '11.3',
-  :log_level => LOG_LEVEL
+  :log_level => LOGLEVEL,
 }
 REDHAT_OPTS = {
   :platform => 'redhat',
   :version => '6.5',
-  :log_level => LOG_LEVEL,
+  :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
 UBUNTU_OPTS = {
   :platform => 'ubuntu',
   :version => '14.04',
-  :log_level => LOG_LEVEL,
+  :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
 CENTOS_OPTS = {
   :platform => 'centos',
   :version => '7.0',
-  :log_level => LOG_LEVEL,
+  :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
 FEDORA_OPTS = {
   :platform => 'fedora',
   :version => '20',
-  :log_level => LOG_LEVEL,
+  :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
 
