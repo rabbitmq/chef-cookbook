@@ -171,7 +171,6 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
 end
 
 template "#{node['rabbitmq']['config']}.config" do
-  sensitive true
   source 'rabbitmq.config.erb'
   cookbook node['rabbitmq']['config_template_cookbook']
   owner 'root'
