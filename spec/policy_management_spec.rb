@@ -3,7 +3,14 @@ require 'spec_helper'
 describe 'rabbitmq::policy_management' do
   let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
   let(:node) { runner.node }
-  cached(:chef_run) do
+  let(:chef_run) do
+    node.set['rabbitmq']['policies']['ha-all']['pattern'] = '^(?!amq\\.).*'
+    node.set['rabbitmq']['policies']['ha-all']['params'] = { 'ha-mode' => 'all' }
+    node.set['rabbitmq']['policies']['ha-all']['priority'] = 0
+    node.set['rabbitmq']['policies']['ha-two']['pattern'] = '^two.'
+    node.set['rabbitmq']['policies']['ha-two']['params'] = { 'ha-mode' => 'exactly', 'ha-params' => 2 }
+    node.set['rabbitmq']['policies']['ha-two']['priority'] = 1
+    node.set['rabbitmq']['disabled_policies'] = []
     runner.converge(described_recipe)
   end
 

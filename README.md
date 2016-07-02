@@ -71,6 +71,8 @@ To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['P
 ### policy_management
 Enables any policies listed in the `node['rabbitmq']['policies']` and disables any listed in `node['rabbitmq']['disabled_policies']` attributes.
 
+See examples in attributes file.
+
 ### user_management
 Enables any users listed in the `node['rabbitmq']['enabled_users']` and disables any listed in `node['rabbitmq']['disabled_users']` attributes.
 You can provide user credentials, the vhosts that they need to have access to and the permissions that should be allocated to each user.
