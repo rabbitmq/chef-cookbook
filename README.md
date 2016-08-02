@@ -1,5 +1,7 @@
 # rabbitmq Cookbook
 
+[![Build Status](https://travis-ci.org/rabbitmq/chef-cookbook.svg?branch=master)](https://travis-ci.org/rabbitmq/chef-cookbook)
+
 This is a cookbook for managing RabbitMQ with Chef. It is intended for RabbitMQ 2.6.1 or later releases. With Chef we have adopted support >= 11.14.0 for chef-client, and leaning heavily on chef-client 12 and above.
 
 **NOTE**: This cookbook is still maintained by @jjasghar, please ping him on PRs or Issues you may find.
@@ -12,7 +14,7 @@ The release was tested with (rabbitmq.com/distro version), from the [kitchen.yml
 
 - CentOS 7.0
 - Ubuntu 14.04
-- Ubuntu 15.10
+- Ubuntu 16.04
 - Debian 8.0
 
 We are starting to test with Ubuntu 16.04, though we have not fully vetted support yet.
