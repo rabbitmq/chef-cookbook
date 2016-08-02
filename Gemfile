@@ -4,6 +4,7 @@ gem 'chef'
 gem 'chefspec'
 gem 'github_changelog_generator'
 gem 'kitchen-digitalocean'
+gem 'stove'
 
 group :lint do
   gem 'foodcritic'
@@ -44,5 +45,4 @@ group :development do
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'rake'
-  gem 'stove'
 end
