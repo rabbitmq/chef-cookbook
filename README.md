@@ -14,7 +14,7 @@ The release was tested with (rabbitmq.com/distro version), from the [kitchen.yml
 
 - CentOS 7.0
 - Ubuntu 14.04
-- Ubuntu 15.10
+- Ubuntu 16.04
 - Debian 8.0
 
 We are starting to test with Ubuntu 16.04, though we have not fully vetted support yet.
