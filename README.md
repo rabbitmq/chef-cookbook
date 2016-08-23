@@ -87,7 +87,7 @@ node['rabbitmq']['enabled_users'] = [
         :tag => 'leader',
         :rights => [
             {
-                :vhost => ['/', 'nova'],
+                :vhost => 'nova',
                 :conf => '.*',
                 :write => '.*',
                 :read => '.*'
@@ -209,6 +209,14 @@ end
 ```ruby
 rabbitmq_user "nova" do
   vhost "/nova"
+  permissions ".* .* .*"
+  action :set_permissions
+end
+```
+
+```ruby
+rabbitmq_user "rmq" do
+  vhost ["/", "/rmq", "/nova"]
   permissions ".* .* .*"
   action :set_permissions
 end
