@@ -134,8 +134,10 @@ def parse_cluster_nodes_string(cluster_nodes)
 end
 
 # Checking node is joined in cluster
-def joined_cluster?(node_name, cluster_status)
-  (running_nodes(cluster_status) || '').include?(node_name)
+def joined_cluster?(node_name, cluster_status, node_name_to_join)
+  b_running_nodes = (running_nodes(cluster_status) || '').include?(node_name)
+  b_cluster_name = (current_cluster_name(cluster_status) || '').include?(node_name_to_join)
+  b_running_nodes && b_cluster_name
 end
 
 # Custom exception for join errors
@@ -204,8 +206,8 @@ action :join do
 
   if var_node_name == var_node_name_to_join
     Chef::Log.warn('[rabbitmq_cluster] Trying to join cluster node itself. Joining cluster will be skipped.')
-  elsif joined_cluster?(var_node_name, var_cluster_status)
-    Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{current_cluster_name(var_cluster_status)}. Joining cluster will be skipped.")
+  elsif joined_cluster?(var_node_name, var_cluster_status, var_node_name_to_join)
+    Chef::Log.warn("[rabbitmq_cluster] Node is already member of #{var_node_name_to_join}. Joining cluster will be skipped.")
   else
     run_rabbitmqctl('stop_app')
 
