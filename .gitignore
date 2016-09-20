@@ -12,3 +12,6 @@ Berksfile.lock
 bin
 .kitchen.local.yml
 .coverage
+.direnv/
+.envrc
+.ruby-version
