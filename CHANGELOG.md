@@ -1,7 +1,21 @@
 # Change Log
 
-## [4.9.0](https://github.com/rabbitmq/chef-cookbook/tree/v4.9.0) (2016-08-02)
+## [v4.10.0](https://github.com/rabbitmq/chef-cookbook/tree/v4.10.0) (2016-09-20)
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.9.0...v4.10.0)
 
+**Closed issues:**
+
+- Unable to get secondary node to join cluster. [\#393](https://github.com/rabbitmq/chef-cookbook/issues/393)
+- Unable to enable plugins [\#392](https://github.com/rabbitmq/chef-cookbook/issues/392)
+- New version with MR 376 [\#390](https://github.com/rabbitmq/chef-cookbook/issues/390)
+
+**Merged pull requests:**
+
+- 4.10.0 release [\#397](https://github.com/rabbitmq/chef-cookbook/pull/397) ([jjasghar](https://github.com/jjasghar))
+- Fix README [\#394](https://github.com/rabbitmq/chef-cookbook/pull/394) ([dhui](https://github.com/dhui))
+- Cluster join never happens for manual clustering [\#380](https://github.com/rabbitmq/chef-cookbook/pull/380) ([akadoya](https://github.com/akadoya))
+
+## [v4.9.0](https://github.com/rabbitmq/chef-cookbook/tree/v4.9.0) (2016-08-02)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.8.0...v4.9.0)
 
 **Closed issues:**
@@ -12,6 +26,7 @@
 
 **Merged pull requests:**
 
+- v4.9.0 [\#391](https://github.com/rabbitmq/chef-cookbook/pull/391) ([jjasghar](https://github.com/jjasghar))
 - Comments out example HA policy attributes [\#384](https://github.com/rabbitmq/chef-cookbook/pull/384) ([dgoradia](https://github.com/dgoradia))
 - Fix warning:already initialized constant LOG\_LEVEL [\#378](https://github.com/rabbitmq/chef-cookbook/pull/378) ([ruizink](https://github.com/ruizink))
 - Update bundler that comes with Travis' ruby 2.1.0. [\#377](https://github.com/rabbitmq/chef-cookbook/pull/377) ([ruizink](https://github.com/ruizink))
@@ -386,7 +401,7 @@
 - Removing the PATH from the execute resource [\#176](https://github.com/rabbitmq/chef-cookbook/pull/176) ([jjasghar](https://github.com/jjasghar))
 
 ## [v3.5.0](https://github.com/rabbitmq/chef-cookbook/tree/v3.5.0) (2014-12-02)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/pull...v3.5.0)
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.4.0...v3.5.0)
 
 **Fixed bugs:**
 
@@ -411,11 +426,11 @@
 - Add raw configuration for rabbitmq.erb [\#123](https://github.com/rabbitmq/chef-cookbook/pull/123) ([kYann](https://github.com/kYann))
 -  expose the heartbeat configuration parameter [\#87](https://github.com/rabbitmq/chef-cookbook/pull/87) ([kisoku](https://github.com/kisoku))
 
-## [pull](https://github.com/rabbitmq/chef-cookbook/tree/pull) (2014-11-23)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.4.0...pull)
-
 ## [v3.4.0](https://github.com/rabbitmq/chef-cookbook/tree/v3.4.0) (2014-11-23)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.3.0...v3.4.0)
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/pull...v3.4.0)
+
+## [pull](https://github.com/rabbitmq/chef-cookbook/tree/pull) (2014-11-23)
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.3.0...pull)
 
 **Closed issues:**
 
