@@ -5,6 +5,7 @@ gem 'chefspec'
 gem 'github_changelog_generator'
 gem 'kitchen-digitalocean'
 gem 'stove'
+gem 'kitchen-dokken'
 
 group :lint do
   gem 'foodcritic'
