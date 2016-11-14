@@ -10,7 +10,6 @@ describe 'rabbitmq::policy_management' do
     node.set['rabbitmq']['policies']['ha-two']['pattern'] = '^two.'
     node.set['rabbitmq']['policies']['ha-two']['params'] = { 'ha-mode' => 'exactly', 'ha-params' => 2 }
     node.set['rabbitmq']['policies']['ha-two']['priority'] = 1
-    node.set['rabbitmq']['disabled_policies'] = []
     runner.converge(described_recipe)
   end
 
