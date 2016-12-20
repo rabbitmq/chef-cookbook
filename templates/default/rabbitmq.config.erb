@@ -18,6 +18,12 @@
                     ]}
               ]}
   ]},
+<% else %>
+  {rabbitmq_management, [
+    {listener, [
+                {port, <%= node['rabbitmq']['web_console_port'] %>}
+    ]}
+  ]},
 <% end %>
 <% if node['rabbitmq']['ssl'] && @ssl_versions -%>
   {ssl, [{versions, [<%= @ssl_versions %>]}]},
