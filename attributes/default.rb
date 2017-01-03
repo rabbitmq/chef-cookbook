@@ -104,6 +104,9 @@ default['rabbitmq']['ssl_ciphers'] = nil
 default['rabbitmq']['web_console_ssl'] = false
 default['rabbitmq']['web_console_ssl_port'] = 15_671
 
+# Change non SSL web console listen port
+default['rabbitmq']['web_console_port'] = 15672
+
 # tcp listen options
 default['rabbitmq']['tcp_listen'] = true
 default['rabbitmq']['tcp_listen_packet'] = 'raw'
