@@ -1,5 +1,5 @@
 # Latest RabbitMQ.com version to install
-default['rabbitmq']['version'] = '3.6.1'
+default['rabbitmq']['version'] = '3.6.6'
 # The distro versions may be more stable and have back-ported patches
 default['rabbitmq']['use_distro_version'] = false
 # Allow the distro version to be optionally pinned like the rabbitmq.com version
@@ -9,9 +9,9 @@ default['rabbitmq']['pin_distro_version'] = false
 default['rabbitmq']['deb_package'] = "rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
 default['rabbitmq']['deb_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/"
 
-default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.noarch.rpm"
-default['rabbitmq']['rpm_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/"
+default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.el#{node['platform_version'].to_i}.noarch.rpm"
 
+default['rabbitmq']['rpm_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/"
 default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-R16B03-1.noarch.rpm?raw=true'
 default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/'
 

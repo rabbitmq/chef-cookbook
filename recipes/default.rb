@@ -1,3 +1,4 @@
+# coding: utf-8
 #
 # Cookbook Name:: rabbitmq
 # Recipe:: default
@@ -24,7 +25,11 @@ class Chef::Resource
   include Opscode::RabbitMQ # rubocop:enable all
 end
 
-include_recipe 'erlang'
+case node['platform_family']
+when 'rhel'
+else
+  include_recipe 'erlang'
+end
 
 ## Install the package
 case node['platform_family']
@@ -94,8 +99,6 @@ when 'debian'
 
 when 'rhel', 'fedora'
 
-  # socat is a package dependency of rabbitmq-server
-  package 'socat'
 
   # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
   if node['erlang']['install_method'] == 'esl'
@@ -111,6 +114,28 @@ when 'rhel', 'fedora'
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
   else
+    package 'wget' do
+      action :install
+    end
+    bash "install erlang repos" do
+      user "root"
+      cwd "/tmp"
+      creates "/tmp/erlang-solutions-1.0-1.noarch.rpm"
+      code <<-EOH
+      STATUS=0
+        wget https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm      || STATUS=1
+        rpm -Uvh erlang-solutions-1.0-1.noarch.rpm      || STATUS=1
+      exit $STATUS
+      EOH
+    end
+
+    # socat is a package dependency of rabbitmq-server
+    package 'socat'
+
+    package 'erlang' do
+      action :install
+    end
+
     # We need to download the rpm
     rpm_package = "#{node['rabbitmq']['rpm_package_url']}#{node['rabbitmq']['rpm_package']}"
 

@@ -109,6 +109,9 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
+    docker-api (1.31.0)
+      excon (>= 0.38.0)
+      json
     droplet_kit (1.4.0)
       activesupport (> 3.0, < 5.0.0)
       faraday (~> 0.9.1)
@@ -320,6 +323,9 @@ GEM
       test-kitchen (~> 1.2)
     kitchen-docker (2.3.0)
       test-kitchen (>= 1.0.0)
+    kitchen-dokken (1.0.3)
+      docker-api (~> 1.29)
+      test-kitchen (~> 1.5)
     kitchen-ec2 (1.0.0)
       aws-sdk (~> 2)
       excon
@@ -547,6 +553,7 @@ DEPENDENCIES
   guard-rubocop
   kitchen-digitalocean
   kitchen-docker
+  kitchen-dokken
   kitchen-ec2
   kitchen-openstack
   kitchen-vagrant

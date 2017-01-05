@@ -1,6 +1,7 @@
 driver:
   name: dokken
   chef_version: latest
+  chef_image: chef/chef:latest
   privileged: true # because Docker and SystemD/Upstart
 
 transport:
@@ -21,6 +22,7 @@ platforms:
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN yum -y install which initscripts
+
   - name: centos-7.2
     driver:
       image: centos:7
@@ -43,6 +45,13 @@ platforms:
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
         - RUN /usr/bin/apt-get install lsb-release procps -y
+  - name: debian-8
+    driver:
+      image: debian:8
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install lsb-release procps -y
 
 
 suites:
@@ -55,7 +64,6 @@ suites:
     attributes:
       rabbitmq:
         use_distro_version: true
-    excludes: ["centos-6.7", "centos-7.2"]
   - name: lwrps
     run_list:
       - recipe[rabbitmq_test::lwrps]
