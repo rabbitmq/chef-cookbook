@@ -1,5 +1,3 @@
-# coding: utf-8
-#
 # Cookbook Name:: rabbitmq
 # Recipe:: default
 #
@@ -25,11 +23,7 @@ class Chef::Resource
   include Opscode::RabbitMQ # rubocop:enable all
 end
 
-case node['platform_family']
-when 'rhel'
-else
-  include_recipe 'erlang'
-end
+include_recipe 'erlang' unless platform_family?('rhel')
 
 ## Install the package
 case node['platform_family']
@@ -114,17 +108,19 @@ when 'rhel', 'fedora'
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
   else
-    package 'wget' do
-      action :install
-    end
+
+    package 'wget'
+
     bash "install erlang repos" do
       user "root"
       cwd "/tmp"
       creates "/tmp/erlang-solutions-1.0-1.noarch.rpm"
       code <<-EOH
       STATUS=0
-        wget https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm      || STATUS=1
-        rpm -Uvh erlang-solutions-1.0-1.noarch.rpm      || STATUS=1
+        wget https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm || STATUS=1
+        rpm -Uvh erlang-solutions-1.0-1.noarch.rpm || STATUS=1
+        wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm || STATUS=1
+        rpm -i epel-release-latest-6.noarch.rpm || STATUS=1
       exit $STATUS
       EOH
     end
@@ -132,9 +128,9 @@ when 'rhel', 'fedora'
     # socat is a package dependency of rabbitmq-server
     package 'socat'
 
-    package 'erlang' do
-      action :install
-    end
+    package 'logrotate'
+
+    package 'erlang'
 
     # We need to download the rpm
     rpm_package = "#{node['rabbitmq']['rpm_package_url']}#{node['rabbitmq']['rpm_package']}"
@@ -192,7 +188,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   owner 'root'
   group 'root'
   mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]" unless platform_family?('rhel')
 end
 
 template "#{node['rabbitmq']['config']}.config" do
@@ -207,7 +203,7 @@ template "#{node['rabbitmq']['config']}.config" do
     :ssl_versions => (format_ssl_versions if node['rabbitmq']['ssl_versions']),
     :ssl_ciphers => (format_ssl_ciphers if node['rabbitmq']['ssl_ciphers'])
   )
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]" unless platform_family?('rhel')
 end
 
 template "/etc/default/#{node['rabbitmq']['service_name']}" do
@@ -215,7 +211,7 @@ template "/etc/default/#{node['rabbitmq']['service_name']}" do
   owner 'root'
   group 'root'
   mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]" unless platform_family?('rhel')
 end
 
 existing_erlang_key = if File.exist?(node['rabbitmq']['erlang_cookie_path']) && File.readable?((node['rabbitmq']['erlang_cookie_path']))
@@ -245,15 +241,27 @@ if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'
   end
 end
 
-if node['rabbitmq']['manage_service']
-  service node['rabbitmq']['service_name'] do
-    action [:enable, :start]
-    supports :status => true, :restart => true
-    provider Chef::Provider::Service::Upstart if node['rabbitmq']['job_control'] == 'upstart'
-    provider Chef::Provider::Service::Init if node['rabbitmq']['job_control'] == 'init'
+case node['platform_family']
+when 'rhel'
+  if node['rabbitmq']['manage_service']
+    service node['rabbitmq']['service_name'] do
+      action [:enable]
+      supports :status => true, :restart => true
+    end
+  else
+    service node['rabbitmq']['service_name'] do
+      action :nothing
+    end
   end
 else
-  service node['rabbitmq']['service_name'] do
-    action :nothing
+  if node['rabbitmq']['manage_service']
+    service node['rabbitmq']['service_name'] do
+      action [:enable, :start]
+      supports :status => true, :restart => true
+    end
+  else
+    service node['rabbitmq']['service_name'] do
+      action :nothing
+    end
   end
 end
