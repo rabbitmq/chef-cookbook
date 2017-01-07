@@ -21,3 +21,17 @@ Style/FileName:
 
 Metrics/AbcSize:
   Max: 16
+
+Metrics/ModuleLength:
+  Exclude:
+    - "providers/*.rb"
+    - "spec/*.rb"
+    - "test/cookbooks/rabbitmq_test/files/default/tests/minitest/default_test.rb"
+    - "test/cookbooks/rabbitmq_test/files/default/tests/minitest/lwrps_test.rb"
+
+Metrics/BlockLength:
+  Exclude:
+    - "providers/*.rb"
+    - "spec/*.rb"
+    - "test/cookbooks/rabbitmq_test/files/default/tests/minitest/default_test.rb"
+    - "test/cookbooks/rabbitmq_test/files/default/tests/minitest/lwrps_test.rb"

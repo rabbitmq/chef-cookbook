@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Cookbook Name:: rabbitmq
 # Recipe:: default
 #
@@ -19,7 +20,7 @@
 #
 
 #
-class Chef::Resource
+class Chef::Resource # rubocop:disable all
   include Opscode::RabbitMQ # rubocop:enable all
 end
 
@@ -86,13 +87,12 @@ when 'debian'
       source 'rabbitmq.upstart.conf.erb'
       owner 'root'
       group 'root'
-      mode 0644
+      mode 0o644
       variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
     end
   end
 
 when 'rhel', 'fedora'
-
 
   # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
   if node['erlang']['install_method'] == 'esl'
@@ -111,10 +111,10 @@ when 'rhel', 'fedora'
 
     package 'wget'
 
-    bash "install erlang repos" do
-      user "root"
-      cwd "/tmp"
-      creates "/tmp/erlang-solutions-1.0-1.noarch.rpm"
+    bash 'install erlang repos' do
+      user 'root'
+      cwd '/tmp'
+      creates '/tmp/erlang-solutions-1.0-1.noarch.rpm'
       code <<-EOH
       STATUS=0
         wget https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm || STATUS=1
@@ -186,7 +186,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   source 'rabbitmq-env.conf.erb'
   owner 'root'
   group 'root'
-  mode 00644
+  mode 0o0644
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]" unless platform_family?('rhel')
 end
 
@@ -196,7 +196,7 @@ template "#{node['rabbitmq']['config']}.config" do
   cookbook node['rabbitmq']['config_template_cookbook']
   owner 'root'
   group 'root'
-  mode 00644
+  mode 0o0644
   variables(
     :kernel => format_kernel_parameters,
     :ssl_versions => (format_ssl_versions if node['rabbitmq']['ssl_versions']),
@@ -209,7 +209,7 @@ template "/etc/default/#{node['rabbitmq']['service_name']}" do
   source 'default.rabbitmq-server.erb'
   owner 'root'
   group 'root'
-  mode 00644
+  mode 0o0644
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]" unless platform_family?('rhel')
 end
 
@@ -228,7 +228,7 @@ if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'
     source 'doterlang.cookie.erb'
     owner 'rabbitmq'
     group 'rabbitmq'
-    mode 00400
+    mode 0o0400
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
     notifies :run, 'execute[reset-node]', :immediately
   end

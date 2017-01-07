@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 describe file('/var/lib/rabbitmq/.erlang.cookie') do

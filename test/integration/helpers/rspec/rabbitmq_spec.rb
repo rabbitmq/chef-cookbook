@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 describe package('rabbitmq-server') do
@@ -8,21 +9,20 @@ if os[:family] == 'redhat'
   describe service('rabbitmq-server') do
     it { should be_enabled }
   end
-elsif ['debian', 'ubuntu'].include?(os[:family])
+elsif %w(debian ubuntu).include?(os[:family])
   describe service('rabbitmq-server') do
     it { should be_enabled }
     it { should be_running }
   end
 
   describe port(5672) do
-  it { should be_listening }
+    it { should be_listening }
   end
 
   describe command('rabbitmqctl status') do
     it { should return_exit_status 0 }
   end
 end
-
 
 describe file('/var/lib/rabbitmq/mnesia') do
   it { should be_directory }

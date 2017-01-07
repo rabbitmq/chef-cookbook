@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq
 # Recipe:: cluster
@@ -30,7 +31,6 @@ rabbitmq_cluster cluster_nodes do
   action :join
   not_if { node['rabbitmq']['clustering']['use_auto_clustering'] }
 end
-
 
 # Set cluster name : It will be skipped once same cluster name has been set in the cluster.
 rabbitmq_cluster cluster_nodes do

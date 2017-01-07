@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Latest RabbitMQ.com version to install
 default['rabbitmq']['version'] = '3.6.6'
 # The distro versions may be more stable and have back-ported patches
@@ -105,7 +106,7 @@ default['rabbitmq']['web_console_ssl'] = false
 default['rabbitmq']['web_console_ssl_port'] = 15_671
 
 # Change non SSL web console listen port
-default['rabbitmq']['web_console_port'] = 15672
+default['rabbitmq']['web_console_port'] = 15_672
 
 # tcp listen options
 default['rabbitmq']['tcp_listen'] = true
@@ -125,8 +126,7 @@ default['rabbitmq']['disabled_virtualhosts'] = []
 # users
 default['rabbitmq']['enabled_users'] =
   [{ :name => 'guest', :password => 'guest', :rights =>
-    [{ :vhost => nil, :conf => '.*', :write => '.*', :read => '.*' }]
-  }]
+    [{ :vhost => nil, :conf => '.*', :write => '.*', :read => '.*' }] }]
 default['rabbitmq']['disabled_users'] = []
 
 # plugins

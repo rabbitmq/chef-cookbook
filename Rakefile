@@ -1,4 +1,5 @@
 #!/usr/bin/env rake
+# frozen_string_literal: true
 
 # Style tests. cookstyle (rubocop) and Foodcritic
 namespace :style do
@@ -18,8 +19,8 @@ namespace :style do
     desc 'Run Chef style checks'
     FoodCritic::Rake::LintTask.new(:chef) do |t|
       t.options = {
-        fail_tags: ['any'],
-        progress: true
+        :fail_tags => ['any'],
+        :progress => true
       }
     end
   rescue LoadError
@@ -28,7 +29,7 @@ namespace :style do
 end
 
 desc 'Run all style checks'
-task style: ['style:chef', 'style:ruby']
+task :style => ['style:chef', 'style:ruby']
 
 # ChefSpec
 begin
@@ -64,4 +65,4 @@ namespace :supermarket do
 end
 
 # Default
-task default: %w(style spec)
+task :default => %w(style spec)
