@@ -21,6 +21,7 @@ namespace :style do
       t.options = {
         :fail_tags => ['any'],
         :progress => true,
+        :tags => ['~FC023'],
       }
     end
   rescue LoadError
