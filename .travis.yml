@@ -21,6 +21,9 @@ services: docker
 env:
   matrix:
   - INSTANCE=centos-7
+  - INSTANCE=centos-6
+  - INSTANCE=debian-7
+  - INSTANCE=debian-8
   - INSTANCE=ubuntu-1404
   - INSTANCE=ubuntu-1604
 
