@@ -20,7 +20,7 @@
 #
 
 #
-class Chef::Resource # rubocop:disable all
+class Chef::Resource
   include Opscode::RabbitMQ # rubocop:enable all
 end
 

@@ -58,7 +58,7 @@ end
 
 # does the user have the rights listed on the vhost?
 # empty perm_list means we're checking for any permissions
-def user_has_permissions?(name, vhost, perm_list = nil) # rubocop:disable all
+def user_has_permissions?(name, vhost, perm_list = nil)
   vhost = '/' if vhost.nil? # rubocop:enable all
   cmd = "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\s\""
   cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)

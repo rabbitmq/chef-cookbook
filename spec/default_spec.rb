@@ -52,7 +52,7 @@ describe 'rabbitmq::default' do
     it 'has additional_env_settings' do
       node.set['rabbitmq']['additional_env_settings'] = [
         'USE_LONGNAME=true',
-        'WHATS_ON_THE_TELLY=penguin'
+        'WHATS_ON_THE_TELLY=penguin',
       ]
       [/^WHATS_ON_THE_TELLY=penguin/,
        /^# Additional ENV settings/,
