@@ -20,9 +20,6 @@ describe 'rabbitmq::community_plugins' do
   plugins.each do |plugin, download_url|
     it 'creates the remote files with attributes' do
       expect(chef_run).to create_remote_file("/usr/lib/rabbitmq/lib/rabbitmq_server-#{node['rabbitmq']['version']}/plugins/#{plugin}.ez").with(
-        :mode => '0644',
-        :owner => 'root',
-        :group => 'root',
         :source => download_url
       )
     end
