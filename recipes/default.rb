@@ -43,6 +43,9 @@ when 'debian'
   # socat is a package dependency of rabbitmq-server
   package 'socat'
 
+  # because erlang is difficult
+  package 'esl-erlang'
+
   # => Prevent Debian systems from automatically starting RabbitMQ after dpkg install
   dpkg_autostart node['rabbitmq']['service_name'] do
     allow false
@@ -138,6 +141,20 @@ when 'rhel', 'fedora'
     remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}" do
       source rpm_package
       action :create_if_missing
+    end
+
+    bash 'install erlang repos' do
+      user 'root'
+      cwd '/tmp'
+      creates '/tmp/erlang-solutions-1.0-1.noarch.rpm'
+      code <<-EOH
+      STATUS=0
+        wget https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm || STATUS=1
+        rpm -Uvh erlang-solutions-1.0-1.noarch.rpm || STATUS=1
+        wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm || STATUS=1
+        rpm -i epel-release-latest-6.noarch.rpm || STATUS=1
+      exit $STATUS
+      EOH
     end
     rpm_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}"
   end
