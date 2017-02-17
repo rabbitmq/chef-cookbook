@@ -202,6 +202,7 @@ existing_erlang_key = if File.exist?(node['rabbitmq']['erlang_cookie_path']) && 
 if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
   log "stop #{node['rabbitmq']['service_name']} to change erlang cookie" do
     notifies :stop, "service[#{node['rabbitmq']['service_name']}]", :immediately
+    not_if "cat #{node['rabbitmq']['erlang_cookie_path']} | grep #{node['rabbitmq']['erlang_cookie']}"
   end
 
   template node['rabbitmq']['erlang_cookie_path'] do
