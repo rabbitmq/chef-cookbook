@@ -1,4 +1,4 @@
-#
+# frozen_string_literal: true
 # Cookbook Name:: rabbitmq
 # Recipe:: default
 #
@@ -24,7 +24,7 @@ class Chef::Resource
   include Opscode::RabbitMQ # rubocop:enable all
 end
 
-include_recipe 'erlang'
+include_recipe 'erlang' unless platform_family?('rhel')
 
 ## Install the package
 case node['platform_family']
@@ -34,7 +34,7 @@ when 'debian'
     source '90forceyes.erb'
     owner 'root'
     group 'root'
-    mode '0644'
+    mode '644'
   end
 
   # logrotate is a package dependency of rabbitmq-server
@@ -42,6 +42,9 @@ when 'debian'
 
   # socat is a package dependency of rabbitmq-server
   package 'socat'
+
+  # because erlang is difficult
+  package 'esl-erlang'
 
   # => Prevent Debian systems from automatically starting RabbitMQ after dpkg install
   dpkg_autostart node['rabbitmq']['service_name'] do
@@ -87,15 +90,12 @@ when 'debian'
       source 'rabbitmq.upstart.conf.erb'
       owner 'root'
       group 'root'
-      mode 0644
+      mode '644'
       variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
     end
   end
 
 when 'rhel', 'fedora'
-
-  # socat is a package dependency of rabbitmq-server
-  package 'socat'
 
   # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
   if node['erlang']['install_method'] == 'esl'
@@ -111,12 +111,50 @@ when 'rhel', 'fedora'
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
   else
+
+    package 'wget'
+
+    bash 'install erlang repos' do
+      user 'root'
+      cwd '/tmp'
+      creates '/tmp/erlang-solutions-1.0-1.noarch.rpm'
+      code <<-EOH
+      STATUS=0
+        wget https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm || STATUS=1
+        rpm -Uvh erlang-solutions-1.0-1.noarch.rpm || STATUS=1
+        wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm || STATUS=1
+        rpm -i epel-release-latest-6.noarch.rpm || STATUS=1
+      exit $STATUS
+      EOH
+    end
+
+    # socat is a package dependency of rabbitmq-server
+    package 'socat'
+
+    package 'logrotate'
+
+    package 'erlang'
+
     # We need to download the rpm
     rpm_package = "#{node['rabbitmq']['rpm_package_url']}#{node['rabbitmq']['rpm_package']}"
 
     remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}" do
       source rpm_package
       action :create_if_missing
+    end
+
+    bash 'install erlang repos' do
+      user 'root'
+      cwd '/tmp'
+      creates '/tmp/erlang-solutions-1.0-1.noarch.rpm'
+      code <<-EOH
+      STATUS=0
+        wget https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm || STATUS=1
+        rpm -Uvh erlang-solutions-1.0-1.noarch.rpm || STATUS=1
+        wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm || STATUS=1
+        rpm -i epel-release-latest-6.noarch.rpm || STATUS=1
+      exit $STATUS
+      EOH
     end
     rpm_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}"
   end
@@ -166,8 +204,8 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   source 'rabbitmq-env.conf.erb'
   owner 'root'
   group 'root'
-  mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  mode '644'
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]" unless platform_family?('rhel')
 end
 
 template "#{node['rabbitmq']['config']}.config" do
@@ -176,21 +214,21 @@ template "#{node['rabbitmq']['config']}.config" do
   cookbook node['rabbitmq']['config_template_cookbook']
   owner 'root'
   group 'root'
-  mode 00644
+  mode '644'
   variables(
     :kernel => format_kernel_parameters,
     :ssl_versions => (format_ssl_versions if node['rabbitmq']['ssl_versions']),
     :ssl_ciphers => (format_ssl_ciphers if node['rabbitmq']['ssl_ciphers'])
   )
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]" unless platform_family?('rhel')
 end
 
 template "/etc/default/#{node['rabbitmq']['service_name']}" do
   source 'default.rabbitmq-server.erb'
   owner 'root'
   group 'root'
-  mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  mode '644'
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]" unless platform_family?('rhel')
 end
 
 existing_erlang_key = if File.exist?(node['rabbitmq']['erlang_cookie_path']) && File.readable?((node['rabbitmq']['erlang_cookie_path']))
@@ -208,7 +246,7 @@ if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'
     source 'doterlang.cookie.erb'
     owner 'rabbitmq'
     group 'rabbitmq'
-    mode 00400
+    mode 0o0400
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
     notifies :run, 'execute[reset-node]', :immediately
   end
@@ -220,15 +258,27 @@ if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'
   end
 end
 
-if node['rabbitmq']['manage_service']
-  service node['rabbitmq']['service_name'] do
-    action [:enable, :start]
-    supports :status => true, :restart => true
-    provider Chef::Provider::Service::Upstart if node['rabbitmq']['job_control'] == 'upstart'
-    provider Chef::Provider::Service::Init if node['rabbitmq']['job_control'] == 'init'
+case node['platform_family']
+when 'rhel'
+  if node['rabbitmq']['manage_service']
+    service node['rabbitmq']['service_name'] do
+      action [:enable]
+      supports :status => true, :restart => true
+    end
+  else
+    service node['rabbitmq']['service_name'] do
+      action :nothing
+    end
   end
 else
-  service node['rabbitmq']['service_name'] do
-    action :nothing
+  if node['rabbitmq']['manage_service']
+    service node['rabbitmq']['service_name'] do
+      action [:enable, :start]
+      supports :status => true, :restart => true
+    end
+  else
+    service node['rabbitmq']['service_name'] do
+      action :nothing
+    end
   end
 end

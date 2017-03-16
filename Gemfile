@@ -1,17 +1,18 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 
 gem 'chef'
 gem 'chefspec'
 gem 'github_changelog_generator'
 gem 'kitchen-digitalocean'
-gem 'stove'
 gem 'kitchen-dokken'
+gem 'stove'
 
 group :lint do
-  gem 'foodcritic'
-  gem 'rubocop'
-  gem 'rainbow'
   gem 'cookstyle'
+  gem 'foodcritic'
+  gem 'rainbow'
+  gem 'rubocop'
 end
 
 group :unit do
@@ -37,13 +38,13 @@ group :kitchen_cloud do
 end
 
 group :development do
-  gem 'ruby_gntp'
   gem 'growl'
-  gem 'rb-fsevent'
   gem 'guard'
-  gem 'guard-kitchen'
   gem 'guard-foodcritic'
+  gem 'guard-kitchen'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'rake'
+  gem 'rb-fsevent'
+  gem 'ruby_gntp'
 end

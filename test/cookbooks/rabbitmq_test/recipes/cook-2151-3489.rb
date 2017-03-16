@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq_test
 # Recipe:: cook-2151-3489

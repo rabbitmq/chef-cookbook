@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 describe 'rabbitmq::default' do
@@ -24,7 +25,8 @@ describe 'rabbitmq::default' do
         :user => 'root',
         :group => 'root',
         :source => 'rabbitmq-env.conf.erb',
-        :mode => 00644)
+        :mode => '644'
+      )
     end
 
     it 'has no erl args by default' do
@@ -50,7 +52,8 @@ describe 'rabbitmq::default' do
     it 'has additional_env_settings' do
       node.set['rabbitmq']['additional_env_settings'] = [
         'USE_LONGNAME=true',
-        'WHATS_ON_THE_TELLY=penguin']
+        'WHATS_ON_THE_TELLY=penguin',
+      ]
       [/^WHATS_ON_THE_TELLY=penguin/,
        /^# Additional ENV settings/,
        /^USE_LONGNAME=true/].each do |line|
@@ -83,11 +86,6 @@ describe 'rabbitmq::default' do
     expect(chef_run).to enable_service('rabbitmq-server')
   end
 
-  it 'starts a rabbitmq service when manage_service is true' do
-    node.set['rabbitmq']['manage_service'] = true
-    expect(chef_run).to start_service('rabbitmq-server')
-  end
-
   it 'should have the use_distro_version set to false' do
     expect(chef_run.node['rabbitmq']['use_distro_version']).to eq(false)
   end
@@ -101,7 +99,7 @@ describe 'rabbitmq::default' do
       :user => 'root',
       :group => 'root',
       :source => 'default.rabbitmq-server.erb',
-      :mode => 00644
+      :mode => '644'
     )
   end
 
@@ -110,7 +108,8 @@ describe 'rabbitmq::default' do
       :user => 'root',
       :group => 'root',
       :source => 'rabbitmq.config.erb',
-      :mode => 00644)
+      :mode => '644'
+    )
 
     if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
       expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.config').with(:sensitive => true)
@@ -122,21 +121,24 @@ describe 'rabbitmq::default' do
   describe 'ssl ciphers' do
     it 'has no ssl ciphers specified by default' do
       expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-        /{ciphers,[{.*}]}/)
+        /{ciphers,[{.*}]}/
+      )
     end
 
     it 'allows ssl ciphers' do
       node.set['rabbitmq']['ssl'] = true
       node.set['rabbitmq']['ssl_ciphers'] = ['{ecdhe_ecdsa,aes_128_cbc,sha256}', '{ecdhe_ecdsa,aes_256_cbc,sha}']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-        '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
+        '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}'
+      )
     end
 
     it 'allows web console ssl ciphers' do
       node.set['rabbitmq']['web_console_ssl'] = true
       node.set['rabbitmq']['ssl_ciphers'] = ['"ECDHE-ECDSA-AES256-SHA384"', '"ECDH-ECDSA-AES256-SHA384"']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-        '{ciphers,["ECDHE-ECDSA-AES256-SHA384","ECDH-ECDSA-AES256-SHA384"]}')
+        '{ciphers,["ECDHE-ECDSA-AES256-SHA384","ECDH-ECDSA-AES256-SHA384"]}'
+      )
     end
 
     it 'should set additional rabbitmq config' do
@@ -196,20 +198,13 @@ describe 'rabbitmq::default' do
       expect(chef_run).to install_package('logrotate')
     end
 
-    it 'creates a rabbitmq-server deb in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.6.1-1_all.deb')
-    end
-
-    it 'installs the rabbitmq-server deb_package with the default action' do
-      expect(chef_run).to upgrade_package('rabbitmq-server')
-    end
-
     it 'creates a template rabbitmq-server with attributes' do
       expect(chef_run).to create_template('/etc/default/rabbitmq-server').with(
         :user => 'root',
         :group => 'root',
         :source => 'default.rabbitmq-server.erb',
-        :mode => 00644)
+        :mode => '644'
+      )
     end
 
     describe 'uses distro version' do
@@ -232,16 +227,6 @@ describe 'rabbitmq::default' do
     let(:node) { runner.node }
     let(:chef_run) do
       runner.converge(described_recipe)
-    end
-
-    it 'creates a rabbitmq-server rpm in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
-    end
-
-    it 'installs the rabbitmq-server rpm_package with the default action' do
-      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
     end
 
     describe 'uses distro version' do
@@ -281,20 +266,6 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
-    it 'creates a rabbitmq-server rpm in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
-    end
-
-    it 'installs the rabbitmq-server rpm_package with the default action' do
-      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
-    end
-
-    it 'includes the `yum-epel` recipe' do
-      expect(chef_run).to include_recipe('yum-epel')
-    end
-
     describe 'uses distro version' do
       before do
         node.set['rabbitmq']['use_distro_version'] = true
@@ -312,16 +283,6 @@ describe 'rabbitmq::default' do
     let(:chef_run) do
       node.set['rabbitmq']['version'] = '3.6.1'
       runner.converge(described_recipe)
-    end
-
-    it 'creates a rabbitmq-server rpm in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
-    end
-
-    it 'installs the rabbitmq-server rpm_package with the default action' do
-      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
     end
 
     describe 'uses distro version' do
