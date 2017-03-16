@@ -147,7 +147,7 @@ when 'debian'
 end
 
 # heartbeat
-default['rabbitmq']['heartbeat'] = 580
+default['rabbitmq']['heartbeat'] = 60
 
 # per default all policies and disabled policies are empty but need to be
 # defined
