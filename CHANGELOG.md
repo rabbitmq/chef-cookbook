@@ -1,5 +1,29 @@
 # Change Log
 
+## [v4.11.0](https://github.com/rabbitmq/chef-cookbook/tree/v4.11.0)
+
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.10.0...v4.11.0)
+
+**Closed issues:**
+
+- To install version 3.6.6 [\#414](https://github.com/rabbitmq/chef-cookbook/issues/414)
+- Change default hearbeat to 60 [\#412](https://github.com/rabbitmq/chef-cookbook/issues/412)
+- Erlang cookbook dependency is out of date [\#403](https://github.com/rabbitmq/chef-cookbook/issues/403)
+
+**Merged pull requests:**
+
+- Provision 3.6.8 by default [\#415](https://github.com/rabbitmq/chef-cookbook/pull/415) ([michaelklishin](https://github.com/michaelklishin))
+- Change heartbeat to 60 \(default since 3.5.5\) [\#413](https://github.com/rabbitmq/chef-cookbook/pull/413) ([tsupertramp](https://github.com/tsupertramp))
+- Remove defaults from resource [\#410](https://github.com/rabbitmq/chef-cookbook/pull/410) ([tas50](https://github.com/tas50))
+- Avoid double testing in Travis [\#409](https://github.com/rabbitmq/chef-cookbook/pull/409) ([tas50](https://github.com/tas50))
+- Update readme to require Chef 12.1 [\#408](https://github.com/rabbitmq/chef-cookbook/pull/408) ([tas50](https://github.com/tas50))
+- Add opensuse / opensuseleap to the metadata [\#407](https://github.com/rabbitmq/chef-cookbook/pull/407) ([tas50](https://github.com/tas50))
+- Remove attributes from the metadata [\#406](https://github.com/rabbitmq/chef-cookbook/pull/406) ([tas50](https://github.com/tas50))
+- Add support for non ssl management port [\#404](https://github.com/rabbitmq/chef-cookbook/pull/404) ([BasLangenberg](https://github.com/BasLangenberg))
+- Add kitchen-dokken support to .travis.yml and Gemfile [\#400](https://github.com/rabbitmq/chef-cookbook/pull/400) ([OBrienCommaJosh](https://github.com/OBrienCommaJosh))
+- defined policies and disabled\_policies as \[\] to avoid nil:NilClass error [\#399](https://github.com/rabbitmq/chef-cookbook/pull/399) ([jklare](https://github.com/jklare))
+- apply\_to parameter missing [\#381](https://github.com/rabbitmq/chef-cookbook/pull/381) ([satyabhan](https://github.com/satyabhan))
+
 ## [v4.10.0](https://github.com/rabbitmq/chef-cookbook/tree/v4.10.0) (2016-09-20)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.9.0...v4.10.0)
 
@@ -401,7 +425,7 @@
 - Removing the PATH from the execute resource [\#176](https://github.com/rabbitmq/chef-cookbook/pull/176) ([jjasghar](https://github.com/jjasghar))
 
 ## [v3.5.0](https://github.com/rabbitmq/chef-cookbook/tree/v3.5.0) (2014-12-02)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.4.0...v3.5.0)
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/pull...v3.5.0)
 
 **Fixed bugs:**
 
@@ -426,11 +450,11 @@
 - Add raw configuration for rabbitmq.erb [\#123](https://github.com/rabbitmq/chef-cookbook/pull/123) ([kYann](https://github.com/kYann))
 -  expose the heartbeat configuration parameter [\#87](https://github.com/rabbitmq/chef-cookbook/pull/87) ([kisoku](https://github.com/kisoku))
 
-## [v3.4.0](https://github.com/rabbitmq/chef-cookbook/tree/v3.4.0) (2014-11-23)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/pull...v3.4.0)
-
 ## [pull](https://github.com/rabbitmq/chef-cookbook/tree/pull) (2014-11-23)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.3.0...pull)
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.4.0...pull)
+
+## [v3.4.0](https://github.com/rabbitmq/chef-cookbook/tree/v3.4.0) (2014-11-23)
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.3.0...v3.4.0)
 
 **Closed issues:**
 
