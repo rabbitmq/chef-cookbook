@@ -12,13 +12,13 @@ default['rabbitmq']['deb_package_url'] = "https://www.rabbitmq.com/releases/rabb
 case node['platform_family']
 when 'rhel', 'fedora'
   case node['platform_version']
-  when > '6'
-    default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.el6..noarch.rpm"
   when < '6'
+    default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.el6..noarch.rpm"
+  when > '6'
     default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.el7.noarch.rpm"
   end
 when 'suse'
-  default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.suse..noarch.rpm"
+  default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.suse.noarch.rpm"
 end
 
 default['rabbitmq']['rpm_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/"
