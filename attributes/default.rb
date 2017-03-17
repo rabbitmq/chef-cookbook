@@ -151,7 +151,7 @@ default['rabbitmq']['heartbeat'] = 60
 
 # per default all policies and disabled policies are empty but need to be
 # defined
-default['rabbitmq']['policies'] = []
+default['rabbitmq']['policies'] = {}
 default['rabbitmq']['disabled_policies'] = []
 
 # Example HA policies
