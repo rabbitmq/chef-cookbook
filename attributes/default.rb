@@ -13,7 +13,7 @@ case node['platform_family']
 when 'rhel', 'fedora'
   case node['platform_version']
   when < '6'
-    default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.el6..noarch.rpm"
+    default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.el6.noarch.rpm"
   when > '6'
     default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.el7.noarch.rpm"
   end
