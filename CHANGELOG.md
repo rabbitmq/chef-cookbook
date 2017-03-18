@@ -1,7 +1,15 @@
 # Change Log
 
-## [v4.11.0](https://github.com/rabbitmq/chef-cookbook/tree/v4.11.0)
+## [v4.11.1](https://github.com/rabbitmq/chef-cookbook/tree/v4.11.1)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.11.0...v4.11.1)
+
+**Merged pull requests:**
+
+- Fixes for rhel based pkgs [\#418](https://github.com/rabbitmq/chef-cookbook/pull/418) ([jjasghar](https://github.com/jjasghar))
+- Policies Attribute Fix [\#417](https://github.com/rabbitmq/chef-cookbook/pull/417) ([bdwyertech](https://github.com/bdwyertech))
+
+## [v4.11.0](https://github.com/rabbitmq/chef-cookbook/tree/v4.11.0) (2017-03-17)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.10.0...v4.11.0)
 
 **Closed issues:**
