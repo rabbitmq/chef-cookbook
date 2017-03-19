@@ -1,8 +1,19 @@
 # Change Log
 
-## [v4.11.1](https://github.com/rabbitmq/chef-cookbook/tree/v4.11.1)
+## [v4.11.2](https://github.com/rabbitmq/chef-cookbook/tree/v4.11.2)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.11.1...v4.11.2)
+
+**Merged pull requests:**
+
+- Fix Case Statement for RHEL [\#419](https://github.com/rabbitmq/chef-cookbook/pull/419) ([bdwyertech](https://github.com/bdwyertech))
+
+## [v4.11.1](https://github.com/rabbitmq/chef-cookbook/tree/v4.11.1) (2017-03-18)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.11.0...v4.11.1)
+
+**Closed issues:**
+
+- cookbook defaults broken with update to rabbitmq rpm names [\#416](https://github.com/rabbitmq/chef-cookbook/issues/416)
 
 **Merged pull requests:**
 
