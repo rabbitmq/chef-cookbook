@@ -19,6 +19,7 @@ namespace :style do
     FoodCritic::Rake::LintTask.new(:chef) do |t|
       t.options = {
         fail_tags: ['any'],
+        tags: %w(~FC023),
         progress: true
       }
     end
