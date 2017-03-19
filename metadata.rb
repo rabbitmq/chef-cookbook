@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 name 'rabbitmq'
 maintainer 'Chef, Inc.'
 maintainer_email 'jj@chef.io'
