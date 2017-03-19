@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq
 # Recipe:: default
@@ -94,6 +95,9 @@ when 'debian'
 
 when 'rhel', 'fedora'
 
+  # logrotate is a package dependency of rabbitmq-server
+  package 'logrotate'
+
   # socat is a package dependency of rabbitmq-server
   package 'socat'
 
@@ -122,6 +126,13 @@ when 'rhel', 'fedora'
   end
 
 when 'suse'
+
+  # logrotate is a package dependency of rabbitmq-server
+  package 'logrotate'
+
+  # socat is a package dependency of rabbitmq-server
+  package 'socat'
+
   # rabbitmq-server-plugins needs to be first so they both get installed
   # from the right repository. Otherwise, zypper will stop and ask for a
   # vendor change.
