@@ -32,6 +32,3 @@ suites:
       rabbitmq:
         use_distro_version: true
     excludes: ["centos-7-0-x64"]
-  - name: lwrps
-    run_list:
-      - recipe[rabbitmq_test::lwrps]
