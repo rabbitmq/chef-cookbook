@@ -1,7 +1,14 @@
 # Change Log
 
-## [v4.11.2](https://github.com/rabbitmq/chef-cookbook/tree/v4.11.2)
+## [v4.12.0](https://github.com/rabbitmq/chef-cookbook/tree/v4.12.0)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.11.2...v4.12.0)
+
+**Merged pull requests:**
+
+- Getting tests green [\#420](https://github.com/rabbitmq/chef-cookbook/pull/420) ([jjasghar](https://github.com/jjasghar))
+
+## [v4.11.2](https://github.com/rabbitmq/chef-cookbook/tree/v4.11.2) (2017-03-19)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.11.1...v4.11.2)
 
 **Merged pull requests:**
@@ -444,7 +451,7 @@
 - Removing the PATH from the execute resource [\#176](https://github.com/rabbitmq/chef-cookbook/pull/176) ([jjasghar](https://github.com/jjasghar))
 
 ## [v3.5.0](https://github.com/rabbitmq/chef-cookbook/tree/v3.5.0) (2014-12-02)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/pull...v3.5.0)
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.4.0...v3.5.0)
 
 **Fixed bugs:**
 
@@ -469,11 +476,11 @@
 - Add raw configuration for rabbitmq.erb [\#123](https://github.com/rabbitmq/chef-cookbook/pull/123) ([kYann](https://github.com/kYann))
 -  expose the heartbeat configuration parameter [\#87](https://github.com/rabbitmq/chef-cookbook/pull/87) ([kisoku](https://github.com/kisoku))
 
-## [pull](https://github.com/rabbitmq/chef-cookbook/tree/pull) (2014-11-23)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.4.0...pull)
-
 ## [v3.4.0](https://github.com/rabbitmq/chef-cookbook/tree/v3.4.0) (2014-11-23)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.3.0...v3.4.0)
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/pull...v3.4.0)
+
+## [pull](https://github.com/rabbitmq/chef-cookbook/tree/pull) (2014-11-23)
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v3.3.0...pull)
 
 **Closed issues:**
 
