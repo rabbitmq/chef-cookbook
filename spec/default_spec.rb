@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 describe 'rabbitmq::default' do
@@ -168,6 +169,14 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
+    it 'should install the socat package' do
+      expect(chef_run).to install_package('socat')
+    end
+
+    it 'should install the logrotate package' do
+      expect(chef_run).to install_package('logrotate')
+    end
+
     it 'should install the rabbitmq package' do
       expect(chef_run).to install_package('rabbitmq-server')
     end
@@ -181,7 +190,7 @@ describe 'rabbitmq::default' do
     let(:runner) { ChefSpec::ServerRunner.new(UBUNTU_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
-      node.set['rabbitmq']['version'] = '3.6.1'
+      node.set['rabbitmq']['version'] = '3.6.8'
       runner.converge(described_recipe)
     end
 
@@ -196,8 +205,12 @@ describe 'rabbitmq::default' do
       expect(chef_run).to install_package('logrotate')
     end
 
+    it 'should install the socat package' do
+      expect(chef_run).to install_package('socat')
+    end
+
     it 'creates a rabbitmq-server deb in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.6.1-1_all.deb')
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.6.8-1_all.deb')
     end
 
     it 'installs the rabbitmq-server deb_package with the default action' do
@@ -234,14 +247,19 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
-    it 'creates a rabbitmq-server rpm in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
-    end
+    describe 'if redhat is below 7' do
+      before do
+        node.set['platform_version'] = '6'
+      end
+      it 'creates a rabbitmq-server rpm in the cache path' do
+        expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.8-1.el6.noarch.rpm')
+        expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.8-1.el6.noarch.rpm')
+      end
 
-    it 'installs the rabbitmq-server rpm_package with the default action' do
-      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
+      it 'installs the rabbitmq-server rpm_package with the default action' do
+        expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.8-1.el6.noarch.rpm')
+        expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.8-1.el6.noarch.rpm')
+      end
     end
 
     describe 'uses distro version' do
@@ -272,6 +290,14 @@ describe 'rabbitmq::default' do
       node.set['rabbitmq']['loopback_users'] = %w(foo bar)
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"foo">>,<<"bar">>]')
     end
+
+    it 'should install the logrotate package' do
+      expect(chef_run).to install_package('logrotate')
+    end
+
+    it 'should install the socat package' do
+      expect(chef_run).to install_package('socat')
+    end
   end
 
   describe 'centos' do
@@ -281,47 +307,32 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
-    it 'creates a rabbitmq-server rpm in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
+    it 'should install the logrotate package' do
+      expect(chef_run).to install_package('logrotate')
     end
 
-    it 'installs the rabbitmq-server rpm_package with the default action' do
-      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
+    it 'should install the socat package' do
+      expect(chef_run).to install_package('socat')
+    end
+
+    describe 'if centos is above 7' do
+      before do
+        node.set['platform_version'] = '7'
+      end
+
+      it 'creates a rabbitmq-server rpm in the cache path' do
+        expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.8-1.el7.noarch.rpm')
+        expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.8-1.el7.noarch.rpm')
+      end
+
+      it 'installs the rabbitmq-server rpm_package with the default action' do
+        expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.8-1.el7.noarch.rpm')
+        expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.8-1.el7.noarch.rpm')
+      end
     end
 
     it 'includes the `yum-epel` recipe' do
       expect(chef_run).to include_recipe('yum-epel')
-    end
-
-    describe 'uses distro version' do
-      before do
-        node.set['rabbitmq']['use_distro_version'] = true
-      end
-
-      it 'should install rabbitmq-server package' do
-        expect(chef_run).to install_package('rabbitmq-server')
-      end
-    end
-  end
-
-  describe 'fedora' do
-    let(:runner) { ChefSpec::ServerRunner.new(FEDORA_OPTS) }
-    let(:node) { runner.node }
-    let(:chef_run) do
-      node.set['rabbitmq']['version'] = '3.6.1'
-      runner.converge(described_recipe)
-    end
-
-    it 'creates a rabbitmq-server rpm in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
-    end
-
-    it 'installs the rabbitmq-server rpm_package with the default action' do
-      expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.1-1.noarch.rpm')
-      expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.1-1.noarch.rpm')
     end
 
     describe 'uses distro version' do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 name 'rabbitmq_test'
 maintainer 'Chef Software, Inc.'
 maintainer_email 'cookbooks@chef.io'

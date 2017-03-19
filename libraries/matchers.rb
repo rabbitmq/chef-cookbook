@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 if defined?(ChefSpec)
   def add_rabbitmq_user(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:rabbitmq_user, :add, resource_name)

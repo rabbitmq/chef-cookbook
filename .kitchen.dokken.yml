@@ -56,9 +56,6 @@ suites:
       rabbitmq:
         use_distro_version: true
     excludes: ["centos-6.7", "centos-7.2"]
-  - name: lwrps
-    run_list:
-      - recipe[rabbitmq_test::lwrps]
   - name: default-force-yes
     run_list:
       - recipe[rabbitmq::default]

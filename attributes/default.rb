@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Latest RabbitMQ.com version to install
 default['rabbitmq']['version'] = '3.6.8'
 # The distro versions may be more stable and have back-ported patches
@@ -11,11 +12,11 @@ default['rabbitmq']['deb_package_url'] = "https://www.rabbitmq.com/releases/rabb
 
 case node['platform_family']
 when 'rhel', 'fedora'
-  if node['platform_version'].to_i > 6
-    default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.el7.noarch.rpm"
-  else
-    default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.el6.noarch.rpm"
-  end
+  default['rabbitmq']['rpm_package'] = if node['platform_version'].to_i > 6
+                                         "rabbitmq-server-#{node['rabbitmq']['version']}-1.el7.noarch.rpm"
+                                       else
+                                         "rabbitmq-server-#{node['rabbitmq']['version']}-1.el6.noarch.rpm"
+                                       end
 when 'suse'
   default['rabbitmq']['rpm_package'] = "rabbitmq-server-#{node['rabbitmq']['version']}-1.suse.noarch.rpm"
 end
