@@ -1,7 +1,18 @@
 # Change Log
 
-## [v4.12.0](https://github.com/rabbitmq/chef-cookbook/tree/v4.12.0)
+## [v4.12.1](https://github.com/rabbitmq/chef-cookbook/tree/v4.12.1)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.12.0...v4.12.1)
+
+**Closed issues:**
+
+- rabbitmq::policy\_management tries to modify a frozen string [\#422](https://github.com/rabbitmq/chef-cookbook/issues/422)
+
+**Merged pull requests:**
+
+- reassign variable with frozen string  instead of appending to it [\#423](https://github.com/rabbitmq/chef-cookbook/pull/423) ([brendenyule](https://github.com/brendenyule))
+
+## [v4.12.0](https://github.com/rabbitmq/chef-cookbook/tree/v4.12.0) (2017-03-19)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.11.2...v4.12.0)
 
 **Merged pull requests:**
