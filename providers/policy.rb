@@ -27,8 +27,8 @@ use_inline_resources
 
 def policy_exists?(vhost, name)
   cmd = 'rabbitmqctl list_policies'
-  cmd << " -p #{Shellwords.escape vhost}" unless vhost.nil?
-  cmd << " |grep '#{name}\\b'"
+  cmd += " -p #{Shellwords.escape vhost}" unless vhost.nil?
+  cmd += " |grep '#{name}\\b'"
 
   cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
   cmd.run_command
@@ -43,17 +43,17 @@ end
 action :set do
   unless policy_exists?(new_resource.vhost, new_resource.policy)
     cmd = 'rabbitmqctl set_policy'
-    cmd << " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
-    cmd << " --apply-to #{new_resource.apply_to}" if new_resource.apply_to
-    cmd << " #{new_resource.policy}"
-    cmd << " \"#{new_resource.pattern}\""
-    cmd << " '{"
+    cmd += " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
+    cmd += " --apply-to #{new_resource.apply_to}" if new_resource.apply_to
+    cmd += " #{new_resource.policy}"
+    cmd += " \"#{new_resource.pattern}\""
+    cmd += " '{"
 
     first_param = true
     new_resource.params.each do |key, value|
-      cmd << ',' unless first_param
+      cmd += ',' unless first_param
 
-      cmd << if value.is_a? String
+      cmd += if value.is_a? String
                "\"#{key}\":\"#{value}\""
              else
                "\"#{key}\":#{value}"
@@ -61,11 +61,11 @@ action :set do
       first_param = false
     end
 
-    cmd << "}'"
+    cmd += "}'"
     if node['rabbitmq']['version'] >= '3.2.0'
-      cmd << " --priority #{new_resource.priority}" if new_resource.priority
+      cmd += " --priority #{new_resource.priority}" if new_resource.priority
     else
-      cmd << " #{new_resource.priority}" if new_resource.priority # rubocop:disable all
+      cmd += " #{new_resource.priority}" if new_resource.priority # rubocop:disable all
     end
 
     execute "set_policy #{new_resource.policy}" do
@@ -81,7 +81,7 @@ end
 action :clear do
   if policy_exists?(new_resource.vhost, new_resource.policy)
     cmd = "rabbitmqctl clear_policy #{new_resource.policy}"
-    cmd << " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
+    cmd += " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
     execute "clear_policy #{new_resource.policy}" do
       command cmd
       environment shell_environment
