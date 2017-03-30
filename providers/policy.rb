@@ -41,41 +41,39 @@ def policy_exists?(vhost, name)
 end
 
 action :set do
-  unless policy_exists?(new_resource.vhost, new_resource.policy)
-    cmd = 'rabbitmqctl set_policy'
-    cmd += " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
-    cmd += " --apply-to #{new_resource.apply_to}" if new_resource.apply_to
-    cmd += " #{new_resource.policy}"
-    cmd += " \"#{new_resource.pattern}\""
-    cmd += " '{"
+  cmd = 'rabbitmqctl set_policy'
+  cmd += " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
+  cmd += " --apply-to #{new_resource.apply_to}" if new_resource.apply_to
+  cmd += " #{new_resource.policy}"
+  cmd += " \"#{new_resource.pattern}\""
+  cmd += " '{"
 
-    first_param = true
-    new_resource.params.each do |key, value|
-      cmd += ',' unless first_param
+  first_param = true
+  new_resource.params.each do |key, value|
+    cmd += ',' unless first_param
 
-      cmd += if value.is_a? String
-               "\"#{key}\":\"#{value}\""
-             else
-               "\"#{key}\":#{value}"
-             end
-      first_param = false
-    end
-
-    cmd += "}'"
-    if node['rabbitmq']['version'] >= '3.2.0'
-      cmd += " --priority #{new_resource.priority}" if new_resource.priority
-    else
-      cmd += " #{new_resource.priority}" if new_resource.priority # rubocop:disable all
-    end
-
-    execute "set_policy #{new_resource.policy}" do
-      command cmd
-      environment shell_environment
-    end
-
-    new_resource.updated_by_last_action(true)
-    Chef::Log.info "Done setting RabbitMQ policy '#{new_resource.policy}'."
+    cmd += if value.is_a? String
+             "\"#{key}\":\"#{value}\""
+           else
+             "\"#{key}\":#{value}"
+           end
+    first_param = false
   end
+
+  cmd += "}'"
+  if node['rabbitmq']['version'] >= '3.2.0'
+    cmd += " --priority #{new_resource.priority}" if new_resource.priority
+  else
+    cmd += " #{new_resource.priority}" if new_resource.priority # rubocop:disable all
+  end
+
+  execute "set_policy #{new_resource.policy}" do
+    command cmd
+    environment shell_environment
+  end
+
+  new_resource.updated_by_last_action(true)
+  Chef::Log.info "Done setting RabbitMQ policy '#{new_resource.policy}'."
 end
 
 action :clear do
