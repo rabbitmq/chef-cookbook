@@ -5,7 +5,7 @@ describe 'rabbitmq::community_plugins' do
   let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
   let(:node) { runner.node }
   let(:chef_run) do
-    node.set['rabbitmq']['community_plugins'] = { 'rabbitmq_community_plugin' => 'http://sample.com/rabbitmq_community_plugin.ez' }
+    node.normal['rabbitmq']['community_plugins'] = { 'rabbitmq_community_plugin' => 'http://sample.com/rabbitmq_community_plugin.ez' }
     runner.converge(described_recipe)
   end
 
