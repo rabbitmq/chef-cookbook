@@ -36,8 +36,8 @@ describe 'rabbitmq::default' do
     end
 
     it 'has erl args overridden' do
-      node.set['rabbitmq']['server_additional_erl_args'] = 'test123'
-      node.set['rabbitmq']['ctl_erl_args'] = 'test123'
+      node.normal['rabbitmq']['server_additional_erl_args'] = 'test123'
+      node.normal['rabbitmq']['ctl_erl_args'] = 'test123'
       [/^SERVER_ADDITIONAL_ERL_ARGS='test123'/,
        /^CTL_ERL_ARGS='test123'/].each do |line|
         expect(chef_run).to render_file(file.name).with_content(line)
@@ -49,7 +49,7 @@ describe 'rabbitmq::default' do
     end
 
     it 'has additional_env_settings' do
-      node.set['rabbitmq']['additional_env_settings'] = [
+      node.normal['rabbitmq']['additional_env_settings'] = [
         'USE_LONGNAME=true',
         'WHATS_ON_THE_TELLY=penguin']
       [/^WHATS_ON_THE_TELLY=penguin/,
@@ -70,22 +70,22 @@ describe 'rabbitmq::default' do
   end
 
   it 'does not enable a rabbitmq service when manage_service is false' do
-    node.set['rabbitmq']['manage_service'] = false
+    node.normal['rabbitmq']['manage_service'] = false
     expect(chef_run).not_to enable_service('rabbitmq-server')
   end
 
   it 'does not start a rabbitmq service when manage_service is false' do
-    node.set['rabbitmq']['manage_service'] = false
+    node.normal['rabbitmq']['manage_service'] = false
     expect(chef_run).not_to start_service('rabbitmq-server')
   end
 
   it 'enables a rabbitmq service when manage_service is true' do
-    node.set['rabbitmq']['manage_service'] = true
+    node.normal['rabbitmq']['manage_service'] = true
     expect(chef_run).to enable_service('rabbitmq-server')
   end
 
   it 'starts a rabbitmq service when manage_service is true' do
-    node.set['rabbitmq']['manage_service'] = true
+    node.normal['rabbitmq']['manage_service'] = true
     expect(chef_run).to start_service('rabbitmq-server')
   end
 
@@ -127,21 +127,21 @@ describe 'rabbitmq::default' do
     end
 
     it 'allows ssl ciphers' do
-      node.set['rabbitmq']['ssl'] = true
-      node.set['rabbitmq']['ssl_ciphers'] = ['{ecdhe_ecdsa,aes_128_cbc,sha256}', '{ecdhe_ecdsa,aes_256_cbc,sha}']
+      node.normal['rabbitmq']['ssl'] = true
+      node.normal['rabbitmq']['ssl_ciphers'] = ['{ecdhe_ecdsa,aes_128_cbc,sha256}', '{ecdhe_ecdsa,aes_256_cbc,sha}']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
     end
 
     it 'allows web console ssl ciphers' do
-      node.set['rabbitmq']['web_console_ssl'] = true
-      node.set['rabbitmq']['ssl_ciphers'] = ['"ECDHE-ECDSA-AES256-SHA384"', '"ECDH-ECDSA-AES256-SHA384"']
+      node.normal['rabbitmq']['web_console_ssl'] = true
+      node.normal['rabbitmq']['ssl_ciphers'] = ['"ECDHE-ECDSA-AES256-SHA384"', '"ECDH-ECDSA-AES256-SHA384"']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         '{ciphers,["ECDHE-ECDSA-AES256-SHA384","ECDH-ECDSA-AES256-SHA384"]}')
     end
 
     it 'should set additional rabbitmq config' do
-      node.set['rabbitmq']['additional_rabbit_configs'] = { 'foo' => 'bar' }
+      node.normal['rabbitmq']['additional_rabbit_configs'] = { 'foo' => 'bar' }
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('foo, bar')
     end
   end
@@ -152,12 +152,12 @@ describe 'rabbitmq::default' do
     end
 
     it 'false linger option' do
-      node.set['rabbitmq']['tcp_listen_linger'] = false
+      node.normal['rabbitmq']['tcp_listen_linger'] = false
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {false,0}}')
     end
 
     it 'linger option variable timeout' do
-      node.set['rabbitmq']['tcp_listen_linger_timeout'] = 5
+      node.normal['rabbitmq']['tcp_listen_linger_timeout'] = 5
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {true,5}}')
     end
   end
@@ -190,7 +190,7 @@ describe 'rabbitmq::default' do
     let(:runner) { ChefSpec::ServerRunner.new(UBUNTU_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
-      node.set['rabbitmq']['version'] = '3.6.8'
+      node.normal['rabbitmq']['version'] = '3.6.8'
       runner.converge(described_recipe)
     end
 
@@ -227,7 +227,7 @@ describe 'rabbitmq::default' do
 
     describe 'uses distro version' do
       before do
-        node.set['rabbitmq']['use_distro_version'] = true
+        node.normal['rabbitmq']['use_distro_version'] = true
       end
 
       it 'should install rabbitmq-server package' do
@@ -249,7 +249,7 @@ describe 'rabbitmq::default' do
 
     describe 'if redhat is below 7' do
       before do
-        node.set['platform_version'] = '6'
+        node.normal['platform_version'] = '6'
       end
       it 'creates a rabbitmq-server rpm in the cache path' do
         expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.8-1.el6.noarch.rpm')
@@ -264,7 +264,7 @@ describe 'rabbitmq::default' do
 
     describe 'uses distro version' do
       before do
-        node.set['rabbitmq']['use_distro_version'] = true
+        node.normal['rabbitmq']['use_distro_version'] = true
       end
 
       it 'should install rabbitmq-server package' do
@@ -277,17 +277,17 @@ describe 'rabbitmq::default' do
     end
 
     it 'loopback_users is empty when attribute is empty array' do
-      node.set['rabbitmq']['loopback_users'] = []
+      node.normal['rabbitmq']['loopback_users'] = []
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, []')
     end
 
     it 'loopback_users can list single user' do
-      node.set['rabbitmq']['loopback_users'] = ['foo']
+      node.normal['rabbitmq']['loopback_users'] = ['foo']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"foo">>]')
     end
 
     it 'loopback_users can list multiple users' do
-      node.set['rabbitmq']['loopback_users'] = %w(foo bar)
+      node.normal['rabbitmq']['loopback_users'] = %w(foo bar)
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"foo">>,<<"bar">>]')
     end
 
@@ -317,7 +317,7 @@ describe 'rabbitmq::default' do
 
     describe 'if centos is above 7' do
       before do
-        node.set['platform_version'] = '7'
+        node.normal['platform_version'] = '7'
       end
 
       it 'creates a rabbitmq-server rpm in the cache path' do
@@ -337,7 +337,7 @@ describe 'rabbitmq::default' do
 
     describe 'uses distro version' do
       before do
-        node.set['rabbitmq']['use_distro_version'] = true
+        node.normal['rabbitmq']['use_distro_version'] = true
       end
 
       it 'should install rabbitmq-server package' do
