@@ -48,7 +48,7 @@ action :set do
     cmd += " #{new_resource.parameter}"
 
     cmd += " '"
-    cmd += JSON.dump(new_resource.params)
+    cmd += JSON.dump(new_resource.parameters)
     cmd += "'"
 
     parameter = "#{new_resource.component} #{new_resource.parameter}"
