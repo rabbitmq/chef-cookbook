@@ -49,7 +49,7 @@ action :set do
   cmd += " '{"
 
   first_param = true
-  new_resource.params.each do |key, value|
+  new_resource.parameters.each do |key, value|
     cmd += ',' unless first_param
 
     cmd += if value.is_a? String
