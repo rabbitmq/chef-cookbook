@@ -56,7 +56,7 @@ end
 
 rabbitmq_policy 'rabbitmq_cluster' do
   pattern 'cluster.*'
-  params 'ha-mode' => 'all', 'ha-sync-mode' => 'automatic'
+  parameters 'ha-mode' => 'all', 'ha-sync-mode' => 'automatic'
   apply_to 'queues'
   action :set
 end
@@ -68,5 +68,5 @@ rabbitmq_vhost '/sensu'
 rabbitmq_parameter 'sensu-dc-1' do
   vhost '/sensu'
   component 'federation-upstream'
-  params 'uri' => 'amqp://dc-cluster-node'
+  parameters 'uri' => 'amqp://dc-cluster-node'
 end

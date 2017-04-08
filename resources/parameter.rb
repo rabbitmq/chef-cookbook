@@ -25,4 +25,4 @@ default_action :set
 attribute :parameter, :kind_of => String, :name_attribute => true
 attribute :component, :kind_of => String
 attribute :vhost, :kind_of => String
-attribute :params, :kind_of => [Hash, Array], :default => {}
+attribute :parameters, :kind_of => [Hash, Array], :default => {}
