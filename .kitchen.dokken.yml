@@ -32,14 +32,25 @@ platforms:
     driver:
       image: ubuntu-upstart:14.04
       pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
   - name: ubuntu-16.04
     driver:
       image: ubuntu:16.04
       pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
   - name: debian-7
     driver:
       image: debian:7
       pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install lsb-release procps -y
+  - name: debian-8
+    driver:
+      image: debian:8
+      pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
         - RUN /usr/bin/apt-get install lsb-release procps -y
