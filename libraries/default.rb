@@ -34,10 +34,10 @@ module Opscode
       # theoretically opens the door for arbitrary kernel_app parameters to be
       # declared.
       kernel.select { |_k, v| !v.nil? }.each_pair do |param, val|
-        rendered << "{#{param}, #{val}}"
+        rendered << "    {#{param}, #{val}}"
       end
 
-      rendered.each { |r| r.prepend('    ') }.join(",\n")
+      rendered.each { |r| r }.join(",\n")
     end
 
     def format_ssl_versions
