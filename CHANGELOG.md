@@ -1,7 +1,22 @@
 # Change Log
 
-## [v4.12.1](https://github.com/rabbitmq/chef-cookbook/tree/v4.12.1)
+## [v5.0.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.0.0)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.12.1...v5.0.0)
+
+**Closed issues:**
+
+- policy provider prevents updating an existing policy [\#424](https://github.com/rabbitmq/chef-cookbook/issues/424)
+
+**Merged pull requests:**
+
+- Update to default.rb library to handle frozen strings [\#430](https://github.com/rabbitmq/chef-cookbook/pull/430) ([bphinney](https://github.com/bphinney))
+- Update kitchen dokken [\#428](https://github.com/rabbitmq/chef-cookbook/pull/428) ([shortdudey123](https://github.com/shortdudey123))
+- Rename params property to parameters [\#427](https://github.com/rabbitmq/chef-cookbook/pull/427) ([shortdudey123](https://github.com/shortdudey123))
+- Change node.set to node.normal [\#426](https://github.com/rabbitmq/chef-cookbook/pull/426) ([shortdudey123](https://github.com/shortdudey123))
+- make set action idempotent [\#425](https://github.com/rabbitmq/chef-cookbook/pull/425) ([brendenyule](https://github.com/brendenyule))
+
+## [v4.12.1](https://github.com/rabbitmq/chef-cookbook/tree/v4.12.1) (2017-03-24)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.12.0...v4.12.1)
 
 **Closed issues:**
