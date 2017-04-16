@@ -80,6 +80,9 @@
 
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>},
+<% if node['rabbitmq']['loopback_users'] -%>
+    {loopback_users, [<%= node['rabbitmq']['loopback_users'] %>]},
+<% end %>
     {heartbeat, <%= node['rabbitmq']['heartbeat'] %>}
 
     <% node['rabbitmq']['additional_rabbit_configs'].each do |key,value|  -%>

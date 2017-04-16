@@ -34,4 +34,9 @@ describe 'rabbitmq_test::cook-2151' do
     file("#{node['rabbitmq']['config_root']}/rabbitmq-env.conf")
       .must_match(/(ulimit -n #{node['rabbitmq']['open_file_limit']})/)
   end
+  
+  it 'includes the loopback_users configuration setting' do
+    file("#{node['rabbitmq']['config_root']}/rabbitmq.config")
+      .must_match(/\{loopback_users, \[#{node['rabbitmq']['loopback_users']}\]/)
+  end
 end

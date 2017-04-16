@@ -6,6 +6,7 @@
 # This recipe exists to ensure that minitest tests are run.
 
 include_recipe 'rabbitmq::default'
+node.set['rabbitmq']['loopback_users'] = '<<"testuser">>'
 
 # HACK: Give rabbit time to spin up before the tests, it seems
 # to be responding that it has started before it really has
