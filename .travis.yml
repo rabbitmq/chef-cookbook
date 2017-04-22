@@ -12,10 +12,6 @@ addons:
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
 
-branches:
-  only:
-    - master
-
 services: docker
 
 env:
