@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe command('rabbitmqadmin --version') do
-  it { should return_exit_status 0 }
+  its(:exit_status) { should eq 0 }
 end
 
 describe command('rabbitmqctl list_policies') do
