@@ -1,5 +1,5 @@
-# frozen_string_literal: true
-require 'spec_helper'
+# The Inspec reference, with examples and extensive documentation, can be
+# found at http://inspec.io/docs/reference/resources/
 
 describe package('rabbitmq-server') do
   it { should be_installed }
@@ -19,19 +19,19 @@ end
 
 describe file('/var/lib/rabbitmq/mnesia') do
   it { should be_directory }
-  it { should be_mode 775 }
-  it { should be_owned_by 'rabbitmq' }
-  it { should be_grouped_into 'rabbitmq' }
+  its('mode') { should cmp '0775' }
+  its('owner') { should eq 'rabbitmq' }
+  its('group') { should eq 'rabbitmq' }
 end
 
 describe file('/etc/rabbitmq/rabbitmq-env.conf') do
   it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'root' }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
 end
 
 describe file('/etc/rabbitmq/rabbitmq.config') do
   it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'root' }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
 end

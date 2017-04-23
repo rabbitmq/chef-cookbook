@@ -2,22 +2,21 @@
 source 'https://rubygems.org'
 
 gem 'chef'
-gem 'chefspec'
+gem 'berkshelf'
 gem 'github_changelog_generator'
-gem 'kitchen-digitalocean'
 gem 'stove'
-gem 'kitchen-dokken'
 
 group :lint do
   gem 'foodcritic'
-  gem 'rubocop'
-  gem 'rainbow'
   gem 'cookstyle'
 end
 
 group :unit do
-  gem 'berkshelf'
-  gem 'fauxhai'
+  gem 'chefspec'
+end
+
+group :integration do
+  gem 'inspec'
 end
 
 group :kitchen_common do
@@ -28,13 +27,14 @@ group :kitchen_vagrant do
   gem 'kitchen-vagrant'
 end
 
-group :kitchen_docker do
-  gem 'kitchen-docker'
+group :kitchen_dokken do
+  gem 'kitchen-dokken'
 end
 
 group :kitchen_cloud do
   gem 'kitchen-ec2'
   gem 'kitchen-openstack'
+  gem 'kitchen-digitalocean'
 end
 
 group :development do
