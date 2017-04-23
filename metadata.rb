@@ -2,7 +2,7 @@
 name 'rabbitmq'
 maintainer 'Chef, Inc.'
 maintainer_email 'jj@chef.io'
-license 'Apache 2.0'
+license 'Apache-2.0'
 description 'Installs and configures RabbitMQ server'
 version '5.0.0'
 recipe 'rabbitmq', 'Install and configure RabbitMQ'
@@ -13,6 +13,8 @@ recipe 'rabbitmq::user_management', 'Manage users with node attributes'
 
 issues_url 'https://github.com/rabbitmq/chef-cookbook/issues'
 source_url 'https://github.com/rabbitmq/chef-cookbook'
+
+chef_version '>= 12.0'
 
 depends 'erlang'
 depends 'yum-epel'
