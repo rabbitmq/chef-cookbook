@@ -37,7 +37,7 @@ platforms:
       image: ubuntu-upstart:14.04
       pid_one_command: /sbin/init
       intermediate_instructions:
-        - RUN /usr/bin/apt-get update
+        - RUN apt-get update
 
   - name: ubuntu-16.04
     driver:
@@ -45,6 +45,7 @@ platforms:
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get -y install lsb-release procps net-tools
 
   - name: debian-7
     driver:
@@ -52,7 +53,7 @@ platforms:
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install lsb-release procps -y
+        - RUN /usr/bin/apt-get -y install lsb-release procps net-tools
 
   - name: debian-8
     driver:
@@ -60,6 +61,6 @@ platforms:
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install lsb-release procps -y
+        - RUN /usr/bin/apt-get -y install lsb-release procps net-tools
 
 # use (inherit) suites defined in main .kitchen.yml
