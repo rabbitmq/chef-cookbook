@@ -75,7 +75,7 @@ to them.
 
 This cookbook is set up to run tests under
 [Kitchen-ci's test-kitchen](https://github.com/test-kitchen/test-kitchen).
-It uses Serverspec or Bats to perform integration tests after the node
+It uses [inspec](http://inspec.io) to perform integration tests after the node
 has been converged.
 
 Test kitchen should run completely without exception using the default

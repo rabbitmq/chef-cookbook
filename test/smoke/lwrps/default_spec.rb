@@ -1,5 +1,5 @@
-# frozen_string_literal: true
-require 'spec_helper'
+# The Inspec reference, with examples and extensive documentation, can be
+# found at http://inspec.io/docs/reference/resources/
 
 describe command('rabbitmqadmin --version') do
   its(:exit_status) { should eq 0 }
