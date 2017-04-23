@@ -14,7 +14,7 @@ describe port(5672) do
 end
 
 describe command('rabbitmqctl status') do
-  it { should return_exit_status 0 }
+  its(:exit_status) { should eq 0 }
 end
 
 describe file('/var/lib/rabbitmq/mnesia') do
