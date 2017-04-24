@@ -33,7 +33,6 @@ env:
   - INSTANCE=lwrps-centos-72
   - INSTANCE=lwrps-ubuntu-1404
   - INSTANCE=lwrps-ubuntu-1604
-  - INSTANCE=lwrps-debian-7
   - INSTANCE=lwrps-debian-8
 
   - INSTANCE=cluster-centos-67
