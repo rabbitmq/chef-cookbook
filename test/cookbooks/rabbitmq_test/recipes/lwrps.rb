@@ -54,6 +54,12 @@ remote_file '/usr/local/bin/rabbitmqadmin' do
   action :create
 end
 
+# rabbitmqadmin needs python which is not part of every systems. This is a shortcut,
+# you probably want to use the cookbook poise-python for real python things.
+package 'python' do
+  not_if 'which python'
+end
+
 rabbitmq_policy 'rabbitmq_cluster' do
   pattern 'cluster.*'
   parameters 'ha-mode' => 'all', 'ha-sync-mode' => 'automatic'
