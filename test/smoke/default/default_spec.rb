@@ -13,7 +13,10 @@ describe port(5672) do
   it { should be_listening }
 end
 
-describe command('rabbitmqctl status') do
+# HACK: make sure HOSTNAME is set which seems not to be the case with The
+# centos 6 docker image
+describe command('HOSTNAME=$(hostname) rabbitmqctl status') do
+  # see https://github.com/rabbitmq/rabbitmq-server/issues/396 for exit codes
   its(:exit_status) { should eq 0 }
 end
 
