@@ -17,7 +17,7 @@ SUSE_OPTS = {
 }
 REDHAT_OPTS = {
   :platform => 'redhat',
-  :version => '6.5',
+  :version => '7.2',
   :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }

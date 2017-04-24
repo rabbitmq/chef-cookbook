@@ -247,18 +247,28 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
-    describe 'if redhat is below 7' do
-      before do
-        node.normal['platform_version'] = '6'
-      end
+    describe 'if redhat version is below 7' do
+      let(:rpm_file) { 'rabbitmq-server-3.6.8-1.el6.noarch.rpm' }
+      let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS.merge(:version => 6.5)) }
+
       it 'creates a rabbitmq-server rpm in the cache path' do
-        expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.8-1.el6.noarch.rpm')
-        expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.8-1.el6.noarch.rpm')
+        expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
       end
 
       it 'installs the rabbitmq-server rpm_package with the default action' do
-        expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.8-1.el6.noarch.rpm')
-        expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.8-1.el6.noarch.rpm')
+        expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
+      end
+    end
+
+    describe 'if redhat version is default' do
+      let(:rpm_file) { 'rabbitmq-server-3.6.8-1.el7.noarch.rpm' }
+
+      it 'creates a rabbitmq-server rpm in the cache path' do
+        expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
+      end
+
+      it 'installs the rabbitmq-server rpm_package with the default action' do
+        expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
       end
     end
 
@@ -315,19 +325,28 @@ describe 'rabbitmq::default' do
       expect(chef_run).to install_package('socat')
     end
 
-    describe 'if centos is above 7' do
-      before do
-        node.normal['platform_version'] = '7'
-      end
+    describe 'if centos version is below 7' do
+      let(:rpm_file) { 'rabbitmq-server-3.6.8-1.el6.noarch.rpm' }
+      let(:runner) { ChefSpec::ServerRunner.new(CENTOS_OPTS.merge(:version => 6.2)) }
 
       it 'creates a rabbitmq-server rpm in the cache path' do
-        expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server-3.6.8-1.el7.noarch.rpm')
-        expect(chef_run).to_not create_remote_file_if_missing('/tmp/not-rabbitmq-server-3.6.8-1.el7.noarch.rpm')
+        expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
       end
 
       it 'installs the rabbitmq-server rpm_package with the default action' do
-        expect(chef_run).to install_rpm_package('/tmp/rabbitmq-server-3.6.8-1.el7.noarch.rpm')
-        expect(chef_run).to_not install_rpm_package('/tmp/not-rabbitmq-server-3.6.8-1.el7.noarch.rpm')
+        expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
+      end
+    end
+
+    describe 'if centos version is default' do
+      let(:rpm_file) { 'rabbitmq-server-3.6.8-1.el7.noarch.rpm' }
+
+      it 'creates a rabbitmq-server rpm in the cache path' do
+        expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
+      end
+
+      it 'installs the rabbitmq-server rpm_package with the default action' do
+        expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
       end
     end
 

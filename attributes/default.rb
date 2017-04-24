@@ -23,6 +23,15 @@ end
 
 default['rabbitmq']['rpm_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/"
 
+# RabbitMQ 3.6.8+ non-distro versions requires a modern Erlang which is neither available in
+# older distros via packages nor EPEL. rhel < 7, debian < 8
+#
+if !node['rabbitmq']['use_distro_version'] &&
+   (node['platform'] == 'debian' && node['platform_version'].to_i < 8 ||
+    node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7)
+  default['erlang']['install_method'] = 'esl'
+end
+
 default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-R16B03-1.noarch.rpm?raw=true'
 default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/'
 

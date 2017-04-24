@@ -1,6 +1,9 @@
 driver:
   name: vagrant
 
+verifier:
+  name: inspec
+
 provisioner:
   name: chef_zero
   require_chef_omnibus: latest
@@ -16,31 +19,60 @@ suites:
   - name: default
     run_list:
       - recipe[rabbitmq::default]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+
   - name: default-use-distro-version
     run_list:
       - recipe[rabbitmq::default]
     attributes:
       rabbitmq:
         use_distro_version: true
+    verifier:
+      inspec_tests:
+        - test/smoke/default
     excludes: ["centos-6.7", "centos-7.2"]
+
   - name: lwrps
     run_list:
       - recipe[rabbitmq_test::lwrps]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+        - test/smoke/lwrps
+    excludes: ["debian-7"]
+
+  - name: cluster
+    run_list:
+      - recipe[rabbitmq_test::cluster]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+        - test/smoke/cluster
+
   - name: default-force-yes
     run_list:
       - recipe[rabbitmq::default]
     attributes:
-           apt:
-             confd:
-               assume_yes: true
-               force-yes: true
+      apt:
+        confd:
+          assume_yes: true
+          force-yes: true
+    verifier:
+      inspec_tests:
+        - test/smoke/default
     excludes: ["centos-6.7", "centos-7.2"]
+
   - name: default-force-yes-false
     run_list:
       - recipe[rabbitmq::default]
     attributes:
-           apt:
-             confd:
-               assume_yes: false
-               force-yes: false
+      apt:
+        confd:
+          assume_yes: false
+          force-yes: false
+    verifier:
+      inspec_tests:
+        - test/smoke/default
     excludes: ["centos-6.7", "centos-7.2"]

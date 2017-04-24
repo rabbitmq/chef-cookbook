@@ -25,6 +25,7 @@ suites:
   - name: default
     run_list:
       - recipe[rabbitmq::default]
+
   - name: default-use-distro-version
     run_list:
       - recipe[rabbitmq::default]

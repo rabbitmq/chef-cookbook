@@ -26,8 +26,3 @@ attribute :password, :kind_of => String
 attribute :vhost, :kind_of => [String, Array]
 attribute :permissions, :kind_of => String
 attribute :tag, :kind_of => String
-
-def initialize(*args)
-  super
-  @action = :add
-end
