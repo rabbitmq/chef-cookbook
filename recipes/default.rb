@@ -49,14 +49,17 @@ when 'debian'
     allow false
   end
 
+  if node['platform_version'].to_i < 8 && !node['rabbitmq']['use_distro_version']
+    Chef::Log.warning 'Debian 7 is too old to use the recent .deb RabbitMQ packages. Falling back to distro package!'
+    node['rabbitmq']['use_distro_version'] = true
+  end
+
   if node['rabbitmq']['use_distro_version']
     package 'rabbitmq-server' do
       action :install
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
   else
-    package 'init-system-helpers'
-
     # we need to download the package
     deb_package = "#{node['rabbitmq']['deb_package_url']}#{node['rabbitmq']['deb_package']}"
     remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" do
