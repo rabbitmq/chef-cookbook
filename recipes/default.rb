@@ -50,8 +50,8 @@ when 'debian'
   end
 
   if node['platform_version'].to_i < 8 && !node['rabbitmq']['use_distro_version']
-    Chef::Log.warning 'Debian 7 is too old to use the recent .deb RabbitMQ packages. Falling back to distro package!'
-    node['rabbitmq']['use_distro_version'] = true
+    Chef::Log.warn 'Debian 7 is too old to use the recent .deb RabbitMQ packages. Falling back to distro package!'
+    node.normal['rabbitmq']['use_distro_version'] = true
   end
 
   if node['rabbitmq']['use_distro_version']
