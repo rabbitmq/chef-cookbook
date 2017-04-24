@@ -41,6 +41,7 @@ suites:
       inspec_tests:
         - test/smoke/default
         - test/smoke/lwrps
+    excludes: ["debian-7"]
 
   - name: cluster
     run_list:
