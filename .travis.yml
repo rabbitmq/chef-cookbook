@@ -14,14 +14,44 @@ install: echo "skip bundle install"
 
 services: docker
 
+# kitchen list -b | xargs -I {} echo "- INSTANCE={}"
 env:
   matrix:
-  - INSTANCE=centos-6
-  - INSTANCE=centos-7
-  - INSTANCE=debian-7
-  - INSTANCE=debian-8
-  - INSTANCE=ubuntu-1404
-  - INSTANCE=ubuntu-1604
+  - INSTANCE=default-centos-67
+  - INSTANCE=default-centos-72
+  - INSTANCE=default-ubuntu-1404
+  - INSTANCE=default-ubuntu-1604
+  - INSTANCE=default-debian-7
+  - INSTANCE=default-debian-8
+
+  - INSTANCE=default-use-distro-version-ubuntu-1404
+  - INSTANCE=default-use-distro-version-ubuntu-1604
+  - INSTANCE=default-use-distro-version-debian-7
+  - INSTANCE=default-use-distro-version-debian-8
+
+  - INSTANCE=lwrps-centos-67
+  - INSTANCE=lwrps-centos-72
+  - INSTANCE=lwrps-ubuntu-1404
+  - INSTANCE=lwrps-ubuntu-1604
+  - INSTANCE=lwrps-debian-7
+  - INSTANCE=lwrps-debian-8
+
+  - INSTANCE=cluster-centos-67
+  - INSTANCE=cluster-centos-72
+  - INSTANCE=cluster-ubuntu-1404
+  - INSTANCE=cluster-ubuntu-1604
+  - INSTANCE=cluster-debian-7
+  - INSTANCE=cluster-debian-8
+
+  - INSTANCE=default-force-yes-ubuntu-1404
+  - INSTANCE=default-force-yes-ubuntu-1604
+  - INSTANCE=default-force-yes-debian-7
+  - INSTANCE=default-force-yes-debian-8
+
+  - INSTANCE=default-force-yes-false-ubuntu-1404
+  - INSTANCE=default-force-yes-false-ubuntu-1604
+  - INSTANCE=default-force-yes-false-debian-7
+  - INSTANCE=default-force-yes-false-debian-8
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
