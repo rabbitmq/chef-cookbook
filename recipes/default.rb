@@ -55,6 +55,8 @@ when 'debian'
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
     end
   else
+    package 'init-system-helpers'
+
     # we need to download the package
     deb_package = "#{node['rabbitmq']['deb_package_url']}#{node['rabbitmq']['deb_package']}"
     remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" do
