@@ -41,26 +41,24 @@ def parameter_exists?(vhost, name)
 end
 
 action :set do
-  unless parameter_exists?(new_resource.vhost, new_resource.parameter)
-    cmd = 'rabbitmqctl set_parameter'
-    cmd += " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
-    cmd += " #{new_resource.component}"
-    cmd += " #{new_resource.parameter}"
+  cmd = 'rabbitmqctl set_parameter'
+  cmd += " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
+  cmd += " #{new_resource.component}"
+  cmd += " #{new_resource.parameter}"
 
-    cmd += " '"
-    cmd += JSON.dump(new_resource.parameters)
-    cmd += "'"
+  cmd += " '"
+  cmd += JSON.dump(new_resource.parameters)
+  cmd += "'"
 
-    parameter = "#{new_resource.component} #{new_resource.parameter}"
+  parameter = "#{new_resource.component} #{new_resource.parameter}"
 
-    execute "set_parameter #{parameter}" do
-      command cmd
-      environment shell_environment
-    end
-
-    new_resource.updated_by_last_action(true)
-    Chef::Log.info "Done setting RabbitMQ parameter #{parameter}."
+  execute "set_parameter #{parameter}" do
+    command cmd
+    environment shell_environment
   end
+
+  new_resource.updated_by_last_action(true)
+  Chef::Log.info "Done setting RabbitMQ parameter #{parameter}."
 end
 
 action :clear do
