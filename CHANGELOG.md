@@ -1,7 +1,23 @@
 # Change Log
 
-## [v5.0.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.0.0)
+## [v5.1.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.1.0)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.0.0...v5.1.0)
+
+**Closed issues:**
+
+- CentOS 7 is broken \(in dokken\) [\#435](https://github.com/rabbitmq/chef-cookbook/issues/435)
+- Tests are broken… [\#434](https://github.com/rabbitmq/chef-cookbook/issues/434)
+- Separete recipes for installation and file configuration [\#431](https://github.com/rabbitmq/chef-cookbook/issues/431)
+
+**Merged pull requests:**
+
+- allow set\_parameter changes to existing parameters [\#439](https://github.com/rabbitmq/chef-cookbook/pull/439) ([stevenolen](https://github.com/stevenolen))
+- improve tests: migrate to inspec [\#438](https://github.com/rabbitmq/chef-cookbook/pull/438) ([rmoriz](https://github.com/rmoriz))
+- Serverspec 2 upgrade [\#437](https://github.com/rabbitmq/chef-cookbook/pull/437) ([rmoriz](https://github.com/rmoriz))
+- mount cgroup in docker, even when privileged [\#436](https://github.com/rabbitmq/chef-cookbook/pull/436) ([rmoriz](https://github.com/rmoriz))
+
+## [v5.0.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.0.0) (2017-04-12)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.12.1...v5.0.0)
 
 **Closed issues:**
@@ -139,7 +155,6 @@
 - Nodes try to rejoin cluster when first listed node is down [\#347](https://github.com/rabbitmq/chef-cookbook/issues/347)
 - Logrotating [\#338](https://github.com/rabbitmq/chef-cookbook/issues/338)
 - rabbitmq\_plugin\[rabbitmq\_management\] erlexec: HOME must be set [\#334](https://github.com/rabbitmq/chef-cookbook/issues/334)
-- Is "notifies restart" necessary for enabling or disabling a policy? [\#319](https://github.com/rabbitmq/chef-cookbook/issues/319)
 - Alternate restarts fail on CentOS [\#264](https://github.com/rabbitmq/chef-cookbook/issues/264)
 - rabbitmq-server fail to start after setting the cipher suites [\#259](https://github.com/rabbitmq/chef-cookbook/issues/259)
 - Add auth\_backends attribute [\#230](https://github.com/rabbitmq/chef-cookbook/issues/230)
