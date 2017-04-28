@@ -8,6 +8,7 @@
 
 - CentOS 7 is broken \(in dokken\) [\#435](https://github.com/rabbitmq/chef-cookbook/issues/435)
 - Tests are broken… [\#434](https://github.com/rabbitmq/chef-cookbook/issues/434)
+- Add ability to leave a cluster. [\#432](https://github.com/rabbitmq/chef-cookbook/issues/432)
 - Separete recipes for installation and file configuration [\#431](https://github.com/rabbitmq/chef-cookbook/issues/431)
 
 **Merged pull requests:**
@@ -16,6 +17,7 @@
 - improve tests: migrate to inspec [\#438](https://github.com/rabbitmq/chef-cookbook/pull/438) ([rmoriz](https://github.com/rmoriz))
 - Serverspec 2 upgrade [\#437](https://github.com/rabbitmq/chef-cookbook/pull/437) ([rmoriz](https://github.com/rmoriz))
 - mount cgroup in docker, even when privileged [\#436](https://github.com/rabbitmq/chef-cookbook/pull/436) ([rmoriz](https://github.com/rmoriz))
+- closes \#432 [\#433](https://github.com/rabbitmq/chef-cookbook/pull/433) ([majormoses](https://github.com/majormoses))
 
 ## [v5.0.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.0.0) (2017-04-12)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v4.12.1...v5.0.0)
