@@ -186,3 +186,16 @@ default['rabbitmq']['disabled_policies'] = []
 # conf
 default['rabbitmq']['conf'] = {}
 default['rabbitmq']['additional_rabbit_configs'] = {}
+
+# mqtt
+default['rabbitmq']['rabbitmq_mqtt']['default_user'] = 'guest'
+default['rabbitmq']['rabbitmq_mqtt']['default_pass'] = 'guest'
+default['rabbitmq']['rabbitmq_mqtt']['allow_anonymous'] = true
+default['rabbitmq']['rabbitmq_mqtt']['vhost'] = '/'
+default['rabbitmq']['rabbitmq_mqtt']['exchange'] = 'amq.topic'
+default['rabbitmq']['rabbitmq_mqtt']['subscription_ttl'] = 1800000
+default['rabbitmq']['rabbitmq_mqtt']['prefetch'] = 10
+default['rabbitmq']['rabbitmq_mqtt']['ssl_listeners'] = []
+default['rabbitmq']['rabbitmq_mqtt']['tcp_listeners'] = [1883]
+default['rabbitmq']['rabbitmq_mqtt']['tcp_listen_options']['backlog'] = 128
+default['rabbitmq']['rabbitmq_mqtt']['tcp_listen_options']['nodelay'] = true

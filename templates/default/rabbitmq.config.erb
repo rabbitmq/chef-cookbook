@@ -86,6 +86,23 @@
       ,{<%= key %>, <%= value %>}
     <% end -%>
   ]}
+<% if node['rabbitmq']['enabled_plugins'].include? 'rabbitmq_mqtt' %>
+  ,{rabbitmq_mqtt, [
+    {default_user, <<"<%= node['rabbitmq']['rabbitmq_mqtt']['default_user'] %>">>},
+    {default_pass, <<"<%= node['rabbitmq']['rabbitmq_mqtt']['default_pass'] %>">>},
+    {allow_anonymous, <%= node['rabbitmq']['rabbitmq_mqtt']['allow_anonymous'] %>},
+    {vhost, <<"<%= node['rabbitmq']['rabbitmq_mqtt']['vhost'] %>">>},
+    {exchange, <<"<%= node['rabbitmq']['rabbitmq_mqtt']['exchange'] %>">>},
+    {subscription_ttl, <%= node['rabbitmq']['rabbitmq_mqtt']['subscription_ttl'] %>},
+    {prefetch, <%= node['rabbitmq']['rabbitmq_mqtt']['prefetch'] %>},
+    {ssl_listeners, <%= node['rabbitmq']['rabbitmq_mqtt']['ssl_listeners'] %>},
+    {tcp_listeners, <%= node['rabbitmq']['rabbitmq_mqtt']['tcp_listeners'] %>},
+    {tcp_listen_options, [
+      {backlog, <%= node['rabbitmq']['rabbitmq_mqtt']['tcp_listen_options']['backlog'] %>},
+      {nodelay, <%= node['rabbitmq']['rabbitmq_mqtt']['tcp_listen_options']['nodelay'] %>}
+    ]}
+  ]}
+<% end %>
 <% node['rabbitmq']['conf'].each do |key,value|  -%>
 	,{<%= key %>, <%= value %>}
 <% end -%>
