@@ -186,7 +186,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
-template "#{node['rabbitmq']['config']}.config" do
+template "#{node['rabbitmq']['config']}" do
   sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
   source 'rabbitmq.config.erb'
   cookbook node['rabbitmq']['config_template_cookbook']
