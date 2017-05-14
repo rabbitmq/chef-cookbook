@@ -30,13 +30,11 @@ node['rabbitmq']['policies'].each do |name, policy|
     vhost policy['vhost']
     apply_to policy['apply_to']
     action :set
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
 
 node['rabbitmq']['disabled_policies'].each do |policy|
   rabbitmq_policy policy do
     action :clear
-    notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
 end
