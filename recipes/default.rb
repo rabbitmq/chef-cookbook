@@ -92,13 +92,13 @@ when 'debian'
     include_recipe 'logrotate'
 
     logrotate_app 'rabbitmq-server' do
-      path '/var/log/rabbitmq/*.log'
-      enable true
-      rotate 20
-      frequency 'weekly'
-      options %w(missingok notifempty delaycompress)
-      sharedscripts true
-      postrotate '/usr/sbin/rabbitmqctl rotate_logs > /dev/null'
+      path node['rabbitmq']['logrotate']['path']
+      enable node['rabbitmq']['logrotate']['enable']
+      rotate node['rabbitmq']['logrotate']['rotate']
+      frequency node['rabbitmq']['logrotate']['frequency']
+      options node['rabbitmq']['logrotate']['options']
+      sharedscripts node['rabbitmq']['logrotate']['sharedscripts']
+      postrotate node['rabbitmq']['logrotate']['postrotate']
     end
 
     template "/etc/init/#{node['rabbitmq']['service_name']}.conf" do
