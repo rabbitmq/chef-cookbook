@@ -51,7 +51,7 @@ default['rabbitmq']['manage_service'] = true
 # http://www.rabbitmq.com/configure.html#define-environment-variables
 # "The .config extension is automatically appended by the Erlang runtime."
 default['rabbitmq']['config_root'] = '/etc/rabbitmq'
-default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq"
+default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq.config"
 default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
 default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 # override this if you wish to provide `rabbitmq.config.erb` in your own wrapper cookbook
