@@ -218,7 +218,7 @@ template "/etc/default/#{node['rabbitmq']['service_name']}" do
   owner 'root'
   group 'root'
   mode 00644
-  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end
 
 existing_erlang_key = if File.exist?(node['rabbitmq']['erlang_cookie_path']) && File.readable?((node['rabbitmq']['erlang_cookie_path']))
