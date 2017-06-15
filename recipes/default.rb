@@ -245,6 +245,8 @@ if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'
   execute 'reset-node' do
     command 'rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app'
     action :nothing
+    retries 12
+    retry_delay 5
   end
 end
 
