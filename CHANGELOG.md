@@ -1,7 +1,18 @@
 # Change Log
 
-## [v5.1.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.1.0)
+## [v5.2.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.2.0) (2017-06-16)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.1.0...v5.2.0)
+
+**Merged pull requests:**
+
+- Remediate RabbitMQ reset failures [\#449](https://github.com/rabbitmq/chef-cookbook/pull/449) ([jkugler](https://github.com/jkugler))
+- Add configuration for logrotate [\#448](https://github.com/rabbitmq/chef-cookbook/pull/448) ([foxdalas](https://github.com/foxdalas))
+- Fix resource cloning deprecation warnings [\#446](https://github.com/rabbitmq/chef-cookbook/pull/446) ([iamthemuffinman](https://github.com/iamthemuffinman))
+- Do not restart RabbitMQ for Policy Change [\#445](https://github.com/rabbitmq/chef-cookbook/pull/445) ([bdwyertech](https://github.com/bdwyertech))
+- replace logrotate script, for debian upstart [\#349](https://github.com/rabbitmq/chef-cookbook/pull/349) ([flah00](https://github.com/flah00))
+
+## [v5.1.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.1.0) (2017-04-28)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.0.0...v5.1.0)
 
 **Closed issues:**
@@ -10,9 +21,11 @@
 - Tests are broken… [\#434](https://github.com/rabbitmq/chef-cookbook/issues/434)
 - Add ability to leave a cluster. [\#432](https://github.com/rabbitmq/chef-cookbook/issues/432)
 - Separete recipes for installation and file configuration [\#431](https://github.com/rabbitmq/chef-cookbook/issues/431)
+- 3.6.2 released [\#365](https://github.com/rabbitmq/chef-cookbook/issues/365)
 
 **Merged pull requests:**
 
+- Prep for 5.1.0 [\#440](https://github.com/rabbitmq/chef-cookbook/pull/440) ([jjasghar](https://github.com/jjasghar))
 - allow set\_parameter changes to existing parameters [\#439](https://github.com/rabbitmq/chef-cookbook/pull/439) ([stevenolen](https://github.com/stevenolen))
 - improve tests: migrate to inspec [\#438](https://github.com/rabbitmq/chef-cookbook/pull/438) ([rmoriz](https://github.com/rmoriz))
 - Serverspec 2 upgrade [\#437](https://github.com/rabbitmq/chef-cookbook/pull/437) ([rmoriz](https://github.com/rmoriz))
@@ -168,6 +181,7 @@
 - added an example to the "user\_management" section. [\#350](https://github.com/rabbitmq/chef-cookbook/pull/350) ([farshidce](https://github.com/farshidce))
 - Fix check for whether node has joined cluster [\#348](https://github.com/rabbitmq/chef-cookbook/pull/348) ([ccrebolder](https://github.com/ccrebolder))
 - Update metadata.rb with config\_template\_cookbook [\#345](https://github.com/rabbitmq/chef-cookbook/pull/345) ([jgonera](https://github.com/jgonera))
+- allowing to clear a parameter which is created in a vhost [\#343](https://github.com/rabbitmq/chef-cookbook/pull/343) ([sergiu-svinarciuc](https://github.com/sergiu-svinarciuc))
 - simplified clustering logic [\#340](https://github.com/rabbitmq/chef-cookbook/pull/340) ([jklare](https://github.com/jklare))
 - Package install logrotate for \*.log [\#339](https://github.com/rabbitmq/chef-cookbook/pull/339) ([ptqa](https://github.com/ptqa))
 - Debian Fixes [\#330](https://github.com/rabbitmq/chef-cookbook/pull/330) ([bdwyertech](https://github.com/bdwyertech))
@@ -605,7 +619,7 @@
 
 - foodcritic  alerts fixes [\#52](https://github.com/rabbitmq/chef-cookbook/pull/52) ([ranjib](https://github.com/ranjib))
 - Make clustering work [\#48](https://github.com/rabbitmq/chef-cookbook/pull/48) ([tchoi80](https://github.com/tchoi80))
-- \[COOK-2575\] add LWRP for setting policies [\#43](https://github.com/rabbitmq/chef-cookbook/pull/43) ([robertchoi8099](https://github.com/robertchoi8099))
+- \[COOK-2575\] add LWRP for setting policies [\#43](https://github.com/rabbitmq/chef-cookbook/pull/43) ([robertchoi80](https://github.com/robertchoi80))
 
 ## [2.0.0](https://github.com/rabbitmq/chef-cookbook/tree/2.0.0) (2013-03-22)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/1.8.0...2.0.0)
