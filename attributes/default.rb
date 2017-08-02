@@ -196,6 +196,6 @@ default['rabbitmq']['disabled_policies'] = []
 default['rabbitmq']['conf'] = {}
 default['rabbitmq']['additional_rabbit_configs'] = {}
 
-# retry
-default['rabbitmq']['retry'] = 5
-default['rabbitmq']['retry_delay'] = 10
+# retry - Keeping defualts to chef service resource defualts 
+default['rabbitmq']['retry'] = 0
+default['rabbitmq']['retry_delay'] = 2
