@@ -195,3 +195,7 @@ default['rabbitmq']['disabled_policies'] = []
 # conf
 default['rabbitmq']['conf'] = {}
 default['rabbitmq']['additional_rabbit_configs'] = {}
+
+# retry
+default['rabbitmq']['retry'] = 5
+default['rabbitmq']['retry_delay'] = 10
