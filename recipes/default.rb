@@ -253,6 +253,8 @@ end
 if node['rabbitmq']['manage_service']
   service node['rabbitmq']['service_name'] do
     action [:enable, :start]
+    retry node['rabbitmq']['retry']
+    retry_delay node['rabbitmq']['retry_delay']
     supports :status => true, :restart => true
     provider Chef::Provider::Service::Upstart if node['rabbitmq']['job_control'] == 'upstart'
     provider Chef::Provider::Service::Init if node['rabbitmq']['job_control'] == 'init'
