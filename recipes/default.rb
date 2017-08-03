@@ -252,7 +252,7 @@ end
 
 if node['rabbitmq']['manage_service']
   service node['rabbitmq']['service_name'] do
-    retry node['rabbitmq']['retry']
+    retries node['rabbitmq']['retry']
     retry_delay node['rabbitmq']['retry_delay']
     action [:enable, :start]
     supports :status => true, :restart => true
