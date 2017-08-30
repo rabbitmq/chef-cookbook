@@ -28,7 +28,12 @@ end
 include_recipe 'erlang'
 
 version = node['rabbitmq']['version']
-%w(deb_package_url rpm_package rpm_package_url).each do |key|
+%w(
+  deb_package
+  deb_package_url
+  rpm_package
+  rpm_package_url
+).each do |key|
   value = node['rabbitmq'][key]
   node.default['rabbitmq'][key] = value.gsub('{VERSION}', version) if value
 end
