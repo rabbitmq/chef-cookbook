@@ -7,21 +7,21 @@ default['rabbitmq']['use_distro_version'] = false
 default['rabbitmq']['pin_distro_version'] = false
 
 # provide options to override download urls and package names
-default['rabbitmq']['deb_package'] = lazy { "rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb" }
-default['rabbitmq']['deb_package_url'] = lazy { "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/" }
+default['rabbitmq']['deb_package'] = "rabbitmq-server_{VERSION}-1_all.deb"
+default['rabbitmq']['deb_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v{VERSION}/"
 
 case node['platform_family']
 when 'rhel', 'fedora'
   default['rabbitmq']['rpm_package'] = if node['platform_version'].to_i > 6
-                                         lazy { "rabbitmq-server-#{node['rabbitmq']['version']}-1.el7.noarch.rpm" }
+                                         "rabbitmq-server-{VERSION}-1.el7.noarch.rpm"
                                        else
-                                         lazy { "rabbitmq-server-#{node['rabbitmq']['version']}-1.el6.noarch.rpm" }
+                                         "rabbitmq-server-{VERSION}-1.el6.noarch.rpm"
                                        end
 when 'suse'
-  default['rabbitmq']['rpm_package'] = lazy { "rabbitmq-server-#{node['rabbitmq']['version']}-1.suse.noarch.rpm" }
+  default['rabbitmq']['rpm_package'] = "rabbitmq-server-{VERSION}-1.suse.noarch.rpm"
 end
 
-default['rabbitmq']['rpm_package_url'] = lazy { "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/" }
+default['rabbitmq']['rpm_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v{VERSION}/"
 
 # RabbitMQ 3.6.8+ non-distro versions requires a modern Erlang which is neither available in
 # older distros via packages nor EPEL. rhel < 7, debian < 8
@@ -51,7 +51,7 @@ default['rabbitmq']['manage_service'] = true
 # http://www.rabbitmq.com/configure.html#define-environment-variables
 # "The .config extension is automatically appended by the Erlang runtime."
 default['rabbitmq']['config_root'] = '/etc/rabbitmq'
-default['rabbitmq']['config'] = lazy { "#{node['rabbitmq']['config_root']}/rabbitmq" }
+default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq"
 default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
 default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 # override this if you wish to provide `rabbitmq.config.erb` in your own wrapper cookbook

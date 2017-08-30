@@ -27,6 +27,11 @@ end
 
 include_recipe 'erlang'
 
+version = node['rabbitmq']['version']
+node.default['rabbitmq']['deb_package_url'].gsub! '{VERSION}', version
+node.default['rabbitmq']['rpm_package'].gsub! '{VERSION}', version
+node.default['rabbitmq']['rpm_package_url'].gsub! '{VERSION}', version
+
 ## Install the package
 case node['platform_family']
 when 'debian'
