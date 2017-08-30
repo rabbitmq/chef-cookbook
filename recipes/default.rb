@@ -29,7 +29,8 @@ include_recipe 'erlang'
 
 version = node['rabbitmq']['version']
 %w(deb_package_url rpm_package rpm_package_url).each do |key|
-  node.default['rabbitmq'][key] = node['rabbitmq'][key].gsub('{VERSION}', version)
+  value = node['rabbitmq'][key]
+  node.default['rabbitmq'][key] = value.gsub('{VERSION}', version) if value
 end
 
 ## Install the package
