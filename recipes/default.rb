@@ -28,15 +28,27 @@ end
 include_recipe 'erlang'
 
 version = node['rabbitmq']['version']
-%w(
-  deb_package
-  deb_package_url
-  rpm_package
-  rpm_package_url
-).each do |key|
-  value = node['rabbitmq'][key]
-  node.default['rabbitmq'][key] = value.gsub('{VERSION}', version) if value
+
+default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
+default_deb_package_url = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{version}/"
+
+case node['platform_family']
+when 'rhel', 'fedora'
+  default_rpm_package_name = if node['platform_version'].to_i > 6
+                               "rabbitmq-server-#{version}-1.el7.noarch.rpm"
+                             else
+                               "rabbitmq-server-#{version}-1.el6.noarch.rpm"
+                             end
+when 'suse'
+  default_rpm_package = "rabbitmq-server-#{version}-1.suse.noarch.rpm"
 end
+
+default_rpm_package_url = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{version}/"
+
+deb_package_name = node['rabbitmq']['deb_package'] || default_deb_package_name
+deb_package_url = node['rabbitmq']['deb_package_url'] || default_deb_package_url
+rpm_package_name = node['rabbitmq']['rpm_package'] || default_rpm_package_name
+rpm_package_url = node['rabbitmq']['rpm_package_url'] || default_rpm_package_url
 
 ## Install the package
 case node['platform_family']
@@ -72,14 +84,13 @@ when 'debian'
     end
   else
     # we need to download the package
-    deb_package = "#{node['rabbitmq']['deb_package_url']}#{node['rabbitmq']['deb_package']}"
-    remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['deb_package']}" do
-      source deb_package
+    remote_file "#{Chef::Config[:file_cache_path]}/#{deb_package_name}" do
+      source "#{deb_package_url}#{deb_package_name}"
       action :create_if_missing
     end
     package 'rabbitmq-server' do
       provider Chef::Provider::Package::Dpkg
-      source ::File.join(Chef::Config[:file_cache_path], node['rabbitmq']['deb_package'])
+      source ::File.join(Chef::Config[:file_cache_path], deb_package_name)
       action :upgrade
     end
   end
@@ -144,13 +155,11 @@ when 'rhel', 'fedora'
     end
   else
     # We need to download the rpm
-    rpm_package = "#{node['rabbitmq']['rpm_package_url']}#{node['rabbitmq']['rpm_package']}"
-
-    remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}" do
-      source rpm_package
+    remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+      source "#{rpm_package_url}#{rpm_package_name}"
       action :create_if_missing
     end
-    rpm_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['rpm_package']}"
+    rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
   end
 
 when 'suse'

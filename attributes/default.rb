@@ -7,21 +7,11 @@ default['rabbitmq']['use_distro_version'] = false
 default['rabbitmq']['pin_distro_version'] = false
 
 # provide options to override download urls and package names
-default['rabbitmq']['deb_package'] = "rabbitmq-server_{VERSION}-1_all.deb"
-default['rabbitmq']['deb_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v{VERSION}/"
+default['rabbitmq']['deb_package'] = nil
+default['rabbitmq']['deb_package_url'] = nil
 
-case node['platform_family']
-when 'rhel', 'fedora'
-  default['rabbitmq']['rpm_package'] = if node['platform_version'].to_i > 6
-                                         "rabbitmq-server-{VERSION}-1.el7.noarch.rpm"
-                                       else
-                                         "rabbitmq-server-{VERSION}-1.el6.noarch.rpm"
-                                       end
-when 'suse'
-  default['rabbitmq']['rpm_package'] = "rabbitmq-server-{VERSION}-1.suse.noarch.rpm"
-end
-
-default['rabbitmq']['rpm_package_url'] = "https://www.rabbitmq.com/releases/rabbitmq-server/v{VERSION}/"
+default['rabbitmq']['rpm_package'] = nil
+default['rabbitmq']['rpm_package_url'] = nil
 
 # RabbitMQ 3.6.8+ non-distro versions requires a modern Erlang which is neither available in
 # older distros via packages nor EPEL. rhel < 7, debian < 8
