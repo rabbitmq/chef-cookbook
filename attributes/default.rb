@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 # Latest RabbitMQ.com version to install
 default['rabbitmq']['version'] = '3.6.12'
-# The distro versions may be more stable and have back-ported patches
+# When true, distribution-provided package will be used.
+# This may be useful e.g. on old distributions.
 default['rabbitmq']['use_distro_version'] = false
 # Allow the distro version to be optionally pinned like the rabbitmq.com version
 default['rabbitmq']['pin_distro_version'] = false
