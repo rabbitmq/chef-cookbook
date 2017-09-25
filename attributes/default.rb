@@ -45,7 +45,13 @@ default['rabbitmq']['server_additional_erl_args'] = nil
 default['rabbitmq']['ctl_erl_args'] = nil
 default['rabbitmq']['mnesiadir'] = '/var/lib/rabbitmq/mnesia'
 default['rabbitmq']['service_name'] = 'rabbitmq-server'
+
 default['rabbitmq']['manage_service'] = true
+# service management operation retries. These defaults
+# as the same as Chef's.
+default['rabbitmq']['retry'] = 0
+default['rabbitmq']['retry_delay'] = 2
+
 
 # config file location
 # http://www.rabbitmq.com/configure.html#define-environment-variables
@@ -195,7 +201,3 @@ default['rabbitmq']['disabled_policies'] = []
 # conf
 default['rabbitmq']['conf'] = {}
 default['rabbitmq']['additional_rabbit_configs'] = {}
-
-# retry - Keeping defualts to chef service resource defualts 
-default['rabbitmq']['retry'] = 0
-default['rabbitmq']['retry_delay'] = 2
