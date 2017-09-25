@@ -53,7 +53,6 @@ default['rabbitmq']['manage_service'] = true
 default['rabbitmq']['retry'] = 0
 default['rabbitmq']['retry_delay'] = 2
 
-
 # config file location
 # http://www.rabbitmq.com/configure.html#define-environment-variables
 # "The .config extension is automatically appended by the Erlang runtime."
@@ -100,7 +99,7 @@ default['rabbitmq']['clustering']['cluster_node_type'] = 'disc'
 # log levels
 default['rabbitmq']['log_levels'] = { 'connection' => 'info' }
 
-#Logrotate
+# Logrotate
 default['rabbitmq']['logrotate']['enable'] = true
 default['rabbitmq']['logrotate']['path'] = '/var/log/rabbitmq/*.log'
 default['rabbitmq']['logrotate']['rotate'] = 20
