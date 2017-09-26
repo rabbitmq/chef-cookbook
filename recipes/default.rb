@@ -28,7 +28,7 @@ end
 include_recipe 'erlang'
 
 version = node['rabbitmq']['version']
-url_version = version.gsub('.', '_')
+url_version = version.tr('.', '_')
 
 default_package_url = "https://github.com/rabbitmq/rabbitmq-server/releases/download/rabbitmq_v#{url_version}/"
 
@@ -42,7 +42,7 @@ when 'rhel', 'fedora'
                                "rabbitmq-server-#{version}-1.el6.noarch.rpm"
                              end
 when 'suse'
-  default_rpm_package = "rabbitmq-server-#{version}-1.suse.noarch.rpm"
+  default_rpm_package_name = "rabbitmq-server-#{version}-1.suse.noarch.rpm"
 end
 
 deb_package_name = node['rabbitmq']['deb_package'] || default_deb_package_name
