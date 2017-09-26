@@ -28,8 +28,9 @@ end
 include_recipe 'erlang'
 
 version = node['rabbitmq']['version']
+url_version = version.gsub('.', '_')
 
-default_package_url = "https://github.com/rabbitmq/rabbitmq-server/releases/download/v#{version}/"
+default_package_url = "https://github.com/rabbitmq/rabbitmq-server/releases/download/rabbitmq_v#{version}/"
 
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
