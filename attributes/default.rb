@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 # Latest RabbitMQ.com version to install
-default['rabbitmq']['version'] = '3.6.8'
-# The distro versions may be more stable and have back-ported patches
+default['rabbitmq']['version'] = '3.6.12'
+# When true, distribution-provided package will be used.
+# This may be useful e.g. on old distributions.
 default['rabbitmq']['use_distro_version'] = false
 # Allow the distro version to be optionally pinned like the rabbitmq.com version
 default['rabbitmq']['pin_distro_version'] = false
@@ -35,7 +36,12 @@ default['rabbitmq']['server_additional_erl_args'] = nil
 default['rabbitmq']['ctl_erl_args'] = nil
 default['rabbitmq']['mnesiadir'] = '/var/lib/rabbitmq/mnesia'
 default['rabbitmq']['service_name'] = 'rabbitmq-server'
+
 default['rabbitmq']['manage_service'] = true
+# service management operation retries. These defaults
+# as the same as Chef's.
+default['rabbitmq']['retry'] = 0
+default['rabbitmq']['retry_delay'] = 2
 
 # config file location
 # http://www.rabbitmq.com/configure.html#define-environment-variables
@@ -83,7 +89,7 @@ default['rabbitmq']['clustering']['cluster_node_type'] = 'disc'
 # log levels
 default['rabbitmq']['log_levels'] = { 'connection' => 'info' }
 
-#Logrotate
+# Logrotate
 default['rabbitmq']['logrotate']['enable'] = true
 default['rabbitmq']['logrotate']['path'] = '/var/log/rabbitmq/*.log'
 default['rabbitmq']['logrotate']['rotate'] = 20
