@@ -1,14 +1,26 @@
 # Change Log
 
-## [v5.2.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.2.0) (2017-06-16)
+## [v5.3.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.3.0)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.2.0...v5.3.0)
+
+**Closed issues:**
+
+- version is hard coded so that we can't change the default version in wrap cookbooks [\#457](https://github.com/rabbitmq/chef-cookbook/issues/457)
+
+**Merged pull requests:**
+
+- Make it possible to override base package URL location; switch default to GitHub [\#458](https://github.com/rabbitmq/chef-cookbook/pull/458) ([Wing924](https://github.com/Wing924))
+- Request for adding retry to node start  [\#454](https://github.com/rabbitmq/chef-cookbook/pull/454) ([amulyas](https://github.com/amulyas))
+
+## [v5.2.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.2.0) (2017-06-16)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.1.0...v5.2.0)
 
 **Merged pull requests:**
 
 - Remediate RabbitMQ reset failures [\#449](https://github.com/rabbitmq/chef-cookbook/pull/449) ([jkugler](https://github.com/jkugler))
 - Add configuration for logrotate [\#448](https://github.com/rabbitmq/chef-cookbook/pull/448) ([foxdalas](https://github.com/foxdalas))
-- Fix resource cloning deprecation warnings [\#446](https://github.com/rabbitmq/chef-cookbook/pull/446) ([iamthemuffinman](https://github.com/iamthemuffinman))
+- Fix resource cloning deprecation warnings [\#446](https://github.com/rabbitmq/chef-cookbook/pull/446) ([rdeusser](https://github.com/rdeusser))
 - Do not restart RabbitMQ for Policy Change [\#445](https://github.com/rabbitmq/chef-cookbook/pull/445) ([bdwyertech](https://github.com/bdwyertech))
 - replace logrotate script, for debian upstart [\#349](https://github.com/rabbitmq/chef-cookbook/pull/349) ([flah00](https://github.com/flah00))
 
