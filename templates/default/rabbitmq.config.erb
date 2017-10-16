@@ -9,6 +9,9 @@
 <% if node['rabbitmq']['web_console_ssl'] -%>
   {rabbitmq_management, [
     {listener, [{port, <%= node['rabbitmq']['web_console_ssl_port'] %>},
+<% if node['rabbitmq']['web_console_interface'] -%>
+                {ip, "<%= node['rabbitmq']['web_console_interface'] %>"},
+<% end -%>
                 {ssl, true},
                 {ssl_opts, [{cacertfile,"<%= node['rabbitmq']['ssl_cacert'] %>"},
                     {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
@@ -22,6 +25,9 @@
   {rabbitmq_management, [
     {listener, [
                 {port, <%= node['rabbitmq']['web_console_port'] %>}
+<% if node['rabbitmq']['web_console_interface'] -%>
+                ,{ip, "<%= node['rabbitmq']['web_console_interface'] %>"}
+<% end -%>
     ]}
   ]},
 <% end %>

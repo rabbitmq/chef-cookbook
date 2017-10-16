@@ -132,6 +132,9 @@ default['rabbitmq']['web_console_ssl_port'] = 15_671
 # Change non SSL web console listen port
 default['rabbitmq']['web_console_port'] = 15672
 
+# Add an ability to set web console listen ip.
+default['rabbitmq']['web_console_interface'] = nil
+
 # tcp listen options
 default['rabbitmq']['tcp_listen'] = true
 default['rabbitmq']['tcp_listen_packet'] = 'raw'
