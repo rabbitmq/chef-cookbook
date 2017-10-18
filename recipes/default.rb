@@ -257,6 +257,7 @@ if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'
     owner 'rabbitmq'
     group 'rabbitmq'
     mode 00400
+    sensitive true
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
     notifies :run, 'execute[reset-node]', :immediately
   end
