@@ -1,7 +1,24 @@
 # Change Log
 
-## [v5.3.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.3.0)
+## [v5.3.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.3.1)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.3.0...v5.3.1)
+
+**Fixed bugs:**
+
+- .erlang.cookie template is not marked as sensitive [\#465](https://github.com/rabbitmq/chef-cookbook/issues/465)
+
+**Closed issues:**
+
+- User management execution optimisation  [\#463](https://github.com/rabbitmq/chef-cookbook/issues/463)
+- Time for a new release \(5.3.0\)? [\#462](https://github.com/rabbitmq/chef-cookbook/issues/462)
+
+**Merged pull requests:**
+
+- Mark the .erlang.cookie as sensitive. [\#466](https://github.com/rabbitmq/chef-cookbook/pull/466) ([smekalayahoo](https://github.com/smekalayahoo))
+- Listen ip address configuration for management console. [\#464](https://github.com/rabbitmq/chef-cookbook/pull/464) ([dragonsmith](https://github.com/dragonsmith))
+
+## [v5.3.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.3.0) (2017-10-04)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.2.0...v5.3.0)
 
 **Closed issues:**
