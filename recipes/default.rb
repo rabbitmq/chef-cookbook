@@ -212,6 +212,7 @@ end
 
 template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   source 'rabbitmq-env.conf.erb'
+  cookbook node['rabbitmq']['config-env_template_cookbook']
   owner 'root'
   group 'root'
   mode 00644
