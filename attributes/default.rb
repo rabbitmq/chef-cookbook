@@ -52,6 +52,8 @@ default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
 default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 # override this if you wish to provide `rabbitmq.config.erb` in your own wrapper cookbook
 default['rabbitmq']['config_template_cookbook'] = 'rabbitmq'
+# override this if you wish to provide `rabbitmq-env.config.erb` in your own wrapper cookbook
+default['rabbitmq']['config-env_template_cookbook'] = 'rabbitmq'
 
 # rabbitmq.config defaults
 default['rabbitmq']['default_user'] = 'guest'
