@@ -23,7 +23,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    backports (3.7.0)
+    backports (3.10.3)
     berkshelf (5.6.4)
       addressable (~> 2.3, >= 2.3.4)
       berkshelf-api-client (>= 2.0.2, < 4.0)
@@ -114,9 +114,11 @@ GEM
     concurrent-ruby (1.0.5)
     cookstyle (1.3.1)
       rubocop (= 0.47.1)
-    cucumber-core (2.0.0)
-      backports (~> 3.6)
-      gherkin (~> 4.0)
+    cucumber-core (3.0.0)
+      backports (>= 3.8.0)
+      cucumber-tag_expressions (>= 1.0.1)
+      gherkin (>= 4.1.3)
+    cucumber-tag_expressions (1.0.1)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.3)
@@ -279,17 +281,17 @@ GEM
     fog-xml (0.1.3)
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
-    foodcritic (10.4.1)
+    foodcritic (12.2.1)
       cucumber-core (>= 1.3)
       erubis
+      ffi-yajl (~> 2.0)
       nokogiri (>= 1.5, < 2.0)
       rake
       rufus-lru (~> 1.0)
       treetop (~> 1.4)
-      yajl-ruby (~> 1.1)
     formatador (0.2.5)
     fuzzyurl (0.9.0)
-    gherkin (4.1.1)
+    gherkin (5.0.0)
     github_changelog_generator (1.14.3)
       activesupport
       faraday-http-cache
@@ -392,7 +394,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.3.0)
     minitar (0.6.1)
     minitest (5.10.1)
     mixlib-archive (0.4.1)
@@ -425,8 +427,8 @@ GEM
       net-ssh-gateway (>= 1.2.0)
     net-telnet (0.1.1)
     nio4r (2.0.0)
-    nokogiri (1.7.1)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
     nori (2.6.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -462,7 +464,7 @@ GEM
     rack (2.0.1)
     rainbow (2.2.2)
       rake
-    rake (12.0.0)
+    rake (12.3.0)
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
@@ -573,7 +575,7 @@ GEM
       net-ssh (>= 2.9, < 5.0)
       winrm (~> 2.0)
       winrm-fs (~> 1.0)
-    treetop (1.6.8)
+    treetop (1.6.9)
       polyglot (~> 0.3)
     trollop (2.1.2)
     tzinfo (1.2.3)
@@ -607,7 +609,6 @@ GEM
       winrm (~> 2.0)
     wmi-lite (1.0.0)
     xml-simple (1.1.5)
-    yajl-ruby (1.3.0)
 
 PLATFORMS
   ruby
@@ -617,7 +618,7 @@ DEPENDENCIES
   chef
   chefspec
   cookstyle
-  foodcritic
+  foodcritic (>= 12.2.1)
   github_changelog_generator
   growl
   guard

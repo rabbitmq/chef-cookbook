@@ -7,7 +7,7 @@ gem 'github_changelog_generator'
 gem 'stove'
 
 group :lint do
-  gem 'foodcritic'
+  gem 'foodcritic', '>= 12.2.1'
   gem 'cookstyle'
 end
 

@@ -20,7 +20,7 @@ namespace :style do
     FoodCritic::Rake::LintTask.new(:chef) do |t|
       t.options = {
         :fail_tags => ['any'],
-        :tags => %w(~FC023 ~FC085),
+        :tags => %w(~FC007 ~FC023 ~FC085),
         :progress => true,
       }
     end

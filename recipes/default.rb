@@ -88,8 +88,7 @@ when 'debian'
       source "#{deb_package_url}#{deb_package_name}"
       action :create_if_missing
     end
-    package 'rabbitmq-server' do
-      provider Chef::Provider::Package::Dpkg
+    dpkg_package 'rabbitmq-server' do
       source ::File.join(Chef::Config[:file_cache_path], deb_package_name)
       action :upgrade
     end
