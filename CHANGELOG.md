@@ -1,7 +1,19 @@
 # Change Log
 
-## [v5.3.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.3.1)
+## [v5.4.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.4.0)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.3.1...v5.4.0)
+
+**Closed issues:**
+
+- add the abitity to add a queue [\#401](https://github.com/rabbitmq/chef-cookbook/issues/401)
+- Upgrade to RabbitMQ 3.6.0 [\#329](https://github.com/rabbitmq/chef-cookbook/issues/329)
+
+**Merged pull requests:**
+
+- Allow override of rabbitmq-env template [\#468](https://github.com/rabbitmq/chef-cookbook/pull/468) ([wjdavis5](https://github.com/wjdavis5))
+
+## [v5.3.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.3.1) (2017-10-19)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.3.0...v5.3.1)
 
 **Fixed bugs:**
