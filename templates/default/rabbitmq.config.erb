@@ -42,7 +42,11 @@
     {cluster_partition_handling,<%= node['rabbitmq']['clustering']['cluster_partition_handling'] %>},
 <% end %>
 <% if node['rabbitmq']['ssl'] -%>
+    <% if node['rabbitmq']['ssl_listen_interface'] %>
+    {ssl_listeners, [{"<%= node['rabbitmq']['ssl_listen_interface'] %>", <%= node['rabbitmq']['ssl_port'] %>}]},
+    <% else %>
     {ssl_listeners, [<%= node['rabbitmq']['ssl_port'] %>]},
+    <% end %>
     {ssl_options, [{cacertfile,"<%= node['rabbitmq']['ssl_cacert'] %>"},
                     {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
                     {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"},
