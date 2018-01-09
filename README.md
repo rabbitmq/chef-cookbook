@@ -35,6 +35,10 @@ node['rabbitmq']['ssl_cacert'] = '/path/to/cacert.pem'
 node['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
 node['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 ```
+Listening for SSL connections may be limited specific interface by setting the following attribute:
+```
+node['rabbitmq']['ssl_listen_interface'] = nil
+```
 
 A full list of SSL attributes can be found in [attributes/default.rb](attributes/default.rb).
 

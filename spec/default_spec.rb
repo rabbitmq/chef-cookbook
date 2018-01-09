@@ -140,6 +140,19 @@ describe 'rabbitmq::default' do
         '{ciphers,["ECDHE-ECDSA-AES256-SHA384","ECDH-ECDSA-AES256-SHA384"]}')
     end
 
+    it 'does not set interface to listen for SSL by default' do
+      node.normal['rabbitmq']['ssl'] = true
+      expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
+        /{ssl_listeners, [5671]},/)
+    end
+
+    it 'is seting interface to listen for SSL if set' do
+      node.normal['rabbitmq']['ssl'] = true
+      node.normal['rabbitmq']['ssl_listen_interface'] = '0.0.0.0'
+      expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
+        /{ssl_listeners, [{"0.0.0.0", 5671}]},/)
+    end
+
     it 'should set additional rabbitmq config' do
       node.normal['rabbitmq']['additional_rabbit_configs'] = { 'foo' => 'bar' }
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('foo, bar')
@@ -214,7 +227,7 @@ describe 'rabbitmq::default' do
     end
 
     it 'installs the rabbitmq-server deb_package with the default action' do
-      expect(chef_run).to upgrade_package('rabbitmq-server')
+      expect(chef_run).to upgrade_dpkg_package('rabbitmq-server')
     end
 
     it 'creates a template rabbitmq-server with attributes' do
