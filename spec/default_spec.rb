@@ -227,7 +227,7 @@ describe 'rabbitmq::default' do
     end
 
     it 'installs the rabbitmq-server deb_package with the default action' do
-      expect(chef_run).to upgrade_package('rabbitmq-server')
+      expect(chef_run).to upgrade_dpkg_package('rabbitmq-server')
     end
 
     it 'creates a template rabbitmq-server with attributes' do
