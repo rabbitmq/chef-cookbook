@@ -66,7 +66,21 @@ By default, the guest user can only connect via localhost.  This is the behavior
 
 If you wish to allow the default guest user to connect remotely, you can change this to `[]`. If instead you wanted to allow just the user 'foo' to connect over loopback, you would set this value to `["foo"]`.  More information can be found here: https://www.rabbitmq.com/access-control.html.
 
+##### Definitions Import
 
+[RabbitMQ management plugin](http://www.rabbitmq.com/management.html) provides a means to load a definitions (schema) file on node boot.
+To configure definition loading, set the following attribute:
+
+`['rabbitmq']['management']['load_definitions'] = true`
+
+By default, the node will be configured to load a JSON at `/etc/rabbitmq/load_definitions.json`;
+however, you can define another path if you'd prefer using the following attribute:
+
+`['rabbitmq']['management']['definitions_file'] = '/path/to/your/definitions.json'`
+
+In order to use this functionality, you will need to provision a file referenced by the above attribute
+before you execute any recipes in the RabbitMQ cookbook (in other words, before the node starts). For example, this can be done
+using a remote file resource.
 
 ### mgmt_console
 Installs the `rabbitmq_management` and `rabbitmq_management_visualiser` plugins.

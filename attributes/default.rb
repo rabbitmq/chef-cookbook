@@ -132,6 +132,10 @@ default['rabbitmq']['ssl_ciphers'] = nil
 default['rabbitmq']['web_console_ssl'] = false
 default['rabbitmq']['web_console_ssl_port'] = 15_671
 
+# If configured to true, allows downstream cookbooks to supply definitions on start
+default['rabbitmq']['management']['load_definitions'] = false
+default['rabbitmq']['management']['definitions_file'] = '/etc/rabbitmq/load_definitions.json'
+
 # Change non SSL web console listen port
 default['rabbitmq']['web_console_port'] = 15672
 
