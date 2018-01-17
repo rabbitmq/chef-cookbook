@@ -3,23 +3,28 @@
 [![Build Status](https://travis-ci.org/rabbitmq/chef-cookbook.svg?branch=master)](https://travis-ci.org/rabbitmq/chef-cookbook)
 [![Cookbook Version](https://img.shields.io/cookbook/v/rabbitmq.svg)](https://supermarket.chef.io/cookbooks/rabbitmq)
 
-This is a cookbook for managing RabbitMQ with Chef. It is intended for RabbitMQ 2.6.1 or later releases and Chef 12.1 and later.
+This is a cookbook for managing RabbitMQ with Chef. It is intended for RabbitMQ 3.5.8 or later releases
+and targets Chef 12.1 and later.
 
-**NOTE**: This cookbook is still maintained by @jjasghar, please ping him on PRs or Issues you may find.
 
-## Requirements
+## Dependencies
 
-This cookbook depends on the [erlang cookbook](https://supermarket.chef.io/cookbooks/erlang).
+This cookbook depends on the [Erlang cookbook](https://supermarket.chef.io/cookbooks/erlang).
 
-The release was tested with (rabbitmq.com/distro version), from the [kitchen.yml](.kitchen.cloud.yml).
+
+## Supported Distributions
+
+The release was tested with recent RabbitMQ releases on
 
 - CentOS 7.0
 - Ubuntu 14.04
 - Ubuntu 16.04
 - Debian 8.0
 
-We are starting to test with Ubuntu 16.04, though we have not fully vetted support yet.
-Use at your own risk, if you do find something please report [here](https://github.com/jjasghar/rabbitmq/issues/379).
+Those are the distributions currently used to run tests [with Kitchen](.kitchen.cloud.yml).
+
+Local Kitchen tests and user experience suggest that more recent Debian, Ubuntu and CentOS 7.x versions
+should work just fine.
 
 ## Recipes
 
@@ -309,11 +314,12 @@ For an already running cluster, these actions still require manual intervention:
 
 ## License & Authors
 
-- Author:: Benjamin Black (<b@b3k.us>)
-- Author:: Daniel DeLeo (<dan@kallistec.com>)
-- Author:: Matt Ray (<matt@chef.io>)
-- Author:: Seth Thomas (<cheeseplus@chef.io>)
-- Author:: JJ Asghar (<jj@chef.io>)
+- Author:: Benjamin Black
+- Author:: Daniel DeLeo
+- Author:: Matt Ray
+- Author:: Seth Thomas
+- Author:: JJ Asghar
+- Author:: Team RabbitMQ
 
 ```text
 Copyright (c) 2009-2018, Chef Software, Inc.
