@@ -8,6 +8,10 @@
   ]},
 <% if node['rabbitmq']['web_console_ssl'] -%>
   {rabbitmq_management, [
+<% if node['rabbitmq']['management']['load_definitions'] %>
+    {load_definitions, "<%= node['rabbitmq']['management']['definitions_file'] %>"}
+    ]}
+<% end -%>
     {listener, [{port, <%= node['rabbitmq']['web_console_ssl_port'] %>},
 <% if node['rabbitmq']['web_console_interface'] -%>
                 {ip, "<%= node['rabbitmq']['web_console_interface'] %>"},
