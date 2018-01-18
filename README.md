@@ -83,7 +83,7 @@ before you execute any recipes in the RabbitMQ cookbook (in other words, before 
 using a remote file resource.
 
 ### mgmt_console
-Installs the `rabbitmq_management` and `rabbitmq_management_visualiser` plugins.
+Installs the `rabbitmq_management` plugin.
 To use https connection to management console, turn `['rabbitmq']['web_console_ssl']` to true. The SSL port for web management console can be configured by setting attribute `['rabbitmq']['web_console_ssl_port']`, whose default value is 15671.
 
 ### plugin_management

@@ -28,9 +28,15 @@ end
 include_recipe 'erlang'
 
 version = node['rabbitmq']['version']
-url_version = version.tr('.', '_')
 
-default_package_url = "https://github.com/rabbitmq/rabbitmq-server/releases/download/rabbitmq_v#{url_version}/"
+default_package_url = if version =~ /^3\.[7-8]/
+                        # 3.7.0 and later
+                        "https://github.com/rabbitmq/rabbitmq-server/releases/download/rabbitmq_v#{version}/"
+                      else
+                        # prior to 3.7.0
+                        legacy_version = version.tr('.', '_')
+                        "https://github.com/rabbitmq/rabbitmq-server/releases/download/rabbitmq_v#{legacy_version}/"
+                      end
 
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 

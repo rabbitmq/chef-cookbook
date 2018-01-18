@@ -20,7 +20,7 @@
 
 include_recipe 'rabbitmq::default'
 
-plugins = %w( rabbitmq_management rabbitmq_management_visualiser )
+plugins = %w(rabbitmq_management)
 
 service_name = node['rabbitmq']['service_name']
 
