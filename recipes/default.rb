@@ -31,7 +31,7 @@ version = node['rabbitmq']['version']
 
 default_package_url = if version =~ /^3\.[7-8]/
                         # 3.7.0 and later
-                        "https://github.com/rabbitmq/rabbitmq-server/releases/download/rabbitmq_v#{version}/"
+                        "https://dl.bintray.com/rabbitmq/all/rabbitmq-server/#{version}/"
                       else
                         # prior to 3.7.0
                         legacy_version = version.tr('.', '_')
