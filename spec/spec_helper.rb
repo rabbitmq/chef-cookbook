@@ -12,30 +12,30 @@ require 'chef/application'
 LOGLEVEL = :fatal
 SUSE_OPTS = {
   :platform => 'suse',
-  :version => '11.3',
+  :version => '12.3',
   :log_level => LOGLEVEL,
 }
 REDHAT_OPTS = {
   :platform => 'redhat',
-  :version => '7.2',
+  :version => '7.4',
   :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
 UBUNTU_OPTS = {
   :platform => 'ubuntu',
-  :version => '14.04',
+  :version => '16.04',
   :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
 CENTOS_OPTS = {
   :platform => 'centos',
-  :version => '7.0',
+  :version => '7.4.1708',
   :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
 FEDORA_OPTS = {
   :platform => 'fedora',
-  :version => '20',
+  :version => '27',
   :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
