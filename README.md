@@ -25,7 +25,21 @@ the minimum required Erlang version for it [is 19.3](https://github.com/rabbitmq
 Most distributions provide older versions, so Erlang must be provisioned either
 from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/) or [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm).
 
-The Erlang cookbook will provision packages from Erlang Solutions if `node['erlang']['install_method']` is set to `esl`.
+The Erlang cookbook will provision packages from Erlang Solutions if `node['erlang']['install_method']` is set to `esl`:
+
+``` ruby
+# will install the latest release, please
+# consult with https://www.rabbitmq.com/which-erlang.html first
+node['erlang']['install_method'] = "esl"
+```
+
+to provision a specific version, e.g. 20.2.2:
+
+``` ruby
+node['erlang']['install_method'] = "esl"
+# note the "1:" package epoch prefix
+node['erlang']['esl']['version'] = "1:20.2.2"
+```
 
 #### Set RabbitMQ Version
 
