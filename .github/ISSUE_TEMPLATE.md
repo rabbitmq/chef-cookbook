@@ -12,31 +12,16 @@ feedback should be directed to the RabbitMQ mailing list [1] instead.
 In order for the RabbitMQ team to investigate your issue, please provide
 **as much as possible** of the following details:
 
-* RabbitMQ version
-* Erlang version
-* RabbitMQ server and client application log files
-* A runnable code sample, terminal transcript or detailed set of
-  instructions that can be used to reproduce the issue
-* RabbitMQ plugin information via `rabbitmq-plugins list`
-* Client library version (for all libraries used)
+* Cookbook version used
 * Operating system, version, and patch level
-
-Running the `rabbitmq-collect-env` [2] script can provide most of the
-information needed. Please make the archive available via a third-party
-service and note that **the script does not attempt to scrub any
-sensitive data**.
-
-If your issue involves RabbitMQ management UI or HTTP API, please also provide
-the following:
-
- * Browser and its version
- * What management UI page was used (if applicable)
- * How the HTTP API requests performed can be reproduced with `curl`
- * Operating system on which you are running your browser, and its version
- * Errors reported in the JavaScript console (if any)
+* Node attributes
+* RabbitMQ version provisioned
+* Erlang version provisioned
+* RabbitMQ server and client application log files
+* Brief instructions that can be used to reproduce the issue e.g. with Vagrant and `chef-solo`
 
 This information **greatly speeds up issue investigation** (or makes it
-possible to investigate it at all).  Please help project maintainers and
+possible to investigate it at all). Please help project maintainers and
 contributors to help you by providing it!
 
 1. https://groups.google.com/forum/#!forum/rabbitmq-users
