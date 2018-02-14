@@ -18,6 +18,11 @@ that a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) is 
 
 ### 3.7.x
 
+#### Ensure Your Cookbook Version is Compatible
+
+To provision RabbitMQ 3.7.x, you must use version `5.5.0` of this cookbook or later.
+Older versions will use incorrect package download URLs.
+
 #### Provision Erlang/OTP 19.3 or Later
 
 Before provisioning a 3.7.x release, please beware that
