@@ -49,9 +49,11 @@ Set `node['rabbitmq']['version']` to specify a version:
 node['rabbitmq']['version'] = "3.7.3"
 ```
 
-Please omit `node['rabbitmq']['deb_package_url']`, `node['rabbitmq']['deb_package_url']` and similar node attributes when provisioning 3.7.x versions.
+If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['deb_package_url']` overridden
+from earlier versions, consider omitting those attributes. Otherwise see a section on download
+location customization below.
 
-3.7.x releases will be downloaded [from Bintray](https://bintray.com/rabbitmq/all/).
+3.7.x releases will be downloaded [from Bintray](https://bintray.com/rabbitmq/all/) by default.
 
 
 ### 3.6.x
@@ -62,15 +64,7 @@ Set `node['rabbitmq']['version']` to specify a version:
 node['rabbitmq']['version'] = "3.6.15"
 ```
 
-If `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['deb_package_url']` are specified,
-download location can be changed. The `default` recipe will append a `"rabbitmq_v{version}"` to the URL
-value, with `{version}` being the value of `node['rabbitmq']['version']` with dots replaced by underscores
-to match RabbitMQ 3.6.x tag naming scheme.
-
-This may require also tweaking `node['rabbitmq']['deb_package']`
-and `node['rabbitmq']['rpm_package']`, which both specify package names.
-
-3.6.x releases will be downloaded [from GitHub](https://github.com/rabbitmq/rabbitmq-server/releases/).
+3.6.x releases will be downloaded [from GitHub](https://github.com/rabbitmq/rabbitmq-server/releases/) by default.
 
 
 
@@ -91,7 +85,12 @@ should work just fine.
 ## Recipes
 
 ### default
-Installs `rabbitmq-server` from RabbitMQ.com via direct download of the installation package or using the distribution version. Depending on your distribution, the provided version may be quite old so they are disabled by default. If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`. You may override the download URL attribute `['rabbitmq']['package']` if you wish to use a local mirror.
+
+Installs `rabbitmq-server` via direct download (from Bintray or GitHub, depending on the version) of
+the installation package or using the distribution version. Depending on your distribution,
+the provided version may be quite old so direct download is the default option.
+
+If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`.
 
 The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['clustering']['enable']` attribute to `true`, `['rabbitmq']['clustering']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
@@ -107,9 +106,26 @@ Listening for SSL connections may be limited specific interface by setting the f
 node['rabbitmq']['ssl_listen_interface'] = nil
 ```
 
-A full list of SSL attributes can be found in [attributes/default.rb](attributes/default.rb).
+#### Custom Package Download Locations
+
+`node['rabbitmq']['deb_package_url']` and `node['rabbitmq']['deb_package_url']` can be used
+to override the package download location. They configure a prefix without a version.
+Set them to a download location without a version if you want to provision from a custom
+endpoint such as a local mirror.
+
+The `default` recipe will append a version suffix that matches RabbitMQ tag naming scheme.
+For 3.7.x or later, it is just the version (unchanged). For 3.6.x and 3.5.x, it is
+`"rabbitmq_v{version}"` where `{version}` being the value of `node['rabbitmq']['version']` with dots replaced by underscores.
+So, `3.6.15` will be translated to `rabbitmq_v3_6_15`.
+
+Lastly, a package name will be appended to form a full download URL. They rarely need
+changing but can also be overridden using the `node['rabbitmq']['deb_package']`
+and `node['rabbitmq']['rpm_package']` attributes.
+
 
 #### Attributes
+
+A full list of SSL attributes can be found in [attributes/default.rb](attributes/default.rb).
 
 Default values and usage information of important attributes are shown below.  More attributes are documented in metadata.rb.
 
