@@ -34,11 +34,15 @@ Please omit `node['rabbitmq']['deb_package_url']`, `node['rabbitmq']['deb_packag
 Set `node['rabbitmq']['version']` to specify a version.
 
 ``` ruby
-node['rabbitmq']['version'] = "3.7.3"
+node['rabbitmq']['version'] = "3.6.15"
 ```
 
 If `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['deb_package_url']` are specified,
-download location can be changed. This may require also tweaking `node['rabbitmq']['deb_package']`
+download location can be changed. The `default` recipe will append a `"rabbitmq_v{version}"` to the URL
+value, with `{version}` being the value of `node['rabbitmq']['version']` with dots replaced by underscores
+to match RabbitMQ 3.6.x tag naming scheme.
+
+This may require also tweaking `node['rabbitmq']['deb_package']`
 and `node['rabbitmq']['rpm_package']`, which both specify package names.
 
 3.6.x releases will be downloaded [from GitHub](https://github.com/rabbitmq/rabbitmq-server/releases/).
