@@ -1,4 +1,4 @@
-# rabbitmq Cookbook
+# RabbitMQ Chef Cookbook
 
 [![Build Status](https://travis-ci.org/rabbitmq/chef-cookbook.svg?branch=master)](https://travis-ci.org/rabbitmq/chef-cookbook)
 [![Cookbook Version](https://img.shields.io/cookbook/v/rabbitmq.svg)](https://supermarket.chef.io/cookbooks/rabbitmq)
