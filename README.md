@@ -18,10 +18,16 @@ that a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) is 
 
 ### 3.7.x
 
+#### Provision Erlang/OTP 19.3 or Later
+
 Before provisioning a 3.7.x release, please beware that
 the minimum required Erlang version for it [is 19.3](https://github.com/rabbitmq/rabbitmq-server/releases/tag/v3.7.0).
 Most distributions provide older versions, so Erlang must be provisioned either
 from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/) or [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm).
+
+The Erlang cookbook will provision packages from Erlang Solutions if `node['erlang']['install_method']` is set to `esl`.
+
+#### Set RabbitMQ Version
 
 Set `node['rabbitmq']['version']` to specify a version:
 
