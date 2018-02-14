@@ -11,6 +11,39 @@ and targets Chef 12.1 and later.
 
 This cookbook depends on the [Erlang cookbook](https://supermarket.chef.io/cookbooks/erlang).
 
+## Supported RabbitMQ Versions
+
+This cookbook can provision any recent (3.7.x and 3.6.x version) plus 3.5.x or even older, provided
+that a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) is also provisioned.
+
+### 3.7.x
+
+Set `node['rabbitmq']['version']` to specify a version.
+
+``` ruby
+node['rabbitmq']['version'] = "3.7.3"
+```
+
+Please omit `node['rabbitmq']['deb_package_url']`, `node['rabbitmq']['deb_package_url']` and similar node attributes when provisioning 3.7.x versions.
+
+3.7.x releases will be downloaded [from Bintray](https://bintray.com/rabbitmq/all/).
+
+
+### 3.6.x
+
+Set `node['rabbitmq']['version']` to specify a version.
+
+``` ruby
+node['rabbitmq']['version'] = "3.7.3"
+```
+
+If `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['deb_package_url']` are specified,
+download location can be changed. This may require also tweaking `node['rabbitmq']['deb_package']`
+and `node['rabbitmq']['rpm_package']`, which both specify package names.
+
+3.6.x releases will be downloaded [from GitHub](https://github.com/rabbitmq/rabbitmq-server/releases/).
+
+
 
 ## Supported Distributions
 
@@ -92,7 +125,7 @@ Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disa
 ### community_plugins
 Downloads, installs and enables pre-built community plugins binaries.
 
-To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['PLUGIN_NAME']` to `'DOWNLOAD_URL'`. For example, to use the [RabbitMQ priority queue plugin](https://github.com/rabbitmq/rabbitmq-priority-queue), set the attribute `node['rabbitmq']['community_plugins']['rabbitmq_priority_queue']` to `'https://www.rabbitmq.com/community-plugins/v3.4.x/rabbitmq_priority_queue-3.4.x-3431dc1e.ez'`.
+To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['PLUGIN_NAME']` to `'{DOWNLOAD_URL}'`.
 
 ### policy_management
 Enables any policies listed in the `node['rabbitmq']['policies']` and disables any listed in `node['rabbitmq']['disabled_policies']` attributes.
