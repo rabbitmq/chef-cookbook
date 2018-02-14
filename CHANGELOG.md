@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.4.0...v5.5.0)
 
+**Enhancements:**
+
+ - RabbitMQ 3.7.x releases [now can be provisioned](https://github.com/rabbitmq/chef-cookbook/blob/master/README.md#supported-rabbitmq-versions)
+
 **Closed issues:**
 
 - Not honoring Version - always installs 3.6.8 [\#480](https://github.com/rabbitmq/chef-cookbook/issues/480)
