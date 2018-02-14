@@ -1,7 +1,23 @@
 # Change Log
 
-## [v5.4.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.4.0)
+## [v5.5.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.5.0)
 
+[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.4.0...v5.5.0)
+
+**Closed issues:**
+
+- Not honoring Version - always installs 3.6.8 [\#480](https://github.com/rabbitmq/chef-cookbook/issues/480)
+- Github link seems to no longer be valid [\#479](https://github.com/rabbitmq/chef-cookbook/issues/479)
+- Failing to create vhost and users [\#474](https://github.com/rabbitmq/chef-cookbook/issues/474)
+
+**Merged pull requests:**
+
+- fixed change cluster node type [\#477](https://github.com/rabbitmq/chef-cookbook/pull/477) ([pauldmccann](https://github.com/pauldmccann))
+- add the ability to load definitions on start [\#472](https://github.com/rabbitmq/chef-cookbook/pull/472) ([esabelhaus](https://github.com/esabelhaus))
+- Updated spec for upgrade\_dpkg\_package [\#471](https://github.com/rabbitmq/chef-cookbook/pull/471) ([k-popov](https://github.com/k-popov))
+- Ability to set interface to listen for SSL connections [\#470](https://github.com/rabbitmq/chef-cookbook/pull/470) ([k-popov](https://github.com/k-popov))
+
+## [v5.4.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.4.0) (2017-12-18)
 [Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.3.1...v5.4.0)
 
 **Closed issues:**
