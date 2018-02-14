@@ -147,7 +147,8 @@ By default, the guest user can only connect via localhost.  This is the behavior
 
 `['rabbitmq']['loopback_users'] = nil`
 
-If you wish to allow the default guest user to connect remotely, you can change this to `[]`. If instead you wanted to allow just the user 'foo' to connect over loopback, you would set this value to `["foo"]`.  More information can be found here: https://www.rabbitmq.com/access-control.html.
+If you wish to allow the default guest user to connect remotely, you can change this to `[]`. If instead you wanted to allow just the user 'foo' to connect over loopback, you would set this value to `["foo"]`. Learn more
+in the RabbitMQ [Access Control guide](https://www.rabbitmq.com/access-control.html).
 
 ##### Definitions Import
 
