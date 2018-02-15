@@ -1,12 +1,64 @@
+# Contributing to the RabbitMQ Chef Cookbook
+
+Thank you for using Chef, RabbitMQ, this cookbook
+and for taking the time to contribute to the project!
+
 ## Quick-contribute
 
 * Visit the Github page for the project.
 * Fork the repository
 * Create a feature branch for your change.
 * Create a Pull Request for your change.
+* Provide some context and reasoning behind the change.
 
 We regularly review contributions and will get back to you if we have
 any suggestions or concerns.
+
+
+## How to Report Issues (and When Not To)
+
+The RabbitMQ team uses GitHub issues for _specific actionable items_ that
+engineers can work on. This assumes the following:
+
+* GitHub issues are not used for questions, investigations, root cause
+  analysis, discussions of potential issues, etc (as defined by this team)
+* Enough information is provided by the reporter for maintainers to work with
+
+The team receives many questions through various venues every single
+day. Frequently, these questions do not include the necessary details
+the team needs to begin useful work. GitHub issues can very quickly
+turn into a something impossible to navigate and make sense
+of. Because of this, questions, investigations, root cause analysis,
+and discussions of potential features are all considered to be
+[mailing list][rmq-users] material. If you are unsure where to begin,
+the [RabbitMQ users mailing list][rmq-users] is the right place.
+
+Getting all the details necessary to reproduce an issue, make a
+conclusion or even form a hypothesis about what's happening can take a
+fair amount of time. Please help others help you by providing a way to
+reproduce the behavior you're observing, or at least sharing as much
+relevant information as possible on the [RabbitMQ users mailing
+list][rmq-users].
+
+Please provide versions of the software used:
+
+ * Chef version
+ * Cookbook version
+ * Node attributes (as many as possible, make sure to edit out **sensitive information**)
+ * RabbitMQ server version(s) you target
+ * Erlang version used
+ * Operating system version (and distribution, if applicable)
+ * What RabbitMQ plugins are used, in particular 3rd party ones
+
+The following information greatly helps in investigating and reproducing issues:
+
+ * A Vagrant and `chef-solo`-based example that can be used to reproduce
+ * Chef client debug logs
+ * RabbitMQ server logs
+ * Full exception stack traces (a single line message is not enough!)
+
+Again, please make sure to edit out all **sensitive information**.
+
 
 ## The Apache License and the CLA/CCLA
 
@@ -173,3 +225,5 @@ Please do not update the CHANGELOG.md for a new version. Not all
 changes to a cookbook may be merged and released in the same versions.
 A maintainer will update the CHANGELOG.md when releasing a new version of
 the cookbook.
+
+[rmq-users]: https://groups.google.com/forum/#!forum/rabbitmq-users
