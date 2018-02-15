@@ -1,0 +1,36 @@
+SITE
+  remote: https://supermarket.getchef.com/api/v1
+  specs:
+    build-essential (8.0.4)
+      mingw (>= 1.1)
+      seven_zip (>= 0.0.0)
+    compat_resource (12.19.1)
+    dpkg_autostart (0.2.0)
+    erlang (5.1.0)
+      build-essential (>= 0.0.0)
+      compat_resource (>= 0.0.0)
+      yum-epel (>= 0.0.0)
+      yum-erlang_solutions (>= 1.0.3)
+    logrotate (2.2.0)
+    mingw (2.0.1)
+      seven_zip (>= 0.0.0)
+    ohai (5.2.1)
+    rabbitmq (5.5.0)
+      dpkg_autostart (>= 0.0.0)
+      erlang (>= 0.0.0)
+      logrotate (>= 0.0.0)
+      yum-epel (>= 0.0.0)
+      yum-erlang_solutions (>= 0.0.0)
+    seven_zip (2.0.2)
+      windows (>= 1.2.2)
+    windows (3.4.4)
+      ohai (>= 4.0.0)
+    yum-epel (2.1.2)
+      compat_resource (>= 12.16.3)
+    yum-erlang_solutions (1.0.3)
+      compat_resource (>= 12.16.3)
+      yum-epel (>= 0.0.0)
+
+DEPENDENCIES
+  rabbitmq (>= 0)
+
