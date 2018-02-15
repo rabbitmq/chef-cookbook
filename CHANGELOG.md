@@ -1,8 +1,8 @@
 # Change Log
 
-## [v5.5.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.5.0)
+## [v5.5.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.5.0) (2018-02-14)
 
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.4.0...v5.5.0)
+[Full Diff](https://github.com/rabbitmq/chef-cookbook/compare/v5.4.0...v5.5.0)
 
 **Enhancements:**
 
