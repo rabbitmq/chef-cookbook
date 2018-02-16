@@ -152,7 +152,10 @@ in the RabbitMQ [Access Control guide](https://www.rabbitmq.com/access-control.h
 
 ##### Definitions Import
 
-[RabbitMQ management plugin](http://www.rabbitmq.com/management.html) provides a means to load a definitions (schema) file on node boot.
+[RabbitMQ management plugin](http://www.rabbitmq.com/management.html) provides a means to load a definitions
+(schema) file on node boot. See [Definitions Export and Import](http://www.rabbitmq.com/management.html#load-definitions)
+and [Backup](http://www.rabbitmq.com/backup.html) guides for details.
+
 To configure definition loading, set the following attribute:
 
 `['rabbitmq']['management']['load_definitions'] = true`
@@ -184,6 +187,7 @@ Enables any policies listed in the `node['rabbitmq']['policies']` and disables a
 See examples in attributes file.
 
 ### user_management
+
 Enables any users listed in the `node['rabbitmq']['enabled_users']` and disables any listed in `node['rabbitmq']['disabled_users']` attributes.
 You can provide user credentials, the vhosts that they need to have access to and the permissions that should be allocated to each user.
 
@@ -204,6 +208,12 @@ node['rabbitmq']['enabled_users'] = [
     }
 ]
 ```
+
+Note that with this approach user credentials will be stored in the attribute file.
+Using encrypted data bags is therefore highly recommended.
+
+Alternatively [definitions export and import](http://www.rabbitmq.com/management.html#load-definitions) (see above) can be used.
+Definition files contain password hashes since clear text values are not stored.
 
 ### virtualhost_management
 Enables any vhosts listed in the `node['rabbitmq']['virtualhosts']` and disables any listed in `node['rabbitmq']['disabled_virtualhosts']` attributes.
