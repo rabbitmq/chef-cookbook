@@ -169,6 +169,13 @@ default['rabbitmq']['enabled_plugins'] = []
 default['rabbitmq']['disabled_plugins'] = []
 default['rabbitmq']['community_plugins'] = {}
 
+# systemd unit files directory
+default['rabbitmq']['systemd_unit_root'] = '/etc/systemd/system/rabbitmq-server.service.d'
+
+default['rabbitmq']['systemd']['limits'] = {
+  "NOFILE": 500_000
+}
+
 # platform specific settings
 case node['platform_family']
 when 'smartos'

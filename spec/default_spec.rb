@@ -262,7 +262,7 @@ describe 'rabbitmq::default' do
 
     describe 'if redhat version is below 7' do
       let(:rpm_file) { 'rabbitmq-server-3.6.15-1.el6.noarch.rpm' }
-      let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS.merge(:version => 6.5)) }
+      let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS.merge(:version => 6.9)) }
 
       it 'creates a rabbitmq-server rpm in the cache path' do
         expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
@@ -340,7 +340,7 @@ describe 'rabbitmq::default' do
 
     describe 'if centos version is below 7' do
       let(:rpm_file) { 'rabbitmq-server-3.6.15-1.el6.noarch.rpm' }
-      let(:runner) { ChefSpec::ServerRunner.new(CENTOS_OPTS.merge(:version => 6.2)) }
+      let(:runner) { ChefSpec::ServerRunner.new(CENTOS_OPTS.merge(:version => 6.9)) }
 
       it 'creates a rabbitmq-server rpm in the cache path' do
         expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")

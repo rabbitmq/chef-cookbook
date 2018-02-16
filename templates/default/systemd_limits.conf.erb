@@ -1,0 +1,4 @@
+[Service]
+<% node['rabbitmq']['systemd']['limits'].each do |limit, val| -%>
+Limit<%= limit.upcase %>=<%= val %>
+<% end -%>
