@@ -2,8 +2,19 @@ Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-16.04"
 
   config.vm.provision "chef_solo" do |chef|
+    # AMQP 0-9-1, AMQP 1.0
+    config.vm.network "forwarded_port", guest: 5672,  host: 5682
+    # HTTP API, management UI
+    config.vm.network "forwarded_port", guest: 15672, host: 15682
+    # MQTT
+    config.vm.network "forwarded_port", guest: 1883,  host: 1893
+    # STOMP
+    config.vm.network "forwarded_port", guest: 61613, host: 61623
+
     chef.add_recipe "erlang::default"
     chef.add_recipe "rabbitmq::default"
+    chef.add_recipe "rabbitmq::mgmt_console"
+    chef.add_recipe "rabbitmq::plugin_management"
 
     chef.json = {
       "erlang" => {
@@ -13,7 +24,12 @@ Vagrant.configure("2") do |config|
         }
       },
       "rabbitmq" => {
-        "version" => "3.7.3"
+        "version" => "3.7.3",
+        # only to allow guest/guest logins via the forwarded port,
+        # the right thing to do for production environments is delete
+        # "guest" and create a new user account with a generated password.
+        "loopback_users": [],
+        "enabled_plugins": %w(rabbitmq_stomp rabbitmq_mqtt rabbitmq_amqp1_0)
       }
     }
   end
