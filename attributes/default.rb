@@ -129,6 +129,10 @@ default['rabbitmq']['ssl_versions'] = nil
 # or in OpenSSL format:
 # ['"ECDHE-ECDSA-AES128-SHA256"', '"ECDHE-ECDSA-AES256-SHA"']
 default['rabbitmq']['ssl_ciphers'] = nil
+default['rabbitmq']['ssl_secure_renegotiate'] = true
+default['rabbitmq']['ssl_honor_cipher_order'] = true
+default['rabbitmq']['ssl_honor_ecc_order'] = true
+
 default['rabbitmq']['web_console_ssl'] = false
 default['rabbitmq']['web_console_ssl_port'] = 15_671
 

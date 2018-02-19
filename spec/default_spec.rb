@@ -120,10 +120,33 @@ describe 'rabbitmq::default' do
     end
   end
 
-  describe 'ssl ciphers' do
+  it 'should set additional rabbitmq config' do
+    node.normal['rabbitmq']['additional_rabbit_configs'] = { 'foo' => 'bar' }
+    expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('foo, bar')
+  end
+
+  describe 'TLS configuration' do
     it 'has no ssl ciphers specified by default' do
       expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         /{ciphers,[{.*}]}/)
+    end
+
+    it 'enables secure renegotiation by default' do
+      node.normal['rabbitmq']['ssl'] = true
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
+        '{secure_renegotiate, true}')
+    end
+
+    it 'uses server cipher suite preference by default' do
+      node.normal['rabbitmq']['ssl'] = true
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
+        '{honor_cipher_order, true}')
+    end
+
+    it 'uses server ECC curve preference by default' do
+      node.normal['rabbitmq']['ssl'] = true
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
+        '{honor_ecc_order, true}')
     end
 
     it 'allows ssl ciphers' do
@@ -151,11 +174,6 @@ describe 'rabbitmq::default' do
       node.normal['rabbitmq']['ssl_listen_interface'] = '0.0.0.0'
       expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         /{ssl_listeners, [{"0.0.0.0", 5671}]},/)
-    end
-
-    it 'should set additional rabbitmq config' do
-      node.normal['rabbitmq']['additional_rabbit_configs'] = { 'foo' => 'bar' }
-      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('foo, bar')
     end
   end
 

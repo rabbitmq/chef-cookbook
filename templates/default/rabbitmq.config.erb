@@ -60,6 +60,9 @@
                     {fail_if_no_peer_cert,<%= node['rabbitmq']['ssl_fail_if_no_peer_cert'] %>}
                     <% if @ssl_versions -%>,{versions,[<%= @ssl_versions %>]}<% end -%>
                     <% if @ssl_ciphers -%>,{ciphers,[<%= @ssl_ciphers %>]}<% end -%>
+                    <% if node['rabbitmq']['ssl_secure_renegotiate'] -%>,{secure_renegotiate, <%= node['rabbitmq']['ssl_secure_renegotiate'] %>}<% end -%>
+                    <% if node['rabbitmq']['ssl_honor_cipher_order'] -%>,{honor_cipher_order, <%= node['rabbitmq']['ssl_honor_cipher_order'] %>}<% end -%>
+                    <% if node['rabbitmq']['ssl_honor_ecc_order'] -%>,{honor_ecc_order, <%= node['rabbitmq']['ssl_honor_ecc_order'] %>}<% end -%>
                     ]},
 <% end %>
 <% if node['rabbitmq']['tcp_listen'] -%>
