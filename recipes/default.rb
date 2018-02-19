@@ -57,6 +57,15 @@ deb_package_url = node['rabbitmq']['deb_package_url'] || default_package_url
 rpm_package_name = node['rabbitmq']['rpm_package'] || default_rpm_package_name
 rpm_package_url = node['rabbitmq']['rpm_package_url'] || default_package_url
 
+# see rabbitmq/chef-cookbook#351
+directory node['rabbitmq']['config_root'] do
+  owner 'root'
+  group 'root'
+  mode  '0440'
+  recursive true
+  action :create
+end
+
 ## Install the package
 case node['platform_family']
 when 'debian'

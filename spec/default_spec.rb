@@ -60,7 +60,16 @@ describe 'rabbitmq::default' do
     end
   end
 
-  it 'should create the directory /var/lib/rabbitmq/mnesia' do
+  it 'should create the config root directory' do
+    expect(chef_run).to create_directory('/etc/rabbitmq')
+      .with(
+        :user => 'root',
+        :group => 'root',
+        :mode => '0440'
+      )
+  end
+
+  it 'should create the node data directory' do
     expect(chef_run).to create_directory('/var/lib/rabbitmq/mnesia')
       .with(
         :user => 'rabbitmq',
