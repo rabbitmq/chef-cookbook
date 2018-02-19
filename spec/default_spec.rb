@@ -169,15 +169,32 @@ describe 'rabbitmq::default' do
         /{ssl_listeners, [5671]},/)
     end
 
-    it 'is seting interface to listen for SSL if set' do
+    it 'is setting interface to listen for SSL if set' do
       node.normal['rabbitmq']['ssl'] = true
       node.normal['rabbitmq']['ssl_listen_interface'] = '0.0.0.0'
-      expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
-        /{ssl_listeners, [{"0.0.0.0", 5671}]},/)
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
+        /{ssl_listeners, \[{"0.0.0.0", 5671}\]},/)
+    end
+
+    it 'is setting port to listen for SSL if set' do
+      node.normal['rabbitmq']['ssl'] = true
+      node.normal['rabbitmq']['ssl_port'] = 5670
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
+        /{ssl_listeners, \[5670\]},/)
     end
   end
 
   describe 'TCP listener options' do
+    it 'allows interface to be overridden' do
+      node.normal['rabbitmq']['tcp_listen_interface'] = '192.168.1.10'
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{"192.168.1.10", 5672}')
+    end
+
+    it 'allows AMQP port to be overridden' do
+      node.normal['rabbitmq']['port'] = 5674
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('[5674]')
+    end
+
     it 'enables socket lingering by default' do
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {true,0}}')
     end

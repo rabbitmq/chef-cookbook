@@ -149,6 +149,10 @@ default['rabbitmq']['web_console_interface'] = nil
 # TCP listener options, see
 # https://www.rabbitmq.com/networking.html for details.
 default['rabbitmq']['tcp_listen'] = true
+
+default['rabbitmq']['port'] = 5672
+default['rabbitmq']['tcp_listen_interface'] = nil
+
 default['rabbitmq']['tcp_listen_packet'] = 'raw'
 default['rabbitmq']['tcp_listen_reuseaddr'] = true
 default['rabbitmq']['tcp_listen_backlog'] = 128

@@ -65,6 +65,13 @@
                     <% if node['rabbitmq']['ssl_honor_ecc_order'] -%>,{honor_ecc_order, <%= node['rabbitmq']['ssl_honor_ecc_order'] %>}<% end -%>
                     ]},
 <% end %>
+
+<% if node['rabbitmq']['tcp_listen_interface'] -%>
+{tcp_listeners, [{"<%= node['rabbitmq']['tcp_listen_interface'] %>", <%= node['rabbitmq']['port'] %>}]},
+<% else %>
+{tcp_listeners, [<%= node['rabbitmq']['port'] %>]},
+<% end -%>
+
 <% if node['rabbitmq']['tcp_listen'] -%>
     {tcp_listen_options, [{packet, <%= node['rabbitmq']['tcp_listen_packet'] %>},
                           {reuseaddr, <%= node['rabbitmq']['tcp_listen_reuseaddr'] %>},
