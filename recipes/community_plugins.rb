@@ -27,6 +27,9 @@ node['rabbitmq']['community_plugins'].each do |plugin, download_url|
   # List of installation directory per installation method: https://www.rabbitmq.com/installing-plugins.html
   remote_file "/usr/lib/rabbitmq/lib/rabbitmq_server-#{node['rabbitmq']['version']}/plugins/#{plugin}.ez" do
     source download_url
+    owner  'rabbitmq'
+    group  'rabbitmq'
+    mode   0644
   end
 
   rabbitmq_plugin plugin do
