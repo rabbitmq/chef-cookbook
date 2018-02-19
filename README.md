@@ -219,36 +219,39 @@ Definition files contain password hashes since clear text values are not stored.
 Enables any vhosts listed in the `node['rabbitmq']['virtualhosts']` and disables any listed in `node['rabbitmq']['disabled_virtualhosts']` attributes.
 
 ### cluster
-Configure the cluster between the nodes in the `node['rabbitmq']['clustering']['cluster_nodes']` attribute. It also, supports the auto or manual clustering.
-* Auto clustering : Use auto-configuration of RabbitMQ, http://www.rabbitmq.com/clustering.html#auto-config
+
+Configures a cluster of nodes.
+
+It supports two clustering modes: auto or manual.
+
+* Auto clustering: lists [cluster nodes in the RabbitMQ config file](http://www.rabbitmq.com/cluster-formation.html#peer-discovery-classic-config). Those are taken from lists the nodes `node['rabbitmq']['clustering']['cluster_nodes']`.
 * Manual clustering : Configure the cluster by executing `rabbitmqctl join_cluster` command.
 
-#### Attributes that related to clustering
+#### Attributes
+
 * `node['rabbitmq']['clustering']['enable']` : Default decision flag of clustering
 * `node['rabbitmq']['erlang_cookie']` : Same erlang cookie is required for the cluster
 * `node['rabbitmq']['clustering']['use_auto_clustering']` : Default is false. (manual clustering is default)
 * `node['rabbitmq']['clustering']['cluster_name']` : Name of cluster. default value is nil. In case of nil or '' is set for `cluster_name`, first node name in `node['rabbitmq']['clustering']['cluster_nodes']` attribute will be set for manual clustering. for the auto clustering, one of the node name will be set.
 * `node['rabbitmq']['clustering']['cluster_nodes']` : List of cluster nodes. it required node name and cluster node type. please refer to example in below.
 
-Attributes example
+Example
+
 ```ruby
 node['rabbitmq']['clustering']['enable'] = true
 node['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
-node['rabbitmq']['clustering']['cluster_partition_handling'] = 'ignore'
+node['rabbitmq']['clustering']['cluster_partition_handling'] = 'pause_minority'
 node['rabbitmq']['clustering']['use_auto_clustering'] = false
-node['rabbitmq']['clustering']['cluster_name'] = 'seoul_tokyo_newyork'
+node['rabbitmq']['clustering']['cluster_name'] = 'qa_env'
 node['rabbitmq']['clustering']['cluster_nodes'] = [
     {
-        :name => 'rabbit@rabbit1',
-        :type => 'disc'
+        :name => 'rabbit@rabbit1'
     },
     {
-        :name => 'rabbit@rabbit2',
-        :type => 'ram'
+        :name => 'rabbit@rabbit2'
     },
     {
-        :name => 'rabbit@rabbit3',
-        :type => 'disc'
+        :name => 'rabbit@rabbit3'
     }
 ]
 ```
