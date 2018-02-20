@@ -61,7 +61,7 @@ rpm_package_url = node['rabbitmq']['rpm_package_url'] || default_package_url
 directory node['rabbitmq']['config_root'] do
   owner 'root'
   group 'root'
-  mode  '0440'
+  mode  '755'
   recursive true
   action :create
 end

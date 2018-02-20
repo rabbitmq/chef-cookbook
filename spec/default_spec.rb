@@ -65,7 +65,7 @@ describe 'rabbitmq::default' do
       .with(
         :user => 'root',
         :group => 'root',
-        :mode => '0440'
+        :mode => '755'
       )
   end
 
