@@ -23,7 +23,7 @@
 # limitations under the License.
 #
 
-include_recipe "rabbitmq::default"
+include_recipe 'rabbitmq::default'
 
 directory node['rabbitmq']['systemd_unit_root'] do
   owner 'root'
@@ -38,7 +38,7 @@ template "#{node['rabbitmq']['systemd_unit_root']}/limits.conf" do
   owner 'root'
   group 'root'
   mode 00644
-  notifies :run,     "execute[systemctl daemon-reload]", :immediately
+  notifies :run,     'execute[systemctl daemon-reload]', :immediately
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
