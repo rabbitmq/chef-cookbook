@@ -6,7 +6,8 @@ verifier:
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: latest
+  product_name: chef
+  install_strategy: always
 
 platforms:
   - name: centos-6.9
@@ -17,6 +18,7 @@ platforms:
 suites:
   - name: default-deb
     run_list:
+      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
@@ -24,6 +26,8 @@ suites:
         install_method: "esl"
         esl:
           version: "1:20.2.2"
+      rabbitmq:
+        version: "3.7.3"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -38,6 +42,9 @@ suites:
         install_method: "esl"
         esl:
           version: "20.2.2-1"
+      rabbitmq:
+        version: "3.7.3"
+
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -47,6 +54,13 @@ suites:
     run_list:
       - recipe[erlang::default]
       - recipe[rabbitmq_test::lwrps]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:20.2.2"
+      rabbitmq:
+        version: "3.7.3"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -55,6 +69,7 @@ suites:
 
   - name: cluster-deb
     run_list:
+      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq_test::cluster]
     attributes:
@@ -62,6 +77,8 @@ suites:
         install_method: "esl"
         esl:
           version: "1:20.2.2"
+      rabbitmq:
+        version: "3.7.3"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -77,6 +94,8 @@ suites:
         install_method: "esl"
         esl:
           version: "20.2.2-1"
+      rabbitmq:
+        version: "3.7.3"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -85,6 +104,7 @@ suites:
 
   - name: default-force-yes
     run_list:
+      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
@@ -92,11 +112,19 @@ suites:
         install_method: "esl"
         esl:
           version: "1:20.2.2"
+      rabbitmq:
+        version: "3.7.3"
     attributes:
       apt:
         confd:
           assume_yes: true
           force-yes: true
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:20.2.2"
+      rabbitmq:
+        version: "3.7.3"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -104,12 +132,20 @@ suites:
 
   - name: default-force-yes-false
     run_list:
+      - recipe[apt]
+      - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
       apt:
         confd:
           assume_yes: false
           force-yes: false
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:20.2.2"
+      rabbitmq:
+        version: "3.7.3"
     verifier:
       inspec_tests:
         - test/smoke/default
