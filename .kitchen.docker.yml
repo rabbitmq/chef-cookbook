@@ -1,6 +1,9 @@
 driver:
+driver:
   name: docker
-  use_sudo: <%= ENV['USE_SUDO'] || false %>
+  use_sudo: false
+  privileged: true
+  run_command: /usr/sbin/init
   chef_version: latest
 
 provisioner:
@@ -19,6 +22,7 @@ platforms:
       image: centos:6.9
       platform: rhel
       pid_one_command: /sbin/init
+      privileged: true
       hostname: localhost
       intermediate_instructions:
         - RUN yum -y install which initscripts
@@ -28,6 +32,10 @@ platforms:
       image: centos:7
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
+      privileged: true
+      provision_command:
+        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+        - systemctl enable sshd.service
       intermediate_instructions:
         - RUN yum -y install lsof which systemd-sysv initscripts openssl net-tools
 
