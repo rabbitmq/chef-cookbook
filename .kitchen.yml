@@ -1,5 +1,5 @@
 driver:
-  name: vagrant
+  name: <%= ENV['KI_DRIVER'] || 'vagrant' %>
 
 verifier:
   name: inspec
@@ -45,7 +45,7 @@ suites:
 
   - name: lwrps
     run_list:
-      - recipe[erlang::default]      
+      - recipe[erlang::default]
       - recipe[rabbitmq_test::lwrps]
     verifier:
       inspec_tests:
