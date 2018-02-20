@@ -56,6 +56,14 @@ libraries, then test recipes using ChefSpec. This works by compiling a
 recipe (but not converging it), and allowing the user to make
 assertions about the resource_collection.
 
+```
+bundle exec rspec
+```
+
+Will run the specs.
+
+
+
 Integration Testing
 -------------------
 Integration testing is performed by Test Kitchen. Test Kitchen will
@@ -132,7 +140,7 @@ variables referenced by ```.kitchen.cloud.yml``` need to be made
 available. Second, the private half of the ssh keys needed to log into
 machines need to be dropped off on the machine.
 
-The first part is straight forward. The travis gem can encrypt
+The first part is straightforward. The travis gem can encrypt
 environment variables against the public key on the Travis repository
 and add them to the .travis.yml.
 
