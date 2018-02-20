@@ -3,7 +3,8 @@
 # Cookbook Name:: rabbitmq_test
 # Recipe:: default
 #
-# Copyright 2012-2013, Chef Software, Inc. <legal@chef.io>
+# Copyright 2012-2017, Chef Software, Inc. <legal@chef.io>
+# Copyright 2017-2018, Pivotal Software, Inc. <info@rabbitmq.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +18,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+case node['platform_family']
+when 'debian', 'ubuntu'
+  apt_update
+end
 
 chef_gem 'bunny' do
   action :install
