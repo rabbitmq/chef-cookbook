@@ -16,6 +16,7 @@ group :unit do
 end
 
 group :integration do
+  gem 'kitchen-inspec'
   gem 'inspec'
 end
 

@@ -242,6 +242,10 @@ GEM
       multi_json
       retryable (~> 2.0)
       test-kitchen (~> 1.4, >= 1.4.1)
+    kitchen-inspec (0.22.0)
+      hashie (~> 3.4)
+      inspec (>= 0.34.0, < 2.0.0)
+      test-kitchen (~> 1.6)
     kitchen-openstack (3.5.1)
       fog-openstack (~> 0.1)
       ohai
@@ -495,6 +499,7 @@ DEPENDENCIES
   kitchen-digitalocean
   kitchen-dokken
   kitchen-ec2
+  kitchen-inspec
   kitchen-openstack
   kitchen-vagrant
   rake
