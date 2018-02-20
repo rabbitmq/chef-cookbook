@@ -25,7 +25,7 @@ platforms:
 
   - name: centos-7.4
     driver:
-      image: centos-7.4.1708
+      image: centos:7
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
