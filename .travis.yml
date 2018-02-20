@@ -18,13 +18,9 @@ env:
   matrix:
   - INSTANCE=default-deb-ubuntu-1604
   - INSTANCE=default-deb-debian-9
-  - INSTANCE=default-rpm-centos-69
-  - INSTANCE=default-rpm-centos-74
   - INSTANCE=lwrps-ubuntu-1604
   - INSTANCE=cluster-deb-ubuntu-1604
   - INSTANCE=cluster-deb-debian-9
-  - INSTANCE=cluster-rpm-centos-69
-  - INSTANCE=cluster-rpm-centos-74
   - INSTANCE=default-force-yes-ubuntu-1604
   - INSTANCE=default-force-yes-false-ubuntu-1604
 
