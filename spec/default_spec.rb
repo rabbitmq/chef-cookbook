@@ -174,6 +174,11 @@ describe 'rabbitmq::default' do
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {true,5}}')
     end
 
+    it 'supports explicit setting of TCP socket buffer' do
+      node.normal['rabbitmq']['tcp_listen_buffer'] = 16384
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{buffer, 16384}')
+    end
+
     it 'supports explicit setting of TCP socket send buffer' do
       node.normal['rabbitmq']['tcp_listen_sndbuf'] = 8192
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{sndbuf, 8192}')

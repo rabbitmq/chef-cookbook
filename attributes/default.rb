@@ -153,6 +153,7 @@ default['rabbitmq']['tcp_listen_exit_on_close'] = false
 default['rabbitmq']['tcp_listen_keepalive'] = false
 default['rabbitmq']['tcp_listen_linger'] = true
 default['rabbitmq']['tcp_listen_linger_timeout'] = 0
+default['rabbitmq']['tcp_listen_buffer'] = nil
 default['rabbitmq']['tcp_listen_sndbuf'] = nil
 default['rabbitmq']['tcp_listen_recbuf'] = nil
 

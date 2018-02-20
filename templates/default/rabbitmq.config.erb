@@ -70,6 +70,10 @@
                           {exit_on_close, <%= node['rabbitmq']['tcp_listen_exit_on_close'] %>},
                           {keepalive, <%= node['rabbitmq']['tcp_listen_keepalive'] %>},
 
+                          <% if node['rabbitmq']['tcp_listen_buffer'] -%>
+                          {buffer, <%= node['rabbitmq']['tcp_listen_buffer'] %>},
+                          <% end -%>
+
                           <% if node['rabbitmq']['tcp_listen_sndbuf'] -%>
                           {sndbuf, <%= node['rabbitmq']['tcp_listen_sndbuf'] %>},
                           <% end -%>
