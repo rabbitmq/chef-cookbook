@@ -3,18 +3,24 @@
 [![Build Status](https://travis-ci.org/rabbitmq/chef-cookbook.svg?branch=master)](https://travis-ci.org/rabbitmq/chef-cookbook)
 [![Cookbook Version](https://img.shields.io/cookbook/v/rabbitmq.svg)](https://supermarket.chef.io/cookbooks/rabbitmq)
 
-This is a cookbook for managing RabbitMQ with Chef. It is intended for RabbitMQ 3.5.8 or later releases
-and targets Chef 12.1 and later.
+This is a cookbook for managing RabbitMQ with Chef. 
+
+
+## Supported Chef Versions
+
+This cookbook targets Chef 12.1 and later.
 
 
 ## Dependencies
 
 This cookbook depends on the [Erlang cookbook](https://supermarket.chef.io/cookbooks/erlang).
 
+
 ## Supported RabbitMQ Versions
 
-This cookbook can provision any recent (3.7.x and 3.6.x version) plus 3.5.x or even older, provided
-that a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) is also provisioned.
+`5.x` release series of this cookbook can provision any recent (3.7.x, 3.6.x) version and even older ones (e.g. 3.5.8),
+provided that a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) is also provisioned.
+
 
 ### 3.7.x
 
