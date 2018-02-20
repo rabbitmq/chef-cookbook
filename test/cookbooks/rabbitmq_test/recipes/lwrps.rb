@@ -48,18 +48,6 @@ rabbitmq_plugin 'rabbitmq_management' do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately # must restart before we can download
 end
 
-remote_file '/usr/local/bin/rabbitmqadmin' do
-  source 'http://localhost:15672/cli/rabbitmqadmin'
-  mode '0755'
-  action :create
-end
-
-# rabbitmqadmin needs python which is not part of every systems. This is a shortcut,
-# you probably want to use the cookbook poise-python for real python things.
-package 'python' do
-  not_if 'which python'
-end
-
 rabbitmq_policy 'rabbitmq_cluster' do
   pattern 'cluster.*'
   parameters 'ha-mode' => 'all', 'ha-sync-mode' => 'automatic'

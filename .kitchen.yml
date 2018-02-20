@@ -9,51 +9,89 @@ provisioner:
   require_chef_omnibus: latest
 
 platforms:
-  - name: centos-6.7
-  - name: centos-7.2
-  - name: ubuntu-14.04
+  - name: centos-6.9
+  - name: centos-7.4
   - name: ubuntu-16.04
-  - name: debian-7.7
+  - name: debian-9
 
 suites:
-  - name: default
+  - name: default-deb
     run_list:
-      - recipe[rabbitmq::default]
-    verifier:
-      inspec_tests:
-        - test/smoke/default
-
-  - name: default-use-distro-version
-    run_list:
+      - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
-      rabbitmq:
-        use_distro_version: true
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:20.2.2"
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["centos-6.7", "centos-7.2"]
+    excludes: ["centos-6.9", "centos-7.4"]
+
+  - name: default-rpm
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::default]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "20.2.2-1"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    excludes: ["ubuntu-16.04", "debian-9"]
 
   - name: lwrps
     run_list:
+      - recipe[erlang::default]      
       - recipe[rabbitmq_test::lwrps]
     verifier:
       inspec_tests:
         - test/smoke/default
         - test/smoke/lwrps
-    excludes: ["debian-7"]
+    excludes: ["centos-6.9", "debian-9", "centos-7.4"]
 
-  - name: cluster
+  - name: cluster-deb
     run_list:
+      - recipe[erlang::default]
       - recipe[rabbitmq_test::cluster]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:20.2.2"
     verifier:
       inspec_tests:
         - test/smoke/default
         - test/smoke/cluster
+    excludes: ["centos-6.9", "centos-7.4"]
+
+  - name: cluster-rpm
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq_test::cluster]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "20.2.2-1"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+        - test/smoke/cluster
+    excludes: ["ubuntu-16.04", "debian-9"]
 
   - name: default-force-yes
     run_list:
+      - recipe[erlang::default]
       - recipe[rabbitmq::default]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:20.2.2"
     attributes:
       apt:
         confd:
@@ -62,7 +100,7 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["centos-6.7", "centos-7.2"]
+    excludes: ["centos-6.9", "centos-7.4", "debian-9"]
 
   - name: default-force-yes-false
     run_list:
@@ -75,4 +113,4 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["centos-6.7", "centos-7.2"]
+    excludes: ["centos-6.9", "centos-7.4", "debian-9"]
