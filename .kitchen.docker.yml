@@ -1,0 +1,50 @@
+driver:
+  name: docker
+  use_sudo: <%= ENV['USE_SUDO'] || false %>
+  chef_version: latest
+
+provisioner:
+  name: chef_zero
+  product_name: chef
+  install_strategy: always
+
+
+verifier:
+  root_path: '/opt/verifier'
+  sudo: false
+
+platforms:
+  - name: centos-6.9
+    driver:
+      image: centos:6.9
+      platform: rhel
+      pid_one_command: /sbin/init
+      hostname: localhost
+      intermediate_instructions:
+        - RUN yum -y install which initscripts
+
+  - name: centos-7.4
+    driver:
+      image: centos-7.4.1708
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN yum -y install lsof which systemd-sysv initscripts openssl net-tools
+
+  - name: ubuntu-16.04
+    driver:
+      image: ubuntu:16.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get -y install lsb-release procps net-tools
+
+  - name: debian-9
+    driver:
+      image: debian:9
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get -y install lsb-release procps net-tools
+
+# use (inherit) suites defined in main .kitchen.yml
