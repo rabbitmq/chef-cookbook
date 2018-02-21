@@ -177,21 +177,46 @@ describe 'rabbitmq::default' do
     end
   end
 
-  describe 'tcp_listen_linger' do
-    it 'default linger option' do
+  describe 'TCP listener options' do
+    it 'enables socket lingering by default' do
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {true,0}}')
     end
 
-    it 'false linger option' do
+    it 'supports disabling lingering' do
       node.normal['rabbitmq']['tcp_listen_linger'] = false
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {false,0}}')
     end
 
-    it 'linger option variable timeout' do
+    it 'supports setting lingering timeout' do
       node.normal['rabbitmq']['tcp_listen_linger_timeout'] = 5
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {true,5}}')
     end
+
+    it 'supports explicit setting of TCP socket buffer' do
+      node.normal['rabbitmq']['tcp_listen_buffer'] = 16384
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{buffer, 16384}')
+    end
+
+    it 'supports explicit setting of TCP socket send buffer' do
+      node.normal['rabbitmq']['tcp_listen_sndbuf'] = 8192
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{sndbuf, 8192}')
+    end
+
+    it 'supports explicit setting of TCP socket receive buffer' do
+      node.normal['rabbitmq']['tcp_listen_recbuf'] = 8192
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{recbuf, 8192}')
+    end
   end
+
+  describe 'credit flow' do
+    it 'can configure defaults' do
+      node.normal['rabbitmq']['credit_flow_defaults']['initial'] = 500
+      node.normal['rabbitmq']['credit_flow_defaults']['more_credit_after'] = 250
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{credit_flow_default_credit, {500, 250}}')
+    end
+  end
+
+
 
   describe 'suse' do
     let(:runner) { ChefSpec::ServerRunner.new(SUSE_OPTS) }

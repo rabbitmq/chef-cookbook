@@ -28,7 +28,7 @@
   {rabbitmq_management, [
 <% if node['rabbitmq']['management']['load_definitions'] %>
     {load_definitions, "<%= node['rabbitmq']['management']['definitions_file'] %>"},
-<% end -%>  
+<% end -%>
     {listener, [
                 {port, <%= node['rabbitmq']['web_console_port'] %>}
 <% if node['rabbitmq']['web_console_interface'] -%>
@@ -66,15 +66,28 @@
                     ]},
 <% end %>
 <% if node['rabbitmq']['tcp_listen'] -%>
-    {tcp_listen_options, [binary, {packet,<%= node['rabbitmq']['tcp_listen_packet'] %>},
-                                  {reuseaddr,<%= node['rabbitmq']['tcp_listen_reuseaddr'] %>},
-                                  {backlog,<%= node['rabbitmq']['tcp_listen_backlog'] %>},
-                                  {nodelay,<%= node['rabbitmq']['tcp_listen_nodelay'] %>},
-                                  {exit_on_close,<%= node['rabbitmq']['tcp_listen_exit_on_close'] %>},
-                                  {keepalive,<%= node['rabbitmq']['tcp_listen_keepalive'] %>},
-                                  {linger, {<%= node['rabbitmq']['tcp_listen_linger'] %>,<%= node['rabbitmq']['tcp_listen_linger_timeout'] %>}}]},
+    {tcp_listen_options, [{packet, <%= node['rabbitmq']['tcp_listen_packet'] %>},
+                          {reuseaddr, <%= node['rabbitmq']['tcp_listen_reuseaddr'] %>},
+                          {backlog, <%= node['rabbitmq']['tcp_listen_backlog'] %>},
+                          {nodelay, <%= node['rabbitmq']['tcp_listen_nodelay'] %>},
+                          {exit_on_close, <%= node['rabbitmq']['tcp_listen_exit_on_close'] %>},
+                          {keepalive, <%= node['rabbitmq']['tcp_listen_keepalive'] %>},
+
+                          <% if node['rabbitmq']['tcp_listen_buffer'] -%>
+                          {buffer, <%= node['rabbitmq']['tcp_listen_buffer'] %>},
+                          <% end -%>
+
+                          <% if node['rabbitmq']['tcp_listen_sndbuf'] -%>
+                          {sndbuf, <%= node['rabbitmq']['tcp_listen_sndbuf'] %>},
+                          <% end -%>
+
+                          <% if node['rabbitmq']['tcp_listen_recbuf'] -%>
+                          {recbuf, <%= node['rabbitmq']['tcp_listen_recbuf'] %>},
+                          <% end -%>
+
+                          {linger, {<%= node['rabbitmq']['tcp_listen_linger'] %>,<%= node['rabbitmq']['tcp_listen_linger_timeout'] %>}}]},
 <% else -%>
-   {tcp_listeners, []},
+   {tcp_listen_options, []},
 <% end %>
 
 <% if node['rabbitmq']['log_levels'] -%>
@@ -100,6 +113,10 @@
     {default_user, <<"<%= node['rabbitmq']['default_user'] %>">>},
     {default_pass, <<"<%= node['rabbitmq']['default_pass'] %>">>},
     {heartbeat, <%= node['rabbitmq']['heartbeat'] %>}
+
+<% if node['rabbitmq']['credit_flow_defaults'] -%>
+    {credit_flow_default_credit, {<%= node['rabbitmq']['credit_flow_defaults']['initial'] %>, <%= node['rabbitmq']['credit_flow_defaults']['more_credit_after'] %>}},
+<% end %>
 
     <% node['rabbitmq']['additional_rabbit_configs'].each do |key,value|  -%>
       ,{<%= key %>, <%= value %>}

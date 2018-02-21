@@ -146,7 +146,8 @@ default['rabbitmq']['web_console_port'] = 15672
 # Add an ability to set web console listen ip.
 default['rabbitmq']['web_console_interface'] = nil
 
-# tcp listen options
+# TCP listener options, see
+# https://www.rabbitmq.com/networking.html for details.
 default['rabbitmq']['tcp_listen'] = true
 default['rabbitmq']['tcp_listen_packet'] = 'raw'
 default['rabbitmq']['tcp_listen_reuseaddr'] = true
@@ -156,6 +157,9 @@ default['rabbitmq']['tcp_listen_exit_on_close'] = false
 default['rabbitmq']['tcp_listen_keepalive'] = false
 default['rabbitmq']['tcp_listen_linger'] = true
 default['rabbitmq']['tcp_listen_linger_timeout'] = 0
+default['rabbitmq']['tcp_listen_buffer'] = nil
+default['rabbitmq']['tcp_listen_sndbuf'] = nil
+default['rabbitmq']['tcp_listen_recbuf'] = nil
 
 # virtualhosts
 default['rabbitmq']['virtualhosts'] = []
