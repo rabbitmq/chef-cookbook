@@ -106,13 +106,22 @@ If you want to use the distro version, set the attribute `['rabbitmq']['use_dist
 The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['clustering']['enable']` attribute to `true`, `['rabbitmq']['clustering']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
 To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
+
 ```ruby
 node['rabbitmq']['ssl'] = true
 node['rabbitmq']['ssl_cacert'] = '/path/to/cacert.pem'
 node['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
 node['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 ```
-Listening for SSL connections may be limited specific interface by setting the following attribute:
+
+Listening for TCP connections may be limited to a specific interface by setting the following attribute:
+
+```
+node['rabbitmq']['tcp_listen_interface'] = nil
+```
+
+Listening for SSL connections may be limited to a specific interface by setting the following attribute:
+
 ```
 node['rabbitmq']['ssl_listen_interface'] = nil
 ```
