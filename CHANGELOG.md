@@ -1,5 +1,17 @@
 # Change Log
 
+## [v5.6.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.6.0) (2018-02-23)
+
+[Full Diff](https://github.com/rabbitmq/chef-cookbook/compare/v5.5.0...v5.6.0)
+
+**Enhancements:**
+
+ * More TLS socket options are configurable (e.g. cipher suite preference) [#487](https://github.com/rabbitmq/chef-cookbook/pull/487)
+ * TCP socket buffer size is now configurable [#486](https://github.com/rabbitmq/chef-cookbook/pull/486)
+ * TCP listener interface and port are now configuratble [#485](https://github.com/rabbitmq/chef-cookbook/pull/485)
+ * Config root is now configurable [#484](https://github.com/rabbitmq/chef-cookbook/pull/484)
+
+
 ## [v5.5.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.5.0) (2018-02-14)
 
 [Full Diff](https://github.com/rabbitmq/chef-cookbook/compare/v5.4.0...v5.5.0)
