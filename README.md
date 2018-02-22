@@ -48,8 +48,15 @@ to provision a specific version, e.g. 20.2.2:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
+# Ubuntu and Debian
 # note the "1:" package epoch prefix
 node['erlang']['esl']['version'] = "1:20.2.2"
+```
+
+``` ruby
+node['erlang']['install_method'] = "esl"
+# CentOS, RHEL, Fedora
+node['erlang']['esl']['version'] = "20.2.2-1"
 ```
 
 #### Set RabbitMQ Version
