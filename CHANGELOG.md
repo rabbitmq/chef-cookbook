@@ -1,58 +1,24 @@
 # Change Log
 
-## [v5.6.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.6.0) (2018-02-22)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.5.0...v5.6.0)
+## [v5.6.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.6.0) (2018-02-23)
 
-**Implemented enhancements:**
+[Full Diff](https://github.com/rabbitmq/chef-cookbook/compare/v5.5.0...v5.6.0)
 
-- Make it easier to configure "ulimit -n" on modern distributions [\#483](https://github.com/rabbitmq/chef-cookbook/issues/483)
-- sndbuf, recbuf and credit\_flow\_default\_credit in config file [\#459](https://github.com/rabbitmq/chef-cookbook/issues/459)
-- Allow to set tcp\_listeners [\#364](https://github.com/rabbitmq/chef-cookbook/issues/364)
-- Support additional `ssl\_options` for security [\#240](https://github.com/rabbitmq/chef-cookbook/issues/240)
+**Enhancements:**
 
-**Fixed bugs:**
+ * More TLS socket options are configurable (e.g. cipher suite preference) [#487](https://github.com/rabbitmq/chef-cookbook/pull/487)
+ * TCP socket buffer size is now configurable [#486](https://github.com/rabbitmq/chef-cookbook/pull/486)
+ * TCP listener interface and port are now configuratble [#485](https://github.com/rabbitmq/chef-cookbook/pull/485)
+ * Config root is now configurable [#484](https://github.com/rabbitmq/chef-cookbook/pull/484)
 
-- Make it easier to configure "ulimit -n" on modern distributions [\#483](https://github.com/rabbitmq/chef-cookbook/issues/483)
-- Cluster resource provider incorrectly determines node type? [\#476](https://github.com/rabbitmq/chef-cookbook/issues/476)
-- Allow to set tcp\\_listeners [\#364](https://github.com/rabbitmq/chef-cookbook/issues/364)
-- Clustering attribute clarification [\#362](https://github.com/rabbitmq/chef-cookbook/issues/362)
-- The following packages cannot be authenticated!   rabbitmq-server [\#300](https://github.com/rabbitmq/chef-cookbook/issues/300)
-
-**Closed issues:**
-
-- Incompatible erlang version with latest rabbitmq build [\#478](https://github.com/rabbitmq/chef-cookbook/issues/478)
-- Management SSL port in attributes.rb [\#473](https://github.com/rabbitmq/chef-cookbook/issues/473)
-- unable to set nofile ulimit on rhel [\#443](https://github.com/rabbitmq/chef-cookbook/issues/443)
-- Policy Recipe - Constant Restart [\#441](https://github.com/rabbitmq/chef-cookbook/issues/441)
-- chef enables rabbitmq\_management\_visualiser in all runs [\#411](https://github.com/rabbitmq/chef-cookbook/issues/411)
-- systemd script [\#389](https://github.com/rabbitmq/chef-cookbook/issues/389)
-- Enable SSL? [\#388](https://github.com/rabbitmq/chef-cookbook/issues/388)
-- join cluster action [\#387](https://github.com/rabbitmq/chef-cookbook/issues/387)
-- Joining cluster issue [\#385](https://github.com/rabbitmq/chef-cookbook/issues/385)
-- Install specific ERLANG version in debian distro [\#383](https://github.com/rabbitmq/chef-cookbook/issues/383)
-- Ubuntu 16.04 issues [\#379](https://github.com/rabbitmq/chef-cookbook/issues/379)
-- rabbitmq.com apt repo is re-signed with the new release key [\#369](https://github.com/rabbitmq/chef-cookbook/issues/369)
-- Version in attributes not taking effect [\#361](https://github.com/rabbitmq/chef-cookbook/issues/361)
-- change\_cluster\_node\_type broken since change [\#358](https://github.com/rabbitmq/chef-cookbook/issues/358)
-- Please add directory resource for config\_root [\#351](https://github.com/rabbitmq/chef-cookbook/issues/351)
-- Support disk\_free\_limit [\#335](https://github.com/rabbitmq/chef-cookbook/issues/335)
-- Add tcp linger option for tcp\_listen\_options  in rabbitmq.config [\#320](https://github.com/rabbitmq/chef-cookbook/issues/320)
-- Is "notifies restart" necessary for enabling or disabling a policy? [\#319](https://github.com/rabbitmq/chef-cookbook/issues/319)
-- Ubuntu 15.04 support [\#305](https://github.com/rabbitmq/chef-cookbook/issues/305)
-- Use a different mirror than rabbitmq.com? [\#304](https://github.com/rabbitmq/chef-cookbook/issues/304)
-- 'Example HA Policies' should be commented out in default attributes [\#287](https://github.com/rabbitmq/chef-cookbook/issues/287)
-- rabbitmq-server with ssl-enabled management can't be started when selinux is enforcing on redhat 7 [\#276](https://github.com/rabbitmq/chef-cookbook/issues/276)
-- LWRP for managing exchanges using rabbitmq api client [\#251](https://github.com/rabbitmq/chef-cookbook/issues/251)
-
-**Merged pull requests:**
-
-- Expose more TLS socket options, enable them by default [\#487](https://github.com/rabbitmq/chef-cookbook/pull/487) ([michaelklishin](https://github.com/michaelklishin))
-- Make TCP buffer size configurable [\#486](https://github.com/rabbitmq/chef-cookbook/pull/486) ([michaelklishin](https://github.com/michaelklishin))
-- Make it possible to override TCP listener interface [\#485](https://github.com/rabbitmq/chef-cookbook/pull/485) ([michaelklishin](https://github.com/michaelklishin))
-- Add a config root resource, closes \#351 [\#484](https://github.com/rabbitmq/chef-cookbook/pull/484) ([michaelklishin](https://github.com/michaelklishin))
 
 ## [v5.5.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.5.0) (2018-02-14)
-[Full Changelog](https://github.com/rabbitmq/chef-cookbook/compare/v5.4.0...v5.5.0)
+
+[Full Diff](https://github.com/rabbitmq/chef-cookbook/compare/v5.4.0...v5.5.0)
+
+**Enhancements:**
+
+ - RabbitMQ 3.7.x releases [now can be provisioned](https://github.com/rabbitmq/chef-cookbook/blob/master/README.md#supported-rabbitmq-versions)
 
 **Closed issues:**
 
@@ -530,7 +496,7 @@
 
 **Merged pull requests:**
 
-- changed regex behavior for guard command on set user permission resource  [\#215](https://github.com/rabbitmq/chef-cookbook/pull/215) ([francoisnicholas](https://github.com/francoisnicholas))
+- changed regex behavior for guard command on set user permission resource  [\#215](https://github.com/rabbitmq/chef-cookbook/pull/215) ([fnicholas](https://github.com/fnicholas))
 - CentOS 7 support [\#214](https://github.com/rabbitmq/chef-cookbook/pull/214) ([jjasghar](https://github.com/jjasghar))
 - inital enforcement of Gemfile.lock [\#213](https://github.com/rabbitmq/chef-cookbook/pull/213) ([jjasghar](https://github.com/jjasghar))
 - \*  add support for looback users [\#212](https://github.com/rabbitmq/chef-cookbook/pull/212) ([sethcall](https://github.com/sethcall))
