@@ -73,7 +73,8 @@
 <% end -%>
 
 <% if node['rabbitmq']['tcp_listen'] -%>
-    {tcp_listen_options, [{packet, <%= node['rabbitmq']['tcp_listen_packet'] %>},
+    {tcp_listen_options, [binary,
+                          {packet, <%= node['rabbitmq']['tcp_listen_packet'] %>},
                           {reuseaddr, <%= node['rabbitmq']['tcp_listen_reuseaddr'] %>},
                           {backlog, <%= node['rabbitmq']['tcp_listen_backlog'] %>},
                           {nodelay, <%= node['rabbitmq']['tcp_listen_nodelay'] %>},
@@ -94,7 +95,7 @@
 
                           {linger, {<%= node['rabbitmq']['tcp_listen_linger'] %>,<%= node['rabbitmq']['tcp_listen_linger_timeout'] %>}}]},
 <% else -%>
-   {tcp_listen_options, []},
+   {tcp_listen_options, [binary]},
 <% end %>
 
 <% if node['rabbitmq']['log_levels'] -%>
