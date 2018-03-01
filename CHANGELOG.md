@@ -1,5 +1,18 @@
 # Change Log
 
+## [v5.6.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.6.1) (2018-03-01)
+
+[Full Diff](https://github.com/rabbitmq/chef-cookbook/compare/v5.6.0...v5.6.1)
+
+### Bug Fixes
+
+ * Force a TCP socket option, `binary`, that's not necessary starting with 3.6.0
+   but implicitly required in earlier versions.
+
+   GitHub issue: [\#488](https://github.com/rabbitmq/chef-cookbook/issues/488)
+
+
+
 ## [v5.6.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.6.0) (2018-02-23)
 
 [Full Diff](https://github.com/rabbitmq/chef-cookbook/compare/v5.5.0...v5.6.0)
