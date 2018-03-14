@@ -13,7 +13,11 @@ This cookbook targets Chef 12.1 and later.
 
 ## Dependencies
 
-This cookbook depends on the [Erlang cookbook](https://supermarket.chef.io/cookbooks/erlang).
+This cookbook depends on the [Erlang cookbook](https://supermarket.chef.io/cookbooks/erlang)
+and assumes that the user configures that cookbook's attributes to provision a [supported Erlang/OTP version](http://www.rabbitmq.com/which-erlang.html)
+for running RabbitMQ.
+
+Examples of how to do that are provided below.
 
 
 ## Supported RabbitMQ Versions
