@@ -76,13 +76,44 @@ location customization below.
 
 ### 3.6.x
 
+#### Provision Erlang/OTP 19.3 or Later
+
+Erlang 19.3.6.5 or 20.x versions are [highly recommended](http://www.rabbitmq.com/which-erlang.html) for most recent
+3.6.x releases.
+
+Most distributions provide older versions, so Erlang must be provisioned either
+from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/) or [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm).
+
+The Erlang cookbook will provision packages from Erlang Solutions if `node['erlang']['install_method']` is set to `esl`:
+
+``` ruby
+# will install the latest release, please
+# consult with https://www.rabbitmq.com/which-erlang.html first
+node['erlang']['install_method'] = "esl"
+```
+
+to provision a specific version, e.g. 20.2.2:
+
+``` ruby
+node['erlang']['install_method'] = "esl"
+# Ubuntu and Debian
+# note the "1:" package epoch prefix
+node['erlang']['esl']['version'] = "1:20.2.2"
+```
+
+``` ruby
+node['erlang']['install_method'] = "esl"
+# CentOS, RHEL, Fedora
+node['erlang']['esl']['version'] = "20.2.2-1"
+```
+
+#### Set RabbitMQ Version
+
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
 node['rabbitmq']['version'] = "3.6.15"
 ```
-
-Erlang 19.3.6.5 or 20.x versions are [highly recommended](http://www.rabbitmq.com/which-erlang.html).
 
 3.6.x releases will be downloaded [from GitHub](https://github.com/rabbitmq/rabbitmq-server/releases/) by default.
 
