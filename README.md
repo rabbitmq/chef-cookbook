@@ -123,15 +123,22 @@ node['rabbitmq']['version'] = "3.6.15"
 
 The release was tested with recent RabbitMQ releases on
 
-- CentOS 7.0
-- Ubuntu 14.04
+- CentOS 7.x
 - Ubuntu 16.04
-- Debian 8.0
+- Debian 9.0
 
 Those are the distributions currently used to run tests [with Kitchen](.kitchen.cloud.yml).
 
+### Newer Versions
+
 Local Kitchen tests and user experience suggest that more recent Debian, Ubuntu and CentOS 7.x versions
 should work just fine.
+
+### Older Versions
+
+CentOS 6.x, Ubuntu 14.04 and Debian 8.0 might
+work just fine but they are no longer on the "must support" list of distributions.
+
 
 ## Recipes
 
