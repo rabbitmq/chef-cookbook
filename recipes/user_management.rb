@@ -24,16 +24,19 @@ include_recipe 'rabbitmq::default'
 include_recipe 'rabbitmq::virtualhost_management'
 
 node['rabbitmq']['enabled_users'].each do |user|
-  rabbitmq_user user['name'] do
+  rabbitmq_user "add-#{user['name']}" do
+    user user['name']
     password user['password']
     action :add
   end
-  rabbitmq_user user['name'] do
+  rabbitmq_user "set-tags-#{user['name']}" do
+    user user['name']
     tag user['tag']
     action :set_tags
   end
   user['rights'].each do |r|
-    rabbitmq_user user['name'] do
+    rabbitmq_user "set-perms-#{user['name']}-vhost-#{Array(r['vhost']).join().gsub('/','_')}" do
+      user user['name']
       vhost r['vhost']
       permissions "#{r['conf']} #{r['write']} #{r['read']}"
       action :set_permissions
@@ -42,7 +45,8 @@ node['rabbitmq']['enabled_users'].each do |user|
 end
 
 node['rabbitmq']['disabled_users'].each do |user|
-  rabbitmq_user user do
+  rabbitmq_user "delete-#{user}" do
+    user user
     action :delete
   end
 end
