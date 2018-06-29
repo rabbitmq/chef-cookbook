@@ -116,7 +116,7 @@ node['erlang']['esl']['version'] = "20.2.2-1"
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.6.15"
+node['rabbitmq']['version'] = "3.6.16"
 ```
 
 3.6.x releases will be downloaded [from GitHub](https://github.com/rabbitmq/rabbitmq-server/releases/) by default.
@@ -185,9 +185,10 @@ Set them to a download location without a version if you want to provision from 
 endpoint such as a local mirror.
 
 The `default` recipe will append a version suffix that matches RabbitMQ tag naming scheme.
-For 3.7.x or later, it is just the version (unchanged). For 3.6.x and 3.5.x, it is
-`"rabbitmq_v{version}"` where `{version}` being the value of `node['rabbitmq']['version']` with dots replaced by underscores.
-So, `3.6.15` will be translated to `rabbitmq_v3_6_15`.
+For 3.7.x or later, it is just the version (unchanged).
+
+For 3.6.x and 3.5.x, it is `"rabbitmq_v{version}"` where `{version}` being the value of `node['rabbitmq']['version']`
+with dots replaced by underscores. So, `3.6.16` will be translated to `rabbitmq_v3_6_16`.
 
 Lastly, a package name will be appended to form a full download URL. They rarely need
 changing but can also be overridden using the `node['rabbitmq']['deb_package']`
