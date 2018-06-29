@@ -19,6 +19,6 @@ describe 'rabbitmq::user_management' do
   end
 
   it 'adds rabbitmq enabled users' do
-    expect(chef_run).to add_rabbitmq_user('guest')
+    expect(chef_run).to add_rabbitmq_user('add-guest')
   end
 end
