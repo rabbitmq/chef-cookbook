@@ -41,16 +41,19 @@ default_package_url = if version =~ /^3\.[7-8]/
 
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
-case node['platform_family']
-when 'rhel', 'fedora'
-  default_rpm_package_name = if node['platform_version'].to_i > 6
+default_rpm_package_name = case node['platform_family']
+                           when 'rhel', 'fedora'
+                             if node['platform_version'].to_i > 6
                                "rabbitmq-server-#{version}-1.el7.noarch.rpm"
                              else
                                "rabbitmq-server-#{version}-1.el6.noarch.rpm"
                              end
-when 'suse'
-  default_rpm_package_name = "rabbitmq-server-#{version}-1.suse.noarch.rpm"
-end
+                           # see https://docs.chef.io/deprecations_ohai_amazon_linux.html
+                           when 'amazon'
+                             "rabbitmq-server-#{version}-1.el6.noarch.rpm"
+                           when 'suse'
+                             default_rpm_package_name = "rabbitmq-server-#{version}-1.suse.noarch.rpm"
+                           end
 
 deb_package_name = node['rabbitmq']['deb_package'] || default_deb_package_name
 deb_package_url = node['rabbitmq']['deb_package_url'] || default_package_url
@@ -69,7 +72,6 @@ end
 ## Install the package
 case node['platform_family']
 when 'debian'
-
   template '/etc/apt/apt.conf.d/90forceyes' do
     source '90forceyes.erb'
     owner 'root'
@@ -147,7 +149,7 @@ when 'debian'
     end
   end
 
-when 'rhel', 'fedora'
+when 'rhel', 'fedora', 'amazon'
 
   # logrotate is a package dependency of rabbitmq-server
   package 'logrotate'
