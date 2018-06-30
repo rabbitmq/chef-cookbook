@@ -17,11 +17,14 @@ services: docker
 env:
   matrix:
   - INSTANCE=default-deb-ubuntu-1604
+  - INSTANCE=default-deb-ubuntu-1804
   - INSTANCE=default-deb-debian-9
   - INSTANCE=lwrps-ubuntu-1604
   - INSTANCE=cluster-deb-ubuntu-1604
+  - INSTANCE=cluster-deb-ubuntu-1804
   - INSTANCE=cluster-deb-debian-9
   - INSTANCE=default-force-yes-ubuntu-1604
+  - INSTANCE=default-force-yes-ubuntu-1804
   - INSTANCE=default-force-yes-false-ubuntu-1604
 
 before_script:
