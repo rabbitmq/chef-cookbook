@@ -285,6 +285,91 @@ Definition files contain password hashes since clear text values are not stored.
 ### virtualhost_management
 Enables any vhosts listed in the `node['rabbitmq']['virtualhosts']` and disables any listed in `node['rabbitmq']['disabled_virtualhosts']` attributes.
 
+### exchanges_management
+Declare any exchanges listed in the `node['rabbitmq']['exchanges']` and delete any listed in `node['rabbitmq']['delete_exchanges']` attributes.
+Declarations and deletions will be done with rabbitmqadmin command.
+See documentation of [management command line tool](https://www.rabbitmq.com/management-cli.html)
+
+#### rabbitmqadmin
+Url to download rabbitmqadmin is specified on default attributes (`default['rabbitmq']['rabbitmqadmin']['url']`)
+This binary is necessary to declare and delete any exchanges
+You must specify user / password an administrator rabbitmq.
+Example:
+```json
+"rabbitmq": {
+  "rabbitmqadmin": {
+    "user": "common",
+    "password": "common"
+  }
+}
+```
+#### declare an exchange
+Example with a json role:
+
+`recipe[rabbitmq::exchanges_management]`
+```json
+"rabbitmq": {
+  "exchanges": [
+    {
+      "exchange": "toto_exchange",
+      "vhost": "toto",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false
+    },
+    {
+      "exchange": "toto2_exchange",
+      "vhost": "toto",
+      "type": "fanout",
+      "durable": false,
+      "auto_delete": true
+    }
+  ]
+}
+```
+Example with a recipe:
+```ruby
+rabbitmq_exchanges 'toto_exchange' do
+  user "#{node['rabbitmq']['rabbitmqadmin']['user']}"
+  password "#{node['rabbitmq']['rabbitmqadmin']['password']}"
+  vhost 'toto'
+  exchange 'toto_exchange'
+  type 'direct'
+  durable true
+  auto_delete false
+  action :declare
+end
+```
+
+#### delete an exchange
+Example with a json role:
+
+`recipe[rabbitmq::exchanges_management]`
+```json
+"rabbitmq": {
+  "delete_exchanges": [
+    {
+      "exchange": "toto_exchange",
+      "vhost": "toto"
+    },
+    {
+      "exchange": "toto2_exchange",
+      "vhost": "toto"
+    }
+  ]
+}
+```
+Example with a recipe:
+```ruby
+rabbitmq_exchanges 'toto_exchange' do
+  user "#{node['rabbitmq']['rabbitmqadmin']['user']}"
+  password "#{node['rabbitmq']['rabbitmqadmin']['password']}"
+  vhost 'toto'
+  exchange 'toto_exchange'
+  action :delete
+end
+```
+
 ### cluster
 
 Configures a cluster of nodes.
