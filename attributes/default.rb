@@ -218,3 +218,9 @@ default['rabbitmq']['disabled_policies'] = []
 # conf
 default['rabbitmq']['conf'] = {}
 default['rabbitmq']['additional_rabbit_configs'] = {}
+
+# Exchanges
+## rabbitmqadmin
+default['rabbitmq']['rabbitmqadmin']['url'] = "http://127.0.0.1:15672/cli/rabbitmqadmin"
+default['rabbitmq']['delete_exchanges'] = []
+default['rabbitmq']['exchanges'] = []

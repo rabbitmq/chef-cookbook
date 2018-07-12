@@ -67,4 +67,10 @@ if defined?(ChefSpec)
   def change_cluster_node_type(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:rabbitmq_cluster, :change_cluster_node_type, resource_name)
   end
+  def rabbitmq_exchanges_declare(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:rabbitmq_exchanges, :declare, resource_name)
+  end
+  def rabbitmq_exchange_delete(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:rabbitmq_exchanges, :delete, resource_name)
+  end
 end
