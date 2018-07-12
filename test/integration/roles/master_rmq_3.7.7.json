@@ -1,0 +1,139 @@
+{
+  "name": "cluster_rmq",
+  "description": "",
+  "json_class": "Chef::Role",
+  "default_attributes": {},
+  "override_attributes": {
+    "erlang": {
+      "install_method": "esl",
+      "esl": {
+        "version": "1:20.3.6"
+      }
+    },
+    "rabbitmq": {
+      "version": "3.7.7",
+      "open_file_limit": "65536",
+      "default_user": "administrator",
+      "default_pass": "administrator",
+      "port": "5672",
+      "clustering": {
+        "enable": true,
+        "cluster_partition_handling": "pause_minority",
+        "use_auto_clustering": false,
+        "cluster_name": "test_cluster",
+        "node_type": "master",
+        "master_node_name": "rabbit1-377-debian-8",
+        "cluster_nodes": [
+          {
+            "name": "rabbit@rabbit1-debian-8"
+          }
+        ]
+      },
+      "policies": {
+        "ha-all": {
+          "vhost": "tata",
+          "pattern": "",
+          "params": {
+            "ha-mode": "all",
+            "ha-sync-mode": "automatic"
+          },
+          "apply_to": "all",
+          "priority": 0
+        },
+        "ha-aramisauto_titi": {
+          "vhost": "titi",
+          "pattern": "",
+          "params": {
+            "ha-mode": "all",
+            "ha-sync-mode": "automatic"
+          },
+          "apply_to": "all",
+          "priority": 0
+        }
+      },
+      "enabled_users": [
+        {
+          "name": "common",
+          "password": "common",
+          "tag": "administrator",
+          "rights": [
+            {
+              "vhost": "/",
+              "conf": ".*",
+              "write": ".*",
+              "read": ".*"
+            },
+            {
+              "vhost": "titi",
+              "conf": ".*",
+              "write": ".*",
+              "read": ".*"
+            },
+            {
+              "vhost": "tata",
+              "conf": ".*",
+              "write": ".*",
+              "read": ".*"
+            },
+            {
+              "vhost": "toto",
+              "conf": ".*",
+              "write": ".*",
+              "read": ".*"
+            }
+          ]
+        }
+      ],
+      "virtualhosts": [
+        "toto",
+        "titi",
+        "tata"
+      ],
+      "rabbitmqadmin": {
+        "user": "common",
+        "password": "common"
+      },
+      "exchanges": [
+        {
+          "exchange": "test_exchange",
+          "vhost": "titi",
+          "type": "direct",
+          "durable": true,
+          "auto_delete": false
+        },
+        {
+          "exchange": "test_exchange2",
+          "vhost": "titi",
+          "type": "fanout",
+          "durable": true,
+          "auto_delete": false
+        },
+        {
+          "exchange": "yolo2",
+          "vhost": "titi",
+          "type": "fanout",
+          "durable": true,
+          "auto_delete": false
+        }
+      ],
+      "delete_exchanges": [
+        {
+          "exchange": "yolo2",
+          "vhost": "titi"
+        }
+      ]
+    }
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[apt]",
+    "recipe[rabbitmq::default]",
+    "recipe[rabbitmq::mgmt_console]",
+    "recipe[rabbitmq::cluster]",
+    "recipe[rabbitmq::user_management]",
+    "recipe[rabbitmq::virtualhost_management]",
+    "recipe[rabbitmq::policy_management]",
+    "recipe[rabbitmq::exchanges_management]"
+  ],
+  "env_run_lists": {}
+}

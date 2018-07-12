@@ -15,6 +15,7 @@ platforms:
   - name: ubuntu-16.04
   - name: ubuntu-18.04
   - name: debian-9
+  - name: debian-8
 
 suites:
   - name: default-deb
@@ -151,3 +152,14 @@ suites:
       inspec_tests:
         - test/smoke/default
     excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04"]
+  - name: rabbit1
+    driver:
+      network:
+        - ["private_network", {ip: "10.10.10.4"}]
+    run_list:
+      - role[master_rmq_3.7.7]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    attributes:
+    excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04", "ubuntu-18.04"]
