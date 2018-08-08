@@ -5,6 +5,7 @@
 #
 # Author: Sunggun Yu <sunggun.dev@gmail.com>
 # Copyright (C) 2015 Sunggun Yu
+# Copyright (C) 2015-2018 Contributors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,5 +24,5 @@ actions :join, :set_cluster_name, :change_cluster_node_type
 
 default_action :join
 
-attribute :cluster_nodes, :kind_of => String, :name_attribute => true # first node name to join
-attribute :cluster_name,  :kind_of => String                          # cluster name
+attribute :cluster_nodes, kind_of: Array,  name_attribute: true # first node name to join
+attribute :cluster_name,  kind_of: String                       # cluster name
