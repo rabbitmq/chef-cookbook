@@ -23,7 +23,6 @@ require 'json'
 include_recipe 'rabbitmq::default'
 
 cluster_nodes = node['rabbitmq']['clustering']['cluster_nodes'] || []
-cluster_nodes = cluster_nodes.to_json
 
 # Only join unless classic config peer discovery is used
 unless node['rabbitmq']['clustering']['use_auto_clustering']
