@@ -129,12 +129,12 @@ def current_cluster_node_type(node_name, cluster_status)
   var_cluster_node_type
 end
 
-# Parse hash string of cluster_nodes to JSON object
+# Parse hash string of cluster_nodes to a JSON object
 def parse_cluster_nodes_string(cluster_nodes)
   JSON.parse(cluster_nodes.gsub('=>', ':'))
 end
 
-# Checking node is joined in cluster
+# Check whether the node has joined the cluster
 def joined_cluster?(node_name, cluster_status)
   (running_nodes(cluster_status) || '').include?(node_name)
 end

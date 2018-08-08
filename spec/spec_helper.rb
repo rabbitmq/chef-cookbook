@@ -3,7 +3,6 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
 require 'fauxhai'
-ChefSpec::Coverage.start!
 
 require 'chef/application'
 
@@ -23,7 +22,7 @@ REDHAT_OPTS = {
 }
 UBUNTU_OPTS = {
   :platform => 'ubuntu',
-  :version => '16.04',
+  :version => '18.04',
   :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }

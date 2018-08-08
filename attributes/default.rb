@@ -59,39 +59,41 @@ default['rabbitmq']['config-env_template_cookbook'] = 'rabbitmq'
 default['rabbitmq']['default_user'] = 'guest'
 default['rabbitmq']['default_pass'] = 'guest'
 
-# loopback_users
-# List of users which are only permitted to connect to the broker via a loopback interface (i.e. localhost).
-# If you wish to allow the default guest user to connect remotely, you need to change this to [].
+## loopback_users
+## List of users which are only permitted to connect to the broker via a loopback interface (i.e. localhost).
+## If you wish to allow the default guest user to connect remotely, you need to change this to [].
 default['rabbitmq']['loopback_users'] = nil
 
-# Erlang kernel application options
-# See http://www.erlang.org/doc/man/kernel_app.html
+## Erlang kernel application options
+## See http://www.erlang.org/doc/man/kernel_app.html
 default['rabbitmq']['kernel']['inet_dist_listen_min'] = nil
 default['rabbitmq']['kernel']['inet_dist_listen_max'] = nil
 
 # Tell Erlang what IP to bind to
 default['rabbitmq']['kernel']['inet_dist_use_interface'] = nil
 
-# clustering
+## clustering
 default['rabbitmq']['clustering']['enable'] = false
 default['rabbitmq']['clustering']['cluster_partition_handling'] = 'ignore'
 
 default['rabbitmq']['clustering']['use_auto_clustering'] = false
 default['rabbitmq']['clustering']['cluster_name'] = nil
+
+### an array of hashes with two keys: name and property
 default['rabbitmq']['clustering']['cluster_nodes'] = []
 
-# Manual clustering
-# - Node type : master | slave
-default['rabbitmq']['clustering']['node_type'] = 'master'
-# - Master node name : ex) rabbit@rabbit1
-default['rabbitmq']['clustering']['master_node_name'] = 'rabbit@rabbit1'
-# - Cluster node type : disc | ram
+## Chef-driven clustering.
+##
+## Note that there are no leader/master or follower nodes in RabbitMQ,
+## all nodes are equal peers: http://www.rabbitmq.com/clustering.html#peer-equality
+default['rabbitmq']['clustering']['node_type']         = 'master'
+default['rabbitmq']['clustering']['master_node_name']  = 'rabbit@rabbit1'
 default['rabbitmq']['clustering']['cluster_node_type'] = 'disc'
 
-# log levels
+## log levels
 default['rabbitmq']['log_levels'] = { 'connection' => 'info' }
 
-# Logrotate
+## Logrotate
 default['rabbitmq']['logrotate']['enable'] = true
 default['rabbitmq']['logrotate']['path'] = '/var/log/rabbitmq/*.log'
 default['rabbitmq']['logrotate']['rotate'] = 20
@@ -100,17 +102,17 @@ default['rabbitmq']['logrotate']['options'] = %w(missingok notifempty delaycompr
 default['rabbitmq']['logrotate']['sharedscripts'] = true
 default['rabbitmq']['logrotate']['postrotate'] = '/usr/sbin/rabbitmqctl rotate_logs > /dev/null'
 
-# resource usage
+## OS/kernel resource usage
 default['rabbitmq']['disk_free_limit_relative'] = nil
 default['rabbitmq']['disk_free_limit'] = nil
 default['rabbitmq']['vm_memory_high_watermark'] = nil
 default['rabbitmq']['max_file_descriptors'] = 1024
 default['rabbitmq']['open_file_limit'] = nil
 
-# job control
+## job control
 default['rabbitmq']['job_control'] = 'initd'
 
-# ssl
+## TLS
 default['rabbitmq']['ssl'] = false
 default['rabbitmq']['ssl_port'] = 5671
 default['rabbitmq']['ssl_listen_interface'] = nil
@@ -119,11 +121,11 @@ default['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
 default['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 default['rabbitmq']['ssl_verify'] = 'verify_none'
 default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
-# Specify SSL versions
+# Specify TLS versions
 # Example:
 #   ['tlsv1.2', 'tlsv1.1']
 default['rabbitmq']['ssl_versions'] = nil
-# Specify SSL ciphers
+# Specify TLS ciphers
 # Examples:
 # ['{ecdhe_ecdsa,aes_128_cbc,sha256}', '{ecdhe_ecdsa,aes_256_cbc,sha}']
 # or in OpenSSL format:
