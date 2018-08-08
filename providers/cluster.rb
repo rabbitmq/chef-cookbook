@@ -205,9 +205,9 @@ action :join do
   var_cluster_name = new_resource.cluster_name
 
   if var_node_name == var_node_name_to_join
-    Chef::Log.warn('[rabbitmq_cluster] Trying to join cluster node itself. Joining cluster will be skipped.')
+    Chef::Log.warn('[rabbitmq_cluster] This node was configured to join itself. Skipping.')
   elsif joined_cluster?(var_node_name, var_cluster_status) && current_cluster_name(var_cluster_status) == var_cluster_name
-    Chef::Log.warn("[rabbitmq_cluster] Node is already member of your desired cluster #{current_cluster_name(var_cluster_status)}. Joining cluster will be skipped.")
+    Chef::Log.warn("[rabbitmq_cluster] Node is already member of the target cluster #{current_cluster_name(var_cluster_status)}. Skipping.")
   else
     if joined_cluster?(var_node_name, var_cluster_status) && current_cluster_name(var_cluster_status) != var_cluster_name
       unless var_cluster_name.nil?
