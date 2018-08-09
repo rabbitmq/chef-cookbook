@@ -53,10 +53,11 @@ module Opscode
     end
 
     def cluster_name_with_fallback
-      first_node_name = node['rabbitmq']['clustering']['cluster_name']
-      cluster_nodes   = node['rabbitmq']['clustering']['cluster_nodes']
+      explicitly_configured_name = node['rabbitmq']['clustering']['cluster_name']
+      return explicitly_configured_name if explicitly_configured_name
+
       if cluster_nodes.any?
-        first_node_name
+        cluster_nodes.first.name
       else
         "unnamed-rabbitmq-cluster"
       end

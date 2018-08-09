@@ -48,7 +48,10 @@ CLUSTER_OPTS = {
   'rabbitmq' => {
     'clustering' => {
       'use_auto_clustering' => false,
-      'cluster_nodes'       => []
+      'cluster_nodes'       => [
+        {name: "rabbit@node1", type: "disc"},
+        {name: "rabbit@node2", type: "disc"}
+      ]
     }
   }
 }
