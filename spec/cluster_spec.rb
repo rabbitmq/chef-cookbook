@@ -21,7 +21,7 @@
 
 require 'spec_helper'
 
-describe 'rabbitmq::cluster' do
+describe 'A cluster with several nodes, peer discovery and without explicitly provided name' do
   let(:runner) { ChefSpec::ServerRunner.new(CLUSTER_OPTS) }
   let(:node) { runner.node }
   cached(:chef_run) do
