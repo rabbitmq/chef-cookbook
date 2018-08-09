@@ -51,5 +51,15 @@ module Opscode
     def shell_environment
       { 'HOME' => ENV.fetch('HOME', '/var/lib/rabbitmq') }
     end
+
+    def cluster_name_with_fallback
+      first_node_name = node['rabbitmq']['clustering']['cluster_name']
+      cluster_nodes   = node['rabbitmq']['clustering']['cluster_nodes']
+      if cluster_nodes.any?
+        first_node_name
+      else
+        "unnamed-rabbitmq-cluster"
+      end
+    end
   end
 end

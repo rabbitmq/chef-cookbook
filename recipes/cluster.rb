@@ -19,30 +19,25 @@
 # limitations under the License.
 #
 require 'json'
+require 'base64'
+require 'digest/sha1'
 
 include_recipe 'rabbitmq::default'
 
 cluster_nodes = node['rabbitmq']['clustering']['cluster_nodes']
+json          = cluster_nodes.to_json
 
-# Only join unless classic config peer discovery is used
+auto_cluster_hash   = Digest::SHA1.hexdigest(Base64.encode64(json))
+static_cluster_hash = Digest::SHA1.hexdigest(Base64.encode64(json))
+
 unless node['rabbitmq']['clustering']['use_auto_clustering']
-  rabbitmq_cluster "unnamed-rabbitmq-cluster" do
-    cluster_name node['rabbitmq']['clustering']['cluster_name']
+  rabbitmq_cluster auto_cluster_hash do
+    cluster_name cluster_name_with_fallback()
     action :join
   end
 end
 
-unless node['rabbitmq']['clustering']['cluster_name']
-  target_name = if cluster_nodes.any?
-                  # this is what RabbitMQ would do anyway
-                  cluster_nodes.first.name
-                else
-                  'rabbitmq-cluster'
-                end
-
-  # Set cluster name to the first node's name, if any
-  rabbitmq_cluster "rabbitmq-cluster-#{target_name}" do
-    cluster_name target_name
-    action [:set_cluster_name, :change_cluster_node_type]
-  end
+rabbitmq_cluster static_cluster_hash do
+  cluster_name cluster_name_with_fallback()
+  action [:set_cluster_name, :change_cluster_node_type]
 end

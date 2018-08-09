@@ -39,6 +39,20 @@ FEDORA_OPTS = {
   :file_cache_path => '/tmp'
 }
 
+CLUSTER_OPTS = {
+  :platform => 'centos',
+  :version => '7.4.1708',
+  :log_level => LOGLEVEL,
+  :file_cache_path => '/tmp',
+
+  'rabbitmq' => {
+    'clustering' => {
+      'use_auto_clustering' => false,
+      'cluster_nodes'       => []
+    }
+  }
+}
+
 # rubocop:enable all
 
 shared_context 'rabbitmq-stubs' do

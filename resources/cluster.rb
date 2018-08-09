@@ -24,5 +24,7 @@ actions :join, :set_cluster_name, :change_cluster_node_type
 
 default_action :join
 
-attribute :cluster_nodes, kind_of: Array,  name_attribute: true # first node name to join
-attribute :cluster_name,  kind_of: String                       # cluster name
+# the elements must be hashes with 2 keys: node name and type (disc or ram)
+attribute :cluster_nodes, kind_of: Array
+# first node's name will be used by default
+attribute :cluster_name,  kind_of: String
