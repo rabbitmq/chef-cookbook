@@ -19,8 +19,8 @@
                 {ssl_opts, [{cacertfile,"<%= node['rabbitmq']['ssl_cacert'] %>"},
                     {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
                     {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"}
-                    <% if @ssl_versions -%>,{versions,[<%= @ssl_versions %>]}<% end -%>
-                    <% if @ssl_ciphers -%>,{ciphers,[<%= @ssl_ciphers %>]}<% end -%>
+                    <% if node['rabbitmq']['ssl_versions'] -%>,{versions,[<%= Opscode::SSL.format_ssl_versions(node) %>]}<% end -%>
+                    <% if node['rabbitmq']['ssl_ciphers'] -%>,{ciphers,[<%= Opscode::SSL.format_ssl_ciphers(node) %>]}<% end -%>
                     ]}
               ]}
   ]},
@@ -37,8 +37,8 @@
     ]}
   ]},
 <% end %>
-<% if node['rabbitmq']['ssl'] && @ssl_versions -%>
-  {ssl, [{versions, [<%= @ssl_versions %>]}]},
+<% if node['rabbitmq']['ssl'] && node['rabbitmq']['ssl_versions'] -%>
+  {ssl, [{versions, [<%= Opscode::SSL.format_ssl_versions(node) %>]}]},
 <% end %>
   {rabbit, [
 <% if node['rabbitmq']['clustering']['enable'] -%>
@@ -58,8 +58,8 @@
                     {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"},
                     {verify,<%= node['rabbitmq']['ssl_verify'] %>},
                     {fail_if_no_peer_cert,<%= node['rabbitmq']['ssl_fail_if_no_peer_cert'] %>}
-                    <% if @ssl_versions -%>,{versions,[<%= @ssl_versions %>]}<% end -%>
-                    <% if @ssl_ciphers -%>,{ciphers,[<%= @ssl_ciphers %>]}<% end -%>
+                    <% if node['rabbitmq']['ssl_versions'] -%>,{versions,[<%= Opscode::SSL.format_ssl_versions(node) %>]}<% end -%>
+                    <% if node['rabbitmq']['ssl_ciphers'] -%>,{ciphers,[<%= Opscode::SSL.format_ssl_ciphers(node) %>]}<% end -%>
                     <% if node['rabbitmq']['ssl_secure_renegotiate'] -%>,{secure_renegotiate, <%= node['rabbitmq']['ssl_secure_renegotiate'] %>}<% end -%>
                     <% if node['rabbitmq']['ssl_honor_cipher_order'] -%>,{honor_cipher_order, <%= node['rabbitmq']['ssl_honor_cipher_order'] %>}<% end -%>
                     <% if node['rabbitmq']['ssl_honor_ecc_order'] -%>,{honor_ecc_order, <%= node['rabbitmq']['ssl_honor_ecc_order'] %>}<% end -%>

@@ -242,9 +242,7 @@ template "#{node['rabbitmq']['config']}.config" do
   group 'root'
   mode 00644
   variables(
-    :kernel => format_kernel_parameters,
-    :ssl_versions => (format_ssl_versions if node['rabbitmq']['ssl_versions']),
-    :ssl_ciphers => (format_ssl_ciphers if node['rabbitmq']['ssl_ciphers'])
+    :kernel => format_kernel_parameters
   )
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
