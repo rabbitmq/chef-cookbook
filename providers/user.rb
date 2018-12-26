@@ -20,7 +20,7 @@
 
 include Opscode::RabbitMQ
 
-use_inline_resources
+use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def user_exists?(name)
   cmd = "rabbitmqctl -q list_users |grep '^#{name}\\s'"

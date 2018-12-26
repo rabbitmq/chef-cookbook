@@ -22,7 +22,7 @@
 include Opscode::RabbitMQ
 include Chef::Mixin::ShellOut
 
-use_inline_resources
+use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 # Get ShellOut
 def get_shellout(cmd)

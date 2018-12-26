@@ -23,7 +23,7 @@ require 'shellwords'
 
 include Opscode::RabbitMQ
 
-use_inline_resources
+use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def policy_exists?(vhost, name)
   cmd = 'rabbitmqctl list_policies'
