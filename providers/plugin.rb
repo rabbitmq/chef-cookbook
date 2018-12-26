@@ -31,7 +31,7 @@ def plugin_enabled?(name)
   cmd.stdout =~ /\b#{name}\b/
 end
 
-use_inline_resources
+use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 action :enable do
   unless plugin_enabled?(new_resource.plugin)
