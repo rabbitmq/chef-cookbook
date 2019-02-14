@@ -51,5 +51,10 @@ module Opscode
     def shell_environment
       { 'HOME' => ENV.fetch('HOME', '/var/lib/rabbitmq') }
     end
+
+    def config_path
+      return "#{node['rabbitmq']['config']}.config" if ::File.extname(node['rabbitmq']['config']) == ""
+      node['rabbitmq']['config']
+    end
   end
 end
