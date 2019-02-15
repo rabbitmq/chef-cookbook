@@ -19,9 +19,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-#
 class Chef::Resource
   include Opscode::RabbitMQ # rubocop:enable all
 end
@@ -232,9 +230,12 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   group 'root'
   mode 00644
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  variables(
+    :config_path => rabbitmq_config_file_path
+  )
 end
 
-template "#{node['rabbitmq']['config']}.config" do
+template rabbitmq_config_file_path do
   sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
   source 'rabbitmq.config.erb'
   cookbook node['rabbitmq']['config_template_cookbook']

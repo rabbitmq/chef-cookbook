@@ -45,7 +45,7 @@ default['rabbitmq']['retry_delay'] = 2
 
 # config file location
 # http://www.rabbitmq.com/configure.html#define-environment-variables
-# "The .config extension is automatically appended by the Erlang runtime."
+# "The .config extension is automatically appended unless a file extension is already present."
 default['rabbitmq']['config_root'] = '/etc/rabbitmq'
 default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq"
 default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'

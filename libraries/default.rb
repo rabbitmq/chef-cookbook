@@ -37,7 +37,7 @@ module Opscode
         rendered << "    {#{param}, #{val}}"
       end
 
-      rendered.each { |r| r }.join(",\n")
+      rendered.join(",\n")
     end
 
     def format_ssl_versions
