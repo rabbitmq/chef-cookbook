@@ -232,9 +232,12 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   group 'root'
   mode 00644
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  variables(
+    :config_path => rabbitmq_config_file_path
+  )
 end
 
-template "#{node['rabbitmq']['config']}.config" do
+template rabbitmq_config_file_path do
   sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
   source 'rabbitmq.config.erb'
   cookbook node['rabbitmq']['config_template_cookbook']

@@ -20,3 +20,13 @@ module RabbitMQCookbook
     end
   end
 end
+
+def rabbitmq_config_file_path
+  configured_path = node['rabbitmq']['config']
+
+  if ::File.extname(configured_path).empty?
+    "#{configured_path}.config"
+  else
+    configured_path
+  end
+end
