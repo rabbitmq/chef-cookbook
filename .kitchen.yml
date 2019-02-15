@@ -26,9 +26,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:20.3.6"
+          version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.6"
+        version: "3.7.11"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -42,9 +42,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "20.3.6-1"
+          version: "21.2-1"
       rabbitmq:
-        version: "3.7.6"
+        version: "3.7.11"
 
     verifier:
       inspec_tests:
@@ -59,9 +59,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:20.3.6"
+          version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.6"
+        version: "3.7.11"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -77,9 +77,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:20.3.6"
+          version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.6"
+        version: "3.7.11"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -94,9 +94,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "20.3.6-1"
+          version: "21.2-1"
       rabbitmq:
-        version: "3.7.6"
+        version: "3.7.11"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -112,9 +112,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:20.3.6"
+          version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.6"
+        version: "3.7.11"
     attributes:
       apt:
         confd:
@@ -123,9 +123,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:20.3.6"
+          version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.6"
+        version: "3.7.11"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -144,9 +144,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:20.3.6"
+          version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.6"
+        version: "3.7.11"
     verifier:
       inspec_tests:
         - test/smoke/default
