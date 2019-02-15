@@ -1,6 +1,9 @@
 AlignParameters:
   Enabled: false
 
+AsciiComments:
+  Enabled: false
+
 Encoding:
   Enabled: false
 
@@ -10,14 +13,14 @@ LineLength:
 HashSyntax:
   EnforcedStyle: hash_rockets
 
-AsciiComments:
-  Enabled: false
-
 MethodLength:
   Max: 18
 
-Style/FileName:
+Naming/FileName:
   Enabled: false
 
 Metrics/AbcSize:
   Max: 16
+
+Style/IfUnlessModifier:
+  Enabled: false

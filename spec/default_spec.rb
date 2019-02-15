@@ -242,8 +242,6 @@ describe 'rabbitmq::default' do
     end
   end
 
-
-
   describe 'suse' do
     let(:runner) { ChefSpec::ServerRunner.new(SUSE_OPTS) }
     let(:node) { runner.node }
