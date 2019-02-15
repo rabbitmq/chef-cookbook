@@ -19,7 +19,6 @@ platforms:
 suites:
   - name: default-deb
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
