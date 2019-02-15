@@ -28,7 +28,7 @@ suites:
         esl:
           version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.11"
+        version: "3.7.12"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -44,7 +44,7 @@ suites:
         esl:
           version: "21.2-1"
       rabbitmq:
-        version: "3.7.11"
+        version: "3.7.12"
 
     verifier:
       inspec_tests:
@@ -61,7 +61,7 @@ suites:
         esl:
           version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.11"
+        version: "3.7.12"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -79,7 +79,7 @@ suites:
         esl:
           version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.11"
+        version: "3.7.12"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -96,7 +96,7 @@ suites:
         esl:
           version: "21.2-1"
       rabbitmq:
-        version: "3.7.11"
+        version: "3.7.12"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -114,7 +114,7 @@ suites:
         esl:
           version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.11"
+        version: "3.7.12"
     attributes:
       apt:
         confd:
@@ -125,7 +125,7 @@ suites:
         esl:
           version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.11"
+        version: "3.7.12"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -146,7 +146,7 @@ suites:
         esl:
           version: "1:21.2-1"
       rabbitmq:
-        version: "3.7.11"
+        version: "3.7.12"
     verifier:
       inspec_tests:
         - test/smoke/default
