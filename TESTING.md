@@ -97,8 +97,7 @@ rake integration:vagrant
 To run Kitchen tests in Docker, use
 
 ```
-export KI_DRIVER=docker
-kitchen test default-deb-ubuntu-1604
+KICHEN_YAML=".kitchen.docker.yml" kitchen test default-deb-ubuntu-1804
 ```
 
 To run all suites (involves multiple operating systems: Ubuntu, Debian, CentOS 7, CentOS 6)
