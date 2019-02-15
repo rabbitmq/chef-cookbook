@@ -9,10 +9,17 @@ describe service('rabbitmq-server') do
   it { should be_running }
 end
 
-# HACK: make sure HOSTNAME is set which seems not to be the case with The
-# centos 6 docker image
+# make sure HOSTNAME is set which seems not to be the case with The
+# Centos 6 Docker image
 describe command('HOSTNAME=$(hostname) rabbitmqctl status') do
-  # see https://github.com/rabbitmq/rabbitmq-server/issues/396 for exit codes
+  its(:exit_status) { should eq 0 }
+end
+
+describe command('HOSTNAME=$(hostname) rabbitmq-diagnostics ping') do
+  its(:exit_status) { should eq 0 }
+end
+
+describe command('HOSTNAME=$(hostname) rabbitmq-plugins list') do
   its(:exit_status) { should eq 0 }
 end
 
