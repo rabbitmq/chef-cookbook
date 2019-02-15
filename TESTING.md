@@ -1,16 +1,15 @@
-TESTING doc
-========================
+# Testing the Cookbook
 
-Bundler
--------
-A ruby environment with Bundler installed is a prerequisite for using
+## Bundler
+
+A Ruby environment with Bundler installed is a prerequisite for using
 the testing harness shipped with this cookbook. At the time of this
 writing, it works with Ruby 2.0 and Bundler 1.5.3. All programs
 involved, with the exception of Vagrant, can be installed by cd'ing
 into the parent directory of this cookbook and running "bundle install"
 
-Rakefile
---------
+## Rakefile
+
 The Rakefile ships with a number of tasks, each of which can be ran
 individually, or in groups. Typing "rake" by itself will perform style
 checks with Rubocop and Foodcritic, ChefSpec with rspec, and
@@ -29,8 +28,8 @@ rake style:ruby           # Run Ruby style checks
 rake travis               # Run all tests on Travis
 ```
 
-Style Testing
--------------
+## Style Testing
+
 Ruby style tests can be performed by Rubocop by issuing either
 ```
 bundle exec rubocop
@@ -49,8 +48,8 @@ or
 rake style:chef
 ```
 
-Spec Testing
--------------
+## Spec Testing
+
 Unit testing is done by running Rspec examples. Rspec will test any
 libraries, then test recipes using ChefSpec. This works by compiling a
 recipe (but not converging it), and allowing the user to make
@@ -60,35 +59,58 @@ assertions about the resource_collection.
 bundle exec rspec
 ```
 
-Will run the specs.
+will run the specs.
 
 
+## Integration Testing
 
-Integration Testing
--------------------
 Integration testing is performed by Test Kitchen. Test Kitchen will
 use either the Vagrant driver or various cloud drivers to instantiate
 machines and apply cookbooks. After a successful converge, tests are
 uploaded and ran out of band of Chef. Tests should be designed to
 ensure that a recipe has accomplished its goal.
 
-Integration Testing using Vagrant
----------------------------------
+### Using Vagrant
+
 Integration tests can be performed on a local workstation using
 Virtualbox or VMWare. Detailed instructions for setting this up can be
 found at the [Bento](https://github.com/chef/bento) project web site.
 
-Integration tests using Vagrant can be performed with either
+```
+kitchen test default-deb-ubuntu-1604
+```
+
+To run all suites (involves multiple operating systems: Ubuntu, Debian, CentOS 7, CentOS 6)
+
 ```
 bundle exec kitchen test
 ```
+
 or
+
 ```
 rake integration:vagrant
 ```
 
-Integration Testing using Cloud providers
------------------------------------------
+### Using Docker
+
+To run Kitchen tests in Docker, use
+
+```
+export KI_DRIVER=docker
+kitchen test default-deb-ubuntu-1604
+```
+
+To run all suites (involves multiple operating systems: Ubuntu, Debian, CentOS 7, CentOS 6)
+
+```
+export KI_DRIVER=docker
+bundle exec kitchen test
+```
+
+
+### Integration Testing using IaaS Providers
+
 Integration tests can be performed on cloud providers using
 Test Kitchen plugins. This cookbook ships a ```.kitchen.cloud.yml```
 that references environmental variables present in the shell that
@@ -124,16 +146,15 @@ or
 rake integration:cloud
 ```
 
-Digital Ocean Hint
-------------------
+#### Digital Ocean Hint
 At the time of this writing, you cannot find the numerical values
 needed for your SSH_KEY_IDS from the GUI. Instead, you will need to
 access the API from the command line.
 
     curl -L 'https://api.digitalocean.com/ssh_keys/?client_id=your_bits_here&api_key=your_bits_here'
 
-Words about .travis.yml
------------------------
+#### Words about .travis.yml
+
 In order for Travis to perform integration tests on public cloud
 providers, two major things need to happen. First, the environment
 variables referenced by ```.kitchen.cloud.yml``` need to be made
@@ -192,4 +213,3 @@ before_install:
   - echo -n $EC2_KEY_CHUNK_{0..30} >> ~/.ssh/id_ec2.base64
   - cat ~/.ssh/id_ec2.base64 | tr -d ' ' | base64 --decode > ~/.ssh/id_ec2.pem
 ```
-
