@@ -9,10 +9,6 @@ describe service('rabbitmq-server') do
   it { should be_running }
 end
 
-describe port(5672) do
-  it { should be_listening }
-end
-
 # HACK: make sure HOSTNAME is set which seems not to be the case with The
 # centos 6 docker image
 describe command('HOSTNAME=$(hostname) rabbitmqctl status') do
