@@ -18,35 +18,187 @@ verifier:
 platforms:
   - name: centos-6.9
     driver:
-      image: centos:6.9
+      image: dokken/centos-6
       platform: rhel
       pid_one_command: /sbin/init
       hostname: localhost
       intermediate_instructions:
-        - RUN yum -y install which initscripts
+        - RUN yum -y install sudo which initscripts
 
   - name: centos-7.4
     driver:
-      image: centos:7
+      image: dokken/centos-7
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
-        - RUN yum -y install lsof which systemd-sysv initscripts openssl net-tools
+        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
-  - name: ubuntu-16.04
+  - name: fedora-latest
     driver:
-      image: ubuntu:16.04
+      image: dokken/fedora-latest
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN dnf -y install sudo
+
+  - name: ubuntu-18.04
+    driver:
+      image: dokken/ubuntu-18.04
       pid_one_command: /bin/systemd
       intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get -y install lsb-release procps net-tools
+        - ENV DEBIAN_FRONTEND noninteractive
+        - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
   - name: debian-9
     driver:
-      image: debian:9
+      image: dokken/debian-9
       pid_one_command: /bin/systemd
       intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get -y install lsb-release procps net-tools
+        - ENV DEBIAN_FRONTEND noninteractive
+        - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
+
+  - name: opensuse-leap
+    driver:
+      image: dokken/opensuse-leap
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+      - RUN zypper --non-interactive install sudo
+
+suites:
+  - name: default-deb
+    run_list:
+      - recipe[apt]
+      - recipe[erlang::default]
+      - recipe[rabbitmq::default]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2-1"
+      rabbitmq:
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    excludes: ["centos-6.9", "centos-7.4"]
+
+  - name: default-rpm
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::default]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "21.2-1"
+      rabbitmq:
+        version: "3.7.12"
+
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    excludes: ["ubuntu-16.04", "ubuntu-18.04", "debian-9"]
+
+  - name: lwrps
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq_test::lwrps]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2-1"
+      rabbitmq:
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+        - test/smoke/lwrps
+    excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04"]
+
+  - name: cluster-deb
+    run_list:
+      - recipe[apt]
+      - recipe[erlang::default]
+      - recipe[rabbitmq_test::cluster]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2-1"
+      rabbitmq:
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+        - test/smoke/cluster
+    excludes: ["centos-6.9", "centos-7.4"]
+
+  - name: cluster-rpm
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq_test::cluster]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "21.2-1"
+      rabbitmq:
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+        - test/smoke/cluster
+    excludes: ["ubuntu-16.04", "ubuntu-18.04", "debian-9"]
+
+  - name: default-force-yes
+    run_list:
+      - recipe[apt]
+      - recipe[erlang::default]
+      - recipe[rabbitmq::default]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2-1"
+      rabbitmq:
+        version: "3.7.12"
+    attributes:
+      apt:
+        confd:
+          assume_yes: true
+          force-yes: true
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2-1"
+      rabbitmq:
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04"]
+
+  - name: default-force-yes-false
+    run_list:
+      - recipe[apt]
+      - recipe[erlang::default]
+      - recipe[rabbitmq::default]
+    attributes:
+      apt:
+        confd:
+          assume_yes: false
+          force-yes: false
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2-1"
+      rabbitmq:
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04"]
 
 # use (inherit) suites defined in main .kitchen.yml
