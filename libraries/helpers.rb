@@ -21,10 +21,27 @@ module RabbitMQCookbook
   end
 end
 
+def rabbitmq_version
+  node['rabbitmq']['version'].to_s
+end
+
+def rabbitmq_38?
+  rabbitmq_version =~ /^3.8/
+end
+
+def rabbitmq_37?
+  rabbitmq_version =~ /^3.7/
+end
+
+def rabbitmq_36?
+  rabbitmq_version =~ /^3.6/
+end
+
 def rabbitmq_config_file_path
   configured_path = node['rabbitmq']['config']
 
-  if ::File.extname(configured_path).empty?
+  # 3.6.x does not support .config in RABBITMQ_CONFIG_FILE paths. MK.
+  if ::File.extname(configured_path).empty? && !rabbitmq_36?
     "#{configured_path}.config"
   else
     configured_path
