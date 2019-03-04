@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/rabbitmq/chef-cookbook.svg?branch=master)](https://travis-ci.org/rabbitmq/chef-cookbook)
 [![Cookbook Version](https://img.shields.io/cookbook/v/rabbitmq.svg)](https://supermarket.chef.io/cookbooks/rabbitmq)
 
-This is a cookbook for managing RabbitMQ with Chef. 
+This is a cookbook for managing RabbitMQ with Chef.
 
 
 ## Supported Chef Versions
@@ -22,8 +22,8 @@ Examples of how to do that are provided below.
 
 ## Supported RabbitMQ Versions
 
-`5.x` release series of this cookbook can provision any recent (3.7.x, 3.6.x) version and even older ones (e.g. 3.5.8),
-provided that a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) is also provisioned.
+`5.x` release series of this cookbook can provision any recent (`3.7.x`, `3.6.16`) version
+if a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) is also provisioned.
 
 
 ### 3.7.x
@@ -78,12 +78,11 @@ location customization below.
 3.7.x releases will be downloaded [from Bintray](https://bintray.com/rabbitmq/all/) by default.
 
 
-### 3.6.x
+### 3.6.16
 
 #### Provision Erlang/OTP 19.3 or Later
 
-Erlang 19.3.6.5 or 20.x versions are [highly recommended](http://www.rabbitmq.com/which-erlang.html) for most recent
-3.6.x releases.
+RabbitMQ 3.6.16 [requires Erlang 19.3.6.5 or laterr](http://www.rabbitmq.com/which-erlang.html).
 
 Most distributions provide older versions, so Erlang must be provisioned either
 from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/) or [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm).
@@ -96,19 +95,19 @@ The Erlang cookbook will provision packages from Erlang Solutions if `node['erla
 node['erlang']['install_method'] = "esl"
 ```
 
-to provision a specific version, e.g. 20.2.2:
+The following examples provision Erlang `20.3.8.20`:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # Ubuntu and Debian
 # note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:20.2.2"
+node['erlang']['esl']['version'] = "1:20.3.8.20-1"
 ```
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "20.2.2-1"
+node['erlang']['esl']['version'] = "20.3.8.20-1"
 ```
 
 #### Set RabbitMQ Version
@@ -119,7 +118,7 @@ Set `node['rabbitmq']['version']` to specify a version:
 node['rabbitmq']['version'] = "3.6.16"
 ```
 
-3.6.x releases will be downloaded [from GitHub](https://github.com/rabbitmq/rabbitmq-server/releases/) by default.
+RabbitMQ 3.6.16 will be downloaded [from GitHub](https://github.com/rabbitmq/rabbitmq-server/releases/) by default.
 
 
 
@@ -128,20 +127,21 @@ node['rabbitmq']['version'] = "3.6.16"
 The release was tested with recent RabbitMQ releases on
 
 - CentOS 7.x
+- Ubuntu 18.04
 - Ubuntu 16.04
 - Debian 9.0
 
-Those are the distributions currently used to run tests [with Kitchen](.kitchen.cloud.yml).
+Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
 
 ### Newer Versions
 
-Local Kitchen tests and user experience suggest that more recent Debian, Ubuntu and CentOS 7.x versions
-should work just fine.
+Newer Debian, Ubuntu and CentOS 7.x versions should work.
 
 ### Older Versions
 
 CentOS 6.x, Ubuntu 14.04 and Debian 8.0 might
-work just fine but they are no longer on the "must support" list of distributions.
+work just fine but their support has been discontinued. Some of those distributions
+will go out of vendor support in 2019.
 
 
 ## Recipes
@@ -185,10 +185,10 @@ Set them to a download location without a version if you want to provision from 
 endpoint such as a local mirror.
 
 The `default` recipe will append a version suffix that matches RabbitMQ tag naming scheme.
-For 3.7.x or later, it is just the version (unchanged).
+For `3.7.x` or later, it is just the version (unchanged).
 
-For 3.6.x and 3.5.x, it is `"rabbitmq_v{version}"` where `{version}` being the value of `node['rabbitmq']['version']`
-with dots replaced by underscores. So, `3.6.16` will be translated to `rabbitmq_v3_6_16`.
+For `3.6.16`, it is `"rabbitmq_v{version}"` where `{version}` being the value of `node['rabbitmq']['version']`
+with dots replaced by underscores. So `3.6.16` will be translated to `rabbitmq_v3_6_16`.
 
 Lastly, a package name will be appended to form a full download URL. They rarely need
 changing but can also be overridden using the `node['rabbitmq']['deb_package']`
