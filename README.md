@@ -14,31 +14,32 @@ This cookbook targets Chef 12.1 and later.
 ## Dependencies
 
 This cookbook depends on the [Erlang cookbook](https://supermarket.chef.io/cookbooks/erlang)
-and assumes that the user configures that cookbook's attributes to provision a [supported Erlang/OTP version](http://www.rabbitmq.com/which-erlang.html)
-for running RabbitMQ.
+and assumes that the user configures that cookbook's attributes to provision a [supported Erlang/OTP version](https://www.rabbitmq.com/which-erlang.html) for running RabbitMQ.
 
 Examples of how to do that are provided below.
 
 
 ## Supported RabbitMQ Versions
 
+`6.x` release series of this cookbook only support RabbitMQ `3.7.x` versions.
+A [supported Erlang version](https://www.rabbitmq.com/which-erlang.html) must also be provisioned.
+
 `5.x` release series of this cookbook can provision any recent (`3.7.x`, `3.6.16`) version
-if a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) is also provisioned.
+if a [supported Erlang version](https://www.rabbitmq.com/which-erlang.html) is also provisioned.
 
+## Provisioning RabbitMQ 3.7.x
 
-### 3.7.x
-
-#### Ensure Your Cookbook Version is Compatible
+### Ensure Your Cookbook Version is Compatible
 
 To provision RabbitMQ 3.7.x, you must use version `5.5.0` of this cookbook or later.
 Older versions will use incorrect package download URLs.
 
-#### Provision Erlang/OTP 19.3 or Later
+### Provision Erlang/OTP 20.3 or Later
 
-Before provisioning a 3.7.x release, please beware that
-the [minimum required Erlang version](http://www.rabbitmq.com/which-erlang.html) for it [is 19.3](https://github.com/rabbitmq/rabbitmq-server/releases/tag/v3.7.0).
+Before provisioning a RabbitMQ 3.7.x release, please beware that
+the [minimum required Erlang version](https://www.rabbitmq.com/which-erlang.html) is `20.3`.
 Most distributions provide older versions, so Erlang must be provisioned either
-from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/) or [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm).
+from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/), [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm) or [RabbitMQ Debian packages](https://bintray.com/rabbitmq-erlang/debian).
 
 The Erlang cookbook will provision packages from Erlang Solutions if `node['erlang']['install_method']` is set to `esl`:
 
@@ -48,27 +49,27 @@ The Erlang cookbook will provision packages from Erlang Solutions if `node['erla
 node['erlang']['install_method'] = "esl"
 ```
 
-to provision a specific version, e.g. 20.2.2:
+The following example provisions Erlang `21.2.6`:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # Ubuntu and Debian
 # note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:20.2.2"
+node['erlang']['esl']['version'] = "1:21.2.6-1"
 ```
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "20.2.2-1"
+node['erlang']['esl']['version'] = "21.2.6-1"
 ```
 
-#### Set RabbitMQ Version
+### Set RabbitMQ Version
 
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.7.3"
+node['rabbitmq']['version'] = "3.7.12"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['deb_package_url']` overridden
@@ -78,58 +79,14 @@ location customization below.
 3.7.x releases will be downloaded [from Bintray](https://bintray.com/rabbitmq/all/) by default.
 
 
-### 3.6.16
-
-#### Provision Erlang/OTP 19.3 or Later
-
-RabbitMQ 3.6.16 [requires Erlang 19.3.6.5 or laterr](http://www.rabbitmq.com/which-erlang.html).
-
-Most distributions provide older versions, so Erlang must be provisioned either
-from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/) or [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm).
-
-The Erlang cookbook will provision packages from Erlang Solutions if `node['erlang']['install_method']` is set to `esl`:
-
-``` ruby
-# will install the latest release, please
-# consult with https://www.rabbitmq.com/which-erlang.html first
-node['erlang']['install_method'] = "esl"
-```
-
-The following examples provision Erlang `20.3.8.20`:
-
-``` ruby
-node['erlang']['install_method'] = "esl"
-# Ubuntu and Debian
-# note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:20.3.8.20-1"
-```
-
-``` ruby
-node['erlang']['install_method'] = "esl"
-# CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "20.3.8.20-1"
-```
-
-#### Set RabbitMQ Version
-
-Set `node['rabbitmq']['version']` to specify a version:
-
-``` ruby
-node['rabbitmq']['version'] = "3.6.16"
-```
-
-RabbitMQ 3.6.16 will be downloaded [from GitHub](https://github.com/rabbitmq/rabbitmq-server/releases/) by default.
-
-
-
 ## Supported Distributions
 
 The release was tested with recent RabbitMQ releases on
 
-- CentOS 7.x
 - Ubuntu 18.04
 - Ubuntu 16.04
 - Debian 9.0
+- CentOS 7.x
 
 Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
 
@@ -156,13 +113,17 @@ If you want to use the distro version, set the attribute `['rabbitmq']['use_dist
 
 The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['clustering']['enable']` attribute to `true`, `['rabbitmq']['clustering']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
-To enable SSL turn `ssl` to `true` and set the paths to your cacert, cert and key files.
+To [enable TLS](https://www.rabbitmq.com/ssl.html) turn `ssl` to `true` and set the paths to CA certificate, server
+certificate and server private key files.
 
 ```ruby
 node['rabbitmq']['ssl'] = true
-node['rabbitmq']['ssl_cacert'] = '/path/to/cacert.pem'
-node['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
-node['rabbitmq']['ssl_key'] = '/path/to/key.pem'
+# CA certificate
+node['rabbitmq']['ssl_cacert'] = '/path/to/ca_certificate.pem'
+# server certificate (public key)
+node['rabbitmq']['ssl_cert'] = '/path/to/server_certificate.pem'
+# server private key
+node['rabbitmq']['ssl_key'] = '/path/to/server_key.pem'
 ```
 
 Listening for TCP connections may be limited to a specific interface by setting the following attribute:
@@ -171,7 +132,7 @@ Listening for TCP connections may be limited to a specific interface by setting 
 node['rabbitmq']['tcp_listen_interface'] = nil
 ```
 
-Listening for SSL connections may be limited to a specific interface by setting the following attribute:
+Listening for TLS connections may be limited to a specific interface by setting the following attribute:
 
 ```
 node['rabbitmq']['ssl_listen_interface'] = nil
@@ -210,6 +171,7 @@ The default username and password are guest/guest:
 `['rabbitmq']['default_pass'] = 'guest'`
 
 ##### Loopback Users
+
 By default, the guest user can only connect via localhost.  This is the behavior of RabbitMQ when the loopback_users configuration is not specified in it's configuration file.   Also, by default, this cookbook does not specify loopback_users in the configuration file:
 
 `['rabbitmq']['loopback_users'] = nil`
@@ -237,10 +199,13 @@ before you execute any recipes in the RabbitMQ cookbook (in other words, before 
 using a remote file resource.
 
 ### mgmt_console
-Installs the `rabbitmq_management` plugin.
+
+Enables the [RabbitMQ management plugin](https://www.rabbitmq.com/management.html).
+
 To use https connection to management console, turn `['rabbitmq']['web_console_ssl']` to true. The SSL port for web management console can be configured by setting attribute `['rabbitmq']['web_console_ssl_port']`, whose default value is 15671.
 
 ### plugin_management
+
 Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq']['disabled_plugins']` attributes.
 
 ### community_plugins
@@ -501,6 +466,7 @@ For an already running cluster, these actions still require manual intervention:
 
 ```text
 Copyright (c) 2009-2018, Chef Software, Inc.
+Copyright (c) 2018-2019, Pivotal Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
