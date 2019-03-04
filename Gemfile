@@ -16,16 +16,19 @@ group :unit do
 end
 
 group :integration do
-  gem 'kitchen-inspec'
-  gem 'inspec'
+  gem 'kitchen-inspec', '~> 1.0'
+  # note: without https://github.com/inspec/train/pull/406 `kitchen verify`
+  # will fail on Ruby 2.6 even with the latest version. MK.
+  gem 'train', '~> 1.7.4'
+  gem 'inspec', '~> 3.7'
 end
 
 group :kitchen_common do
-  gem 'test-kitchen'
+  gem 'test-kitchen', '>= 1.24'
 end
 
 group :kitchen_vagrant do
-  gem 'kitchen-vagrant'
+  gem 'kitchen-vagrant', '~> 1.4'
 end
 
 group :kitchen_docker do
