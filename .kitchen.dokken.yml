@@ -72,9 +72,25 @@ platforms:
 suites:
   - name: default-deb
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
-      - recipe[rabbitmq::default]
+      - recipe[rabbitmq::plugin_management]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2.6-1"
+      rabbitmq:
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
+
+  - name: system-limits-deb
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::systemd_limits]
+      - recipe[rabbitmq::plugin_management]
     attributes:
       erlang:
         install_method: "esl"
@@ -89,7 +105,6 @@ suites:
 
   - name: 36x-deb
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
@@ -106,7 +121,6 @@ suites:
 
   - name: 366-deb
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
@@ -124,7 +138,7 @@ suites:
   - name: default-rpm
     run_list:
       - recipe[erlang::default]
-      - recipe[rabbitmq::default]
+      - recipe[rabbitmq::plugin_management]
     attributes:
       erlang:
         install_method: "esl"
@@ -132,11 +146,27 @@ suites:
           version: "21.2-1"
       rabbitmq:
         version: "3.7.12"
-
     verifier:
       inspec_tests:
         - test/smoke/default
     includes: ["centos-7.4", "centos-6.9"]
+
+  - name: system-limits-rpm
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::systemd_limits]
+      - recipe[rabbitmq::plugin_management]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "21.2-1"
+      rabbitmq:
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    includes: ["centos-7.4"]
 
   - name: lwrps
     run_list:
@@ -157,7 +187,6 @@ suites:
 
   - name: cluster-deb
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq_test::cluster]
     attributes:
