@@ -25,7 +25,7 @@ describe 'rabbitmq::cluster' do
   let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
   let(:node) { runner.node }
   cached(:chef_run) do
-    runner.converge(described_recipe)
+    runner.converge("rabbitmq:cluster")
   end
 
   let(:file_cache_path) { Chef::Config[:file_cache_path] }
