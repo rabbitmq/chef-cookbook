@@ -3,12 +3,9 @@
 ###
 
 # This file is sourced by /etc/init.d/rabbitmq-server. Its primary
-# reason for existing is to allow adjustment of system limits for the
+# reason for existing is to allow minor system and environment adjustment for the
 # rabbitmq-server process.
 #
-# Maximum number of open file handles. This will need to be increased
-# to handle many simultaneous connections. Refer to the system
-# documentation for ulimit (in man bash) for more information.
-#
-#ulimit -n 1024
+# On modern distributions system limits are managed by systemd, see rabbitmq:systemd_limits and
+# https://www.rabbitmq.com/networking.html#open-file-handle-limit.
 <% if node['rabbitmq']['open_file_limit'] -%>ulimit -n <%= node['rabbitmq']['open_file_limit'] %><% end %>
