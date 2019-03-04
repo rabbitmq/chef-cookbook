@@ -15,15 +15,23 @@ transport:
 platforms:
   - name: centos-6.9
   - name: centos-7.4
+  # TODO: re-enable once this cookbook or the Erlang one provision
+  #       latest Erlang via RabbitMQ zero dependency Erlang RPM. MK.
+  # - name: fedora-29
   - name: ubuntu-16.04
   - name: ubuntu-18.04
   - name: debian-9
+
+#
+# Suites
+#
 
 suites:
   - name: default-deb
     run_list:
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
+      - recipe[rabbitmq::plugin_management]
     attributes:
       erlang:
         install_method: "esl"
@@ -34,12 +42,32 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["centos-6.9", "centos-7.4"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
+
+  - name: system-limits-deb
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::systemd_limits]
+      - recipe[rabbitmq::default]
+      - recipe[rabbitmq::plugin_management]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2.6-1"
+      rabbitmq:
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
+
 
   - name: default-rpm
     run_list:
-      - recipe[erlang::default]
+      - recipe[erlang::esl]
       - recipe[rabbitmq::default]
+      - recipe[rabbitmq::plugin_management]
     attributes:
       erlang:
         install_method: "esl"
@@ -47,11 +75,28 @@ suites:
           version: "21.2.6-1"
       rabbitmq:
         version: "3.7.12"
-
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["ubuntu-16.04", "ubuntu-18.04", "debian-9"]
+    includes: ["centos-7.4", "centos-6.9"]
+
+  - name: system-limits-rpm
+    run_list:
+      - recipe[erlang::esl]
+      - recipe[rabbitmq::systemd_limits]
+      - recipe[rabbitmq::default]
+      - recipe[rabbitmq::plugin_management]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "21.2.6-1"
+      rabbitmq:
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    includes: ["centos-7.4", "centos-6.9"]
 
   - name: lwrps
     run_list:
@@ -68,7 +113,7 @@ suites:
       inspec_tests:
         - test/smoke/default
         - test/smoke/lwrps
-    excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04"]
+    includes: ["ubuntu-18.04"]
 
   - name: cluster-deb
     run_list:
@@ -85,11 +130,11 @@ suites:
       inspec_tests:
         - test/smoke/default
         - test/smoke/cluster
-    excludes: ["centos-6.9", "centos-7.4"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
 
   - name: cluster-rpm
     run_list:
-      - recipe[erlang::default]
+      - recipe[erlang::esl]
       - recipe[rabbitmq_test::cluster]
     attributes:
       erlang:
@@ -129,7 +174,7 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04"]
+    includes: ["ubuntu-18.04"]
 
   - name: default-force-yes-false
     run_list:
@@ -149,4 +194,4 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04"]
+    includes: ["ubuntu-18.04"]
