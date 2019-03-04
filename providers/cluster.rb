@@ -50,7 +50,7 @@ def cluster_status
   # To parse the result string, this function normalize the output string
   # - Removing first line : it returns "Cluster status of node 'rabbit@rabbit1' ..."
   # - Removing "... Done" : old version returns this
-  cmd = 'rabbitmqctl cluster_status'
+  cmd = 'rabbitmqctl cluster_status -q'
   Chef::Log.debug("[rabbitmq_cluster] Executing #{cmd}")
   cmd = get_shellout(cmd)
   cmd.run_command

@@ -27,7 +27,7 @@ use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def policy_exists?(vhost, name)
   cmd = 'rabbitmqctl list_policies'
-  cmd += " -p #{Shellwords.escape vhost}" unless vhost.nil?
+  cmd += " -q -p #{Shellwords.escape vhost}" unless vhost.nil?
   cmd += " |grep '#{name}\\b'"
 
   cmd = Mixlib::ShellOut.new(cmd, env: shell_environment)
@@ -42,7 +42,7 @@ end
 
 action :set do
   cmd = 'rabbitmqctl set_policy'
-  cmd += " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
+  cmd += " -q -p #{new_resource.vhost}" unless new_resource.vhost.nil?
   cmd += " --apply-to #{new_resource.apply_to}" if new_resource.apply_to
   cmd += " #{new_resource.policy}"
   cmd += " \"#{new_resource.pattern}\""

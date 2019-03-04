@@ -22,12 +22,7 @@ include Opscode::RabbitMQ
 
 def plugin_enabled?(name)
   ENV['PATH'] = "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
-  cmdstr = if rabbitmq_36?
-             # rabbitmq-plugins in 3.6.x does not support -q
-             "rabbitmq-plugins list -e '#{name}\\b'"
-           else
-             "rabbitmq-plugins list -q -e '#{name}\\b'"
-           end
+  cmdstr = "rabbitmq-plugins list -q -e '#{name}\\b'"
   cmd = Mixlib::ShellOut.new(cmdstr, env: shell_environment)
   cmd.run_command
   Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmdstr}"
