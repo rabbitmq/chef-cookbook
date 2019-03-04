@@ -68,7 +68,6 @@ platforms:
 suites:
   - name: default-deb
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
@@ -119,7 +118,6 @@ suites:
 
   - name: cluster-deb
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq_test::cluster]
     attributes:
@@ -154,7 +152,6 @@ suites:
 
   - name: default-force-yes
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
@@ -182,7 +179,6 @@ suites:
 
   - name: default-force-yes-false
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
