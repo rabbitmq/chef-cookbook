@@ -22,11 +22,7 @@ describe 'rabbitmq_test::default' do
 
   # packages
   it 'installs the rabbitmq-server package' do
-    if node['rabbitmq']['use_distro_version']
-      package('rabbitmq-server').must_be_installed
-    else
-      package('rabbitmq-server').must_be_installed.with(:version, '3.1.5-1')
-    end
+    package('rabbitmq-server').must_be_installed.with(:version, '3.7.12-1')
   end
 
   # directories
@@ -43,19 +39,15 @@ describe 'rabbitmq_test::default' do
   # service
   it 'enables & starts the rabbitmq-server service' do
     service(node['rabbitmq']['service_name']).must_be_enabled unless node['rabbitmq']['job_control'] == 'upstart'
-    service(node['rabbitmq']['service_name']).must_be_running unless node['rabbitmq']['use_distro_version']
+    service(node['rabbitmq']['service_name']).must_be_running
   end
 
   # accepts connections
   it 'accepts AMQP connections' do
-    unless node['rabbitmq']['use_distro_version']
-      require 'bunny'
-      b = Bunny.new(:host => 'localhost',
-                    :port => 5672,
-                    :user => node['rabbitmq']['default_user'],
-                    :pass => node['rabbitmq']['default_pass'])
-      b.start
-      b.stop
-    end
+    require 'bunny'
+    conn = Bunny.new(username: node['rabbitmq']['default_user'],
+                     password: node['rabbitmq']['default_pass'])
+    conn.start
+    conn.close
   end
 end

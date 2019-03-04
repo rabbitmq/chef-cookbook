@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 # Version to install
 default['rabbitmq']['version'] = '3.6.16'
-# When true, distribution-provided package will be used.
-# This may be useful e.g. on old distributions.
-default['rabbitmq']['use_distro_version'] = false
+
+default['rabbitmq']['package_source'] = "github"
+
 # Allow the distro version to be optionally pinned
 default['rabbitmq']['pin_distro_version'] = false
 
@@ -14,17 +14,8 @@ default['rabbitmq']['deb_package_url'] = nil
 default['rabbitmq']['rpm_package'] = nil
 default['rabbitmq']['rpm_package_url'] = nil
 
-# RabbitMQ 3.6.8+ non-distro versions requires a modern Erlang which is neither available in
-# older distros via packages nor EPEL. rhel < 7, debian < 8
-#
-if !node['rabbitmq']['use_distro_version'] &&
-   (node['platform'] == 'debian' && node['platform_version'].to_i < 8 ||
-    node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7)
-  default['erlang']['install_method'] = 'esl'
-end
-
-default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-R16B03-1.noarch.rpm?raw=true'
-default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/'
+default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-20.2.2-1.noarch.rpm'
+default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/raw/master/rpmbuild/RPMS/noarch/'
 
 # being nil, the rabbitmq defaults will be used
 default['rabbitmq']['nodename'] = nil
@@ -173,8 +164,8 @@ default['rabbitmq']['disabled_virtualhosts'] = []
 
 # users
 default['rabbitmq']['enabled_users'] =
-  [{ :name => 'guest', :password => 'guest', :rights =>
-    [{ :vhost => nil, :conf => '.*', :write => '.*', :read => '.*' }]
+  [{ name: 'guest', password: 'guest', rights:
+    [{ vhost: nil, conf: '.*', write: '.*', read: '.*' }]
   }]
 default['rabbitmq']['disabled_users'] = []
 

@@ -22,7 +22,7 @@
 actions :set, :clear, :list
 default_action :set
 
-attribute :parameter, :kind_of => String, :name_attribute => true
-attribute :component, :kind_of => String
-attribute :vhost, :kind_of => String
-attribute :parameters, :kind_of => [Hash, Array], :default => {}
+attribute :parameter, kind_of: String, name_attribute: true
+attribute :component, kind_of: String
+attribute :vhost, kind_of: String
+attribute :parameters, kind_of: [Hash, Array], default: {}

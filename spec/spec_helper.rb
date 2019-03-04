@@ -8,42 +8,42 @@ require 'chef/application'
 
 # rubocop:disable all
 
-LOGLEVEL = :fatal
+LOG_LEVEL = :fatal
 SUSE_OPTS = {
-  :platform => 'suse',
-  :version => '12.3',
-  :log_level => LOGLEVEL,
+  platform: 'suse',
+  version: '12.3',
+  log_level: LOG_LEVEL,
 }
 REDHAT_OPTS = {
-  :platform => 'redhat',
-  :version => '7.4',
-  :log_level => LOGLEVEL,
-  :file_cache_path => '/tmp'
+  platform: 'redhat',
+  version: '7.4',
+  log_level: LOG_LEVEL,
+  file_cache_path: '/tmp'
 }
 UBUNTU_OPTS = {
-  :platform => 'ubuntu',
-  :version => '18.04',
-  :log_level => LOGLEVEL,
-  :file_cache_path => '/tmp'
+  platform: 'ubuntu',
+  version: '18.04',
+  log_level: LOG_LEVEL,
+  file_cache_path: '/tmp'
 }
 CENTOS_OPTS = {
-  :platform => 'centos',
-  :version => '7.4.1708',
-  :log_level => LOGLEVEL,
-  :file_cache_path => '/tmp'
+  platform: 'centos',
+  version: '7.4.1708',
+  log_level: LOG_LEVEL,
+  file_cache_path: '/tmp'
 }
 FEDORA_OPTS = {
-  :platform => 'fedora',
-  :version => '27',
-  :log_level => LOGLEVEL,
-  :file_cache_path => '/tmp'
+  platform: 'fedora',
+  version: '29',
+  log_level: LOG_LEVEL,
+  file_cache_path: '/tmp'
 }
 
 CLUSTER_OPTS = {
-  :platform => 'centos',
-  :version => '7.4.1708',
-  :log_level => LOGLEVEL,
-  :file_cache_path => '/tmp',
+  platform: 'centos',
+  version: '7.6.1804',
+  log_level: LOG_LEVEL,
+  file_cache_path: '/tmp',
 
   'rabbitmq' => {
     'clustering' => {

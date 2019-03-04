@@ -19,18 +19,18 @@ namespace :style do
     desc 'Run Chef style checks'
     FoodCritic::Rake::LintTask.new(:chef) do |t|
       t.options = {
-        :fail_tags => ['any'],
-        :tags => %w(~FC007 ~FC023 ~FC085),
-        :progress => true,
+        fail_tags: ['any'],
+        tags: %w(~FC007 ~FC023 ~FC085),
+        progress: true,
       }
     end
-  rescue LoadError
+  rescue LoadError => e
     puts ">>> Gem load error: #{e}, omitting style:chef" unless ENV['CI']
   end
 end
 
 desc 'Run all style checks'
-task :style => ['style:chef', 'style:ruby']
+task style: ['style:chef', 'style:ruby']
 
 # ChefSpec
 begin
@@ -66,4 +66,4 @@ namespace :supermarket do
 end
 
 # Default
-task :default => %w(style spec)
+task default: %w(style spec)

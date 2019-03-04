@@ -25,23 +25,22 @@ def rabbitmq_version
   node['rabbitmq']['version'].to_s
 end
 
-def rabbitmq_38?
-  rabbitmq_version =~ /^3.8/
-end
-
-def rabbitmq_37?
-  rabbitmq_version =~ /^3.7/
-end
-
-def rabbitmq_36?
-  rabbitmq_version =~ /^3.6/
+def rabbitmq_package_download_base_url
+  case node['rabbitmq']['package_source']
+  when :github, /github/i
+    "https://github.com/rabbitmq/rabbitmq-server/releases/download/v#{rabbitmq_version}/"
+  when :bintray, /bintray/i
+    "https://dl.bintray.com/rabbitmq/all/rabbitmq-server/#{rabbitmq_version}/"
+  else
+    "https://github.com/rabbitmq/rabbitmq-server/releases/download/v#{rabbitmq_version}/"
+  end
 end
 
 def rabbitmq_config_file_path
   configured_path = node['rabbitmq']['config']
 
-  # 3.6.x does not support .config in RABBITMQ_CONFIG_FILE paths. MK.
-  if ::File.extname(configured_path).empty? && !rabbitmq_36?
+  # If no extension is configured, append it.
+  if ::File.extname(configured_path).empty?
     "#{configured_path}.config"
   else
     configured_path

@@ -24,7 +24,7 @@ use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def vhost_exists?(name)
   cmd = "rabbitmqctl -q list_vhosts | grep ^#{name}$"
-  cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
+  cmd = Mixlib::ShellOut.new(cmd, env: shell_environment)
   cmd.run_command
   Chef::Log.debug "rabbitmq_vhost_exists?: #{cmd}"
   Chef::Log.debug "rabbitmq_vhost_exists?: #{cmd.stdout}"

@@ -109,8 +109,6 @@ Installs `rabbitmq-server` via direct download (from Bintray or GitHub, dependin
 the installation package or using the distribution version. Depending on your distribution,
 the provided version may be quite old so direct download is the default option.
 
-If you want to use the distro version, set the attribute `['rabbitmq']['use_distro_version']` to `true`.
-
 The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['clustering']['enable']` attribute to `true`, `['rabbitmq']['clustering']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
 
 To [enable TLS](https://www.rabbitmq.com/ssl.html) turn `ssl` to `true` and set the paths to CA certificate, server
@@ -226,15 +224,15 @@ You can provide user credentials, the vhosts that they need to have access to an
 ```ruby
 node['rabbitmq']['enabled_users'] = [
     {
-        :name => 'kitten',
-        :password => 'kitten',
-        :tag => 'leader',
-        :rights => [
+        name: 'kitten',
+        password: 'kitten',
+        tag: 'leader',
+        rights => [
             {
-                :vhost => 'nova',
-                :conf => '.*',
-                :write => '.*',
-                :read => '.*'
+                vhost: 'nova',
+                conf: '.*',
+                write: '.*',
+                read: '.*'
             }
         ]
     }
@@ -265,7 +263,7 @@ It supports two clustering modes: auto or manual.
 * `node['rabbitmq']['erlang_cookie']` : Same erlang cookie is required for the cluster
 * `node['rabbitmq']['clustering']['use_auto_clustering']` : Default is false. (manual clustering is default)
 * `node['rabbitmq']['clustering']['cluster_name']` : Name of cluster. default value is nil. In case of nil or '' is set for `cluster_name`, first node name in `node['rabbitmq']['clustering']['cluster_nodes']` attribute will be set for manual clustering. for the auto clustering, one of the node name will be set.
-* `node['rabbitmq']['clustering']['cluster_nodes']` : List of cluster nodes. it required node name and cluster node type. please refer to example in below.
+* `node['rabbitmq']['clustering']['cluster_nodes']`  List of cluster nodes. it required node name and cluster node type. please refer to example in below.
 
 Example
 
@@ -277,13 +275,13 @@ node['rabbitmq']['clustering']['use_auto_clustering'] = false
 node['rabbitmq']['clustering']['cluster_name'] = 'qa_env'
 node['rabbitmq']['clustering']['cluster_nodes'] = [
     {
-        :name => 'rabbit@rabbit1'
+        :name: 'rabbit@rabbit1'
     },
     {
-        :name => 'rabbit@rabbit2'
+        name: 'rabbit@rabbit2'
     },
     {
-        :name => 'rabbit@rabbit3'
+        name: 'rabbit@rabbit3'
     }
 ]
 ```

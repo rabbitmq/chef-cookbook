@@ -22,9 +22,9 @@
 actions :set, :clear, :list
 default_action :set
 
-attribute :policy, :kind_of => String, :name_attribute => true
-attribute :pattern, :kind_of => String
-attribute :parameters, :kind_of => Hash
-attribute :priority, :kind_of => Integer
-attribute :vhost, :kind_of => String
-attribute :apply_to, :kind_of => String, :equal_to => %w(all queues exchanges)
+attribute :policy, kind_of: String, name_attribute: true
+attribute :pattern, kind_of: String
+attribute :parameters, kind_of: Hash
+attribute :priority, kind_of: Integer
+attribute :vhost, kind_of: String
+attribute :apply_to, kind_of: String, equal_to: %w(all queues exchanges)

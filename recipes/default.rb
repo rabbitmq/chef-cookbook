@@ -28,15 +28,7 @@ include_recipe 'erlang'
 
 version = node['rabbitmq']['version']
 
-default_package_url = if rabbitmq_37? || rabbitmq_38?
-                        # 3.7.0 and later
-                        "https://dl.bintray.com/rabbitmq/all/rabbitmq-server/#{version}/"
-                      else
-                        # prior to 3.7.0
-                        legacy_version = version.tr('.', '_')
-                        "https://github.com/rabbitmq/rabbitmq-server/releases/download/rabbitmq_v#{legacy_version}/"
-                      end
-
+default_package_url = rabbitmq_package_download_base_url
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
 case node['platform_family']
@@ -81,31 +73,19 @@ when 'debian'
   # socat is a package dependency of rabbitmq-server
   package 'socat'
 
-  # => Prevent Debian systems from automatically starting RabbitMQ after dpkg install
+  #: Prevent Debian systems from automatically starting RabbitMQ after dpkg install
   dpkg_autostart node['rabbitmq']['service_name'] do
     allow false
   end
 
-  if node['platform_version'].to_i < 8 && !node['rabbitmq']['use_distro_version']
-    Chef::Log.warn 'Debian 7 is too old to use the recent .deb RabbitMQ packages. Falling back to distro package!'
-    node.normal['rabbitmq']['use_distro_version'] = true
+  # we need to download the package
+  remote_file "#{Chef::Config[:file_cache_path]}/#{deb_package_name}" do
+    source "#{deb_package_url}#{deb_package_name}"
+    action :create_if_missing
   end
-
-  if node['rabbitmq']['use_distro_version']
-    package 'rabbitmq-server' do
-      action :install
-      version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
-    end
-  else
-    # we need to download the package
-    remote_file "#{Chef::Config[:file_cache_path]}/#{deb_package_name}" do
-      source "#{deb_package_url}#{deb_package_name}"
-      action :create_if_missing
-    end
-    dpkg_package 'rabbitmq-server' do
-      source ::File.join(Chef::Config[:file_cache_path], deb_package_name)
-      action :upgrade
-    end
+  dpkg_package 'rabbitmq-server' do
+    source ::File.join(Chef::Config[:file_cache_path], deb_package_name)
+    action :upgrade
   end
 
   # Configure job control
@@ -121,7 +101,7 @@ when 'debian'
     end
 
     file '/etc/init.d/rabbitmq-server' do
-      action :delete
+      action delete
     end
 
     include_recipe 'logrotate'
@@ -141,7 +121,7 @@ when 'debian'
       owner 'root'
       group 'root'
       mode 0644
-      variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
+      variables(max_file_descriptors: node['rabbitmq']['max_file_descriptors'])
     end
   end
 
@@ -161,19 +141,12 @@ when 'rhel', 'fedora'
     rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
   end
 
-  if node['rabbitmq']['use_distro_version']
-    package 'rabbitmq-server' do
-      action :install
-      version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
-    end
-  else
-    # We need to download the rpm
-    remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
-      source "#{rpm_package_url}#{rpm_package_name}"
-      action :create_if_missing
-    end
-    rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+  # We need to download the rpm
+  remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+    source "#{rpm_package_url}#{rpm_package_name}"
+    action :create_if_missing
   end
+  rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
 
 when 'suse'
 
@@ -231,7 +204,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   mode 00644
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   variables(
-    :config_path => rabbitmq_config_file_path
+    config_path: rabbitmq_config_file_path
   )
 end
 
@@ -243,9 +216,9 @@ template rabbitmq_config_file_path do
   group 'root'
   mode 00644
   variables(
-    :kernel => format_kernel_parameters,
-    :ssl_versions => (format_ssl_versions if node['rabbitmq']['ssl_versions']),
-    :ssl_ciphers => (format_ssl_ciphers if node['rabbitmq']['ssl_ciphers'])
+    kernel: format_kernel_parameters,
+    ssl_versions: (format_ssl_versions if node['rabbitmq']['ssl_versions']),
+    ssl_ciphers: (format_ssl_ciphers if node['rabbitmq']['ssl_ciphers'])
   )
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
@@ -293,7 +266,7 @@ if node['rabbitmq']['manage_service']
     retries node['rabbitmq']['retry']
     retry_delay node['rabbitmq']['retry_delay']
     action [:enable, :start]
-    supports :status => true, :restart => true
+    supports status: true, restart: true
     provider Chef::Provider::Service::Upstart if node['rabbitmq']['job_control'] == 'upstart'
     provider Chef::Provider::Service::Init if node['rabbitmq']['job_control'] == 'init'
   end

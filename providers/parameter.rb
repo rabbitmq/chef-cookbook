@@ -30,7 +30,7 @@ def parameter_exists?(vhost, name)
   cmd += " -p #{Shellwords.escape vhost}" unless vhost.nil?
   cmd += " |grep '#{name}\\b'"
 
-  cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
+  cmd = Mixlib::ShellOut.new(cmd, env: shell_environment)
   cmd.run_command
   begin
     cmd.error!

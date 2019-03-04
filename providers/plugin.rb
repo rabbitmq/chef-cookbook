@@ -28,7 +28,7 @@ def plugin_enabled?(name)
            else
              "rabbitmq-plugins list -q -e '#{name}\\b'"
            end
-  cmd = Mixlib::ShellOut.new(cmdstr, :env => shell_environment)
+  cmd = Mixlib::ShellOut.new(cmdstr, env: shell_environment)
   cmd.run_command
   Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmdstr}"
   Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmd.stdout}"
