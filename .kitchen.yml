@@ -19,6 +19,10 @@ platforms:
   - name: ubuntu-18.04
   - name: debian-9
 
+#
+# Suites
+#
+
 suites:
   - name: default-deb
     run_list:
@@ -35,7 +39,7 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["centos-6.9", "centos-7.4"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
 
   - name: 36x-deb
     run_list:
@@ -52,7 +56,7 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/36x
-    excludes: ["centos-6.9", "centos-7.4", "ubuntu-18.04", "debian-9"]
+    includes: ["ubuntu-16.04"]
 
   - name: 366-deb
     run_list:
@@ -69,7 +73,7 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/36x
-    excludes: ["centos-6.9", "centos-7.4", "ubuntu-18.04", "debian-9"]
+    includes: ["ubuntu-16.04"]
 
   - name: default-rpm
     run_list:
@@ -86,7 +90,7 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["ubuntu-16.04", "ubuntu-18.04", "debian-9"]
+    includes: ["centos-7.4", "centos-6.9"]
 
   - name: lwrps
     run_list:
@@ -103,7 +107,7 @@ suites:
       inspec_tests:
         - test/smoke/default
         - test/smoke/lwrps
-    excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04"]
+    includes: ["ubuntu-18.04"]
 
   - name: cluster-deb
     run_list:
@@ -121,7 +125,7 @@ suites:
       inspec_tests:
         - test/smoke/default
         - test/smoke/cluster
-    excludes: ["centos-6.9", "centos-7.4"]
+    includes: ["ubuntu-18.04", "debian-9"]
 
   - name: cluster-rpm
     run_list:
@@ -138,7 +142,7 @@ suites:
       inspec_tests:
         - test/smoke/default
         - test/smoke/cluster
-    excludes: ["ubuntu-16.04", "ubuntu-18.04", "debian-9"]
+    includes: ["centos-7.4"]
 
   - name: default-force-yes
     run_list:
@@ -166,7 +170,7 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04"]
+    includes: ["debian-9"]
 
   - name: default-force-yes-false
     run_list:
@@ -187,4 +191,4 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["centos-6.9", "centos-7.4", "debian-9", "ubuntu-16.04"]
+    includes: ["debian-9"]
