@@ -29,12 +29,29 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2-1"
+          version: "1:21.2.6-1"
       rabbitmq:
         version: "3.7.12"
     verifier:
       inspec_tests:
         - test/smoke/default
+    excludes: ["centos-6.9", "centos-7.4"]
+
+  - name: 36x-deb
+    run_list:
+      - recipe[apt]
+      - recipe[erlang::default]
+      - recipe[rabbitmq::default]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:20.3.8.20-1"
+      rabbitmq:
+        version: "3.6.16"
+    verifier:
+      inspec_tests:
+        - test/smoke/36x
     excludes: ["centos-6.9", "centos-7.4"]
 
   - name: default-rpm

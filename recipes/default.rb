@@ -28,7 +28,7 @@ include_recipe 'erlang'
 
 version = node['rabbitmq']['version']
 
-default_package_url = if version =~ /^3\.[7-8]/
+default_package_url = if rabbitmq_37? || rabbitmq_38?
                         # 3.7.0 and later
                         "https://dl.bintray.com/rabbitmq/all/rabbitmq-server/#{version}/"
                       else

@@ -15,7 +15,7 @@ describe command('HOSTNAME=$(hostname) rabbitmqctl status') do
   its(:exit_status) { should eq 0 }
 end
 
-describe command('HOSTNAME=$(hostname) rabbitmq-diagnostics ping') do
+describe command('HOSTNAME=$(hostname) rabbitmqctl status') do
   its(:exit_status) { should eq 0 }
 end
 
@@ -35,10 +35,11 @@ describe file('/etc/rabbitmq/rabbitmq-env.conf') do
   its('owner') { should eq 'root' }
   its('group') { should eq 'root' }
 
-  its('content') { should match(/CONFIG_FILE=\/etc\/rabbitmq\/rabbitmq\.config/) }
+  its('content') { should match(/CONFIG_FILE=\/etc\/rabbitmq\/rabbitmq$/) }
 end
 
-describe file('/etc/rabbitmq/rabbitmq.config') do
+# 3.6.x does not support .config in config file name.
+describe file('/etc/rabbitmq/rabbitmq') do
   it { should be_file }
   its('owner') { should eq 'root' }
   its('group') { should eq 'root' }
