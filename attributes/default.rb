@@ -211,3 +211,24 @@ default['rabbitmq']['disabled_policies'] = []
 # conf
 default['rabbitmq']['conf'] = {}
 default['rabbitmq']['additional_rabbit_configs'] = {}
+
+#
+# Erlang packages
+#
+
+# if setting to a specific version, apt repository components
+# will have to be updated
+default['rabbitmq']['erlang']['version'] = nil
+
+# apt
+default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.bintray.com/rabbitmq-erlang/debian"
+default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
+default['rabbitmq']['erlang']['apt']['components'] = ["erlang"]
+default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
+
+# yum
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
+default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
+default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
+default['rabbitmq']['erlang']['yum']['enabled'] = true
