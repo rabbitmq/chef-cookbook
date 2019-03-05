@@ -15,10 +15,6 @@ describe command('HOSTNAME=$(hostname) rabbitmqctl status') do
   its(:exit_status) { should eq 0 }
 end
 
-describe command('HOSTNAME=$(hostname) rabbitmqctl status') do
-  its(:exit_status) { should eq 0 }
-end
-
 describe command('HOSTNAME=$(hostname) rabbitmq-plugins list') do
   its(:exit_status) { should eq 0 }
 end
