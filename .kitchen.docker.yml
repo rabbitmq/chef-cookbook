@@ -56,23 +56,43 @@ suites:
   - name: default-deb
     run_list:
       - recipe[erlang::default]
-      - recipe[rabbitmq::default]
+      - recipe[rabbitmq::plugin_management]
     attributes:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2-1"
+          version: "1:21.2.6-1"
       rabbitmq:
         version: "3.7.12"
     verifier:
       inspec_tests:
         - test/smoke/default
-    excludes: ["centos-6.9", "centos-7.4"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
+
+  - name: system-limits-deb
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::systemd_limits]
+      - recipe[rabbitmq::plugin_management]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2.6-1"
+      rabbitmq:
+        version: "3.7.12"
+        systemd:
+          limits:
+            NOFILE: 54000
+    verifier:
+      inspec_tests:
+        - test/smoke/limits
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
 
   - name: default-rpm
     run_list:
       - recipe[erlang::default]
-      - recipe[rabbitmq::default]
+      - recipe[rabbitmq::plugin_management]
     attributes:
       erlang:
         install_method: "esl"
@@ -80,11 +100,13 @@ suites:
           version: "21.2-1"
       rabbitmq:
         version: "3.7.12"
-
+        systemd:
+          limits:
+            NOFILE: 54000
     verifier:
       inspec_tests:
-        - test/smoke/default
-    excludes: ["ubuntu-16.04", "ubuntu-18.04", "debian-9"]
+        - test/smoke/limits
+    includes: ["centos-7.4"]
 
   - name: lwrps
     run_list:
