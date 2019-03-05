@@ -14,10 +14,13 @@ default['rabbitmq']['deb_package_url'] = nil
 default['rabbitmq']['rpm_package'] = nil
 default['rabbitmq']['rpm_package_url'] = nil
 
-# RabbitMQ 3.6.8+ non-distro versions requires a modern Erlang which is neither available in
-# older distros via packages nor EPEL. rhel < 7, debian < 8
+# Set to true when using recipe[rabbitmq::erlang_package]
+default['rabbitmq']['erlang']['enabled'] = false
+
+# On older distributions use ESL packages unless node['rabbitmq']['erlang']['enabled']
+# suggests that the intent is to use recipe[rabbitmq::erlang_package]
 #
-if !node['rabbitmq']['use_distro_version'] &&
+if !node['rabbitmq']['use_distro_version'] && !node['rabbitmq']['erlang']['enabled'] &&
    (node['platform'] == 'debian' && node['platform_version'].to_i < 8 ||
     node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7)
   default['erlang']['install_method'] = 'esl'
@@ -25,6 +28,9 @@ end
 
 default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-R16B03-1.noarch.rpm?raw=true'
 default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/'
+
+default['rabbitmq']['socat_package'] = 'socat-1.7.2.3-1.el6.x86_64.rpm'
+default['rabbitmq']['socat_package_url'] = 'https://kojipkgs.fedoraproject.org//packages/socat/1.7.2.3/1.el6/x86_64/'
 
 # being nil, the rabbitmq defaults will be used
 default['rabbitmq']['nodename'] = nil
@@ -226,12 +232,16 @@ default['rabbitmq']['additional_rabbit_configs'] = {}
 # if setting to a specific version, apt repository components
 # will have to be updated
 default['rabbitmq']['erlang']['version'] = nil
+default['rabbitmq']['erlang']['hipe'] = false
+default['rabbitmq']['erlang']['retry_delay'] = 10
 
 # apt
 default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.bintray.com/rabbitmq-erlang/debian"
 default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
 default['rabbitmq']['erlang']['apt']['components'] = ["erlang"]
 default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
+
+default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 
 # yum
 default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'

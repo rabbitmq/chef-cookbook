@@ -227,7 +227,6 @@ suites:
 
   - name: default-force-yes
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
@@ -255,7 +254,6 @@ suites:
 
   - name: default-force-yes-false
     run_list:
-      - recipe[apt]
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
     attributes:
@@ -273,3 +271,111 @@ suites:
       inspec_tests:
         - test/smoke/default
     includes: ["debian-9"]
+
+  #
+  # Team RabbitMQ Erlang packages
+  #
+
+  # Latest Erlang package, Debian, HiPE enabled
+  - name: rabbitmq-erlang-latest-deb
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      # relies on node.rabbitmq.erlang.version default
+      # which is nil/"install latest"
+      rabbitmq:
+        erlang:
+          enabled: true
+          hipe: true
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/latest_deb
+    includes: ["debian-9", "ubuntu-18.04"]
+
+  # Erlang package, Debian, version pinning
+  - name: rabbitmq-erlang-pinned-deb
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      rabbitmq:
+        erlang:
+          enabled: true
+          version: "1:21.2.5-1"
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/pinned_deb
+    includes: ["ubuntu-18.04"]
+
+  # Latest Erlang package, RPM
+  - name: rabbitmq-erlang-latest-rpm-el7
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      # relies on node.rabbitmq.erlang.version default
+      # which is nil/"install latest"
+      rabbitmq:
+        erlang:
+          enabled: true
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/latest_rpm
+    includes: ["fedora-latest", "centos-7.4"]
+
+  # Erlang package, RPM, version pinning
+  - name: rabbitmq-erlang-pinned-rpm-el7
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      rabbitmq:
+        erlang:
+          enabled: true
+          version: "21.2.5"
+          yum:
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/pinned_rpm
+    includes: ["fedora-latest", "centos-7.4"]
+
+  # Latest Erlang package, RPM, CentOS 6 repo
+  - name: rabbitmq-erlang-latest-rpm-el6
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      rabbitmq:
+        erlang:
+          enabled: true
+          yum:
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/latest_rpm
+    includes: ["centos-6.9"]
+
+  # Erlang package, RPM, version pinning, CentOS 6 repo
+  - name: rabbitmq-erlang-pinned-rpm-el6
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      rabbitmq:
+        erlang:
+          enabled: true
+          version: "21.2.5"
+          yum:
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
+        version: "3.7.12"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/pinned_rpm
+    includes: ["centos-6.9"]

@@ -21,7 +21,14 @@
 # limitations under the License.
 #
 
+node.default['erlang']['install_method'] = nil
 node.override['erlang']['install_method'] = nil
+
+# yum-erlang_solutions assumes that if it is loaded, you
+node.default['yum']['erlang_solutions']['enabled'] = false
+node.override['yum']['erlang_solutions']['enabled'] = false
+
+erlang_version = node['rabbitmq']['erlang']['version']
 
 case node['platform_family']
 when 'debian'
@@ -35,28 +42,61 @@ when 'debian'
     action :add
   end
 
-  apt_preference 'rabbitmq_erlang' do
-    package_name 'erlang-dev'
-    pin "version #{node['rabbitmq']['erlang']['version']}"
-    pin_priority 700
+  base_pkg = if node['rabbitmq']['erlang']['hipe']
+    "erlang-base-hipe"
+  else
+    "erlang-base"
+  end
+  apt_package(base_pkg) do
+    options node['rabbitmq']['erlang']['apt']['install_options']
+    version erlang_version unless erlang_version.nil?
+    retries 3
+    retry_delay node['rabbitmq']['erlang']['retry_delay'] unless node['rabbitmq']['erlang']['retry_delay'].nil?
+  end
+
+  apt_preference "rabbitmq-#{base_pkg}" do
+    package_name base_pkg
+    pin "version #{erlang_version}"
+    pin_priority 900
     action :add
-    not_if { node['rabbitmq']['erlang']['version'].nil? }
+    not_if { erlang_version.nil? }
   end
 
-  package 'erlang-dev' do
-    version "1:#{node['rabbitmq']['erlang']['version']}-1" if node['rabbitmq']['erlang']['version']
-  end
+  to_install = %w(erlang-asn1 erlang-crypto erlang-public-key erlang-ssl erlang-syntax-tools
+                  erlang-mnesia erlang-runtime-tools erlang-snmp erlang-os-mon erlang-parsetools
+                  erlang-inets erlang-tools erlang-eldap erlang-xmerl
+                  erlang-dev erlang-edoc erlang-eunit erlang-erl-docgen erlang-src)
 
-  %w(erlang-eldap erlang-inets erlang-mnesia erlang-os-mon erlang-parsetools erlang-public-key
-     erlang-runtime-tools erlang-ssl erlang-tools erlang-xmerl).each do |p|
-    package(p) do
-      version "1:#{node['rabbitmq']['erlang']['version']}-1" if node['rabbitmq']['erlang']['version']
+  to_install.each do |p|
+    apt_preference "rabbitmq-#{p}" do
+      package_name p
+      pin "version #{erlang_version}"
+      pin_priority 900
+      action :add
+      not_if { erlang_version.nil? }
+    end
+
+    # Note: apt_resource can install multiple packages at once but not of a specific version.
+    # This may be a bug in that resource. Instead of relying on pinning to happen first, install
+    # packages one by one: slower but avoids implicit behavior/execution order dependency. MK.
+    apt_package(p) do
+      options node['rabbitmq']['erlang']['apt']['install_options']
+      version erlang_version unless erlang_version.nil?
+
+      retries 3
+      retry_delay node['rabbitmq']['erlang']['retry_delay'] unless node['rabbitmq']['erlang']['retry_delay'].nil?
     end
   end
-when 'rhel'
+when 'rhel', 'fedora'
   if node['platform_version'].to_i <= 5
     Chef::Log.fatal('RabbitMQ package repositories are not available for EL5')
     raise
+  end
+
+  execute 'yum update' do
+    command 'yum update -y'
+    # triggered by a notification
+    action :nothing
   end
 
   yum_repository 'rabbitmq_erlang_repo' do
@@ -75,8 +115,6 @@ when 'rhel'
     proxy_username node['rabbitmq']['erlang']['yum']['proxy_username'] unless node['rabbitmq']['erlang']['yum']['proxy_username'].nil?
     proxy_password node['rabbitmq']['erlang']['yum']['proxy_password'] unless node['rabbitmq']['erlang']['yum']['proxy_password'].nil?
 
-
-
     sslcacert node['rabbitmq']['erlang']['yum']['sslcacert'] unless node['rabbitmq']['erlang']['yum']['sslcacert'].nil?
     sslclientcert node['rabbitmq']['erlang']['yum']['sslclientcert'] unless node['rabbitmq']['erlang']['yum']['sslclientcert'].nil?
     sslclientkey node['rabbitmq']['erlang']['yum']['sslclientkey'] unless node['rabbitmq']['erlang']['yum']['sslclientkey'].nil?
@@ -85,9 +123,14 @@ when 'rhel'
     timeout node['rabbitmq']['erlang']['yum']['timeout'] unless node['rabbitmq']['erlang']['yum']['timeout'].nil?
 
     action :create
+
+    notifies :run, 'execute[yum update]', :immediately
   end
 
   package 'erlang' do
-    version node['rabbitmq']['erlang']['version'] if node['rabbitmq']['erlang']['version']
+    version erlang_version if erlang_version
+    options %w(-y)
+    retries 3
+    retry_delay node['rabbitmq']['erlang']['retry_delay'] unless node['rabbitmq']['erlang']['retry_delay'].nil?
   end
 end

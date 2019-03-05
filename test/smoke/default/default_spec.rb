@@ -23,6 +23,10 @@ describe command('HOSTNAME=$(hostname) rabbitmq-plugins list') do
   its(:exit_status) { should eq 0 }
 end
 
+describe port(5672) do
+  it { should be_listening }
+end
+
 describe file('/var/lib/rabbitmq/mnesia') do
   it { should be_directory }
   its('mode') { should cmp '0775' }

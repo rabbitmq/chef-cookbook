@@ -97,15 +97,18 @@ rake integration:vagrant
 To run Kitchen tests in Docker, use
 
 ```
-KICHEN_YAML=".kitchen.docker.yml" kitchen test default-deb-ubuntu-1804
+KICHEN_YAML=".kitchen.dokken.yml" kitchen test default-deb --concurrency=2
 ```
 
-To run all suites (involves multiple operating systems: Ubuntu, Debian, CentOS 7, CentOS 6)
+To run all suites (this can take up to 90 minutes depending on the driver,
+hardware and concurrency rate):
 
 ```
-export KI_DRIVER=docker
+export KI_DRIVER=dokken
 bundle exec kitchen test
 ```
+This will run tels of suites on multiple operating systems (Debian, Ubuntu, CentOS 7, CentOS 6,
+and so on).
 
 
 ### Integration Testing using IaaS Providers
