@@ -35,7 +35,7 @@ describe file('/etc/rabbitmq/rabbitmq-env.conf') do
   its('owner') { should eq 'root' }
   its('group') { should eq 'root' }
 
-  its('content') { should match(/CONFIG_FILE=\/etc\/rabbitmq\/rabbitmq$/) }
+  its('content') { should match(%r{CONFIG_FILE=/etc/rabbitmq/rabbitmq$}) }
 end
 
 # 3.6.x does not support .config in config file name.
