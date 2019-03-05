@@ -76,7 +76,7 @@ suites:
   - name: system-limits-deb
     run_list:
       - recipe[erlang::default]
-      - recipe[rabbitmq::system_limits]
+      - recipe[rabbitmq::systemd_limits]
       - recipe[rabbitmq::plugin_management]
     attributes:
       erlang:
@@ -85,9 +85,12 @@ suites:
           version: "1:21.2.6-1"
       rabbitmq:
         version: "3.7.12"
+        systemd:
+          limits:
+            NOFILE: 54000
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/smoke/limits
     includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
 
   - name: 36x-deb
@@ -141,7 +144,7 @@ suites:
   - name: system-limits-rpm
     run_list:
       - recipe[erlang::default]
-      - recipe[rabbitmq::system_limits]
+      - recipe[rabbitmq::systemd_limits]
       - recipe[rabbitmq::plugin_management]
     attributes:
       erlang:
@@ -150,10 +153,12 @@ suites:
           version: "21.2-1"
       rabbitmq:
         version: "3.7.12"
-
+        systemd:
+          limits:
+            NOFILE: 54000
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/smoke/limits
     includes: ["centos-7.4"]
 
   - name: lwrps
