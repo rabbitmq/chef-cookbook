@@ -86,9 +86,12 @@ suites:
           version: "1:21.2.6-1"
       rabbitmq:
         version: "3.7.12"
+        systemd:
+          limits:
+            NOFILE: 54000
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/smoke/limits
     includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
 
 
@@ -122,10 +125,13 @@ suites:
           version: "21.2.6-1"
       rabbitmq:
         version: "3.7.12"
+        systemd:
+          limits:
+            NOFILE: 54000
     verifier:
       inspec_tests:
-        - test/smoke/default
-    includes: ["centos-7.4", "centos-6.9"]
+        - test/smoke/limits
+    includes: ["centos-7.4"]
 
   - name: lwrps
     run_list:
