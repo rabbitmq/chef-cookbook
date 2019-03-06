@@ -42,12 +42,14 @@ default_package_url = if rabbitmq_37? || rabbitmq_38?
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
 case node['platform_family']
-when 'rhel', 'fedora'
+when 'rhel'
   default_rpm_package_name = if node['platform_version'].to_i > 6
                                "rabbitmq-server-#{version}-1.el7.noarch.rpm"
                              else
                                "rabbitmq-server-#{version}-1.el6.noarch.rpm"
                              end
+ when 'fedora'
+   default_rpm_package_name = "rabbitmq-server-#{version}-1.el7.noarch.rpm"
 when 'suse'
   default_rpm_package_name = "rabbitmq-server-#{version}-1.suse.noarch.rpm"
 end
