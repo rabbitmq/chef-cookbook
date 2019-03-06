@@ -244,7 +244,13 @@ default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
 default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 
 # yum
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+default['rabbitmq']['erlang']['yum']['baseurl'] = case node['platform_family']
+                                                  when 'rhel'
+                                                    "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/#{node['platform_version'].to_i}"
+                                                  else
+                                                    # Fedora and so on
+                                                    'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+                                                  end
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
