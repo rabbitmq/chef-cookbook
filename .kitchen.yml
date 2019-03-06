@@ -34,8 +34,6 @@ suites:
         install_method: "esl"
         esl:
           version: "1:21.2.6-1"
-      rabbitmq:
-        version: "3.7.12"
     verifier:
       inspec_tests:
         - test/smoke/default
@@ -52,7 +50,6 @@ suites:
         esl:
           version: "1:21.2.6-1"
       rabbitmq:
-        version: "3.7.12"
         systemd:
           limits:
             NOFILE: 54000
