@@ -5,19 +5,47 @@
 
 This is a cookbook for managing RabbitMQ with Chef.
 
-
 ## Supported Chef Versions
 
 This cookbook targets Chef 12.1 and later.
 
 
+## Supported Distributions
+
+The release was tested with recent RabbitMQ releases on
+
+ * CentOS 7
+ * Ubuntu 18.04
+ * Ubuntu 16.04
+ * Debian 9
+ * Fedora 29 
+
+Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
+
+### Newer Versions
+
+Newer Debian, Ubuntu and CentOS 7.x versions should work.
+
+### Older Versions
+
+CentOS 6.x, Ubuntu 14.04 and Debian 8.0 might
+work just fine but their support has been discontinued. Some of those distributions
+will go out of vendor support in 2019.
+
+
 ## Dependencies
 
 This cookbook depends on the [Erlang cookbook](https://supermarket.chef.io/cookbooks/erlang)
-and assumes that the user configures that cookbook's attributes to provision a [supported Erlang/OTP version](http://www.rabbitmq.com/which-erlang.html)
-for running RabbitMQ.
+and assumes that the user can configure it to provision a [supported Erlang/OTP version](http://www.rabbitmq.com/which-erlang.html).
 
-Examples of how to do that are provided below.
+Two more recipes are provided by this cookbook:`rabbitmq::erlang_package` and `rabbitmq::esl_erlang_package`.
+The latter is an alias to the `erlang::esl` recipe in the Erlang
+cookbook.
+
+The former uses [Debian Erlang packages](https://github.com/rabbitmq/erlang-debian-package/) and [zero dependency Erlang RPM package](https://github.com/rabbitmq/erlang-rpm) produced and published by Team RabbitMQ.
+Those packages provide the latest patch releases of Erlang/OTP.
+
+Both options are covered below.
 
 
 ## Supported RabbitMQ Versions
@@ -26,19 +54,89 @@ Examples of how to do that are provided below.
 if a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) is also provisioned.
 
 
-### 3.7.x
+## Provisioning RabbitMQ 3.7.x
 
-#### Ensure Your Cookbook Version is Compatible
+### Ensure Your Cookbook Version is Compatible
 
-To provision RabbitMQ 3.7.x, you must use version `5.5.0` of this cookbook or later.
-Older versions will use incorrect package download URLs.
+To provision RabbitMQ 3.7.x, you must use version `5.7.0` of this cookbook or later.
 
-#### Provision Erlang/OTP 19.3 or Later
+### Provision Erlang/OTP 20.3 or Later
 
-Before provisioning a 3.7.x release, please beware that
-the [minimum required Erlang version](http://www.rabbitmq.com/which-erlang.html) for it [is 19.3](https://github.com/rabbitmq/rabbitmq-server/releases/tag/v3.7.0).
+Before provisioning a 3.7.x release, please learn about
+the [minimum required Erlang version](https://www.rabbitmq.com/which-erlang.html).
+
 Most distributions provide older versions, so Erlang must be provisioned either
-from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/) or [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm).
+using [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm),
+[Debian Erlang packages](https://github.com/rabbitmq/erlang-debian-package/),
+or from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/)
+
+#### Installing Erlang Using Packages by Team RabbitMQ
+
+`rabbitmq::erlang_package` is a recipe that provisions latest Erlang packages from team RabbitMQ.
+The packages support
+
+ * Debian Jessie and Stretch
+ * Ubuntu 16.04 and 18.04
+ * CentOS 7
+ * CentOS 6
+ * Fedora 25 or later
+
+The packages are **cannot be installed alongside with other Erlang packages**, for example, those
+from standard Debian repositories or Erlang Solutions.
+
+To make sure that the Erlang cookbook is not used by `rabbitmq::default`, `rabbitmq::cluster`,
+and other recipes, set `node['rabbitmq']['erlang']['enabled']` to `true`:
+
+``` ruby
+node['rabbitmq']['erlang']['enabled'] = true
+```
+
+By default `rabbitmq::erlang_package` will install the latest Erlang version available.
+To override package version, use `node['rabbitmq']['erlang']['version']`:
+
+``` ruby
+# Debian
+node['rabbitmq']['erlang']['version'] = '1:21.2.6-1'
+
+# RPM
+node['rabbitmq']['erlang']['version'] = '21.2.6'
+```
+
+On Ubuntu and Debian the distribution will be picked from node attributes.
+It is possible to override the component used (see [Ubuntu and Debian installation guide](https://www.rabbitmq.com/install-debian.html) to learn more):
+
+``` ruby
+# provisions Erlang 20.3.x
+node['rabbitmq']['erlang']['apt']['components'] = ["erlang-20.x"]
+```
+
+Most of the time there is no need to override other attributes. Below is a list of defaults
+used on Ubuntu and Debian:
+
+``` ruby
+# RabbitMQ Erlang packages
+default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.bintray.com/rabbitmq-erlang/debian"
+default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
+default['rabbitmq']['erlang']['apt']['components'] = ["erlang"]
+default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
+
+default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
+```
+
+On CentOS 7 and 6, base Yum repository URL will be picked based on distribution versions.
+On Fedora the CentOS 7 package will be used. Erlang package version is set the same way
+as for Debian (see above).
+
+Below are the defaults used by the Yum repository:
+
+``` ruby
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
+default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
+default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
+```
+
+#### Installing Erlang with the Erlang Cookbook
 
 The Erlang cookbook will provision packages from Erlang Solutions if `node['erlang']['install_method']` is set to `esl`:
 
@@ -48,27 +146,27 @@ The Erlang cookbook will provision packages from Erlang Solutions if `node['erla
 node['erlang']['install_method'] = "esl"
 ```
 
-to provision a specific version, e.g. 20.2.2:
+to provision a specific version, e.g. 20.3.8.20:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # Ubuntu and Debian
 # note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:20.2.2"
+node['erlang']['esl']['version'] = "1:20.3.8.20"
 ```
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "20.2.2-1"
+node['erlang']['esl']['version'] = "20.3.8.20-1"
 ```
 
-#### Set RabbitMQ Version
+### Seting RabbitMQ Version
 
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.7.3"
+node['rabbitmq']['version'] = "3.7.12"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['deb_package_url']` overridden
@@ -78,11 +176,79 @@ location customization below.
 3.7.x releases will be downloaded [from Bintray](https://bintray.com/rabbitmq/all/) by default.
 
 
-### 3.6.16
+## Provisioning RabbitMQ 3.6.16
 
-#### Provision Erlang/OTP 19.3 or Later
+### Provision Erlang/OTP 19.3 or Later
 
-RabbitMQ 3.6.16 [requires Erlang 19.3.6.5 or laterr](http://www.rabbitmq.com/which-erlang.html).
+RabbitMQ 3.6.16 [requires Erlang 19.3.6.5 or later](http://www.rabbitmq.com/which-erlang.html).
+
+#### Installing Erlang Using Packages by Team RabbitMQ
+
+`rabbitmq::erlang_package` is a recipe that provisions latest Erlang packages from team RabbitMQ.
+The packages support
+
+ * Debian Jessie and Stretch
+ * Ubuntu 16.04 and 18.04
+ * CentOS 7
+ * CentOS 6
+ * Fedora 25 or later
+
+The packages are **cannot be installed alongside with other Erlang packages**, for example, those
+from standard Debian repositories or Erlang Solutions.
+
+To make sure that the Erlang cookbook is not used by `rabbitmq::default`, `rabbitmq::cluster`,
+and other recipes, set `node['rabbitmq']['erlang']['enabled']` to `true`:
+
+``` ruby
+node['rabbitmq']['erlang']['enabled'] = true
+```
+
+By default `rabbitmq::erlang_package` will install the latest Erlang version available.
+To override package version, use `node['rabbitmq']['erlang']['version']`:
+
+``` ruby
+# Debian
+node['rabbitmq']['erlang']['version'] = '1:20.3.8.20-1'
+
+# RPM
+node['rabbitmq']['erlang']['version'] = '20.3.8.20'
+```
+
+On Ubuntu and Debian the distribution will be picked from node attributes.
+It is possible to override the component used (see [Ubuntu and Debian installation guide](https://www.rabbitmq.com/install-debian.html) to learn more):
+
+``` ruby
+# provisions Erlang 20.3.x
+node['rabbitmq']['erlang']['apt']['components'] = ["erlang-20.x"]
+```
+
+Most of the time there is no need to override other attributes. Below is a list of defaults
+used on Ubuntu and Debian:
+
+``` ruby
+# RabbitMQ Erlang packages
+default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.bintray.com/rabbitmq-erlang/debian"
+default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
+default['rabbitmq']['erlang']['apt']['components'] = ["erlang"]
+default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
+
+default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
+```
+
+On CentOS 7 and 6, base Yum repository URL will be picked based on distribution versions.
+On Fedora the CentOS 7 package will be used. Erlang package version is set the same way
+as for Debian (see above).
+
+Below are the defaults used by the Yum repository:
+
+``` ruby
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/20/el/7'
+default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
+default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
+default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
+```
+
+#### Installing Erlang with the Erlang Cookbook
 
 Most distributions provide older versions, so Erlang must be provisioned either
 from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/) or [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm).
@@ -119,29 +285,6 @@ node['rabbitmq']['version'] = "3.6.16"
 ```
 
 RabbitMQ 3.6.16 will be downloaded [from GitHub](https://github.com/rabbitmq/rabbitmq-server/releases/) by default.
-
-
-
-## Supported Distributions
-
-The release was tested with recent RabbitMQ releases on
-
-- CentOS 7.x
-- Ubuntu 18.04
-- Ubuntu 16.04
-- Debian 9.0
-
-Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
-
-### Newer Versions
-
-Newer Debian, Ubuntu and CentOS 7.x versions should work.
-
-### Older Versions
-
-CentOS 6.x, Ubuntu 14.04 and Debian 8.0 might
-work just fine but their support has been discontinued. Some of those distributions
-will go out of vendor support in 2019.
 
 
 ## Recipes
