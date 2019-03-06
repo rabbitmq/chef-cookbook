@@ -1,5 +1,12 @@
 # Change Log
 
+## [v5.7.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.1) (unreleased)
+
+### Enhancements
+
+ * Default provisioned RabbitMQ version is now `3.7.12`.
+
+
 ## [v5.7.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.0) (2019-03-06)
 
 ### Enhancements
@@ -9,8 +16,6 @@
    cookbook. The former uses [Debian Erlang packages](https://github.com/rabbitmq/erlang-debian-package/) and [zero dependency Erlang RPM package](https://github.com/rabbitmq/erlang-rpm)
    produced by Team RabbitMQ.
    Those packages provide the latest patch releases of Erlang/OTP.
-
- * Default provisioned RabbitMQ version is now `3.7.12`.
 
  * Major integration test suite improvements
 
