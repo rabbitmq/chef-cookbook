@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 # Version to install
-default['rabbitmq']['version'] = '3.6.16'
+default['rabbitmq']['version'] = '3.7.12'
 
 default['rabbitmq']['package_source'] = "github"
 
+# When true, distribution-provided package will be used.
+# This may be useful e.g. on old distributions.
+default['rabbitmq']['use_distro_version'] = false
 # Allow the distro version to be optionally pinned
 default['rabbitmq']['pin_distro_version'] = false
 
@@ -13,6 +16,21 @@ default['rabbitmq']['deb_package_url'] = nil
 
 default['rabbitmq']['rpm_package'] = nil
 default['rabbitmq']['rpm_package_url'] = nil
+
+default['rabbitmq']['socat_package'] = 'socat-1.7.2.3-1.el6.x86_64.rpm'
+default['rabbitmq']['socat_package_url'] = 'https://kojipkgs.fedoraproject.org//packages/socat/1.7.2.3/1.el6/x86_64/'
+
+# Set to true when using recipe[rabbitmq::erlang_package]
+default['rabbitmq']['erlang']['enabled'] = false
+
+# On older distributions use ESL packages unless node['rabbitmq']['erlang']['enabled']
+# suggests that the intent is to use recipe[rabbitmq::erlang_package]
+#
+if !node['rabbitmq']['use_distro_version'] && !node['rabbitmq']['erlang']['enabled'] &&
+   (node['platform'] == 'debian' && node['platform_version'].to_i < 8 ||
+    node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7)
+  default['erlang']['install_method'] = 'esl'
+end
 
 default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-20.2.2-1.noarch.rpm'
 default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/raw/master/rpmbuild/RPMS/noarch/'
@@ -219,6 +237,8 @@ default['rabbitmq']['additional_rabbit_configs'] = {}
 # if setting to a specific version, apt repository components
 # will have to be updated
 default['rabbitmq']['erlang']['version'] = nil
+default['rabbitmq']['erlang']['hipe'] = false
+default['rabbitmq']['erlang']['retry_delay'] = 10
 
 # apt
 default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.bintray.com/rabbitmq-erlang/debian"
@@ -226,8 +246,16 @@ default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
 default['rabbitmq']['erlang']['apt']['components'] = ["erlang"]
 default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
 
+default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
+
 # yum
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+default['rabbitmq']['erlang']['yum']['baseurl'] = case node['platform_family']
+                                                  when 'rhel'
+                                                    "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/#{node['platform_version'].to_i}"
+                                                  else
+                                                    # Fedora and so on
+                                                    'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+                                                  end
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false

@@ -24,7 +24,9 @@ class Chef::Resource
   include Opscode::RabbitMQ # rubocop:enable all
 end
 
-include_recipe 'erlang'
+if !node['rabbitmq']['erlang']['enabled']
+  include_recipe 'erlang'
+end
 
 version = node['rabbitmq']['version']
 
@@ -32,12 +34,14 @@ default_package_url = rabbitmq_package_download_base_url
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
 case node['platform_family']
-when 'rhel', 'fedora'
+when 'rhel'
   default_rpm_package_name = if node['platform_version'].to_i > 6
                                "rabbitmq-server-#{version}-1.el7.noarch.rpm"
                              else
                                "rabbitmq-server-#{version}-1.el6.noarch.rpm"
                              end
+ when 'fedora'
+   default_rpm_package_name = "rabbitmq-server-#{version}-1.el7.noarch.rpm"
 when 'suse'
   default_rpm_package_name = "rabbitmq-server-#{version}-1.suse.noarch.rpm"
 end
@@ -125,16 +129,13 @@ when 'debian'
     end
   end
 
-when 'rhel', 'fedora'
-
-  # logrotate is a package dependency of rabbitmq-server
+when 'fedora'
   package 'logrotate'
-
-  # socat is a package dependency of rabbitmq-server
   package 'socat'
 
   # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package just requires "esl-erlang" and provides "erlang".
   if node['erlang']['install_method'] == 'esl'
+    Chef::Log.info('Downloading a shim package for esl-erlang')
     remote_file "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm" do
       source "#{node['rabbitmq']['esl-erlang_package_url']}#{node['rabbitmq']['esl-erlang_package']}"
     end
@@ -148,12 +149,45 @@ when 'rhel', 'fedora'
   end
   rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
 
+when 'rhel'
+
+  package 'logrotate'
+  if node['platform_version'].to_i >= 7
+    package 'socat'
+  else
+    Chef::Log.info('Downloading socat installation on CentOS 6')
+    remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['socat_package']}" do
+      source "#{node['rabbitmq']['socat_package_url']}#{node['rabbitmq']['socat_package']}"
+    end
+    yum_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['socat_package']}"
+  end
+
+  # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package
+  # just requires "esl-erlang" and provides "erlang".
+  if node['erlang']['install_method'] == 'esl'
+    Chef::Log.info('Downloading a shim package for esl-erlang')
+    remote_file "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm" do
+      source "#{node['rabbitmq']['esl-erlang_package_url']}#{node['rabbitmq']['esl-erlang_package']}"
+    end
+    rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
+  end
+
+  if node['rabbitmq']['use_distro_version']
+    package 'rabbitmq-server' do
+      action :install
+      version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
+    end
+  else
+    remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+      source "#{rpm_package_url}#{rpm_package_name}"
+      action :create_if_missing
+    end
+    rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+  end
+
 when 'suse'
 
-  # logrotate is a package dependency of rabbitmq-server
   package 'logrotate'
-
-  # socat is a package dependency of rabbitmq-server
   package 'socat'
 
   # rabbitmq-server-plugins needs to be first so they both get installed

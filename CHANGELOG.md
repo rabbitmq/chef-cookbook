@@ -1,5 +1,60 @@
 # Change Log
 
+## [v5.7.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.1) (unreleased)
+
+### Enhancements
+
+ * Default provisioned RabbitMQ version is now `3.7.12`.
+
+
+## [v5.7.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.0) (2019-03-06)
+
+### Enhancements
+
+ * `rabbitmq::erlang_package` and `rabbitmq::esl_erlang_package` are new recipes that
+   provision Erlang packages. The latter is an alias to the `erlang::esl` recipe in the Erlang
+   cookbook. The former uses [Debian Erlang packages](https://github.com/rabbitmq/erlang-debian-package/) and [zero dependency Erlang RPM package](https://github.com/rabbitmq/erlang-rpm)
+   produced by Team RabbitMQ.
+   Those packages provide the latest patch releases of Erlang/OTP.
+
+ * Major integration test suite improvements
+
+### Bug Fixes
+
+ * `rabbitmq::cluster` referenced an unitialized variable
+ * `socat` package was not installed on CentOS 6
+
+### Diff
+
+[Full Diff](https://github.com/rabbitmq/chef-cookbook/compare/v5.6.3...v5.7.0)
+
+
+## [v5.6.3](https://github.com/rabbitmq/chef-cookbook/tree/v5.6.3) (2019-03-04)
+
+### Enhancements
+
+ * Generated `CONFIG_FILE` value will now use `node['rabbitmq']['config']` value as is
+   if no extension is provided. Note that RabbitMQ `3.6.x` doesn't support config file
+   paths with an extension, so an exception is made for those versions.
+
+   Contributed by James Morelli.
+
+   GitHub issue: [\#505](https://github.com/rabbitmq/chef-cookbook/pull/505)
+
+### Bug Fixes
+
+ * Plugin enablement detection did not work with latest RabbitMQ `3.7.x` releases.
+ * Socket options now force `binary` mode.
+
+   Contributed by Kevin Bonner.
+
+   GitHub issue: [\#492](https://github.com/rabbitmq/chef-cookbook/issues/488)
+
+### Diff
+
+[Full Diff](https://github.com/rabbitmq/chef-cookbook/compare/v5.6.1...v5.6.3)
+
+
 ## [v5.6.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.6.1) (2018-03-01)
 
 [Full Diff](https://github.com/rabbitmq/chef-cookbook/compare/v5.6.0...v5.6.1)

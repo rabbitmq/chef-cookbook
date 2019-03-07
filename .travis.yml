@@ -18,11 +18,10 @@ env:
   matrix:
   - INSTANCE=default-deb-ubuntu-1804
   - INSTANCE=default-rpm-centos-74
+  - INSTANCE=system-limits-deb-ubuntu-1804
   - INSTANCE=lwrps-ubuntu-1604
   - INSTANCE=cluster-deb-ubuntu-1804
-  - INSTANCE=default-force-yes-ubuntu-1604
-  - INSTANCE=system-limits-deb
-  - INSTANCE=system-limits-rpm
+  - INSTANCE=default-force-yes-ubuntu-1804
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
