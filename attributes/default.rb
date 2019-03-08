@@ -26,9 +26,7 @@ default['rabbitmq']['erlang']['enabled'] = false
 # On older distributions use ESL packages unless node['rabbitmq']['erlang']['enabled']
 # suggests that the intent is to use recipe[rabbitmq::erlang_package]
 #
-if !node['rabbitmq']['use_distro_version'] && !node['rabbitmq']['erlang']['enabled'] &&
-   (node['platform'] == 'debian' && node['platform_version'].to_i < 8 ||
-    node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7)
+if !node['rabbitmq']['erlang']['enabled']
   default['erlang']['install_method'] = 'esl'
 end
 

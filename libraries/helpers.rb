@@ -26,7 +26,7 @@ def rabbitmq_version
 end
 
 def rabbitmq_package_download_base_url
-  case node['rabbitmq']['package_source']
+  case node['rabbitmq']['package_source'].to_s.downcase
   when :github, /github/i
     "https://github.com/rabbitmq/rabbitmq-server/releases/download/v#{rabbitmq_version}/"
   when :bintray, /bintray/i
