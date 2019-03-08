@@ -4,7 +4,7 @@
 
 ### Enhancements
 
- * Default provisioned RabbitMQ version is now `3.7.12`.
+ * Default provisioned RabbitMQ version is now `3.7.13`.
 
 
 ## [v5.7.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.0) (2019-03-06)

@@ -18,7 +18,7 @@ The release was tested with recent RabbitMQ releases on
  * Ubuntu 18.04
  * Ubuntu 16.04
  * Debian 9
- * Fedora 29 
+ * Fedora 29
 
 Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
 
@@ -166,7 +166,7 @@ node['erlang']['esl']['version'] = "20.3.8.20-1"
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.7.12"
+node['rabbitmq']['version'] = "3.7.13"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['deb_package_url']` overridden
