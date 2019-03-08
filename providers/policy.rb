@@ -26,8 +26,12 @@ include Opscode::RabbitMQ
 use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def policy_exists?(vhost, name)
-  cmd = 'rabbitmqctl list_policies'
-  cmd += " -q -p #{Shellwords.escape vhost}" unless vhost.nil?
+  cmd = if node['rabbitmq']['version'] >= '3.7.10'
+          'rabbitmqctl list_policies -s'
+        else
+          'rabbitmqctl list_policies -q'
+        end
+  cmd += " -p #{Shellwords.escape vhost}" unless vhost.nil?
   cmd += " |grep '#{name}\\b'"
 
   cmd = Mixlib::ShellOut.new(cmd, env: shell_environment)
@@ -41,8 +45,8 @@ def policy_exists?(vhost, name)
 end
 
 action :set do
-  cmd = 'rabbitmqctl set_policy'
-  cmd += " -q -p #{new_resource.vhost}" unless new_resource.vhost.nil?
+  cmd = 'rabbitmqctl -q set_policy'
+  cmd += " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
   cmd += " --apply-to #{new_resource.apply_to}" if new_resource.apply_to
   cmd += " #{new_resource.policy}"
   cmd += " \"#{new_resource.pattern}\""
@@ -61,11 +65,7 @@ action :set do
   end
 
   cmd += "}'"
-  if node['rabbitmq']['version'] >= '3.2.0'
-    cmd += " --priority #{new_resource.priority}" if new_resource.priority
-  else
-    cmd += " #{new_resource.priority}" if new_resource.priority # rubocop:disable all
-  end
+  cmd += " --priority #{new_resource.priority}" if new_resource.priority
 
   execute "set_policy #{new_resource.policy}" do
     command cmd
@@ -92,7 +92,8 @@ end
 
 action :list do
   execute 'list_policies' do
-    command 'rabbitmqctl list_policies'
+    cmd = 'rabbitmqctl list_parameters -q'
+    command cmd
     environment shell_environment
   end
 

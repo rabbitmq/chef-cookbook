@@ -26,9 +26,13 @@ include Opscode::RabbitMQ
 use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def parameter_exists?(vhost, name)
-  cmd = 'rabbitmqctl list_parameters'
-  cmd += " -q -p #{Shellwords.escape vhost}" unless vhost.nil?
-  cmd += " | grep '#{name}\\b'"
+  cmd = if node['rabbitmq']['version'] >= '3.7.10'
+          'rabbitmqctl list_parameters -s'
+        else
+          'rabbitmqctl list_parameters -q'
+        end
+  cmd += " -p #{Shellwords.escape vhost}" unless vhost.nil?
+  cmd += " |grep '#{name}\\b'"
 
   cmd = Mixlib::ShellOut.new(cmd, env: shell_environment)
   cmd.run_command
@@ -41,8 +45,8 @@ def parameter_exists?(vhost, name)
 end
 
 action :set do
-  cmd = 'rabbitmqctl set_parameter'
-  cmd += " -q -p #{new_resource.vhost}" unless new_resource.vhost.nil?
+  cmd = 'rabbitmqctl set_parameter -q'
+  cmd += " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
   cmd += " #{new_resource.component}"
   cmd += " #{new_resource.parameter}"
 
@@ -65,8 +69,8 @@ action :clear do
   if parameter_exists?(new_resource.vhost, new_resource.parameter)
     parameter = "#{new_resource.component} #{new_resource.parameter}"
 
-    cmd = "rabbitmqctl clear_parameter #{parameter}"
-    cmd << " -q -p #{new_resource.vhost}" unless new_resource.vhost.nil?
+    cmd = "rabbitmqctl clear_parameter #{parameter} -q"
+    cmd << " -p #{new_resource.vhost}" unless new_resource.vhost.nil?
     execute "clear_parameter #{parameter}" do
       command cmd
       environment shell_environment
@@ -79,7 +83,7 @@ end
 
 action :list do
   execute 'list_parameters' do
-    command 'rabbitmqctl list_parameters'
+    command 'rabbitmqctl list_parameters -q'
     environment shell_environment
   end
 

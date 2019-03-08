@@ -47,15 +47,13 @@ end
 # Get cluster status result
 def cluster_status
   # execute > rabbitmqctl cluster_status"
-  # To parse the result string, this function normalize the output string
-  # - Removing first line : it returns "Cluster status of node 'rabbit@rabbit1' ..."
-  # - Removing "... Done" : old version returns this
-  cmd = 'rabbitmqctl cluster_status -q'
+  # This removes an optional "... Done" linee that older version used to output
+  cmd = 'rabbitmqctl -q cluster_status'
   Chef::Log.debug("[rabbitmq_cluster] Executing #{cmd}")
   cmd = get_shellout(cmd)
   cmd.run_command
   cmd.error!
-  result = cmd.stdout.split(/\n/, 2).last.squeeze(' ').gsub(/\n */, '').gsub('...done.', '')
+  result = cmd.stdout.squeeze(' ').gsub(/\n */, '').gsub('...done.', '')
   Chef::Log.debug("[rabbitmq_cluster] rabbitmqctl cluster_status : #{result}")
   result
 end

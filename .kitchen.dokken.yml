@@ -153,6 +153,23 @@ suites:
         - test/smoke/lwrps
     includes: ["ubuntu-18.04"]
 
+  - name: 36x-lwrps
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq_test::lwrps]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:20.3.8.20-1"
+      rabbitmq:
+        version: "3.6.16"
+    verifier:
+      inspec_tests:
+        - test/smoke/36x
+        - test/smoke/36x_lwrps
+    includes: ["ubuntu-18.04"]
+
   - name: cluster-deb
     run_list:
       - recipe[erlang::default]
