@@ -38,7 +38,7 @@ end
 
 action :add do
   unless vhost_exists?(new_resource.vhost)
-    cmd = "rabbitmqctl add_vhost #{new_resource.vhost}"
+    cmd = "rabbitmqctl -q add_vhost #{new_resource.vhost}"
     execute cmd do
       Chef::Log.debug "rabbitmq_vhost_add: #{cmd}"
       Chef::Log.info "Adding RabbitMQ vhost '#{new_resource.vhost}'."
@@ -50,7 +50,7 @@ end
 
 action :delete do
   if vhost_exists?(new_resource.vhost)
-    cmd = "rabbitmqctl delete_vhost #{new_resource.vhost}"
+    cmd = "rabbitmqctl -q delete_vhost #{new_resource.vhost}"
     execute cmd do
       Chef::Log.debug "rabbitmq_vhost_delete: #{cmd}"
       Chef::Log.info "Deleting RabbitMQ vhost '#{new_resource.vhost}'."

@@ -57,10 +57,10 @@ end
 
 rabbitmq_plugin 'rabbitmq_federation'
 
-rabbitmq_vhost '/sensu'
+rabbitmq_vhost 'sensu'
 
 rabbitmq_parameter 'sensu-dc-1' do
-  vhost '/sensu'
+  vhost 'sensu'
   component 'federation-upstream'
   parameters 'uri' => 'amqp://dc-cluster-node'
 end
