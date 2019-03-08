@@ -237,7 +237,7 @@ default['rabbitmq']['erlang']['retry_delay'] = 10
 
 # apt
 default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.bintray.com/rabbitmq-erlang/debian"
-default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
+default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename'] rescue nil
 default['rabbitmq']['erlang']['apt']['components'] = ["erlang"]
 default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
 
