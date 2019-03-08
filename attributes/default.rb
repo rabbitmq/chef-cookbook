@@ -29,6 +29,7 @@ end
 default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-R16B03-1.noarch.rpm?raw=true'
 default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/blob/master/rpmbuild/RPMS/noarch/'
 
+# socat is not guaranteed to be available on CentOS 6
 default['rabbitmq']['socat_package'] = 'socat-1.7.2.3-1.el6.x86_64.rpm'
 default['rabbitmq']['socat_package_url'] = 'https://kojipkgs.fedoraproject.org//packages/socat/1.7.2.3/1.el6/x86_64/'
 
