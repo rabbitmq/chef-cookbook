@@ -28,7 +28,6 @@ def user_exists?(name)
         else
           "rabbitmqctl -q list_users |grep '^#{name}\\s'"
         end
-  cmd =
   cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
   cmd.run_command
   Chef::Log.debug "rabbitmq_user_exists?: #{cmd}"

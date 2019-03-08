@@ -17,7 +17,7 @@ describe file('/etc/systemd/system/rabbitmq-server.service.d/limits.conf') do
   its('owner') { should eq 'root' }
   its('group') { should eq 'root' }
 
-  its('content') { should match(%r{LimitNOFILE=54000}) }
+  its('content') { should match(/LimitNOFILE=54000/) }
 end
 
 describe file('/etc/rabbitmq/rabbitmq.config') do

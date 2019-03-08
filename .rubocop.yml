@@ -7,6 +7,15 @@ AsciiComments:
 Encoding:
   Enabled: false
 
+Layout/ElseAlignment:
+  Enabled: false
+
+Layout/EndAlignment:
+  Enabled: false
+
+Layout/IndentationWidth:
+  Enabled: false
+
 LineLength:
   Max: 200
 
@@ -21,6 +30,9 @@ Naming/FileName:
 
 Metrics/AbcSize:
   Max: 16
+
+Style/RegexpLiteral:
+  Enabled: false
 
 Style/IfUnlessModifier:
   Enabled: false

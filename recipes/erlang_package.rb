@@ -43,9 +43,9 @@ when 'debian'
   end
 
   base_pkg = if node['rabbitmq']['erlang']['hipe']
-    "erlang-base-hipe"
+    'erlang-base-hipe'
   else
-    "erlang-base"
+    'erlang-base'
   end
   apt_package(base_pkg) do
     options node['rabbitmq']['erlang']['apt']['install_options']
