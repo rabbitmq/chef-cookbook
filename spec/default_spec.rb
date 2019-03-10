@@ -106,9 +106,41 @@ describe 'rabbitmq::default' do
     expect(chef_run.node['rabbitmq']['use_distro_version']).to eq(false)
   end
 
-  it 'should install the erlang package' do
-    expect(chef_run).to install_package('erlang')
+
+  describe "when Erlang is provisioned via Team RabbitMQ's Erlang packages"  do
+    let(:runner) do
+      ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
+        node.override['rabbitmq']['version'] = '3.7.13'
+        node.override['rabbitmq']['erlang']['enabled'] = true
+      end
+    end
+
+    let(:chef_run) do
+      runner.converge(described_recipe, 'rabbitmq::erlang_package')
+    end
+
+    it 'should install Erlang' do
+      expect(chef_run).to install_package('erlang')
+    end
   end
+
+  describe 'when Erlang is provisioned from ESL' do
+    let(:runner) do
+      ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
+        node.override['rabbitmq']['version'] = '3.7.13'
+        node.override['rabbitmq']['erlang']['enabled'] = false
+      end
+    end
+
+    let(:chef_run) do
+      runner.converge(described_recipe, 'rabbitmq::esl_erlang_package')
+    end
+
+    it 'should install the ESL Erlang package' do
+      expect(chef_run).to install_package('esl-erlang')
+    end
+  end
+
 
   it 'should create the rabbitmq /etc/default file' do
     expect(chef_run).to create_template("/etc/default/#{chef_run.node['rabbitmq']['service_name']}").with(
