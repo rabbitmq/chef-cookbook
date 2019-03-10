@@ -28,7 +28,7 @@ def user_exists?(name)
         else
           "rabbitmqctl -q list_users |grep '^#{name}\\s'"
         end
-  cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
+  cmd = Mixlib::ShellOut.new(cmd, env: shell_environment)
 
   cmd.run_command
   Chef::Log.debug "rabbitmq_user_exists?: #{cmd}"
@@ -47,7 +47,7 @@ def user_has_tag?(name, tag)
         else
           'rabbitmqctl -q list_users'
         end
-  cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
+  cmd = Mixlib::ShellOut.new(cmd, env: shell_environment)
   cmd.run_command
   user_list = cmd.stdout
   tags = user_list.match(/^#{name}\s+\[(.*?)\]/)[1].split
@@ -74,7 +74,7 @@ def user_has_permissions?(name, vhost, perm_list = nil)
         else
           "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\s\""
         end
-  cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
+  cmd = Mixlib::ShellOut.new(cmd, env: shell_environment)
 
   cmd.run_command
   Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd}"

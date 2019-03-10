@@ -2,7 +2,7 @@
 # Version to install
 default['rabbitmq']['version'] = '3.7.13'
 
-default['rabbitmq']['package_source'] = "github"
+default['rabbitmq']['package_source'] = 'github'
 
 # When true, distribution-provided package will be used.
 # This may be useful e.g. on old distributions.
@@ -26,7 +26,7 @@ default['rabbitmq']['erlang']['enabled'] = false
 # On older distributions use ESL packages unless node['rabbitmq']['erlang']['enabled']
 # suggests that the intent is to use recipe[rabbitmq::erlang_package]
 #
-if !node['rabbitmq']['erlang']['enabled']
+unless node['rabbitmq']['erlang']['enabled']
   default['erlang']['install_method'] = 'esl'
 end
 

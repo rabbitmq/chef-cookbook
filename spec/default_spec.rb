@@ -102,8 +102,7 @@ describe 'rabbitmq::default' do
     expect(chef_run).to start_service('rabbitmq-server')
   end
 
-
-  describe "when Erlang is provisioned via Team RabbitMQ's Erlang packages"  do
+  describe "when Erlang is provisioned via Team RabbitMQ's Erlang packages" do
     let(:runner) do
       ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
         node.override['rabbitmq']['version'] = '3.7.13'
@@ -136,7 +135,6 @@ describe 'rabbitmq::default' do
       expect(chef_run).to install_package('esl-erlang')
     end
   end
-
 
   it 'should create the rabbitmq /etc/default file' do
     expect(chef_run).to create_template("/etc/default/#{chef_run.node['rabbitmq']['service_name']}").with(
@@ -462,6 +460,5 @@ describe 'rabbitmq::default' do
     it 'includes the `yum-epel` recipe' do
       expect(chef_run).to include_recipe('yum-epel')
     end
-  end
-
+  end # describe 'centos 6'
 end

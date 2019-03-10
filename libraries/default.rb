@@ -56,7 +56,7 @@ module Opscode
       explicitly_configured_name = node['rabbitmq']['clustering']['cluster_name']
       return explicitly_configured_name if explicitly_configured_name
 
-      cluster_nodes   = node['rabbitmq']['clustering']['cluster_nodes']
+      cluster_nodes = node['rabbitmq']['clustering']['cluster_nodes']
       if cluster_nodes.any?
         cluster_nodes.first.name
       else
