@@ -1,13 +1,15 @@
 # The Inspec reference, with examples and extensive documentation, can be
 # found at http://inspec.io/docs/reference/resources/
 
-%w(erlang-asn1 erlang-crypto erlang-public-key erlang-ssl erlang-syntax-tools
-   erlang-mnesia erlang-runtime-tools erlang-snmp erlang-os-mon erlang-parsetools
-   erlang-inets erlang-tools erlang-eldap erlang-xmerl
-   erlang-dev erlang-edoc erlang-eunit erlang-erl-docgen erlang-src).each do |p|
-   describe package(p) do
-     it { should be_installed }
-   end
+%w(
+  erlang-asn1 erlang-crypto erlang-public-key erlang-ssl erlang-syntax-tools
+  erlang-mnesia erlang-runtime-tools erlang-snmp erlang-os-mon erlang-parsetools
+  erlang-inets erlang-tools erlang-eldap erlang-xmerl
+  erlang-dev erlang-edoc erlang-eunit erlang-erl-docgen erlang-src
+).each do |p|
+  describe package(p) do
+    it { should be_installed }
+  end
 end
 
 describe package('rabbitmq-server') do

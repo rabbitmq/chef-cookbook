@@ -33,6 +33,10 @@ end
 default['rabbitmq']['esl-erlang_package'] = 'esl-erlang-compat-20.2.2-1.noarch.rpm'
 default['rabbitmq']['esl-erlang_package_url'] = 'https://github.com/jasonmcintosh/esl-erlang-compat/raw/master/rpmbuild/RPMS/noarch/'
 
+# socat is not guaranteed to be available on CentOS 6
+default['rabbitmq']['socat_package'] = 'socat-1.7.2.3-1.el6.x86_64.rpm'
+default['rabbitmq']['socat_package_url'] = 'https://kojipkgs.fedoraproject.org//packages/socat/1.7.2.3/1.el6/x86_64/'
+
 # being nil, the rabbitmq defaults will be used
 default['rabbitmq']['nodename'] = nil
 default['rabbitmq']['address'] = nil
@@ -239,21 +243,24 @@ default['rabbitmq']['erlang']['hipe'] = false
 default['rabbitmq']['erlang']['retry_delay'] = 10
 
 # apt
-default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.bintray.com/rabbitmq-erlang/debian"
-default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename'] rescue nil
-default['rabbitmq']['erlang']['apt']['components'] = ["erlang"]
-default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
+default['rabbitmq']['erlang']['apt']['uri'] = 'https://dl.bintray.com/rabbitmq-erlang/debian'
+unless node['lsb'].nil?
+  default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
+end
+default['rabbitmq']['erlang']['apt']['components'] = ['erlang']
+default['rabbitmq']['erlang']['apt']['key'] = '6B73A36E6026DFCA'
 
 default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 
 # yum
-default['rabbitmq']['erlang']['yum']['baseurl'] = case node['platform_family']
-                                                  when 'rhel'
-                                                    "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/#{node['platform_version'].to_i}"
-                                                  else
-                                                    # Fedora and so on
-                                                    'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
-                                                  end
+default['rabbitmq']['erlang']['yum']['baseurl'] =
+  case node['platform_family']
+  when 'rhel'
+    "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/#{node['platform_version'].to_i}"
+  else
+    # Fedora and so on
+    'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+  end
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false

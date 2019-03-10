@@ -24,7 +24,7 @@ class Chef::Resource
   include Opscode::RabbitMQ # rubocop:enable all
 end
 
-if !node['rabbitmq']['erlang']['enabled']
+unless node['rabbitmq']['erlang']['enabled']
   include_recipe 'erlang'
 end
 
@@ -36,11 +36,11 @@ default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 case node['platform_family']
 when 'rhel'
   default_rpm_package_name = if node['platform_version'].to_i > 6
-                               "rabbitmq-server-#{version}-1.el7.noarch.rpm"
-                             else
-                               "rabbitmq-server-#{version}-1.el6.noarch.rpm"
-                             end
- when 'fedora'
+   "rabbitmq-server-#{version}-1.el7.noarch.rpm"
+  else
+    "rabbitmq-server-#{version}-1.el6.noarch.rpm"
+  end
+when 'fedora'
    default_rpm_package_name = "rabbitmq-server-#{version}-1.el7.noarch.rpm"
 when 'suse'
   default_rpm_package_name = "rabbitmq-server-#{version}-1.suse.noarch.rpm"
@@ -63,7 +63,6 @@ end
 ## Install the package
 case node['platform_family']
 when 'debian'
-
   template '/etc/apt/apt.conf.d/90forceyes' do
     source '90forceyes.erb'
     owner 'root'

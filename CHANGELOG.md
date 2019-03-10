@@ -2,6 +2,14 @@
 
 ## [v5.7.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.1) (unreleased)
 
+### Bug Fixes
+
+ * LSB attribute is no longer references on non-Debian platforms.
+
+   Contributed by Sten Spans.
+
+   GitHub issue: [\#507](https://github.com/rabbitmq/chef-cookbook/pull/507)
+
 ### Enhancements
 
  * Default provisioned RabbitMQ version is now `3.7.13`.

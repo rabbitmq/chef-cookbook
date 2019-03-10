@@ -25,7 +25,7 @@ describe 'A cluster with several nodes, peer discovery and without explicitly pr
   let(:runner) { ChefSpec::ServerRunner.new(CLUSTER_OPTS) }
   let(:node) { runner.node }
   cached(:chef_run) do
-    runner.converge("rabbitmq::cluster")
+    runner.converge('rabbitmq::cluster')
   end
 
   let(:file_cache_path) { Chef::Config[:file_cache_path] }

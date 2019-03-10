@@ -33,6 +33,9 @@ and discussions of potential features are all considered to be
 [mailing list][rmq-users] material. If you are unsure where to begin,
 the [RabbitMQ users mailing list][rmq-users] is the right place.
 
+
+## Information Required to Reproduce
+
 Getting all the details necessary to reproduce an issue, make a
 conclusion or even form a hypothesis about what's happening can take a
 fair amount of time. Please help others help you by providing a way to
@@ -47,12 +50,12 @@ Please provide versions of the software used:
  * Node attributes (as many as possible, make sure to edit out **sensitive information**)
  * RabbitMQ server version(s) you target
  * Erlang version used
- * Operating system version (and distribution, if applicable)
+ * Operating system version and distribution
  * What RabbitMQ plugins are used, in particular 3rd party ones
 
 The following information greatly helps in investigating and reproducing issues:
 
- * A Vagrant and `chef-solo`-based example that can be used to reproduce
+ * A Vagrant and `chef-zero`-based example that demonstrates the problem
  * Chef client debug logs
  * RabbitMQ server logs
  * Full exception stack traces (a single line message is not enough!)
