@@ -2,7 +2,11 @@
 require 'spec_helper'
 
 describe 'rabbitmq::default' do
-  let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
+  let(:runner) do
+    ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
+      node.override['rabbitmq']['version'] = '3.7.13'
+    end
+  end
   let(:node) { runner.node }
 
   let(:chef_run) do
@@ -172,20 +176,20 @@ describe 'rabbitmq::default' do
         '{ciphers,["ECDHE-ECDSA-AES256-SHA384","ECDH-ECDSA-AES256-SHA384"]}')
     end
 
-    it 'does not set interface to listen for SSL by default' do
+    it 'does not enable TLS listeners by default' do
       node.normal['rabbitmq']['ssl'] = true
       expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         /{ssl_listeners, [5671]},/)
     end
 
-    it 'is setting interface to listen for SSL if set' do
+    it 'enables TLS listener, if set' do
       node.normal['rabbitmq']['ssl'] = true
       node.normal['rabbitmq']['ssl_listen_interface'] = '0.0.0.0'
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         /{ssl_listeners, \[{"0.0.0.0", 5671}\]},/)
     end
 
-    it 'is setting port to listen for SSL if set' do
+    it 'overrides TLS listener port, if set' do
       node.normal['rabbitmq']['ssl'] = true
       node.normal['rabbitmq']['ssl_port'] = 5670
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
@@ -243,7 +247,11 @@ describe 'rabbitmq::default' do
   end
 
   describe 'suse' do
-    let(:runner) { ChefSpec::ServerRunner.new(SUSE_OPTS) }
+    let(:runner) do
+      ChefSpec::ServerRunner.new(SUSE_OPTS) do |node, _|
+        node.override['rabbitmq']['version'] = '3.7.13'
+      end
+    end
     let(:node) { runner.node }
     let(:chef_run) do
       runner.converge(described_recipe)
@@ -267,10 +275,14 @@ describe 'rabbitmq::default' do
   end
 
   describe 'ubuntu' do
-    let(:runner) { ChefSpec::ServerRunner.new(UBUNTU_OPTS) }
+    let(:runner) do
+      ChefSpec::ServerRunner.new(UBUNTU_OPTS) do |node, _|
+        node.override['rabbitmq']['version'] = '3.7.13'
+      end
+    end
     let(:node) { runner.node }
     let(:chef_run) do
-      node.normal['rabbitmq']['version'] = '3.6.16'
+      node.normal['rabbitmq']['version'] = '3.7.13'
       runner.converge(described_recipe)
     end
 
@@ -290,7 +302,7 @@ describe 'rabbitmq::default' do
     end
 
     it 'creates a rabbitmq-server deb in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.6.16-1_all.deb')
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.7.13-1_all.deb')
     end
 
     it 'installs the rabbitmq-server deb_package with the default action' do
@@ -321,35 +333,24 @@ describe 'rabbitmq::default' do
   end
 
   describe 'redhat' do
-    let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
+    let(:runner) do
+      ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
+        node.override['rabbitmq']['version'] = '3.7.13'
+      end
+    end
     let(:node) { runner.node }
     let(:chef_run) do
       runner.converge(described_recipe)
     end
 
-    describe 'if redhat version is below 7' do
-      let(:rpm_file) { 'rabbitmq-server-3.6.16-1.el6.noarch.rpm' }
-      let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS.merge(:version => 6.9)) }
+    let(:rpm_file) { 'rabbitmq-server-3.7.13-1.el7.noarch.rpm' }
 
-      it 'creates a rabbitmq-server rpm in the cache path' do
-        expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
-      end
-
-      it 'installs the rabbitmq-server rpm_package with the default action' do
-        expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
-      end
+    it 'creates a rabbitmq-server rpm in the cache path' do
+      expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
     end
 
-    describe 'if redhat version is default' do
-      let(:rpm_file) { 'rabbitmq-server-3.6.16-1.el7.noarch.rpm' }
-
-      it 'creates a rabbitmq-server rpm in the cache path' do
-        expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
-      end
-
-      it 'installs the rabbitmq-server rpm_package with the default action' do
-        expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
-      end
+    it 'installs the rabbitmq-server rpm_package with the default action' do
+      expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
     end
 
     describe 'uses distro version' do
@@ -390,12 +391,18 @@ describe 'rabbitmq::default' do
     end
   end
 
-  describe 'centos' do
-    let(:runner) { ChefSpec::ServerRunner.new(CENTOS_OPTS) }
+  describe 'centos 7' do
+    let(:runner) do
+      ChefSpec::ServerRunner.new(CENTOS7_OPTS) do |node, _|
+        node.override['rabbitmq']['version'] = '3.7.13'
+      end
+    end
     let(:node) { runner.node }
     let(:chef_run) do
       runner.converge(described_recipe)
     end
+
+    let(:rpm_file) { 'rabbitmq-server-3.7.13-1.el7.noarch.rpm' }
 
     it 'should install the logrotate package' do
       expect(chef_run).to install_package('logrotate')
@@ -405,29 +412,12 @@ describe 'rabbitmq::default' do
       expect(chef_run).to install_package('socat')
     end
 
-    describe 'if centos version is below 7' do
-      let(:rpm_file) { 'rabbitmq-server-3.6.16-1.el6.noarch.rpm' }
-      let(:runner) { ChefSpec::ServerRunner.new(CENTOS_OPTS.merge(:version => 6.9)) }
-
-      it 'creates a rabbitmq-server rpm in the cache path' do
-        expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
-      end
-
-      it 'installs the rabbitmq-server rpm_package with the default action' do
-        expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
-      end
+    it 'creates a rabbitmq-server rpm in the cache path' do
+      expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
     end
 
-    describe 'if centos version is default' do
-      let(:rpm_file) { 'rabbitmq-server-3.6.16-1.el7.noarch.rpm' }
-
-      it 'creates a rabbitmq-server rpm in the cache path' do
-        expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
-      end
-
-      it 'installs the rabbitmq-server rpm_package with the default action' do
-        expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
-      end
+    it 'installs the rabbitmq-server rpm_package with the default action' do
+      expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
     end
 
     it 'includes the `yum-epel` recipe' do
@@ -444,4 +434,50 @@ describe 'rabbitmq::default' do
       end
     end
   end
+
+  describe 'centos 6' do
+    let(:runner) do
+      ChefSpec::ServerRunner.new(CENTOS6_OPTS) do |node, _|
+        node.override['rabbitmq']['version'] = '3.6.16'
+      end
+    end
+    let(:node) { runner.node }
+    let(:chef_run) do
+      runner.converge(described_recipe)
+    end
+
+    let(:rpm_file) { 'rabbitmq-server-3.6.16-1.el6.noarch.rpm' }
+    let(:socat_rpm_file) { 'socat-1.7.2.3-1.el6.x86_64.rpm' }
+
+    it 'should install the logrotate package' do
+      expect(chef_run).to install_package('logrotate')
+    end
+
+    it 'should install the socat package' do
+      expect(chef_run).to create_remote_file_if_missing("/tmp/#{socat_rpm_file}")
+    end
+
+    it 'creates a rabbitmq-server rpm in the cache path' do
+      expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
+    end
+
+    it 'installs the rabbitmq-server rpm_package with the default action' do
+      expect(chef_run).to install_rpm_package("/tmp/#{rpm_file}")
+    end
+
+    it 'includes the `yum-epel` recipe' do
+      expect(chef_run).to include_recipe('yum-epel')
+    end
+
+    describe 'uses distro version' do
+      before do
+        node.normal['rabbitmq']['use_distro_version'] = true
+      end
+
+      it 'should install rabbitmq-server package' do
+        expect(chef_run).to install_package('rabbitmq-server')
+      end
+    end
+  end
+
 end

@@ -175,7 +175,6 @@ when 'fedora'
   end
 
 when 'rhel'
-
   package 'logrotate'
   if node['platform_version'].to_i >= 7
     package 'socat'
@@ -183,6 +182,7 @@ when 'rhel'
     Chef::Log.info('Downloading socat installation on CentOS 6')
     remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['socat_package']}" do
       source "#{node['rabbitmq']['socat_package_url']}#{node['rabbitmq']['socat_package']}"
+      action :create_if_missing
     end
     yum_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['socat_package']}"
   end

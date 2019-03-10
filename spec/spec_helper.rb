@@ -13,7 +13,7 @@ LOGLEVEL = :fatal
 SUSE_OPTS = {
   :platform => 'suse',
   :version => '12.3',
-  :log_level => LOGLEVEL,
+  :log_level => LOGLEVEL
 }
 REDHAT_OPTS = {
   :platform => 'redhat',
@@ -27,9 +27,16 @@ UBUNTU_OPTS = {
   :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
-CENTOS_OPTS = {
+CENTOS7_OPTS = {
   :platform => 'centos',
   :version => '7.4.1708',
+  :log_level => LOGLEVEL,
+  :file_cache_path => '/tmp'
+}
+CENTOS_OPTS = CENTOS7_OPTS
+CENTOS6_OPTS = {
+  :platform => 'redhat',
+  :version => '6.9',
   :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
