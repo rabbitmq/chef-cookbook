@@ -12,7 +12,7 @@ LOG_LEVEL = :fatal
 SUSE_OPTS = {
   platform: 'suse',
   version: '12.3',
-  log_level: LOG_LEVEL,
+  log_level: LOG_LEVEL
 }
 REDHAT_OPTS = {
   platform: 'redhat',
@@ -26,11 +26,18 @@ UBUNTU_OPTS = {
   log_level: LOG_LEVEL,
   file_cache_path: '/tmp'
 }
-CENTOS_OPTS = {
-  platform: 'centos',
-  version: '7.4.1708',
-  log_level: LOG_LEVEL,
-  file_cache_path: '/tmp'
+CENTOS7_OPTS = {
+  :platform => 'centos',
+  :version => '7.4.1708',
+  :log_level => LOG_LEVEL,
+  :file_cache_path => '/tmp'
+}
+CENTOS_OPTS = CENTOS7_OPTS
+CENTOS6_OPTS = {
+  :platform => 'redhat',
+  :version => '6.9',
+  :log_level => LOG_LEVEL,
+  :file_cache_path => '/tmp'
 }
 FEDORA_OPTS = {
   platform: 'fedora',

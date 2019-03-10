@@ -149,7 +149,6 @@ when 'fedora'
   rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
 
 when 'rhel'
-
   package 'logrotate'
   if node['platform_version'].to_i >= 7
     package 'socat'
@@ -157,6 +156,7 @@ when 'rhel'
     Chef::Log.info('Downloading socat installation on CentOS 6')
     remote_file "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['socat_package']}" do
       source "#{node['rabbitmq']['socat_package_url']}#{node['rabbitmq']['socat_package']}"
+      action :create_if_missing
     end
     yum_package "#{Chef::Config[:file_cache_path]}/#{node['rabbitmq']['socat_package']}"
   end
@@ -171,18 +171,11 @@ when 'rhel'
     rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
   end
 
-  if node['rabbitmq']['use_distro_version']
-    package 'rabbitmq-server' do
-      action :install
-      version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
-    end
-  else
-    remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
-      source "#{rpm_package_url}#{rpm_package_name}"
-      action :create_if_missing
-    end
-    rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+  remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+    source "#{rpm_package_url}#{rpm_package_name}"
+    action :create_if_missing
   end
+  rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
 
 when 'suse'
 
