@@ -26,7 +26,7 @@ def user_exists?(name)
   cmd = if node['rabbitmq']['version'] >= '3.7.10'
           "rabbitmqctl -s list_users |grep '^#{name}\\s'"
         else
-          "rabbitmqctl -s list_users |grep '^#{name}\\s'"
+          "rabbitmqctl -q list_users |grep '^#{name}\\s'"
         end
   cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
 
