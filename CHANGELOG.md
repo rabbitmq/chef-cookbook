@@ -1,6 +1,6 @@
 # Change Log
 
-## [v5.7.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.1) (unreleased)
+## [v5.7.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.1) (2019-03-11)
 
 ### Bug Fixes
 
