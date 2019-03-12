@@ -64,3 +64,8 @@ rabbitmq_parameter 'sensu-dc-1' do
   component 'federation-upstream'
   parameters 'uri' => 'amqp://dc-cluster-node'
 end
+
+rabbitmq_cluster 'lwrp-test' do
+  cluster_name 'lwrp-test'
+  action :set_cluster_name
+end
