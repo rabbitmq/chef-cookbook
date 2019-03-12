@@ -41,7 +41,7 @@ def rabbitmq_config_file_path
   configured_path = node['rabbitmq']['config']
 
   # 3.6.x does not support .config in RABBITMQ_CONFIG_FILE paths. MK.
-  if ::File.extname(configured_path).empty? && !rabbitmq_36?
+  if ::File.extname(configured_path).empty? && !rabbitmq_36? && !use_distro_version?
     "#{configured_path}.config"
   else
     configured_path

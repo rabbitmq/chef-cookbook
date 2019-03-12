@@ -24,6 +24,10 @@ class Chef::Resource
   include Opscode::RabbitMQ # rubocop:enable all
 end
 
+class Chef::Recipe
+  include Opscode::RabbitMQ # rubocop:enable all
+end
+
 unless node['rabbitmq']['erlang']['enabled']
   include_recipe 'erlang'
 end
@@ -89,12 +93,12 @@ when 'debian'
     allow false
   end
 
-  if node['platform_version'].to_i < 8 && !node['rabbitmq']['use_distro_version']
+  if node['platform_version'].to_i < 8 && !use_distro_version?
     Chef::Log.warn 'Debian 7 is too old to use the recent .deb RabbitMQ packages. Falling back to distro package!'
     node.normal['rabbitmq']['use_distro_version'] = true
   end
 
-  if node['rabbitmq']['use_distro_version']
+  if use_distro_version?
     package 'rabbitmq-server' do
       action :install
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
@@ -111,8 +115,7 @@ when 'debian'
     end
   end
 
-  # Configure job control
-  if node['rabbitmq']['job_control'] == 'upstart' && node['rabbitmq']['manage_service']
+  if service_control_upstart? && manage_rabbitmq_service?
     # We start with stock init.d, remove it if we're not using init.d, otherwise leave it alone
     service node['rabbitmq']['service_name'] do
       action [:stop]
@@ -161,7 +164,7 @@ when 'fedora'
     rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
   end
 
-  if node['rabbitmq']['use_distro_version']
+  if use_distro_version?
     package 'rabbitmq-server' do
       action :install
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
@@ -197,7 +200,7 @@ when 'rhel'
     rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
   end
 
-  if node['rabbitmq']['use_distro_version']
+  if use_distro_version?
     package 'rabbitmq-server' do
       action :install
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
@@ -320,14 +323,16 @@ if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'
   end
 end
 
-if node['rabbitmq']['manage_service']
+if manage_rabbitmq_service?
   service node['rabbitmq']['service_name'] do
     retries node['rabbitmq']['retry']
     retry_delay node['rabbitmq']['retry_delay']
     action [:enable, :start]
     supports :status => true, :restart => true
-    provider Chef::Provider::Service::Upstart if node['rabbitmq']['job_control'] == 'upstart'
-    provider Chef::Provider::Service::Init if node['rabbitmq']['job_control'] == 'init'
+
+    provider Chef::Provider::Service::Upstart if service_control_upstart?
+    provider Chef::Provider::Service::Init    if service_control_init?
+    provider Chef::Provider::Service::Systemd if service_control_systemd?
   end
 else
   service node['rabbitmq']['service_name'] do

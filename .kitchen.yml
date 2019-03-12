@@ -106,6 +106,22 @@ suites:
         - test/integration/36x
     includes: ["ubuntu-16.04"]
 
+  - name: use-distro-version-deb
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::default]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:20.3.8.20-1"
+      rabbitmq:
+        use_distro_version: true
+    verifier:
+      inspec_tests:
+        - test/integration/36x
+    includes: ["ubuntu-18.04"]
+
   - name: default-rpm
     run_list:
       - recipe[erlang::default]

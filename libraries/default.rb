@@ -51,5 +51,25 @@ module Opscode
     def shell_environment
       { 'HOME' => ENV.fetch('HOME', '/var/lib/rabbitmq') }
     end
+
+    def use_distro_version?
+      node['rabbitmq']['use_distro_version']
+    end
+
+    def manage_rabbitmq_service?
+      node['rabbitmq']['manage_service']
+    end
+
+    def service_control_init?
+      node['init_package'] == 'init' && node['rabbitmq']['job_control'] == 'init'
+    end
+
+    def service_control_upstart?
+      node['rabbitmq']['job_control'] == 'upstart'
+    end
+
+    def service_control_systemd?
+      node['init_package'] == 'systemd' || node['rabbitmq']['job_control'] == 'systemd'
+    end
   end
 end
