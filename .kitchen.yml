@@ -39,6 +39,22 @@ suites:
         - test/smoke/default
     includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
 
+  - name: management-plugin-deb
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::mgmt_console]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2.6-1"
+      rabbitmq:
+        version: "3.7.13"
+    verifier:
+      inspec_tests:
+        - test/smoke/management_plugin
+    includes: ["ubuntu-18.04"]
+
   - name: system-limits-deb
     run_list:
       - recipe[erlang::default]
