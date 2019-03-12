@@ -36,7 +36,7 @@ suites:
           version: "1:21.2.6-1"
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/integration/default
     includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
 
   - name: management-plugin-deb
@@ -52,7 +52,7 @@ suites:
         version: "3.7.13"
     verifier:
       inspec_tests:
-        - test/smoke/management_plugin
+        - test/integration/management_plugin
     includes: ["ubuntu-18.04"]
 
   - name: system-limits-deb
@@ -71,7 +71,7 @@ suites:
             NOFILE: 54000
     verifier:
       inspec_tests:
-        - test/smoke/limits
+        - test/integration/limits
     includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
 
   - name: 36x-deb
@@ -87,7 +87,7 @@ suites:
         version: "3.6.16"
     verifier:
       inspec_tests:
-        - test/smoke/36x
+        - test/integration/36x
     includes: ["ubuntu-16.04"]
 
   - name: 366-deb
@@ -103,7 +103,7 @@ suites:
         version: "3.6.6"
     verifier:
       inspec_tests:
-        - test/smoke/36x
+        - test/integration/36x
     includes: ["ubuntu-16.04"]
 
   - name: default-rpm
@@ -119,7 +119,7 @@ suites:
         version: "3.7.13"
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/integration/default
     includes: ["centos-7.4", "centos-6.9"]
 
   - name: system-limits-rpm
@@ -139,7 +139,7 @@ suites:
             NOFILE: 54000
     verifier:
       inspec_tests:
-        - test/smoke/limits
+        - test/integration/limits
     includes: ["centos-7.4"]
 
   - name: lwrps
@@ -155,8 +155,8 @@ suites:
         version: "3.7.13"
     verifier:
       inspec_tests:
-        - test/smoke/default
-        - test/smoke/lwrps
+        - test/integration/default
+        - test/integration/lwrps
     includes: ["ubuntu-18.04"]
 
   - name: 36x-lwrps
@@ -172,8 +172,8 @@ suites:
         version: "3.6.16"
     verifier:
       inspec_tests:
-        - test/smoke/36x
-        - test/smoke/36x_lwrps
+        - test/integration/36x
+        - test/integration/36x_lwrps
     includes: ["ubuntu-18.04"]
 
   - name: cluster-deb
@@ -189,8 +189,8 @@ suites:
         version: "3.7.13"
     verifier:
       inspec_tests:
-        - test/smoke/default
-        - test/smoke/cluster
+        - test/integration/default
+        - test/integration/cluster
     includes: ["ubuntu-18.04", "debian-9"]
 
   - name: cluster-rpm
@@ -206,8 +206,8 @@ suites:
         version: "3.7.13"
     verifier:
       inspec_tests:
-        - test/smoke/default
-        - test/smoke/cluster
+        - test/integration/default
+        - test/integration/cluster
     includes: ["centos-7.4"]
 
   - name: default-force-yes
@@ -234,7 +234,7 @@ suites:
         version: "3.7.13"
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/integration/default
     includes: ["debian-9"]
 
   - name: default-force-yes-false
@@ -254,7 +254,7 @@ suites:
         version: "3.7.13"
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/integration/default
     includes: ["debian-9"]
 
   #

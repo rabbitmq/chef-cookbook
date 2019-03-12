@@ -73,7 +73,7 @@ suites:
 
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/integration/default
     includes: ["ubuntu-18.04", "debian-9"]
 
   - name: default-rpm-el7-alpha
@@ -93,7 +93,7 @@ suites:
         rpm_package: "rabbitmq-server-<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1.el7.noarch.rpm"
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/integration/default
     includes: ["centos-7.4"]
 
   - name: default-rpm-el6-alpha
@@ -113,5 +113,5 @@ suites:
         rpm_package: "rabbitmq-server-<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1.el6.noarch.rpm"
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/integration/default
     includes: ["centos-6.9"]
