@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include Opscode::RabbitMQ
+include RabbitMQ::CoreHelpers
 
 def plugin_enabled?(name)
   ENV['PATH'] = "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"

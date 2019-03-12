@@ -21,11 +21,11 @@
 # limitations under the License.
 
 class Chef::Resource
-  include Opscode::RabbitMQ # rubocop:enable all
+  include RabbitMQ::CoreHelpers # rubocop:enable all
 end
 
 class Chef::Recipe
-  include Opscode::RabbitMQ # rubocop:enable all
+  include RabbitMQ::CoreHelpers # rubocop:enable all
 end
 
 unless node['rabbitmq']['erlang']['enabled']

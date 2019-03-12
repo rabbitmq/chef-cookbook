@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-module Opscode
+module RabbitMQ
   # module rabbit
-  module RabbitMQ
+  module CoreHelpers
     # This method does some of the yuckiness of formatting parameters properly
     # for rendering into the rabbit.config template.
     def format_kernel_parameters  # rubocop:disable all
@@ -56,6 +56,33 @@ module Opscode
       node['rabbitmq']['use_distro_version']
     end
 
+    def rabbitmq_version
+      node['rabbitmq']['version'].to_s
+    end
+
+    def rabbitmq_38?
+      rabbitmq_version =~ /^3.8/
+    end
+
+    def rabbitmq_37?
+      rabbitmq_version =~ /^3.7/
+    end
+
+    def rabbitmq_36?
+      rabbitmq_version =~ /^3.6/
+    end
+
+    def rabbitmq_config_file_path
+      configured_path = node['rabbitmq']['config']
+
+      # 3.6.x does not support .config in RABBITMQ_CONFIG_FILE paths. MK.
+      if ::File.extname(configured_path).empty? && !rabbitmq_36? && !use_distro_version?
+        "#{configured_path}.config"
+      else
+        configured_path
+      end
+    end
+
     def manage_rabbitmq_service?
       node['rabbitmq']['manage_service']
     end
@@ -71,5 +98,11 @@ module Opscode
     def service_control_systemd?
       node['init_package'] == 'systemd' || node['rabbitmq']['job_control'] == 'systemd'
     end
+  end
+end
+
+module Opscode
+  module RabbitMQ
+    include ::RabbitMQ::CoreHelpers
   end
 end
