@@ -6,7 +6,7 @@
 # Copyright 2009, Benjamin Black
 # Copyright 2009-2013, Chef Software, Inc.
 # Copyright 2012, Kevin Nuckolls <kevin.nuckolls@gmail.com>
-# Copyright 2016-2018, Pivotal Software, Inc
+# Copyright 2016-2019, Pivotal Software, Inc
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,11 @@
 # limitations under the License.
 
 class Chef::Resource
-  include Opscode::RabbitMQ # rubocop:enable all
+  include RabbitMQ::CoreHelpers # rubocop:enable all
+end
+
+class Chef::Recipe
+  include RabbitMQ::CoreHelpers # rubocop:enable all
 end
 
 unless node['rabbitmq']['erlang']['enabled']
@@ -91,8 +95,7 @@ when 'debian'
     action :upgrade
   end
 
-  # Configure job control
-  if node['rabbitmq']['job_control'] == 'upstart' && node['rabbitmq']['manage_service']
+  if service_control_upstart? && manage_rabbitmq_service?
     # We start with stock init.d, remove it if we're not using init.d, otherwise leave it alone
     service node['rabbitmq']['service_name'] do
       action [:stop]
@@ -287,14 +290,17 @@ if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'
   end
 end
 
-if node['rabbitmq']['manage_service']
+if manage_rabbitmq_service?
   service node['rabbitmq']['service_name'] do
     retries node['rabbitmq']['retry']
     retry_delay node['rabbitmq']['retry_delay']
     action [:enable, :start]
+
     supports status: true, restart: true
-    provider Chef::Provider::Service::Upstart if node['rabbitmq']['job_control'] == 'upstart'
-    provider Chef::Provider::Service::Init if node['rabbitmq']['job_control'] == 'init'
+
+    provider Chef::Provider::Service::Upstart if service_control_upstart?
+    provider Chef::Provider::Service::Init    if service_control_init?
+    provider Chef::Provider::Service::Systemd if service_control_systemd?
   end
 else
   service node['rabbitmq']['service_name'] do

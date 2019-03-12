@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-include Opscode::RabbitMQ
+include RabbitMQ::CoreHelpers
 
 use_inline_resources if defined?(:use_inline_resources) # ~FC113
 

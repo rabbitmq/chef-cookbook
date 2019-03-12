@@ -1,5 +1,5 @@
-module RabbitMQCookbook
-  module Helpers
+module RabbitMQ
+  module NodeHelpers
     require 'mixlib/shellout'
 
     def reset_current_node
@@ -21,28 +21,8 @@ module RabbitMQCookbook
   end
 end
 
-def rabbitmq_version
-  node['rabbitmq']['version'].to_s
-end
-
-def rabbitmq_package_download_base_url
-  case node['rabbitmq']['package_source'].to_s.downcase
-  when :github, /github/i
-    "https://github.com/rabbitmq/rabbitmq-server/releases/download/v#{rabbitmq_version}/"
-  when :bintray, /bintray/i
-    "https://dl.bintray.com/rabbitmq/all/rabbitmq-server/#{rabbitmq_version}/"
-  else
-    "https://github.com/rabbitmq/rabbitmq-server/releases/download/v#{rabbitmq_version}/"
-  end
-end
-
-def rabbitmq_config_file_path
-  configured_path = node['rabbitmq']['config']
-
-  # If no extension is configured, append it.
-  if ::File.extname(configured_path).empty?
-    "#{configured_path}.config"
-  else
-    configured_path
+module RabbitMQCookbook
+  module Helpers
+    include RabbitMQ::NodeHelpers
   end
 end

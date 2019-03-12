@@ -48,8 +48,12 @@ rabbitmq_plugin 'rabbitmq_management' do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately # must restart before we can download
 end
 
-rabbitmq_policy 'rabbitmq_cluster' do
-  pattern 'cluster.*'
+rabbitmq_plugin 'rabbitmq_top' do
+  action :disable
+end
+
+rabbitmq_policy 'rabbitmq_mirroring' do
+  pattern 'mirroring.*'
   parameters 'ha-mode' => 'all', 'ha-sync-mode' => 'automatic'
   apply_to 'queues'
   action :set
@@ -63,4 +67,9 @@ rabbitmq_parameter 'sensu-dc-1' do
   vhost 'sensu'
   component 'federation-upstream'
   parameters 'uri' => 'amqp://dc-cluster-node'
+end
+
+rabbitmq_cluster 'lwrp-test' do
+  cluster_name 'lwrp-test'
+  action :set_cluster_name
 end
