@@ -9,6 +9,10 @@ addons:
     packages:
       - chefdk
 
+before_install:
+  - gem update bundler
+  - bundle update --bundler
+
 cache: bundler
 
 services: docker
