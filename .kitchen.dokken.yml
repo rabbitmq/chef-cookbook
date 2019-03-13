@@ -159,6 +159,8 @@ suites:
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
       - recipe[rabbitmq::management_ui]
+      - recipe[rabbitmq::vhosts]
+      - recipe[rabbitmq::users]
     attributes:
       erlang:
         install_method: "esl"
@@ -166,6 +168,26 @@ suites:
           version: "1:20.3.8.20-1"
       rabbitmq:
         use_distro_version: true
+        virtualhosts:
+          - vhost1
+          - vhost2
+        enabled_users:
+          - name: user1
+            password: user1-pwd
+            tag: management
+            rights:
+              - vhost: vhost1
+                read: ".*"
+                write: ".*"
+                conf: ".*"
+          - name: user2
+            password: user2-pwd
+            tag: management
+            rights:
+              - vhost: vhost2
+                read: ".*"
+                write: ".*"
+                conf: ".*"
     verifier:
       inspec_tests:
         - test/integration/36x
