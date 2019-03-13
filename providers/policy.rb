@@ -26,7 +26,7 @@ include RabbitMQ::CoreHelpers
 use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def policy_exists?(vhost, name)
-  cmd = if rabbitmq_37? && node['rabbitmq']['version'] >= '3.7.10'
+  cmd = if rabbitmq_37? && !use_distro_version? && node['rabbitmq']['version'] >= '3.7.10'
           'rabbitmqctl list_policies -s'
         else
           'rabbitmqctl list_policies -q'
