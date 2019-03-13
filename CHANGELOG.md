@@ -11,9 +11,9 @@ No changes yet.
 
  * If `node['rabbitmq']['use_distro_version']` is set to `true`, the version is considered
    to be a `3.6.x` one. This is the case even with [Ubuntu Cosmic (18.10)](https://packages.ubuntu.com/search?keywords=rabbitmq-server&searchon=names&suite=all&section=all) and
-   [Debian Stretch backports](https://packages.debian.org/search?keywords=rabbitmq-server&searchon=names&suite=all&section=all):
+   [Debian Stretch backports](https://packages.debian.org/search?keywords=rabbitmq-server&searchon=names&suite=all&section=all).
 
-   Note that `node['rabbitmq']['use_distro_version']` was dropped in the next major version of this cookbook.
+   Note that `node['rabbitmq']['use_distro_version']` will be dropped in the next major version of this cookbook.
    Consider provisioning a supported RabbitMQ version (e.g. `3.7.13`) instead of relying on `node['rabbitmq']['use_distro_version']`.
 
    GitHub issue: [\#508](https://github.com/rabbitmq/chef-cookbook/issues/508)
