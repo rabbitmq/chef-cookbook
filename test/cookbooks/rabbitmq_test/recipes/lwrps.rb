@@ -29,10 +29,10 @@ execute 'sleep 10' do
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
 end
 
-include_recipe 'rabbitmq::plugin_management'
-include_recipe 'rabbitmq::virtualhost_management'
-include_recipe 'rabbitmq::policy_management'
-include_recipe 'rabbitmq::user_management'
+include_recipe 'rabbitmq::plugins'
+include_recipe 'rabbitmq::vhosts'
+include_recipe 'rabbitmq::policies'
+include_recipe 'rabbitmq::users'
 
 # can't verify it actually goes through without logging in, but at least exercise the code
 rabbitmq_user 'kitchen3' do

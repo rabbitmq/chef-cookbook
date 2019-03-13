@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-describe 'rabbitmq::user_management' do
+describe 'rabbitmq::users' do
   let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
   let(:node) { runner.node }
   cached(:chef_run) do
@@ -15,7 +15,7 @@ describe 'rabbitmq::user_management' do
   end
 
   it 'includes the `virtualhost_management` recipe' do
-    expect(chef_run).to include_recipe('rabbitmq::virtualhost_management')
+    expect(chef_run).to include_recipe('rabbitmq::vhosts')
   end
 
   it 'adds rabbitmq enabled users' do

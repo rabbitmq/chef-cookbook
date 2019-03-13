@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq
-# Recipe:: virtualhost_management
+# Recipe:: mgmt_console
 #
-# Copyright 2013, Grégoire Seux
+# Copyright 2012, Tacit Knowledge, Inc.
 # Copyright 2013-2018, Chef Software, Inc.
 # Copyright 2018-2019, Pivotal Software, Inc.
 #
@@ -21,4 +20,15 @@
 # limitations under the License.
 #
 
-include_recipe 'rabbitmq::vhosts'
+include_recipe 'rabbitmq::default'
+
+plugins = %w(rabbitmq_management)
+
+service_name = node['rabbitmq']['service_name']
+
+plugins.each do |plugin|
+  rabbitmq_plugin plugin do
+    action :enable
+    notifies :restart, "service[#{service_name}]", :immediately
+  end
+end

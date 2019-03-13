@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq
-# Recipe:: virtualhost_management
+# Recipe:: vhosts
 #
 # Copyright 2013, Grégoire Seux
 # Copyright 2013-2018, Chef Software, Inc.
@@ -21,4 +21,16 @@
 # limitations under the License.
 #
 
-include_recipe 'rabbitmq::vhosts'
+include_recipe 'rabbitmq::default'
+
+node['rabbitmq']['virtualhosts'].each do |virtualhost|
+  rabbitmq_vhost virtualhost do
+    action :add
+  end
+end
+
+node['rabbitmq']['disabled_virtualhosts'].each do |virtualhost|
+  rabbitmq_vhost virtualhost do
+    action :delete
+  end
+end

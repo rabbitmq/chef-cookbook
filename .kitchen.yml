@@ -28,7 +28,7 @@ suites:
   - name: default-deb
     run_list:
       - recipe[erlang::default]
-      - recipe[rabbitmq::plugin_management]
+      - recipe[rabbitmq::plugins]
     attributes:
       erlang:
         install_method: "esl"
@@ -59,7 +59,7 @@ suites:
     run_list:
       - recipe[erlang::default]
       - recipe[rabbitmq::systemd_limits]
-      - recipe[rabbitmq::plugin_management]
+      - recipe[rabbitmq::plugins]
     attributes:
       erlang:
         install_method: "esl"
@@ -125,7 +125,7 @@ suites:
   - name: default-rpm
     run_list:
       - recipe[erlang::default]
-      - recipe[rabbitmq::plugin_management]
+      - recipe[rabbitmq::plugins]
     attributes:
       erlang:
         install_method: "esl"
@@ -142,7 +142,7 @@ suites:
     run_list:
       - recipe[erlang::default]
       - recipe[rabbitmq::systemd_limits]
-      - recipe[rabbitmq::plugin_management]
+      - recipe[rabbitmq::plugins]
     attributes:
       erlang:
         install_method: "esl"

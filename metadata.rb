@@ -5,13 +5,26 @@ maintainer_email 'mklishin@pivotal.io'
 license 'Apache-2.0'
 description 'Installs and configures RabbitMQ server'
 version '5.7.2'
+
 recipe 'rabbitmq', 'Install and configure RabbitMQ'
-recipe 'rabbitmq::mgmt_console', 'Sets up RabbitMQ management UI'
+
 recipe 'rabbitmq::systemd_limits', 'Sets up kernel limits (e.g. nofile) for RabbitMQ via systemd'
 recipe 'rabbitmq::cluster', 'Set up RabbitMQ clustering.'
-recipe 'rabbitmq::plugin_management', 'Manage plugins with node attributes'
-recipe 'rabbitmq::virtualhost_management', 'Manage virtualhost with node attributes'
-recipe 'rabbitmq::user_management', 'Manage users with node attributes'
+
+recipe 'rabbitmq::management_ui', 'Sets up RabbitMQ management plugin/UI'
+recipe 'rabbitmq::mgmt_console', 'Deprecated, alias for rabbitmq::management_ui'
+
+recipe 'rabbitmq::plugins', 'Manage plugins with node attributes'
+recipe 'rabbitmq::plugin_management', 'Deprecated, alias for rabbitmq::plugins'
+
+recipe 'rabbitmq::vhosts', 'Manage virtual hosts with node attributes'
+recipe 'rabbitmq::virtualhost_management', 'Deprecated, alias for rabbitmq::vhosts'
+
+recipe 'rabbitmq::users', 'Manage users with node attributes'
+recipe 'rabbitmq::user_management', 'Deprecated, alias for rabbitmq::users'
+
+recipe 'rabbitmq::policies', 'Manage policies with node attributes'
+recipe 'rabbitmq::policy_management', 'Deprecated, alias for rabbitmq::policies'
 
 recipe 'rabbitmq::erlang_package', 'Provisions Erlang via Team RabbitMQ packages'
 recipe 'rabbitmq::esl_erlang_package', 'Alias for erlang::esl'

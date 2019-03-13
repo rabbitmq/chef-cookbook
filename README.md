@@ -379,24 +379,16 @@ In order to use this functionality, you will need to provision a file referenced
 before you execute any recipes in the RabbitMQ cookbook (in other words, before the node starts). For example, this can be done
 using a remote file resource.
 
-### mgmt_console
+### management_ui
+
 Installs the `rabbitmq_management` plugin.
 To use https connection to management console, turn `['rabbitmq']['web_console_ssl']` to true. The SSL port for web management console can be configured by setting attribute `['rabbitmq']['web_console_ssl_port']`, whose default value is 15671.
 
-### plugin_management
+### plugins
+
 Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq']['disabled_plugins']` attributes.
 
-### community_plugins
-Downloads, installs and enables pre-built community plugins binaries.
-
-To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['PLUGIN_NAME']` to `'{DOWNLOAD_URL}'`.
-
-### policy_management
-Enables any policies listed in the `node['rabbitmq']['policies']` and disables any listed in `node['rabbitmq']['disabled_policies']` attributes.
-
-See examples in attributes file.
-
-### user_management
+### users
 
 Enables any users listed in the `node['rabbitmq']['enabled_users']` and disables any listed in `node['rabbitmq']['disabled_users']` attributes.
 You can provide user credentials, the vhosts that they need to have access to and the permissions that should be allocated to each user.
@@ -425,7 +417,7 @@ Using encrypted data bags is therefore highly recommended.
 Alternatively [definitions export and import](http://www.rabbitmq.com/management.html#load-definitions) (see above) can be used.
 Definition files contain password hashes since clear text values are not stored.
 
-### virtualhost_management
+### vhosts
 Enables any vhosts listed in the `node['rabbitmq']['virtualhosts']` and disables any listed in `node['rabbitmq']['disabled_virtualhosts']` attributes.
 
 ### cluster
@@ -465,6 +457,18 @@ node['rabbitmq']['clustering']['cluster_nodes'] = [
     }
 ]
 ```
+
+### policies
+
+Enables any policies listed in the `node['rabbitmq']['policies']` and disables any listed in `node['rabbitmq']['disabled_policies']` attributes.
+
+See examples in attributes file.
+
+### community_plugins
+
+Downloads, installs and enables pre-built community plugins binaries.
+
+To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['PLUGIN_NAME']` to `'{DOWNLOAD_URL}'`.
 
 ## Resources/Providers
 

@@ -59,7 +59,7 @@ suites:
   - name: default-deb-alpha
     run_list:
       - recipe[erlang::default]
-      - recipe[rabbitmq::plugin_management]
+      - recipe[rabbitmq::plugins]
     attributes:
       erlang:
         install_method: "esl"
@@ -79,7 +79,7 @@ suites:
   - name: default-rpm-el7-alpha
     run_list:
       - recipe[erlang::default]
-      - recipe[rabbitmq::plugin_management]
+      - recipe[rabbitmq::plugins]
     attributes:
       erlang:
         install_method: "esl"
@@ -99,7 +99,7 @@ suites:
   - name: default-rpm-el6-alpha
     run_list:
       - recipe[erlang::default]
-      - recipe[rabbitmq::plugin_management]
+      - recipe[rabbitmq::plugins]
     attributes:
       erlang:
         install_method: "esl"

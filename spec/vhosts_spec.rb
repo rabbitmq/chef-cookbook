@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-describe 'rabbitmq::virtualhost_management' do
+describe 'rabbitmq::vhosts' do
   let(:runner) { ChefSpec::ServerRunner.new(REDHAT_OPTS) }
   let(:node) { runner.node }
   cached(:chef_run) do
