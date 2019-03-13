@@ -17,8 +17,10 @@ env:
   - INSTANCE=default-deb-ubuntu-1804
   - INSTANCE=default-rpm-centos-74
   - INSTANCE=system-limits-deb-ubuntu-1804
-  - INSTANCE=lwrps-ubuntu-1604
+  - INSTANCE=lwrps
+  - INSTANCE=36x-lwrps
   - INSTANCE=cluster-deb-ubuntu-1804
+  - INSTANCE=cluster-rpm
   - INSTANCE=default-force-yes-ubuntu-1804
 
 before_script:
