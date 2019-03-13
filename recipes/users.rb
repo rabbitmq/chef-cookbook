@@ -29,11 +29,13 @@ node['rabbitmq']['enabled_users'].each do |user|
     user user['name']
     password user['password']
     action :add
+
+    notifies :set_tags, "rabbitmq_user[set-tags-#{user['name']}]", :immediately
   end
   rabbitmq_user "set-tags-#{user['name']}" do
     user user['name']
     tag user['tag']
-    action :set_tags
+    action :nothing
   end
   user['rights'].each do |r|
     rabbitmq_user "set-perms-#{user['name']}-vhost-#{Array(r['vhost']).join().tr('/', '_')}" do
