@@ -3,7 +3,6 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
 require 'fauxhai'
-ChefSpec::Coverage.start!
 
 require 'chef/application'
 
