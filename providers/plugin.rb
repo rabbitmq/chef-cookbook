@@ -23,7 +23,7 @@ include RabbitMQ::CoreHelpers
 
 def plugin_enabled?(name)
   ENV['PATH'] = "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
-  cmdstr = if rabbitmq_37? && !using_distro_version?
+  cmdstr = if rabbitmq_37? && !use_distro_version?
              "rabbitmq-plugins list -q -e '#{name}\\b'"
            else
              "rabbitmq-plugins list -e '#{name}\\b'"

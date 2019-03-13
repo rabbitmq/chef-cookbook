@@ -110,6 +110,7 @@ suites:
     run_list:
       - recipe[erlang::default]
       - recipe[rabbitmq::default]
+      - recipe[rabbitmq::management_ui]
     attributes:
       erlang:
         install_method: "esl"
