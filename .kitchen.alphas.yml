@@ -1,0 +1,117 @@
+driver:
+  name: dokken
+  chef_version: latest
+  privileged: true # because Docker and SystemD/Upstart
+  volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+
+verifier:
+  root_path: '/opt/verifier'
+  sudo: false
+
+platforms:
+  - name: centos-6.9
+    driver:
+      image: dokken/centos-6
+      platform: rhel
+      pid_one_command: /sbin/init
+      hostname: localhost
+      intermediate_instructions:
+        - RUN yum -y install sudo which initscripts
+
+  - name: centos-7.4
+    driver:
+      image: dokken/centos-7
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
+
+  - name: ubuntu-18.04
+    driver:
+      image: dokken/ubuntu-18.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - ENV DEBIAN_FRONTEND noninteractive
+        - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
+
+  - name: debian-9
+    driver:
+      image: dokken/debian-9
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - ENV DEBIAN_FRONTEND noninteractive
+        - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
+
+#
+# Suites
+#
+
+suites:
+  - name: default-deb-alpha
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::plugins]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:21.2.6-1"
+      rabbitmq:
+        # export RABBITMQ_VERSION="3.7.13-alpha.21"
+        version: <%= ENV['RABBITMQ_VERSION'] %>
+        deb_package_url: "https://dl.bintray.com/rabbitmq/all-dev/rabbitmq-server/<%= ENV['RABBITMQ_VERSION'] %>/"
+        deb_package: "rabbitmq-server_<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1_all.deb"
+
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    includes: ["ubuntu-18.04", "debian-9"]
+
+  - name: default-rpm-el7-alpha
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::plugins]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "21.2-1"
+      rabbitmq:
+        # export RABBITMQ_VERSION="3.7.13-alpha.21"
+        version: <%= ENV['RABBITMQ_VERSION'] %>
+
+        rpm_package_url: "https://dl.bintray.com/rabbitmq/all-dev/rabbitmq-server/<%= ENV['RABBITMQ_VERSION'] %>/"
+        rpm_package: "rabbitmq-server-<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1.el7.noarch.rpm"
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    includes: ["centos-7.4"]
+
+  - name: default-rpm-el6-alpha
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::plugins]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "21.2-1"
+      rabbitmq:
+        # export RABBITMQ_VERSION="3.7.13-alpha.21"
+        version: <%= ENV['RABBITMQ_VERSION'] %>
+
+        rpm_package_url: "https://dl.bintray.com/rabbitmq/all-dev/rabbitmq-server/<%= ENV['RABBITMQ_VERSION'] %>/"
+        rpm_package: "rabbitmq-server-<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1.el6.noarch.rpm"
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    includes: ["centos-6.9"]

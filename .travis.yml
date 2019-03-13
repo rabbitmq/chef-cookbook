@@ -1,0 +1,39 @@
+sudo: required
+dist: trusty
+
+# install the pre-release chef-dk.  Use chef-stable-trusty to install the stable release
+addons:
+  apt:
+    sources:
+      - chef-current-trusty
+    packages:
+      - chefdk
+
+cache: bundler
+
+services: docker
+
+# kitchen list -b | xargs -I {} echo "- INSTANCE={}"
+env:
+  matrix:
+  - INSTANCE=default-deb-ubuntu-1804
+  - INSTANCE=default-rpm-centos-74
+  - INSTANCE=system-limits-deb-ubuntu-1804
+  - INSTANCE=lwrps-ubuntu-1604
+  - INSTANCE=cluster-deb-ubuntu-1804
+  - INSTANCE=default-force-yes-ubuntu-1804
+
+before_script:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/cookstyle --version
+  - /opt/chefdk/embedded/bin/foodcritic --version
+
+script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen test ${INSTANCE}
+
+matrix:
+  include:
+    - script:
+      - /opt/chefdk/bin/chef exec rake
+      env: UNIT_AND_LINT=1

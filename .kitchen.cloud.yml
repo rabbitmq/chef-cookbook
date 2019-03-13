@@ -1,0 +1,19 @@
+---
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: latest
+
+platforms:
+- name: centos-7-x64
+  driver:
+    name: digitalocean
+
+- name: ubuntu-16-04-x64
+  driver:
+    name: digitalocean
+
+
+suites:
+  - name: default
+    run_list:
+      - recipe[rabbitmq::default]
