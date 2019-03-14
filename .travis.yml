@@ -2,9 +2,10 @@ sudo: required
 dist: xenial
 
 before_install:
-  - ./bin/ci/install_chef_dk.sh
   - gem update bundler
   - bundle update --bundler
+
+install: ./bin/ci/install_chef_dk.sh
 
 cache: bundler
 
