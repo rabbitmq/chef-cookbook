@@ -1,8 +1,18 @@
 # Change Log
 
-## [v5.7.3](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.3) (in development)
+## [v5.7.4](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.4) (in development)
 
 No changes yet.
+
+## [v5.7.3](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.3) (2019-03-15)
+
+* Follow-up to [\#508](https://github.com/rabbitmq/chef-cookbook/issues/508): more resources treat
+  distro version as `3.6.x`.
+
+  Note that `node['rabbitmq']['use_distro_version']` will be dropped in the next major version of this cookbook.
+  Consider provisioning a supported RabbitMQ version (e.g. `3.7.13`) instead of relying on `node['rabbitmq']['use_distro_version']`.
+
+  GitHub issue: [\#508](https://github.com/rabbitmq/chef-cookbook/issues/508)
 
 
 ## [v5.7.2](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.2) (2019-03-13)

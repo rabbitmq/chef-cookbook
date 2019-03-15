@@ -265,7 +265,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:21.2.5-1"
+          version: "1:21.2.7-1"
         version: "3.7.13"
     verifier:
       inspec_tests:
@@ -298,7 +298,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.2.5"
+          version: "21.2.7"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
         version: "3.7.13"
@@ -333,7 +333,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.2.5"
+          version: "21.2.7"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
         version: "3.7.13"
