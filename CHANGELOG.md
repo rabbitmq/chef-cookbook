@@ -1,5 +1,9 @@
 # Change Log
 
+## [v5.7.4](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.4) (in development)
+
+No changes yet.
+
 ## [v5.7.3](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.3) (2019-03-15)
 
 * Follow-up to [\#508](https://github.com/rabbitmq/chef-cookbook/issues/508): more resources treat
