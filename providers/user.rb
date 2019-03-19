@@ -23,7 +23,7 @@ include RabbitMQ::CoreHelpers
 use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def user_exists?(name)
-  cmd = if node['rabbitmq']['version'] >= '3.7.10'
+  cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')
           "rabbitmqctl -s list_users |grep '^#{name}\\s'"
         else
           "rabbitmqctl -q list_users |grep '^#{name}\\s'"
@@ -42,7 +42,7 @@ def user_exists?(name)
 end
 
 def user_has_tag?(name, tag)
-  cmd = if node['rabbitmq']['version'] >= '3.7.10'
+  cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')
           'rabbitmqctl -s list_users'
         else
           'rabbitmqctl -q list_users'
@@ -69,7 +69,7 @@ end
 # empty perm_list means we're checking for any permissions
 def user_has_permissions?(name, vhost, perm_list = nil)
   vhost = '/' if vhost.nil? # rubocop:enable all
-  cmd = if node['rabbitmq']['version'] >= '3.7.10'
+  cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')
           "rabbitmqctl -s list_user_permissions #{name} | grep \"^#{vhost}\\s\""
         else
           "rabbitmqctl -q list_user_permissions #{name} | grep \"^#{vhost}\\s\""

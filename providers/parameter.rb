@@ -26,7 +26,7 @@ include RabbitMQ::CoreHelpers
 use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def parameter_exists?(vhost, name)
-  cmd = if node['rabbitmq']['version'] >= '3.7.10'
+  cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')
           'rabbitmqctl list_parameters -s'
         else
           'rabbitmqctl list_parameters -q'

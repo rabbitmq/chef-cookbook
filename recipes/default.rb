@@ -307,3 +307,11 @@ else
     action :nothing
   end
 end
+
+# after installing rabbitmq-server, reload the 'packages' automatic attributes
+# from ohai. The version is used when deciding what release series-specific
+# features can bee used.
+ohai 'reload_packages' do
+  action :reload
+  plugin 'packages'
+end

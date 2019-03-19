@@ -50,6 +50,13 @@ module RabbitMQ
       node['init_package'] == 'systemd' || node['rabbitmq']['job_control'] == 'systemd'
     end
 
+    def installed_rabbitmq_version
+      # output a rabbitmq-server version string excluding anything after the "-",
+      # e.g. "3.7.13". This strips off development version qualifiers, package
+      # revision and so on.
+      node['packages']['rabbitmq-server']['version'][/[^-]+/]
+    end
+
     def rabbitmq_config_file_path
       configured_path = node['rabbitmq']['config']
 
