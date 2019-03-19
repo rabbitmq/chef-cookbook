@@ -341,8 +341,8 @@ else
 end
 
 # after installing rabbitmq-server, reload the 'packages' automatic attributes
-# from ohai, since this is used as base to figure out the proper parameters for
-# interacting with the version specific rabbitmqctl
+# from ohai. The version is used when deciding what release series-specific
+# features can bee used.
 ohai 'reload_packages' do
   action :reload
   plugin 'packages'
