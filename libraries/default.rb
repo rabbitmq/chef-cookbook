@@ -72,6 +72,14 @@ module RabbitMQ
       rabbitmq_version =~ /^3.6/
     end
 
+    def installed_rabbitmq_version
+      # output a rabbitmq-server version string excluding anything after the "-"
+      # (distro specific builds might contain additional non semver compatible
+      # versioning that we can not interpret in this cookbook)
+      # e.g. "3.7.13"
+      node['packages']['rabbitmq-server']['version'][/[^-]+/]
+    end
+
     def rabbitmq_config_file_path
       configured_path = node['rabbitmq']['config']
 

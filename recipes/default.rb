@@ -339,3 +339,11 @@ else
     action :nothing
   end
 end
+
+# after installing rabbitmq-server, reload the 'packages' automatic attributes
+# from ohai, since this is used as base to figure out the proper parameters for
+# interacting with the version specific rabbitmqctl
+ohai 'reload_packages' do
+  action :reload
+  plugin 'packages'
+end
