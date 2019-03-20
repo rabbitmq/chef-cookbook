@@ -51,7 +51,7 @@ default['rabbitmq']['retry'] = 0
 default['rabbitmq']['retry_delay'] = 2
 
 # config file location
-# http://www.rabbitmq.com/configure.html#define-environment-variables
+# https://www.rabbitmq.com/configure.html#define-environment-variables
 # "The .config extension is automatically appended unless a file extension is already present."
 default['rabbitmq']['config_root'] = '/etc/rabbitmq'
 default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq"
@@ -72,7 +72,7 @@ default['rabbitmq']['default_pass'] = 'guest'
 default['rabbitmq']['loopback_users'] = nil
 
 # Erlang kernel application options
-# See http://www.erlang.org/doc/man/kernel_app.html
+# See https://www.erlang.org/doc/man/kernel_app.html
 default['rabbitmq']['kernel']['inet_dist_listen_min'] = nil
 default['rabbitmq']['kernel']['inet_dist_listen_max'] = nil
 
@@ -87,12 +87,12 @@ default['rabbitmq']['clustering']['use_auto_clustering'] = false
 default['rabbitmq']['clustering']['cluster_name'] = nil
 default['rabbitmq']['clustering']['cluster_nodes'] = []
 
-# Manual clustering
-# - Node type : master | slave
-default['rabbitmq']['clustering']['node_type'] = 'master'
-# - Master node name : ex) rabbit@rabbit1
-default['rabbitmq']['clustering']['master_node_name'] = 'rabbit@rabbit1'
-# - Cluster node type : disc | ram
+## Chef-driven clustering.
+##
+## Note that there are no leader/master or follower nodes in RabbitMQ,
+## all nodes are equal peers: https://www.rabbitmq.com/clustering.html#peer-equality
+default['rabbitmq']['clustering']['node_type']         = 'master'
+default['rabbitmq']['clustering']['master_node_name']  = 'rabbit@rabbit1'
 default['rabbitmq']['clustering']['cluster_node_type'] = 'disc'
 
 # log levels

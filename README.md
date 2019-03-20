@@ -36,7 +36,7 @@ will go out of vendor support in 2019.
 ## Dependencies
 
 This cookbook depends on the [Erlang cookbook](https://supermarket.chef.io/cookbooks/erlang)
-and assumes that the user can configure it to provision a [supported Erlang/OTP version](http://www.rabbitmq.com/which-erlang.html).
+and assumes that the user can configure it to provision a [supported Erlang/OTP version](https://www.rabbitmq.com/which-erlang.html).
 
 Two more recipes are provided by this cookbook:`rabbitmq::erlang_package` and `rabbitmq::esl_erlang_package`.
 The latter is an alias to the `erlang::esl` recipe in the Erlang
@@ -362,9 +362,9 @@ in the RabbitMQ [Access Control guide](https://www.rabbitmq.com/access-control.h
 
 ##### Definitions Import
 
-[RabbitMQ management plugin](http://www.rabbitmq.com/management.html) provides a means to load a definitions
-(schema) file on node boot. See [Definitions Export and Import](http://www.rabbitmq.com/management.html#load-definitions)
-and [Backup](http://www.rabbitmq.com/backup.html) guides for details.
+[RabbitMQ management plugin](https://www.rabbitmq.com/management.html) provides a means to load a definitions
+(schema) file on node boot. See [Definitions Export and Import](https://www.rabbitmq.com/management.html#load-definitions)
+and [Backup](https://www.rabbitmq.com/backup.html) guides for details.
 
 To configure definition loading, set the following attribute:
 
@@ -414,7 +414,7 @@ node['rabbitmq']['enabled_users'] = [
 Note that with this approach user credentials will be stored in the attribute file.
 Using encrypted data bags is therefore highly recommended.
 
-Alternatively [definitions export and import](http://www.rabbitmq.com/management.html#load-definitions) (see above) can be used.
+Alternatively [definitions export and import](https://www.rabbitmq.com/management.html#load-definitions) (see above) can be used.
 Definition files contain password hashes since clear text values are not stored.
 
 ### vhosts
@@ -426,7 +426,7 @@ Configures a cluster of nodes.
 
 It supports two clustering modes: auto or manual.
 
-* Auto clustering: lists [cluster nodes in the RabbitMQ config file](http://www.rabbitmq.com/cluster-formation.html#peer-discovery-classic-config). Those are taken from lists the nodes `node['rabbitmq']['clustering']['cluster_nodes']`.
+* Auto clustering: lists [cluster nodes in the RabbitMQ config file](https://www.rabbitmq.com/cluster-formation.html#peer-discovery-classic-config). Those are taken from lists the nodes `node['rabbitmq']['clustering']['cluster_nodes']`.
 * Manual clustering : Configure the cluster by executing `rabbitmqctl join_cluster` command.
 
 #### Attributes
