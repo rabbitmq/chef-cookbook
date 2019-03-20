@@ -27,7 +27,7 @@ attribute :baseurl, String, required: true
 attribute :gpgcheck, [true, false], default: true
 attribute :gpgkey, String
 
-attribute :repo_gpgcheck, [true, false]
+attribute :repo_gpgcheck, [true, false], default: false
 attribute :repositoryid, String
 attribute :enabled, [true, false], default: true
 attribute :priority, String
