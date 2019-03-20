@@ -130,7 +130,7 @@ to them.
 
 This cookbook is set up to run tests under
 [Kitchen-ci's test-kitchen](https://github.com/test-kitchen/test-kitchen).
-It uses [inspec](http://inspec.io) to perform integration tests after the node
+It uses [inspec](https://inspec.io) to perform integration tests after the node
 has been converged.
 
 Test kitchen should run completely without exception using the default
@@ -182,7 +182,7 @@ The versioning for Chef Cookbook projects is X.Y.Z.
 
 Releases of Chef's cookbooks are usually announced on the Chef user
 mailing list. Releases of several cookbooks may be batched together
-and announced on the [Chef Blog](http://www.chef.io/blog).
+and announced on the [Chef Blog](https://www.chef.io/blog).
 
 ## Working with the community
 
@@ -190,18 +190,18 @@ These resources will help you learn more about Chef and connect to
 other members of the Chef community:
 
 * [openstack cookbook group](https://groups.google.com/forum/#!forum/opscode-chef-openstack)
-* [chef](http://lists.chef.io/sympa/info/chef) and
-  [chef-dev](http://lists.chef.io/sympa/info/chef-dev) mailing
+* [chef](http://lists.opscode.com/sympa/info/chef) and
+  [chef-dev](http://lists.opscode.com/sympa/info/chef-dev) mailing
   lists
 * #openstack-chef, #chef, #chef-hacking IRC channels on irc.freenode.net
-* Chef, Inc [product page](http://www.chef.io/chef)
+* Chef, Inc [product page](https://www.chef.io/chef)
 
 ## Cookbook Contribution Do's and Don't's
 
 Please do include tests for your contribution. If you need help, ask
 on the [openstack cookbook group](https://groups.google.com/forum/#!forum/opscode-chef-openstack)
-or the [chef-dev mailing list](http://lists.chef.io/sympa/info/chef-dev)
-or the [#chef-hacking IRC channel](http://community.chef.io/chat/chef-hacking).
+or the [chef-dev mailing list](http://lists.opscode.com/sympa/info/chef-dev)
+or the [#chef-hacking IRC channel](https://community.chef.io/chat/chef-hacking).
 
 Not all platforms that a cookbook supports may be supported by Test
 Kitchen. Please provide evidence of testing your contribution if it
