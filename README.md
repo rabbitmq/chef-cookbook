@@ -96,10 +96,10 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:21.2.6-1'
+node['rabbitmq']['erlang']['version'] = '1:21.3.1-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '21.2.6'
+node['rabbitmq']['erlang']['version'] = '21.3.1'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
