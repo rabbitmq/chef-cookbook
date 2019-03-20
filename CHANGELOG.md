@@ -4,7 +4,7 @@
 
 ### Enhancements
 
- * New LWRPs for provisioning team RabbitMQ's Erlang packages:
+ * New LWRPs for provisioning [team RabbitMQ's Erlang packages](https://www.rabbitmq.com/which-erlang.html#erlang-repositories):
 
     * `erlang_apt_repository_on_bintray` and `erlang_yum_repository_on_bintray` for provisioning
       an appropriate [package repository from Bintray](https://bintray.com/rabbitmq-erlang). They
@@ -13,6 +13,7 @@
       ``` ruby
       rabbitmq_erlang_apt_repository_on_bintray 'rabbitmq_erlang_repo_on_bintray' do
         distribution node['lsb']['codename'] unless node['lsb'].nil?
+        # See https://www.rabbitmq.com/install-debian.html
         components ['erlang-21.x']
 
         action :add
@@ -21,11 +22,9 @@
 
       ``` ruby
       rabbitmq_erlang_yum_repository_on_bintray 'rabbitmq_erlang' do
-        # for CentOS 7
+        # for RHEL/CentOS 7+, Fedora. See https://www.rabbitmq.com/install-rpm.html.
         baseurl 'https://dl.bintray.com/rabbitmq/rpm/rabbitmq-server/v3.7.x/el/7/'
         gpgkey 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
-
-        repo_gpgcheck false
 
         action :add
       end
@@ -39,10 +38,9 @@
         # On RHEL/CentOS/Fedora it would be '21.3.1'
         version '1:21.3.1-1'
 
-        # provision a HiPE-enabled Erlang runtime if possible
+        # provision a HiPE-enabled Erlang runtime if available
         use_hipe true
 
-        retry_delay 10
         action :install
       end
       ```

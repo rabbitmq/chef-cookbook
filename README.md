@@ -472,9 +472,71 @@ To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['P
 
 ## Resources/Providers
 
-There are 5 LWRPs for interacting with RabbitMQ.
+There are several LWRPs for interacting with RabbitMQ and a few setting up Erlang repositories
+and package.
+
+## erlang_apt_repository_on_bintray
+
+`erlang_apt_repository_on_bintray` sets up a [Debian package](https://www.rabbitmq.com/install-debian.html) repository [from Bintray](https://bintray.com/rabbitmq-erlang).
+It is a wrapper around the standard `apt_repository` resource provider.
+
+See also [RabbitMQ Erlang Compatibility guide](https://www.rabbitmq.com/which-erlang.html).
+
+``` ruby
+rabbitmq_erlang_apt_repository_on_bintray 'rabbitmq_erlang_repo_on_bintray' do
+  distribution node['lsb']['codename'] unless node['lsb'].nil?
+  # See https://www.rabbitmq.com/install-debian.html
+  components ['erlang-21.x']
+
+  action :add
+end
+```
+
+## erlang_yum_repository_on_bintray
+
+`erlang_apt_repository_on_bintray` sets up an [RPM package](https://www.rabbitmq.com/install-rpm.html) repository [from Bintray](https://bintray.com/rabbitmq-erlang).
+It is a wrapper around the standard `apt_repository` resource provider.
+
+See also [RabbitMQ Erlang Compatibility guide](https://www.rabbitmq.com/which-erlang.html).
+
+``` ruby
+rabbitmq_erlang_yum_repository_on_bintray 'rabbitmq_erlang' do
+  # for RHEL/CentOS 7+, Fedora. See https://www.rabbitmq.com/install-rpm.html.
+  baseurl 'https://dl.bintray.com/rabbitmq/rpm/rabbitmq-server/v3.7.x/el/7/'
+  gpgkey 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
+
+  action :add
+end
+```
+
+## erlang_package_from_bintray
+
+Install the package. Here's an example for Debian-based systems:
+
+``` ruby
+rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
+  # This package version assumes a Debian-based distribution.
+  version '1:21.3.1-1'
+
+  # provision a HiPE-enabled Erlang runtime if available
+  use_hipe true
+
+  action :install
+end
+```
+
+Here's another one for RPM-based ones:
+
+``` ruby
+rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
+  version '21.3.1'
+
+  action :install
+end
+```
 
 ### plugin
+
 Enables or disables a rabbitmq plugin. Plugins are not supported for releases prior to 2.7.0.
 
 - `:enable` enables a `plugin`
