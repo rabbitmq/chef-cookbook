@@ -1,18 +1,70 @@
 # Change Log
 
-## [v5.7.4](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.4) (in development)
+## [v5.7.4](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.4) (2019-03-20)
 
-No changes yet.
+### Enhancements
+
+ * New LWRPs for provisioning team RabbitMQ's Erlang packages:
+
+    * `erlang_apt_repository_on_bintray` and `erlang_yum_repository_on_bintray` for provisioning
+      an appropriate [package repository from Bintray](https://bintray.com/rabbitmq-erlang). They
+      are wrappers around the standard `apt_repository` and `yum_repository` resource providers:
+
+      ``` ruby
+      rabbitmq_erlang_apt_repository_on_bintray 'rabbitmq_erlang_repo_on_bintray' do
+        distribution node['lsb']['codename'] unless node['lsb'].nil?
+        components ['erlang-21.x']
+
+        action :add
+      end
+      ```
+
+      ``` ruby
+      rabbitmq_erlang_yum_repository_on_bintray 'rabbitmq_erlang' do
+        # for CentOS 7
+        baseurl 'https://dl.bintray.com/rabbitmq/rpm/rabbitmq-server/v3.7.x/el/7/'
+        gpgkey 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
+
+        repo_gpgcheck false
+
+        action :add
+      end
+      ```
+
+    * `erlang_package_from_bintray` install the package:
+
+      ``` ruby
+      rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
+        # This package version assumes a Debian-based distribution.
+        # On RHEL/CentOS/Fedora it would be '21.3.1'
+        version '1:21.3.1-1'
+
+        # provision a HiPE-enabled Erlang runtime if possible
+        use_hipe true
+
+        retry_delay 10
+        action :install
+      end
+      ```
+
+### Bug Fixes
+
+ * Actual installed RabbitMQ package version is now inferred using Ohai when deciding whether to use certain
+   features, CLI tool arguments and so on.
+
+   Contributed by Jan Klare.
+
+   GitHub issue: [\#509](https://github.com/rabbitmq/chef-cookbook/issues/509)
 
 ## [v5.7.3](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.3) (2019-03-15)
 
-* Follow-up to [\#508](https://github.com/rabbitmq/chef-cookbook/issues/508): more resources treat
-  distro version as `3.6.x`.
+ * Follow-up to [\#508](https://github.com/rabbitmq/chef-cookbook/issues/508): more resources treat
+   distro version as `3.6.x`.
 
-  Note that `node['rabbitmq']['use_distro_version']` will be dropped in the next major version of this cookbook.
-  Consider provisioning a supported RabbitMQ version (e.g. `3.7.13`) instead of relying on `node['rabbitmq']['use_distro_version']`.
+   Note that `node['rabbitmq']['use_distro_version']` will be dropped in the next major version of this cookbook.
+   Consider provisioning a supported RabbitMQ version (e.g. `3.7.13`) instead of relying on `node['rabbitmq']['use_distro_version']`.
 
-  GitHub issue: [\#508](https://github.com/rabbitmq/chef-cookbook/issues/508)
+   GitHub issue: [\#508](https://github.com/rabbitmq/chef-cookbook/issues/508)
 
 
 ## [v5.7.2](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.2) (2019-03-13)
