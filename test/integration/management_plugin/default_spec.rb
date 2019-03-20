@@ -1,5 +1,5 @@
 # The Inspec reference, with examples and extensive documentation, can be
-# found at http://inspec.io/docs/reference/resources/
+# found at https://inspec.io/docs/reference/resources/
 
 describe package('rabbitmq-server') do
   it { should be_installed }

@@ -1,5 +1,5 @@
 # The Inspec reference, with examples and extensive documentation, can be
-# found at http://inspec.io/docs/reference/resources/
+# found at https://inspec.io/docs/reference/resources/
 
 describe command('curl -u guest:guest -H "Accept: application/json" -X GET "http://localhost:15672/api/overview"') do
   its(:exit_status) { should eq 0 }
