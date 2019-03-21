@@ -41,6 +41,14 @@ platforms:
       intermediate_instructions:
         - RUN dnf -y install sudo
 
+  - name: amazonlinux-1
+    driver:
+      image: dokken/amazonlinux
+      pid_one_command: /sbin/init
+      hostname: localhost
+      intermediate_instructions:
+        - RUN yum -y install sudo which initscripts
+
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
@@ -253,6 +261,21 @@ suites:
       inspec_tests:
         - test/integration/default
     includes: ["centos-7.4", "centos-6.9"]
+
+  - name: default-modern-rpm
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::plugins]
+    attributes:
+      rabbitmq:
+        erlang:
+          enabled: true
+          version: "21.3.1"
+        version: "3.7.13"
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    includes: ["centos-7.4", "fedora-29"]
 
   - name: system-limits-rpm
     run_list:
