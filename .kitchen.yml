@@ -116,13 +116,29 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.2.6-1"
+          version: "21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:
       inspec_tests:
         - test/integration/default
     includes: ["centos-7.4", "centos-6.9"]
+
+  - name: default-modern-rpm
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::plugins]
+    attributes:
+      rabbitmq:
+        erlang:
+          enabled: true
+          version: "21.3.1"
+        version: "3.7.13"
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    includes: ["centos-7.4", "fedora-29"]
+
 
   - name: system-limits-rpm
     run_list:
@@ -133,7 +149,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.2-1"
+          version: "21.3.1-1"
       rabbitmq:
         version: "3.7.13"
         systemd:
@@ -152,7 +168,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2.6-1"
+          version: "1:21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:
@@ -169,7 +185,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2.6-1"
+          version: "1:21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:
@@ -186,7 +202,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.2.6-1"
+          version: "21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:
@@ -203,7 +219,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2.6-1"
+          version: "1:21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     attributes:
@@ -214,7 +230,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2.6-1"
+          version: "1:21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:
@@ -234,7 +250,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2.6-1"
+          version: "1:21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:

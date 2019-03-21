@@ -40,6 +40,7 @@ depends 'yum-erlang_solutions'
 depends 'dpkg_autostart'
 depends 'logrotate'
 
+supports 'amazon', '>= 2.0'
 supports 'centos', '>= 7.0'
 supports 'debian', '>= 8.0'
 supports 'opensuse'

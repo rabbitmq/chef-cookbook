@@ -45,7 +45,12 @@ default['rabbitmq']['config'] = nil
 default['rabbitmq']['logdir'] = nil
 default['rabbitmq']['server_additional_erl_args'] = nil
 default['rabbitmq']['ctl_erl_args'] = nil
-default['rabbitmq']['mnesiadir'] = '/var/lib/rabbitmq/mnesia'
+
+default['rabbitmq']['user'] = 'rabbitmq'
+default['rabbitmq']['group'] = 'rabbitmq'
+default['rabbitmq']['homedir'] = '/var/lib/rabbitmq'
+
+default['rabbitmq']['mnesiadir'] = "#{node['rabbitmq']['homedir']}/mnesia"
 default['rabbitmq']['service_name'] = 'rabbitmq-server'
 
 default['rabbitmq']['manage_service'] = true
@@ -75,8 +80,8 @@ default['rabbitmq']['default_pass'] = 'guest'
 ## If you wish to allow the default guest user to connect remotely, you need to change this to [].
 default['rabbitmq']['loopback_users'] = nil
 
-## Erlang kernel application options
-## See https://www.erlang.org/doc/man/kernel_app.html
+# Erlang kernel application options
+# See https://www.erlang.org/doc/man/kernel_app.html
 default['rabbitmq']['kernel']['inet_dist_listen_min'] = nil
 default['rabbitmq']['kernel']['inet_dist_listen_max'] = nil
 
@@ -253,14 +258,19 @@ default['rabbitmq']['erlang']['apt']['key'] = '6B73A36E6026DFCA'
 default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 
 # yum
-default['rabbitmq']['erlang']['yum']['baseurl'] =
-  case node['platform_family']
-  when 'rhel'
-    "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/#{node['platform_version'].to_i}"
-  else
-    # Fedora and so on
-    'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
-  end
+default['rabbitmq']['erlang']['yum']['baseurl'] = value_for_platform(
+  ['centos', 'rhel', 'scientific'] => {
+    '< 7.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6',
+    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+  },
+  'fedora' => {
+    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+  },
+  'amazon' => {
+    '< 2.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6',
+    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+  }
+)
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false

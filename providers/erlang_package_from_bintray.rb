@@ -76,7 +76,7 @@ action :install do
     end # DEBIAN_PACKAGES
   end
 
-  if platform_family?('rhel', 'centos', 'fedora')
+  if platform_family?('rhel', 'centos', 'scientific', 'fedora', 'amazon')
     package new_resource.name do
       package_name 'erlang'
       version new_resource.version unless new_resource.version.nil?
@@ -122,7 +122,7 @@ action :remove do
       end
     end # DEBIAN_PACKAGES
 
-    if platform_family?('rhel', 'centos', 'fedora')
+    if platform_family?('rhel', 'centos', 'scientific', 'fedora', 'amazon')
       package new_resource.name do
         action :remove
       end

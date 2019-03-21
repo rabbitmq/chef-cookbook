@@ -37,18 +37,22 @@ version = node['rabbitmq']['version']
 default_package_url = rabbitmq_package_download_base_url
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
-case node['platform_family']
-when 'rhel'
-  default_rpm_package_name = if node['platform_version'].to_i > 6
-   "rabbitmq-server-#{version}-1.el7.noarch.rpm"
-  else
-    "rabbitmq-server-#{version}-1.el6.noarch.rpm"
-  end
-when 'fedora'
-   default_rpm_package_name = "rabbitmq-server-#{version}-1.el7.noarch.rpm"
-when 'suse'
-  default_rpm_package_name = "rabbitmq-server-#{version}-1.suse.noarch.rpm"
-end
+default_rpm_package_name = value_for_platform(
+  ['centos', 'rhel', 'scientific'] => {
+    '< 7.0' => "rabbitmq-server-#{version}-1.el6.noarch.rpm",
+    'default' => "rabbitmq-server-#{version}-1.el7.noarch.rpm"
+  },
+  'fedora' => {
+    'default' => "rabbitmq-server-#{version}-1.el7.noarch.rpm"
+  },
+  'amazon' => {
+    '< 2.0' => "rabbitmq-server-#{version}-1.el6.noarch.rpm",
+    'default' => "rabbitmq-server-#{version}-1.el7.noarch.rpm"
+  },
+  'suse' => {
+    'default' => "rabbitmq-server-#{version}-1.suse.noarch.rpm"
+  }
+)
 
 deb_package_name = node['rabbitmq']['deb_package'] || default_deb_package_name
 deb_package_url = node['rabbitmq']['deb_package_url'] || default_package_url
@@ -150,8 +154,7 @@ when 'fedora'
     action :create_if_missing
   end
   rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
-
-when 'rhel'
+when 'rhel', 'centos', 'scientific'
   package 'logrotate'
   if node['platform_version'].to_i >= 7
     package 'socat'
@@ -179,7 +182,32 @@ when 'rhel'
     action :create_if_missing
   end
   rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+when 'amazon'
+  package 'logrotate'
+  package 'socat'
 
+  # This is needed since Erlang Solutions' packages provide "esl-erlang"; this package
+  # just requires "esl-erlang" and provides "erlang".
+  if node['erlang']['install_method'] == 'esl'
+    Chef::Log.info('Downloading a shim package for esl-erlang')
+    remote_file "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm" do
+      source "#{node['rabbitmq']['esl-erlang_package_url']}#{node['rabbitmq']['esl-erlang_package']}"
+    end
+    rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
+  end
+
+  if use_distro_version?
+    package 'rabbitmq-server' do
+      action :install
+      version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
+    end
+  else
+    remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+      source "#{rpm_package_url}#{rpm_package_name}"
+      action :create_if_missing
+    end
+    yum_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+  end
 when 'suse'
 
   package 'logrotate'
@@ -207,6 +235,21 @@ when 'smartos'
     action :start
   end
 
+end
+
+if platform_family?('amazon')
+  user 'rabbitmq' do
+    username node['rabbitmq']['user']
+    shell '/sbin/nologin'
+    home '/var/lib/rabbitmq'
+    action :create
+  end
+
+  group 'rabbitmq' do
+    group_name node['rabbitmq']['group']
+    members [node['rabbitmq']['user']]
+    action :manage
+  end
 end
 
 if node['rabbitmq']['logdir']
