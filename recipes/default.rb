@@ -62,25 +62,6 @@ default_rpm_package_name = value_for_platform(
   }
 )
 
-# case node['platform_family']
-# when 'rhel', 'centos'
-#   default_rpm_package_name = if node['platform_version'].to_i > 6
-#    "rabbitmq-server-#{version}-1.el7.noarch.rpm"
-#   else
-#     "rabbitmq-server-#{version}-1.el6.noarch.rpm"
-#   end
-# when 'fedora'
-#    default_rpm_package_name = "rabbitmq-server-#{version}-1.el7.noarch.rpm"
-# when 'amazon'
-#   default_rpm_package_name = if node['platform_version'].to_i >= 2
-#    "rabbitmq-server-#{version}-1.el7.noarch.rpm"
-#   else
-#     "rabbitmq-server-#{version}-1.el6.noarch.rpm"
-#   end
-# when 'suse'
-#   default_rpm_package_name = "rabbitmq-server-#{version}-1.suse.noarch.rpm"
-# end
-
 deb_package_name = node['rabbitmq']['deb_package'] || default_deb_package_name
 deb_package_url = node['rabbitmq']['deb_package_url'] || default_package_url
 rpm_package_name = node['rabbitmq']['rpm_package'] || default_rpm_package_name
