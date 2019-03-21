@@ -41,7 +41,12 @@ default['rabbitmq']['config'] = nil
 default['rabbitmq']['logdir'] = nil
 default['rabbitmq']['server_additional_erl_args'] = nil
 default['rabbitmq']['ctl_erl_args'] = nil
-default['rabbitmq']['mnesiadir'] = '/var/lib/rabbitmq/mnesia'
+
+default['rabbitmq']['user'] = 'rabbitmq'
+default['rabbitmq']['group'] = 'rabbitmq'
+default['rabbitmq']['homedir'] = '/var/lib/rabbitmq'
+
+default['rabbitmq']['mnesiadir'] = "#{node['rabbitmq']['homedir']}/mnesia"
 default['rabbitmq']['service_name'] = 'rabbitmq-server'
 
 default['rabbitmq']['manage_service'] = true
@@ -249,8 +254,14 @@ default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 # yum
 default['rabbitmq']['erlang']['yum']['baseurl'] =
   case node['platform_family']
-  when 'rhel'
+  when 'rhel', 'centos'
     "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/#{node['platform_version'].to_i}"
+  when 'amazon'
+    if node['platform_version'].to_i >= 2
+      "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7"
+    else
+      "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6"
+    end
   else
     # Fedora and so on
     'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'

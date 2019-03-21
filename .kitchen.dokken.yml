@@ -41,13 +41,12 @@ platforms:
       intermediate_instructions:
         - RUN dnf -y install sudo
 
-  - name: amazonlinux-1
+  - name: amazonlinux-2
     driver:
-      image: dokken/amazonlinux
-      pid_one_command: /sbin/init
-      hostname: localhost
+      image: amazonlinux:2
+      pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
-        - RUN yum -y install sudo which initscripts
+        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
   - name: ubuntu-18.04
     driver:
@@ -262,6 +261,7 @@ suites:
         - test/integration/default
     includes: ["centos-7.4", "centos-6.9"]
 
+  # Fedora and Amazon Linux 2 require recipe[rabbitmq::erlang_package]
   - name: default-modern-rpm
     run_list:
       - recipe[rabbitmq::erlang_package]
@@ -275,7 +275,25 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7.4", "fedora-29"]
+    includes: ["centos-7.4", "fedora-29", "amazonlinux-2"]
+
+  # Fedora and Amazon Linux 2 require recipe[rabbitmq::erlang_package]
+  - name: 36x-modern-rpm
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::plugins]
+    attributes:
+      rabbitmq:
+        erlang:
+          enabled: true
+          version: "20.3.8.20"
+          yum:
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/20/el/7
+        version: "3.6.16"
+    verifier:
+      inspec_tests:
+        - test/integration/36x
+    includes: ["centos-7.4", "fedora-29", "amazonlinux-2"]
 
   - name: system-limits-rpm
     run_list:
