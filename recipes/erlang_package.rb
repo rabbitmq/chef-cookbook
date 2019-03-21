@@ -48,14 +48,14 @@ if platform_family?('debian', 'ubuntu')
   end
 end
 
-if platform_family?('rhel', 'centos')
+if platform_family?('rhel', 'centos', 'scientific')
   if node['platform_version'].to_i <= 5
     Chef::Log.fatal('RabbitMQ package repositories are not available for EL5')
     raise
   end
 end
 
-if platform_family?('rhel', 'centos', 'fedora', 'amazon')
+if platform_family?('rhel', 'centos', 'fedora', 'amazon', 'scientific')
   rabbitmq_erlang_yum_repository_on_bintray 'rabbitmq_erlang' do
     baseurl node['rabbitmq']['erlang']['yum']['baseurl']
     gpgkey node['rabbitmq']['erlang']['yum']['gpgkey']

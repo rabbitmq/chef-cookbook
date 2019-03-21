@@ -34,6 +34,14 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
+  - name: scientificlinux-7
+    driver:
+      image: sl:7
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
+
   - name: fedora-29
     driver:
       image: dokken/fedora-29
@@ -43,7 +51,7 @@ platforms:
 
   - name: amazonlinux-2
     driver:
-      image: amazonlinux:2
+      image: dokken/amazonlinux-2
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
@@ -253,7 +261,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.2-1"
+          version: "21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:
@@ -275,7 +283,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7.4", "fedora-29", "amazonlinux-2"]
+    includes: ["centos-7.4", "fedora-29", "amazonlinux-2", "scientificlinux-7"]
 
   # Fedora and Amazon Linux 2 require recipe[rabbitmq::erlang_package]
   - name: 36x-modern-rpm
@@ -293,7 +301,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/36x
-    includes: ["centos-7.4", "fedora-29", "amazonlinux-2"]
+    includes: ["centos-7.4", "fedora-29", "amazonlinux-2", "scientificlinux-7"]
 
   - name: system-limits-rpm
     run_list:
@@ -304,7 +312,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.2-1"
+          version: "21.3.1-1"
       rabbitmq:
         version: "3.7.13"
         systemd:
@@ -323,7 +331,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2-1"
+          version: "1:21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:
@@ -357,7 +365,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2-1"
+          version: "1:21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:
@@ -374,7 +382,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.2-1"
+          version: "21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:
@@ -391,7 +399,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2-1"
+          version: "1:21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     attributes:
@@ -402,7 +410,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2-1"
+          version: "1:21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:
@@ -422,7 +430,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.2-1"
+          version: "1:21.3.1-1"
       rabbitmq:
         version: "3.7.13"
     verifier:

@@ -22,7 +22,7 @@ default['rabbitmq']['erlang']['enabled'] = false
 #
 if !node['rabbitmq']['use_distro_version'] && !node['rabbitmq']['erlang']['enabled'] &&
    (node['platform'] == 'debian' && node['platform_version'].to_i < 8 ||
-    node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7)
+    platform_family?('rhel', 'centos', 'scientific') && node['platform_version'].to_i < 7)
   default['erlang']['install_method'] = 'esl'
 end
 
@@ -252,20 +252,19 @@ default['rabbitmq']['erlang']['apt']['key'] = '6B73A36E6026DFCA'
 default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 
 # yum
-default['rabbitmq']['erlang']['yum']['baseurl'] =
-  case node['platform_family']
-  when 'rhel', 'centos'
-    "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/#{node['platform_version'].to_i}"
-  when 'amazon'
-    if node['platform_version'].to_i >= 2
-      "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7"
-    else
-      "https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6"
-    end
-  else
-    # Fedora and so on
-    'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
-  end
+default['rabbitmq']['erlang']['yum']['baseurl'] = value_for_platform(
+  ['centos', 'rhel', 'scientific'] => {
+    '< 7.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6',
+    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+  },
+  'fedora' => {
+    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+  },
+  'amazon' => {
+    '< 2.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6',
+    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+  }
+)
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false

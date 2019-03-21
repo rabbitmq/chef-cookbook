@@ -46,7 +46,7 @@ end
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
 default_rpm_package_name = value_for_platform(
-  ['centos', 'rhel'] => {
+  ['centos', 'rhel', 'scientific'] => {
     '< 7.0' => "rabbitmq-server-#{version}-1.el6.noarch.rpm",
     'default' => "rabbitmq-server-#{version}-1.el7.noarch.rpm"
   },
@@ -180,7 +180,7 @@ when 'fedora'
     end
     rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
   end
-when 'rhel', 'centos'
+when 'rhel', 'centos', 'scientific'
   package 'logrotate'
   if node['platform_version'].to_i >= 7
     package 'socat'
