@@ -12,13 +12,16 @@ This cookbook targets Chef 12.1 and later.
 
 ## Supported Distributions
 
-The release was tested with recent RabbitMQ releases on
+The cookbook targets and is tested against
 
+ * RHEL 7
  * CentOS 7
  * Ubuntu 18.04
  * Ubuntu 16.04
  * Debian 9
  * Fedora 29
+ * Amazon Linux 2 (as of `5.7.5`)
+ * Scientific Linux 7
 
 Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
 
