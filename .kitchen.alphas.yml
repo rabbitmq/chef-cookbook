@@ -33,6 +33,13 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
+  - name: fedora-29
+    driver:
+      image: dokken/fedora-29
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN dnf -y install sudo
+
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
@@ -66,7 +73,7 @@ suites:
         esl:
           version: "1:21.3.1-1"
       rabbitmq:
-        # export RABBITMQ_VERSION="3.7.13-alpha.21"
+        # export RABBITMQ_VERSION="3.7.14-alpha.11"
         version: <%= ENV['RABBITMQ_VERSION'] %>
         deb_package_url: "https://dl.bintray.com/rabbitmq/all-dev/rabbitmq-server/<%= ENV['RABBITMQ_VERSION'] %>/"
         deb_package: "rabbitmq-server_<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1_all.deb"
@@ -78,14 +85,13 @@ suites:
 
   - name: default-rpm-el7-alpha
     run_list:
-      - recipe[erlang::default]
+      - recipe[rabbitmq::erlang_package]
       - recipe[rabbitmq::plugins]
     attributes:
-      erlang:
-        install_method: "esl"
-        esl:
-          version: "21.3.1-1"
       rabbitmq:
+        erlang:
+          enabled: true
+          version: "21.3.2"
         # export RABBITMQ_VERSION="3.7.13-alpha.21"
         version: <%= ENV['RABBITMQ_VERSION'] %>
 
@@ -94,7 +100,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7.4"]
+    includes: ["centos-7.4", "fedora-29"]
 
   - name: default-rpm-el6-alpha
     run_list:
