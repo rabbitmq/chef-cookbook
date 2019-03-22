@@ -3,7 +3,7 @@
 
 describe package('erlang') do
   it { should be_installed }
-  its('version') { should match(/^21.3.1/) }
+  its('version') { should match(/^21.3.2/) }
 end
 
 describe package('rabbitmq-server') do
