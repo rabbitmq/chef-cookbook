@@ -70,3 +70,22 @@ if platform_family?('rhel', 'centos', 'fedora', 'amazon', 'scientific')
     retry_delay node['rabbitmq']['erlang']['retry_delay'] unless node['rabbitmq']['erlang']['retry_delay'].nil?
   end
 end
+
+
+
+if platform_family?('suse', 'opensuse')
+  rabbitmq_erlang_zypper_repository_on_suse 'rabbitmq_erlang' do
+    baseurl node['rabbitmq']['erlang']['zypper']['baseurl']
+    baseurl node['rabbitmq']['rabbitmq']['zypper']['baseurl']
+    gpgkey node['rabbitmq']['erlang']['zypper']['gpgkey']
+    gpgcheck node['rabbitmq']['erlang']['zypper']['gpgcheck']
+   # repo_gpgcheck node['rabbitmq']['erlang']['zypper']['repo_gpgcheck']
+    enabled true
+  end
+
+  rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
+    version erlang_version unless erlang_version.nil?
+
+    retry_delay node['rabbitmq']['erlang']['retry_delay'] unless node['rabbitmq']['erlang']['retry_delay'].nil?
+  end
+end

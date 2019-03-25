@@ -17,6 +17,15 @@ verifier:
   sudo: false
 
 platforms:
+  - name: opensuse-leap-42
+    driver:
+      image: dokken/opensuse-leap-42
+      platform: suse
+      pid_one_command: /usr/lib/systemd/systemd
+      hostname: localhost
+      intermediate_instructions:
+        - RUN zypper -n install sudo lsof which openssl net-tools
+
   - name: centos-6.9
     driver:
       image: dokken/centos-6
@@ -422,3 +431,26 @@ suites:
       inspec_tests:
         - test/erlang_package/pinned_rpm
     includes: ["centos-6.9"]
+
+    # Latest Erlang package, RPM, openSUSE leap 15 repo
+  - name: rabbitmq-erlang-latest-suse
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+        rabbitmq:
+          rabbitmq:
+            version: "3.7.13"
+            enabled: true
+            zypper:
+              baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_42.3/
+              repo_gpgcheck: true
+          erlang:
+            enabled: true
+            zypper:
+              baseurl: http://download.opensuse.org/repositories/devel:/languages:/erlang:/Factory/openSUSE_Leap_42.3/
+              repo_gpgcheck: true          
+    verifier:
+      inspec_tests:
+        - test/erlang_package/latest_rpm
+    includes: ["opensuse-leap-42"]
