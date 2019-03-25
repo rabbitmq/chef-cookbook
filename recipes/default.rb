@@ -27,11 +27,12 @@ end
 class Chef::Recipe
   include RabbitMQ::CoreHelpers # rubocop:enable all
 end
+#output="#{Chef::JSONCompat.to_json_pretty(node.to_hash)}"
+#log output
 
 unless node['rabbitmq']['erlang']['enabled']
   include_recipe 'erlang'
 end
-
 version = node['rabbitmq']['version']
 
 default_package_url = rabbitmq_package_download_base_url
@@ -54,10 +55,14 @@ default_rpm_package_name = value_for_platform(
   }
 )
 
+
+
+
 deb_package_name = node['rabbitmq']['deb_package'] || default_deb_package_name
 deb_package_url = node['rabbitmq']['deb_package_url'] || default_package_url
 rpm_package_name = node['rabbitmq']['rpm_package'] || default_rpm_package_name
 rpm_package_url = node['rabbitmq']['rpm_package_url'] || default_package_url
+
 
 # see rabbitmq/chef-cookbook#351
 directory node['rabbitmq']['config_root'] do
@@ -208,11 +213,14 @@ when 'amazon'
     end
     yum_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
   end
-when 'suse'
 
+when 'suse'
   package 'logrotate'
   package 'socat'
-
+  
+  service 'epmd' do
+    action :start
+  end
   # rabbitmq-server-plugins needs to be first so they both get installed
   # from the right repository. Otherwise, zypper will stop and ask for a
   # vendor change.

@@ -19,6 +19,7 @@ platforms:
   - name: debian-9
   - name: fedora-29
   - name: centos-6.9
+  - name: opensuse-leap-15.0
 
 #
 # Suites
@@ -368,3 +369,23 @@ suites:
       inspec_tests:
         - test/erlang_package/pinned_rpm
     includes: ["centos-6.9"]
+
+  # Latest Erlang package, RPM, openSUSE leap 15 repo
+  - name: rabbitmq-erlang-latest-rpm-suse
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      rabbitmq:
+        erlang:
+          enabled: true
+          yum:
+            baseurl: obs://devel:languages:erlang:Factory openSUSE-Erlang-Factory
+            repo_gpgcheck: false
+        version: "3.7.13"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/latest_rpm
+    includes: ["opensuse-leap-15.0"]
+
+
