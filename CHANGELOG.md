@@ -1,8 +1,19 @@
 # Change Log
 
-## [v5.7.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.5) (in development)
+## [v5.7.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.5) (2019-03-25)
 
-No changes yet.
+### Enhancements
+
+ * Amazon Linux 2 is now supported. Note that it requires Erlang to be provisioned via
+   [team RabbitMQ Erlang repositories](https://www.rabbitmq.com/which-erlang.html#erlang-repositories).
+
+   GitHub issue: [\#515](https://github.com/rabbitmq/chef-cookbook/issues/515).
+
+### Bug Fixes
+
+ * Scientific Linux lacked Kitchen integration tests.
+
+   GitHub issue: [\#516](https://github.com/rabbitmq/chef-cookbook/issues/516).
 
 ## [v5.7.4](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.4) (2019-03-20)
 
