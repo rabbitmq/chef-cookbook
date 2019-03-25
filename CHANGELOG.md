@@ -1,8 +1,23 @@
 # Change Log
 
-## [v5.7.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.5) (in development)
+## [v5.7.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.6) (in development)
 
 No changes yet.
+
+## [v5.7.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.5) (2019-03-25)
+
+### Enhancements
+
+ * Amazon Linux 2 is now supported. Note that it requires Erlang to be provisioned via
+   [team RabbitMQ Erlang repositories](https://www.rabbitmq.com/which-erlang.html#erlang-repositories).
+
+   GitHub issue: [\#515](https://github.com/rabbitmq/chef-cookbook/issues/515).
+
+### Bug Fixes
+
+ * Scientific Linux lacked Kitchen integration tests.
+
+   GitHub issue: [\#516](https://github.com/rabbitmq/chef-cookbook/issues/516).
 
 ## [v5.7.4](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.4) (2019-03-20)
 
@@ -39,8 +54,8 @@ No changes yet.
       ``` ruby
       rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
         # This package version assumes a Debian-based distribution.
-        # On RHEL/CentOS/Fedora it would be '21.3.1'
-        version '1:21.3.1-1'
+        # On RHEL/CentOS/Fedora it would be '21.3.2'
+        version '1:21.3.2-1'
 
         # provision a HiPE-enabled Erlang runtime if available
         use_hipe true
