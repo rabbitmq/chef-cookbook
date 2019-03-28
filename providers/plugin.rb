@@ -23,7 +23,7 @@ include RabbitMQ::CoreHelpers
 
 def plugin_enabled?(name)
   ENV['PATH'] = "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
-  cmdstr = if rabbitmq_37? && !use_distro_version?
+  cmdstr = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7')
              "rabbitmq-plugins list -q -e '#{name}\\b'"
            else
              "rabbitmq-plugins list -e '#{name}\\b'"
