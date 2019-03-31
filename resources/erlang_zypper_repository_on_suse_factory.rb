@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq
-# Resource:: erlang_zypper_repository_on_suse
+# Resource:: erlang_zypper_repository_on_suse_factory
 #
 # Copyright 2019, Pivotal Software, Inc.
 #

@@ -444,12 +444,12 @@ suites:
             enabled: true
             zypper:
               baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_42.3/
-              repo_gpgcheck: true
+              repo_gpgcheck: false
           erlang:
             enabled: true
             zypper:
               baseurl: http://download.opensuse.org/repositories/devel:/languages:/erlang:/Factory/openSUSE_Leap_42.3/
-              repo_gpgcheck: true          
+              repo_gpgcheck: false          
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm

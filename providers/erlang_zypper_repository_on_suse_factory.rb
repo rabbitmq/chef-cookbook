@@ -23,7 +23,7 @@ use_inline_resources if defined?(:use_inline_resources) # ~FC113
 provides :erlang_repository, platform_family: %w(suse opensuse)
 
 action :create do
-  execute 'zypper refresh' do
+  execute 'zypper op' do
     command 'zypper --gpg-auto-import-keys refresh'
     # triggered by a notification
     action :nothing
@@ -52,8 +52,10 @@ action :create do
     timeout new_resource.timeout unless new_resource.timeout.nil?
 
     action :create
+    
+    action :refresh
 
-    notifies :run, 'execute[zypper refresh]', :immediately
+    notifies :run, 'execute[zypper op]', :immediately
 
     action :create
   end
