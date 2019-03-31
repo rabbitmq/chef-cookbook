@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # Version to install
-default['rabbitmq']['version'] = '3.7.13'
+default['rabbitmq']['version'] = '3.7.14'
 
 default['rabbitmq']['package_source'] = 'github'
 

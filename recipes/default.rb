@@ -218,9 +218,6 @@ when 'suse'
   package 'logrotate'
   package 'socat'
   
-  service 'epmd' do
-    action :start
-  end
   # rabbitmq-server-plugins needs to be first so they both get installed
   # from the right repository. Otherwise, zypper will stop and ask for a
   # vendor change.
@@ -232,6 +229,11 @@ when 'suse'
     action :install
     version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
   end
+
+  service 'epmd' do
+    action :start
+  end
+
 
 when 'smartos'
   package 'rabbitmq' do

@@ -440,7 +440,7 @@ suites:
     attributes:
         rabbitmq:
           rabbitmq:
-            version: "3.7.13"
+            version: "3.7.14"
             enabled: true
             zypper:
               baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_42.3/
