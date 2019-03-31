@@ -24,7 +24,8 @@ default_action :create
 attribute :name, String, name_attribute: true
 attribute :baseurl, String, required: true
 
-attribute :gpgcheck, [true, false], default: true
+property :gpgautoimportkeys, [true, false], default: true
+attribute :gpgcheck, [true, false], default: false
 attribute :gpgkey, String
 
 attribute :repo_gpgcheck, [true, false], default: true

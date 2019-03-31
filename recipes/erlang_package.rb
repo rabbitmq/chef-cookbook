@@ -79,7 +79,6 @@ if platform_family?('suse', 'opensuse')
     baseurl node['rabbitmq']['rabbitmq']['zypper']['baseurl']
     gpgkey node['rabbitmq']['erlang']['zypper']['gpgkey']
     gpgcheck node['rabbitmq']['erlang']['zypper']['gpgcheck']
-   # repo_gpgcheck node['rabbitmq']['erlang']['zypper']['repo_gpgcheck']
     enabled true
   end
 
