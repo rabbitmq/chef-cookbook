@@ -17,7 +17,7 @@ verifier:
   sudo: false
 
 platforms:
-  - name: opensuse-leap-42
+  - name: opensuse-leap-42.3
     driver:
       image: dokken/opensuse-leap-42
       platform: suse
@@ -453,4 +453,4 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["opensuse-leap-42"]
+    includes: ["opensuse-leap-42.3"]

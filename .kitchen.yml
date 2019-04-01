@@ -19,7 +19,7 @@ platforms:
   - name: debian-9
   - name: fedora-29
   - name: centos-6.9
-  - name: opensuse-leap-15.0
+  - name: opensuse-leap-42.3
 
 #
 # Suites
@@ -377,15 +377,20 @@ suites:
       - recipe[rabbitmq::default]
     attributes:
       rabbitmq:
+        rabbitmq:
+          version: "3.7.14"
+          enabled: true
+          zypper:
+            baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_42.3/
+            repo_gpgcheck: false
         erlang:
           enabled: true
-          yum:
-            baseurl: obs://devel:languages:erlang:Factory openSUSE-Erlang-Factory
+          zypper:
+            baseurl: http://download.opensuse.org/repositories/devel:/languages:/erlang:/Factory/openSUSE_Leap_42.3/
             repo_gpgcheck: false
-        version: "3.7.13"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["opensuse-leap-15.0"]
+    includes: ["opensuse-leap-42.3"]
 
 
