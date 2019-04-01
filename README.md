@@ -172,7 +172,7 @@ Set `node['rabbitmq']['version']` to specify a version:
 node['rabbitmq']['version'] = "3.7.13"
 ```
 
-If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['deb_package_url']` overridden
+If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
 from earlier versions, consider omitting those attributes. Otherwise see a section on download
 location customization below.
 
@@ -325,7 +325,7 @@ node['rabbitmq']['ssl_listen_interface'] = nil
 
 #### Custom Package Download Locations
 
-`node['rabbitmq']['deb_package_url']` and `node['rabbitmq']['deb_package_url']` can be used
+`node['rabbitmq']['deb_package_url']` and `node['rabbitmq']['rpm_package_url']` can be used
 to override the package download location. They configure a prefix without a version.
 Set them to a download location without a version if you want to provision from a custom
 endpoint such as a local mirror.
