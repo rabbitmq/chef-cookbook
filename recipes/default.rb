@@ -201,23 +201,16 @@ when 'amazon'
     rpm_package "#{Chef::Config[:file_cache_path]}/esl-erlang-compat.rpm"
   end
 
-  if use_distro_version?
-    package 'rabbitmq-server' do
-      action :install
-      version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
-    end
-  else
-    remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
-      source "#{rpm_package_url}#{rpm_package_name}"
-      action :create_if_missing
-    end
-    yum_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+  remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+    source "#{rpm_package_url}#{rpm_package_name}"
+    action :create_if_missing
   end
+  yum_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
 
 when 'suse'
   package 'logrotate'
   package 'socat'
-  
+
   # rabbitmq-server-plugins needs to be first so they both get installed
   # from the right repository. Otherwise, zypper will stop and ask for a
   # vendor change.
