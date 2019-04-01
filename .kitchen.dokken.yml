@@ -441,15 +441,11 @@ suites:
         rabbitmq:
           rabbitmq:
             version: "3.7.14"
-            enabled: true
-            zypper:
-              baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_42.3/
-              repo_gpgcheck: false
           erlang:
             enabled: true
+            version: "21.3.2"
             zypper:
-              baseurl: http://download.opensuse.org/repositories/devel:/languages:/erlang:/Factory/openSUSE_Leap_42.3/
-              repo_gpgcheck: false          
+              baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_42.3/
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm

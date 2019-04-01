@@ -76,9 +76,9 @@ end
 if platform_family?('suse', 'opensuse')
   rabbitmq_erlang_zypper_repository_on_suse_factory 'rabbitmq_erlang' do
     baseurl node['rabbitmq']['erlang']['zypper']['baseurl']
-    baseurl node['rabbitmq']['rabbitmq']['zypper']['baseurl']
     gpgkey node['rabbitmq']['erlang']['zypper']['gpgkey']
     gpgcheck node['rabbitmq']['erlang']['zypper']['gpgcheck']
+    gpgautoimportkeys node['rabbitmq']['erlang']['zypper']['gpgautoimportkeys']
     enabled true
   end
 

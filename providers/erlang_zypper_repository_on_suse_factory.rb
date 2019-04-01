@@ -37,6 +37,8 @@ action :create do
     gpgkey new_resource.gpgkey unless new_resource.gpgkey.nil?
     gpgautoimportkeys new_resource.gpgautoimportkeys unless new_resource.gpgautoimportkeys.nil?
 
+    autorefresh true
+
     repositoryid new_resource.repositoryid unless new_resource.repositoryid.nil?
     enabled new_resource.enabled unless new_resource.enabled.nil?
     priority new_resource.priority unless new_resource.priority.nil?
@@ -52,8 +54,6 @@ action :create do
 
     timeout new_resource.timeout unless new_resource.timeout.nil?
 
-    action :create
-    
     notifies :run, 'execute[zypper refresh]', :immediately
 
     action :create
