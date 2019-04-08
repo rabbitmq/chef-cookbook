@@ -225,7 +225,7 @@ default['rabbitmq']['policies'] = {}
 default['rabbitmq']['disabled_policies'] = []
 
 # Example HA policies
-# default['rabbitmq']['policies']['ha-all']['pattern'] = '^(?!amq\\.).*'
+# default['rabbitmq']['policies']['ha-all']['pattern'] = '^(?!amq\.).*'
 # default['rabbitmq']['policies']['ha-all']['params'] = { 'ha-mode' => 'all' }
 # default['rabbitmq']['policies']['ha-all']['priority'] = 0
 #
