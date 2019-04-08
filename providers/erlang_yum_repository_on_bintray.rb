@@ -23,8 +23,8 @@ use_inline_resources if defined?(:use_inline_resources) # ~FC113
 provides :erlang_repository, platform_family: %w(rhel centos fedora)
 
 action :create do
-  execute 'yum update' do
-    command 'yum update -y'
+  execute "yum update #{new_resource.name}" do
+    command "yum update --disablerepo=* --enablerepo=#{new_resource.name}"
     # triggered by a notification
     action :nothing
   end
@@ -54,7 +54,7 @@ action :create do
 
     action :create
 
-    notifies :run, 'execute[yum update]', :immediately
+    notifies :run, "execute[yum update #{new_resource.name}]", :immediately
 
     action :create
   end
