@@ -22,8 +22,8 @@ use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 provides :erlang_package_from_bintray, platform_family: %w(debian ubuntu rhel centos fedora)
 
-DEBIAN_PACKAGES = %w(erlang-asn1 erlang-crypto erlang-public-key erlang-ssl erlang-syntax-tools
-                     erlang-mnesia erlang-runtime-tools erlang-snmp erlang-os-mon erlang-parsetools
+DEBIAN_PACKAGES = %w(erlang-mnesia erlang-runtime-tools erlang-asn1 erlang-crypto erlang-public-key erlang-ssl
+                    erlang-syntax-tools erlang-snmp erlang-os-mon erlang-parsetools
                      erlang-inets erlang-tools erlang-eldap erlang-xmerl
                      erlang-dev erlang-edoc erlang-eunit erlang-erl-docgen erlang-src)
 
@@ -53,27 +53,30 @@ action :install do
       not_if { new_resource.version.nil? }
     end
 
-    DEBIAN_PACKAGES.each do |p|
-      apt_preference "#{new_resource.name}-#{p}" do
-        package_name p
-        pin "version #{new_resource.version}"
-        pin_priority 900
-        action :add
-        not_if { new_resource.version.nil? }
+    # Note: apt_resource can install multiple packages at once but not of a specific version.
+    # This may be a bug in that resource. Instead of relying on pinning to happen first, install
+    # packages one by one: slower but avoids implicit behavior/execution order dependency. MK.
+    unless new_resource.version.nil?
+      DEBIAN_PACKAGES.each do |p|
+        apt_preference "#{new_resource.name}-#{p}" do
+          package_name p
+          pin "version #{new_resource.version}"
+          pin_priority 900
+          action :add
+          not_if { new_resource.version.nil? }
+        end
       end
+    end
 
-      # Note: apt_resource can install multiple packages at once but not of a specific version.
-      # This may be a bug in that resource. Instead of relying on pinning to happen first, install
-      # packages one by one: slower but avoids implicit behavior/execution order dependency. MK.
-      apt_package(p) do
-        options new_resource.options unless new_resource.options.nil?
-        version new_resource.version unless new_resource.version.nil?
-        retries new_resource.retries
-        retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
+    apt_package(DEBIAN_PACKAGES) do
+      options new_resource.options unless new_resource.options.nil?
+      # must provide an array of versions!
+      version DEBIAN_PACKAGES.map { new_resource.version } unless new_resource.version.nil?
+      retries new_resource.retries
+      retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
 
-        action :install
-      end
-    end # DEBIAN_PACKAGES
+      action :install
+    end
   end
 
   if platform_family?('rhel', 'centos', 'scientific', 'fedora', 'amazon')
@@ -111,16 +114,17 @@ action :remove do
         action :remove
         not_if { new_resource.version.nil? }
       end
-
-      # Note: apt_resource can install multiple packages at once but not of a specific version.
-      # This may be a bug in that resource. Instead of relying on pinning to happen first, install
-      # packages one by one: slower but avoids implicit behavior/execution order dependency. MK.
-      apt_package "#{new_resource.name}-#{p}" do
-        options new_resource.options unless new_resource.options.nil?
-
-        action :remove
-      end
     end # DEBIAN_PACKAGES
+
+    apt_package(DEBIAN_PACKAGES) do
+      options new_resource.options unless new_resource.options.nil?
+      # must provide an array of versions!
+      version DEBIAN_PACKAGES.map { new_resource.version } unless new_resource.version.nil?
+      retries new_resource.retries
+      retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
+
+      action :remove
+    end
 
     if platform_family?('rhel', 'centos', 'scientific', 'fedora', 'amazon')
       package new_resource.name do

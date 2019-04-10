@@ -23,12 +23,6 @@ use_inline_resources if defined?(:use_inline_resources) # ~FC113
 provides :erlang_repository, platform_family: %w(rhel centos fedora)
 
 action :create do
-  execute "yum update #{new_resource.name}" do
-    command "yum update --disablerepo=* --enablerepo=#{new_resource.name}"
-    # triggered by a notification
-    action :nothing
-  end
-
   yum_repository(new_resource.name) do
     description 'Erlang RPM packages from Team RabbitMQ'
 
@@ -51,10 +45,6 @@ action :create do
     sslverify new_resource.sslverify unless new_resource.sslverify.nil?
 
     timeout new_resource.timeout unless new_resource.timeout.nil?
-
-    action :create
-
-    notifies :run, "execute[yum update #{new_resource.name}]", :immediately
 
     action :create
   end
