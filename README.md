@@ -99,10 +99,10 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:21.3.2-1'
+node['rabbitmq']['erlang']['version'] = '1:21.3.3-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '21.3.2'
+node['rabbitmq']['erlang']['version'] = '21.3.3'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
@@ -519,7 +519,7 @@ Install the package. Here's an example for Debian-based systems:
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
   # This package version assumes a Debian-based distribution.
-  version '1:21.3.2-1'
+  version '1:21.3.3-1'
 
   # provision a HiPE-enabled Erlang runtime if available
   use_hipe true
@@ -532,7 +532,7 @@ Here's another one for RPM-based ones:
 
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
-  version '21.3.2'
+  version '21.3.3'
 
   action :install
 end
