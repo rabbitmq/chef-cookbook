@@ -19,9 +19,6 @@ Layout/IndentationWidth:
 LineLength:
   Max: 200
 
-HashSyntax:
-  EnforcedStyle: hash_rockets
-
 MethodLength:
   Max: 18
 
@@ -35,4 +32,13 @@ Style/RegexpLiteral:
   Enabled: false
 
 Style/IfUnlessModifier:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/WordArray:
   Enabled: false
