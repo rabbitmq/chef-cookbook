@@ -33,3 +33,12 @@ Style/RegexpLiteral:
 
 Style/IfUnlessModifier:
   Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false

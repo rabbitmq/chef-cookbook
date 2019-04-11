@@ -27,8 +27,6 @@ end
 class Chef::Recipe
   include RabbitMQ::CoreHelpers # rubocop:enable all
 end
-#output="#{Chef::JSONCompat.to_json_pretty(node.to_hash)}"
-#log output
 
 unless node['rabbitmq']['erlang']['enabled']
   include_recipe 'erlang'
@@ -39,7 +37,7 @@ default_package_url = rabbitmq_package_download_base_url
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
 default_rpm_package_name = value_for_platform(
-  ['centos', 'rhel', 'scientific'] => {
+  %w(centos rhel redhat scientific) => {
     '< 7.0' => "rabbitmq-server-#{version}-1.el6.noarch.rpm",
     'default' => "rabbitmq-server-#{version}-1.el7.noarch.rpm"
   },
@@ -54,9 +52,6 @@ default_rpm_package_name = value_for_platform(
     'default' => "rabbitmq-server-#{version}-1.suse.noarch.rpm"
   }
 )
-
-
-
 
 deb_package_name = node['rabbitmq']['deb_package'] || default_deb_package_name
 deb_package_url = node['rabbitmq']['deb_package_url'] || default_package_url
@@ -74,8 +69,7 @@ directory node['rabbitmq']['config_root'] do
 end
 
 ## Install the package
-case node['platform_family']
-when 'debian'
+if platform_family?('debian', 'ubuntu')
   template '/etc/apt/apt.conf.d/90forceyes' do
     source '90forceyes.erb'
     owner 'root'
@@ -139,8 +133,9 @@ when 'debian'
       variables(max_file_descriptors: node['rabbitmq']['max_file_descriptors'])
     end
   end
+end
 
-when 'fedora'
+if platform_family?('fedora')
   package 'logrotate'
   package 'socat'
 
@@ -159,7 +154,9 @@ when 'fedora'
     action :create_if_missing
   end
   rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
-when 'rhel', 'centos', 'scientific'
+end
+
+if platform_family?('rhel', 'redhat', 'centos', 'scientific') # ~FC024
   package 'logrotate'
   if node['platform_version'].to_i >= 7
     package 'socat'
@@ -187,7 +184,9 @@ when 'rhel', 'centos', 'scientific'
     action :create_if_missing
   end
   rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
-when 'amazon'
+end
+
+if platform_family?('amazon')
   package 'logrotate'
   package 'socat'
 
@@ -206,8 +205,9 @@ when 'amazon'
     action :create_if_missing
   end
   yum_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+end
 
-when 'suse'
+if platform_family?('suse')
   package 'logrotate'
   package 'socat'
 
@@ -226,9 +226,9 @@ when 'suse'
   service 'epmd' do
     action :start
   end
+end
 
-
-when 'smartos'
+if platform_family?('smartos')
   package 'rabbitmq' do
     action :install
     version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
@@ -239,6 +239,10 @@ when 'smartos'
   end
 
 end
+
+#
+# Users and directories
+#
 
 if platform_family?('amazon')
   user 'rabbitmq' do

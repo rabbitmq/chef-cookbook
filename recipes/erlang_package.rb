@@ -71,8 +71,6 @@ if platform_family?('rhel', 'centos', 'fedora', 'amazon', 'scientific')
   end
 end
 
-
-
 if platform_family?('suse', 'opensuse')
   rabbitmq_erlang_zypper_repository_on_suse_factory 'rabbitmq_erlang' do
     baseurl node['rabbitmq']['erlang']['zypper']['baseurl']
