@@ -1,8 +1,24 @@
 # Change Log
 
-## [v5.7.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.6) (in development)
+## [v5.7.6](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.6) (2019-04-11)
 
-No changes yet.
+ * `rabbitmq[erlang_yum_repository_on_bintray]` no longer performs a `yum update`
+   which can result in unintended package updates.
+
+   GitHub issue: [\#521](https://github.com/rabbitmq/chef-cookbook/issues/521)
+
+ * On Debian, `rabbitmq[erlang_package_from_bintray]` will install all Erlang packages in
+   a single apt operation to avoid complications with interdependencies and order of installation.
+
+ * Plugin operations now use inferred installed RabbitMQ version when deciding what switches
+   to use. This improves compatibility for distribution-provided versions.
+
+   Contributed by Jan Klare.
+
+   GitHub issue: [\#518](https://github.com/rabbitmq/chef-cookbook/issues/518)
+
+ * [RabbitMQ 3.7.14](https://github.com/rabbitmq/rabbitmq-server/releases/tag/v3.7.14) is now provisioned
+   by default.
 
 ## [v5.7.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.5) (2019-03-25)
 
