@@ -78,11 +78,14 @@ or from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/)
 `rabbitmq::erlang_package` is a recipe that provisions latest Erlang packages from team RabbitMQ.
 The packages support
 
- * Debian Jessie and Stretch
+ * Debian Stretch and Buster
  * Ubuntu 16.04 and 18.04
+ * RHEL 7
  * CentOS 7
  * CentOS 6
- * Fedora 25 or later
+ * Fedora 27 or later
+ * Scientific Linux 7
+ * Amazon Linux 2
 
 The packages are **cannot be installed alongside with other Erlang packages**, for example, those
 from standard Debian repositories or Erlang Solutions.
@@ -180,6 +183,10 @@ location customization below.
 
 
 ## Provisioning RabbitMQ 3.6.16
+
+RabbitMQ 3.6 has [reached end of life](https://groups.google.com/forum/#!msg/rabbitmq-users/kXkI-f3pgEw/UFowJIK4BQAJ)
+in May 2018. Its use is **highly discouraged**. It will no longer receive any kind of updates,
+including security ones.
 
 ### Provision Erlang/OTP 19.3 or Later
 
