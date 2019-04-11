@@ -2,6 +2,8 @@
 
 ## [v5.7.6](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.6) (2019-04-11)
 
+### Bug Fixes
+
  * `rabbitmq[erlang_yum_repository_on_bintray]` no longer performs a `yum update`
    which can result in unintended package updates.
 
@@ -17,8 +19,11 @@
 
    GitHub issue: [\#518](https://github.com/rabbitmq/chef-cookbook/issues/518)
 
+### Enhancements
+
  * [RabbitMQ 3.7.14](https://github.com/rabbitmq/rabbitmq-server/releases/tag/v3.7.14) is now provisioned
    by default.
+
 
 ## [v5.7.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.5) (2019-03-25)
 
