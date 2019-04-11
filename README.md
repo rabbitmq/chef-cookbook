@@ -76,11 +76,14 @@ or from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/)
 `rabbitmq::erlang_package` is a recipe that provisions latest Erlang packages from team RabbitMQ.
 The packages support
 
- * Debian Jessie and Stretch
+ * Debian Stretch and Buster
  * Ubuntu 16.04 and 18.04
+ * RHEL 7
  * CentOS 7
  * CentOS 6
- * Fedora 25 or later
+ * Fedora 27 or later
+ * Scientific Linux 7
+ * Amazon Linux 2
 
 The packages are **cannot be installed alongside with other Erlang packages**, for example, those
 from standard Debian repositories or Erlang Solutions.
@@ -181,10 +184,13 @@ location customization below.
 
 The release was tested with recent RabbitMQ releases on
 
-- Ubuntu 18.04
-- Ubuntu 16.04
-- Debian 9.0
-- CentOS 7.x
+ * Ubuntu 18.04
+ * Ubuntu 16.04
+ * Debian Stretch and Buster
+ * CentOS 7.x
+ * RHEL 7
+ * Fedora 27+
+ * Amazon Linux 2
 
 Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
 
