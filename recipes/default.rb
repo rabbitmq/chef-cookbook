@@ -46,7 +46,7 @@ end
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
 default_rpm_package_name = value_for_platform(
-  ['centos', 'rhel', 'scientific'] => {
+  %w(centos rhel redhat scientific) => {
     '< 7.0' => "rabbitmq-server-#{version}-1.el6.noarch.rpm",
     'default' => "rabbitmq-server-#{version}-1.el7.noarch.rpm"
   },
@@ -77,8 +77,7 @@ directory node['rabbitmq']['config_root'] do
 end
 
 ## Install the package
-case node['platform_family']
-when 'debian'
+if platform_family?('debian', 'ubuntu')
   template '/etc/apt/apt.conf.d/90forceyes' do
     source '90forceyes.erb'
     owner 'root'
@@ -154,8 +153,9 @@ when 'debian'
       variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
     end
   end
+end
 
-when 'fedora'
+if platform_family?('fedora')
   package 'logrotate'
   package 'socat'
 
@@ -180,7 +180,9 @@ when 'fedora'
     end
     rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
   end
-when 'rhel', 'centos', 'scientific'
+end
+
+if platform_family?('rhel', 'redhat', 'centos', 'scientific') # ~FC024
   package 'logrotate'
   if node['platform_version'].to_i >= 7
     package 'socat'
@@ -215,7 +217,9 @@ when 'rhel', 'centos', 'scientific'
     end
     rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
   end
-when 'amazon'
+end
+
+if platform_family?('amazon')
   package 'logrotate'
   package 'socat'
 
@@ -241,8 +245,9 @@ when 'amazon'
     end
     yum_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
   end
-when 'suse'
+end
 
+if platform_family?('suse')
   package 'logrotate'
   package 'socat'
 
@@ -257,8 +262,9 @@ when 'suse'
     action :install
     version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
   end
+end
 
-when 'smartos'
+if platform_family?('smartos')
   package 'rabbitmq' do
     action :install
     version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
@@ -269,6 +275,10 @@ when 'smartos'
   end
 
 end
+
+#
+# Users and directories
+#
 
 if platform_family?('amazon')
   user 'rabbitmq' do

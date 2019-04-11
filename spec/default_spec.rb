@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'rabbitmq::default' do
   let(:runner) do
     ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
-      node.override['rabbitmq']['version'] = '3.7.13'
+      node.override['rabbitmq']['version'] = '3.7.14'
     end
   end
   let(:node) { runner.node }
@@ -17,7 +17,7 @@ describe 'rabbitmq::default' do
 
   include_context 'rabbitmq-stubs'
 
-  it 'creates a directory for mnesiadir' do
+  it 'creates a node database directory' do
     expect(chef_run).to create_directory('/var/lib/rabbitmq/mnesia')
   end
 
@@ -40,8 +40,8 @@ describe 'rabbitmq::default' do
     end
 
     it 'has erl args overridden' do
-      node.normal['rabbitmq']['server_additional_erl_args'] = 'test123'
-      node.normal['rabbitmq']['ctl_erl_args'] = 'test123'
+      node.override['rabbitmq']['server_additional_erl_args'] = 'test123'
+      node.override['rabbitmq']['ctl_erl_args'] = 'test123'
       [/^SERVER_ADDITIONAL_ERL_ARGS='test123'/,
        /^CTL_ERL_ARGS='test123'/].each do |line|
         expect(chef_run).to render_file(file.name).with_content(line)
@@ -53,7 +53,7 @@ describe 'rabbitmq::default' do
     end
 
     it 'has additional_env_settings' do
-      node.normal['rabbitmq']['additional_env_settings'] = [
+      node.override['rabbitmq']['additional_env_settings'] = [
         'USE_LONGNAME=true',
         'WHATS_ON_THE_TELLY=penguin']
       [/^WHATS_ON_THE_TELLY=penguin/,
@@ -83,22 +83,22 @@ describe 'rabbitmq::default' do
   end
 
   it 'does not enable a rabbitmq service when manage_service is false' do
-    node.normal['rabbitmq']['manage_service'] = false
+    node.override['rabbitmq']['manage_service'] = false
     expect(chef_run).not_to enable_service('rabbitmq-server')
   end
 
   it 'does not start a rabbitmq service when manage_service is false' do
-    node.normal['rabbitmq']['manage_service'] = false
+    node.override['rabbitmq']['manage_service'] = false
     expect(chef_run).not_to start_service('rabbitmq-server')
   end
 
   it 'enables a rabbitmq service when manage_service is true' do
-    node.normal['rabbitmq']['manage_service'] = true
+    node.override['rabbitmq']['manage_service'] = true
     expect(chef_run).to enable_service('rabbitmq-server')
   end
 
   it 'starts a rabbitmq service when manage_service is true' do
-    node.normal['rabbitmq']['manage_service'] = true
+    node.override['rabbitmq']['manage_service'] = true
     expect(chef_run).to start_service('rabbitmq-server')
   end
 
@@ -106,27 +106,10 @@ describe 'rabbitmq::default' do
     expect(chef_run.node['rabbitmq']['use_distro_version']).to eq(false)
   end
 
-  describe "when Erlang is provisioned via Team RabbitMQ's Erlang packages" do
-    let(:runner) do
-      ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.13'
-        node.override['rabbitmq']['erlang']['enabled'] = true
-      end
-    end
-
-    let(:chef_run) do
-      runner.converge(described_recipe, 'rabbitmq::erlang_package')
-    end
-
-    it 'should install Erlang' do
-      expect(chef_run).to install_package('erlang')
-    end
-  end
-
   describe 'when Erlang is provisioned from ESL' do
     let(:runner) do
       ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.13'
+        node.override['rabbitmq']['version'] = '3.7.14'
         node.override['rabbitmq']['erlang']['enabled'] = false
       end
     end
@@ -164,7 +147,7 @@ describe 'rabbitmq::default' do
   end
 
   it 'should set additional rabbitmq config' do
-    node.normal['rabbitmq']['additional_rabbit_configs'] = { 'foo' => 'bar' }
+    node.override['rabbitmq']['additional_rabbit_configs'] = { 'foo' => 'bar' }
     expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('foo, bar')
   end
 
@@ -175,53 +158,53 @@ describe 'rabbitmq::default' do
     end
 
     it 'enables secure renegotiation by default' do
-      node.normal['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['ssl'] = true
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         '{secure_renegotiate, true}')
     end
 
     it 'uses server cipher suite preference by default' do
-      node.normal['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['ssl'] = true
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         '{honor_cipher_order, true}')
     end
 
     it 'uses server ECC curve preference by default' do
-      node.normal['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['ssl'] = true
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         '{honor_ecc_order, true}')
     end
 
     it 'allows ssl ciphers' do
-      node.normal['rabbitmq']['ssl'] = true
-      node.normal['rabbitmq']['ssl_ciphers'] = ['{ecdhe_ecdsa,aes_128_cbc,sha256}', '{ecdhe_ecdsa,aes_256_cbc,sha}']
+      node.override['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['ssl_ciphers'] = ['{ecdhe_ecdsa,aes_128_cbc,sha256}', '{ecdhe_ecdsa,aes_256_cbc,sha}']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         '{ciphers,[{ecdhe_ecdsa,aes_128_cbc,sha256},{ecdhe_ecdsa,aes_256_cbc,sha}]}')
     end
 
     it 'allows web console ssl ciphers' do
-      node.normal['rabbitmq']['web_console_ssl'] = true
-      node.normal['rabbitmq']['ssl_ciphers'] = ['"ECDHE-ECDSA-AES256-SHA384"', '"ECDH-ECDSA-AES256-SHA384"']
+      node.override['rabbitmq']['web_console_ssl'] = true
+      node.override['rabbitmq']['ssl_ciphers'] = ['"ECDHE-ECDSA-AES256-SHA384"', '"ECDH-ECDSA-AES256-SHA384"']
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         '{ciphers,["ECDHE-ECDSA-AES256-SHA384","ECDH-ECDSA-AES256-SHA384"]}')
     end
 
     it 'does not enable TLS listeners by default' do
-      node.normal['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['ssl'] = true
       expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         /{ssl_listeners, [5671]},/)
     end
 
     it 'enables TLS listener, if set' do
-      node.normal['rabbitmq']['ssl'] = true
-      node.normal['rabbitmq']['ssl_listen_interface'] = '0.0.0.0'
+      node.override['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['ssl_listen_interface'] = '0.0.0.0'
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         /{ssl_listeners, \[{"0.0.0.0", 5671}\]},/)
     end
 
     it 'overrides TLS listener port, if set' do
-      node.normal['rabbitmq']['ssl'] = true
-      node.normal['rabbitmq']['ssl_port'] = 5670
+      node.override['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['ssl_port'] = 5670
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         /{ssl_listeners, \[5670\]},/)
     end
@@ -229,12 +212,12 @@ describe 'rabbitmq::default' do
 
   describe 'TCP listener options' do
     it 'allows interface to be overridden' do
-      node.normal['rabbitmq']['tcp_listen_interface'] = '192.168.1.10'
+      node.override['rabbitmq']['tcp_listen_interface'] = '192.168.1.10'
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{"192.168.1.10", 5672}')
     end
 
     it 'allows AMQP port to be overridden' do
-      node.normal['rabbitmq']['port'] = 5674
+      node.override['rabbitmq']['port'] = 5674
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('[5674]')
     end
 
@@ -243,35 +226,35 @@ describe 'rabbitmq::default' do
     end
 
     it 'supports disabling lingering' do
-      node.normal['rabbitmq']['tcp_listen_linger'] = false
+      node.override['rabbitmq']['tcp_listen_linger'] = false
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {false,0}}')
     end
 
     it 'supports setting lingering timeout' do
-      node.normal['rabbitmq']['tcp_listen_linger_timeout'] = 5
+      node.override['rabbitmq']['tcp_listen_linger_timeout'] = 5
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{linger, {true,5}}')
     end
 
     it 'supports explicit setting of TCP socket buffer' do
-      node.normal['rabbitmq']['tcp_listen_buffer'] = 16384
+      node.override['rabbitmq']['tcp_listen_buffer'] = 16384
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{buffer, 16384}')
     end
 
     it 'supports explicit setting of TCP socket send buffer' do
-      node.normal['rabbitmq']['tcp_listen_sndbuf'] = 8192
+      node.override['rabbitmq']['tcp_listen_sndbuf'] = 8192
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{sndbuf, 8192}')
     end
 
     it 'supports explicit setting of TCP socket receive buffer' do
-      node.normal['rabbitmq']['tcp_listen_recbuf'] = 8192
+      node.override['rabbitmq']['tcp_listen_recbuf'] = 8192
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{recbuf, 8192}')
     end
   end
 
   describe 'credit flow' do
     it 'can configure defaults' do
-      node.normal['rabbitmq']['credit_flow_defaults']['initial'] = 500
-      node.normal['rabbitmq']['credit_flow_defaults']['more_credit_after'] = 250
+      node.override['rabbitmq']['credit_flow_defaults']['initial'] = 500
+      node.override['rabbitmq']['credit_flow_defaults']['more_credit_after'] = 250
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{credit_flow_default_credit, {500, 250}}')
     end
   end
@@ -279,7 +262,7 @@ describe 'rabbitmq::default' do
   describe 'suse' do
     let(:runner) do
       ChefSpec::ServerRunner.new(SUSE_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.13'
+        node.override['rabbitmq']['version'] = '3.7.14'
       end
     end
     let(:node) { runner.node }
@@ -307,12 +290,12 @@ describe 'rabbitmq::default' do
   describe 'ubuntu' do
     let(:runner) do
       ChefSpec::ServerRunner.new(UBUNTU_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.13'
+        node.override['rabbitmq']['version'] = '3.7.14'
       end
     end
     let(:node) { runner.node }
     let(:chef_run) do
-      node.normal['rabbitmq']['version'] = '3.7.13'
+      node.override['rabbitmq']['version'] = '3.7.14'
       runner.converge(described_recipe)
     end
 
@@ -332,7 +315,7 @@ describe 'rabbitmq::default' do
     end
 
     it 'creates a rabbitmq-server deb in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.7.13-1_all.deb')
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.7.14-1_all.deb')
     end
 
     it 'installs the rabbitmq-server deb_package with the default action' do
@@ -349,7 +332,7 @@ describe 'rabbitmq::default' do
 
     describe 'uses distro version' do
       before do
-        node.normal['rabbitmq']['use_distro_version'] = true
+        node.override['rabbitmq']['use_distro_version'] = true
       end
 
       it 'should install rabbitmq-server package' do
@@ -365,7 +348,7 @@ describe 'rabbitmq::default' do
   describe 'redhat' do
     let(:runner) do
       ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.13'
+        node.override['rabbitmq']['version'] = '3.7.14'
       end
     end
     let(:node) { runner.node }
@@ -373,7 +356,7 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
-    let(:rpm_file) { 'rabbitmq-server-3.7.13-1.el7.noarch.rpm' }
+    let(:rpm_file) { 'rabbitmq-server-3.7.14-1.el7.noarch.rpm' }
 
     it 'creates a rabbitmq-server rpm in the cache path' do
       expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
@@ -385,7 +368,7 @@ describe 'rabbitmq::default' do
 
     describe 'uses distro version' do
       before do
-        node.normal['rabbitmq']['use_distro_version'] = true
+        node.override['rabbitmq']['use_distro_version'] = true
       end
 
       it 'should install rabbitmq-server package' do
@@ -398,18 +381,18 @@ describe 'rabbitmq::default' do
     end
 
     it 'loopback_users is empty when attribute is empty array' do
-      node.normal['rabbitmq']['loopback_users'] = []
+      node.override['rabbitmq']['loopback_users'] = []
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, []')
     end
 
     it 'loopback_users can list single user' do
-      node.normal['rabbitmq']['loopback_users'] = ['foo']
-      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"foo">>]')
+      node.override['rabbitmq']['loopback_users'] = ['one']
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"one">>]')
     end
 
     it 'loopback_users can list multiple users' do
-      node.normal['rabbitmq']['loopback_users'] = %w(foo bar)
-      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"foo">>,<<"bar">>]')
+      node.override['rabbitmq']['loopback_users'] = %w(one two)
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('loopback_users, [<<"one">>,<<"two">>]')
     end
 
     it 'should install the logrotate package' do
@@ -421,10 +404,11 @@ describe 'rabbitmq::default' do
     end
   end
 
-  describe 'centos 7' do
+  describe 'CentOS 7' do
     let(:runner) do
       ChefSpec::ServerRunner.new(CENTOS7_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.13'
+        node.override['rabbitmq']['version'] = '3.7.14'
+        node.override['rabbitmq']['use_distro_version'] = false
       end
     end
     let(:node) { runner.node }
@@ -432,7 +416,7 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
-    let(:rpm_file) { 'rabbitmq-server-3.7.13-1.el7.noarch.rpm' }
+    let(:rpm_file) { 'rabbitmq-server-3.7.14-1.el7.noarch.rpm' }
 
     it 'should install the logrotate package' do
       expect(chef_run).to install_package('logrotate')
@@ -456,7 +440,7 @@ describe 'rabbitmq::default' do
 
     describe 'uses distro version' do
       before do
-        node.normal['rabbitmq']['use_distro_version'] = true
+        node.override['rabbitmq']['use_distro_version'] = true
       end
 
       it 'should install rabbitmq-server package' do
@@ -465,10 +449,11 @@ describe 'rabbitmq::default' do
     end
   end
 
-  describe 'centos 6' do
+  describe 'CentOS 6' do
     let(:runner) do
       ChefSpec::ServerRunner.new(CENTOS6_OPTS) do |node, _|
         node.override['rabbitmq']['version'] = '3.6.16'
+        node.override['rabbitmq']['use_distro_version'] = false
       end
     end
     let(:node) { runner.node }
@@ -501,7 +486,7 @@ describe 'rabbitmq::default' do
 
     describe 'uses distro version' do
       before do
-        node.normal['rabbitmq']['use_distro_version'] = true
+        node.override['rabbitmq']['use_distro_version'] = true
       end
 
       it 'should install rabbitmq-server package' do

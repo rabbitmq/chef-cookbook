@@ -34,7 +34,7 @@ CENTOS7_OPTS = {
 }
 CENTOS_OPTS = CENTOS7_OPTS
 CENTOS6_OPTS = {
-  :platform => 'redhat',
+  :platform => 'centos',
   :version => '6.9',
   :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
