@@ -23,9 +23,9 @@ use_inline_resources if defined?(:use_inline_resources) # ~FC113
 provides :erlang_package_from_bintray, platform_family: %w(debian ubuntu rhel centos fedora)
 
 DEBIAN_PACKAGES = %w(erlang-mnesia erlang-runtime-tools erlang-asn1 erlang-crypto erlang-public-key erlang-ssl
-                    erlang-syntax-tools erlang-snmp erlang-os-mon erlang-parsetools
+                     erlang-syntax-tools erlang-snmp erlang-os-mon erlang-parsetools
                      erlang-inets erlang-tools erlang-eldap erlang-xmerl
-                     erlang-dev erlang-edoc erlang-eunit erlang-erl-docgen erlang-src)
+                     erlang-dev erlang-edoc erlang-eunit erlang-erl-docgen erlang-src).freeze
 
 action :install do
   if platform_family?('debian', 'ubuntu')
