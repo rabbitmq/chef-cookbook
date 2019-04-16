@@ -6,7 +6,7 @@
 
  * Chef 13 is now the minimum required version. Chef 12 has been out of support since April 2018.
 
-   GitHub issue: [\#522](https://github.com/rabbitmq/chef-cookbook/issues/522)
+   GitHub issue: [\#523](https://github.com/rabbitmq/chef-cookbook/issues/523)
 
 
 ## [v5.7.7](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.7) (2019-04-16)
