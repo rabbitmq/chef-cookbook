@@ -1,8 +1,12 @@
 # Change Log
 
-## [v5.7.7](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.7) (under development)
+## [v5.7.7](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.7) (2019-04-16)
 
-No changes yet.
+### Chef 12 Compatibility
+
+ * `rabbitmq[erlang_package_from_bintray]` was adapted to support Chef 12 (which is [no longer maintained](https://blog.chef.io/2018/02/16/preparing-for-chef-14-and-chef-12-end-of-life/)).
+
+   GitHub issue: [\#522](https://github.com/rabbitmq/chef-cookbook/issues/522)
 
 
 ## [v5.7.6](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.6) (2019-04-11)
