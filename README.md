@@ -7,7 +7,7 @@ This is a cookbook for managing RabbitMQ with Chef.
 
 ## Supported Chef Versions
 
-This cookbook targets Chef 12.1 and later.
+This cookbook targets Chef 13.0 and later.
 
 
 ## Supported Distributions
