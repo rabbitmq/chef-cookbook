@@ -1,5 +1,14 @@
 # Change Log
 
+## [v5.8.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.0) (under development)
+
+### Enhancements
+
+ * Chef 13 is now the minimum required version. Chef 12 has been out of support since April 2018.
+
+   GitHub issue: [\#522](https://github.com/rabbitmq/chef-cookbook/issues/522)
+
+
 ## [v5.7.7](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.7) (2019-04-16)
 
 ### Chef 12 Compatibility
