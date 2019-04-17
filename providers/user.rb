@@ -177,7 +177,7 @@ end
 
 action :change_password do
   if user_exists?(new_resource.user)
-    cmd = "rabbitmqctl -q change_password #{new_resource.user} #{new_resource.password}"
+    cmd = "rabbitmqctl -q change_password #{new_resource.user} \"#{new_resource.password}\""
     execute "rabbitmqctl -q change_password #{new_resource.user}" do # ~FC009
       sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
       command cmd

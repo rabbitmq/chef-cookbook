@@ -4,7 +4,7 @@ maintainer 'Chef, Inc. and contributors'
 maintainer_email 'mklishin@pivotal.io'
 license 'Apache-2.0'
 description 'Installs and configures RabbitMQ server'
-version '5.8.0'
+version '5.8.1'
 
 recipe 'rabbitmq', 'Install and configure RabbitMQ'
 
