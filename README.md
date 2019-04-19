@@ -197,7 +197,7 @@ RabbitMQ 3.6.16 [requires Erlang 19.3.6.5 or later](http://www.rabbitmq.com/whic
 `rabbitmq::erlang_package` is a recipe that provisions latest Erlang packages from team RabbitMQ.
 The packages support
 
- * Debian Jessie and Stretch
+ * Debian Stretch and Buster
  * Ubuntu 16.04 and 18.04
  * CentOS 7
  * CentOS 6

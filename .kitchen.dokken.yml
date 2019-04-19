@@ -74,6 +74,15 @@ platforms:
         - RUN /usr/bin/apt-get update -y
         - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
+  - name: debian-10
+    driver:
+      image: dokken/debian-10
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - ENV DEBIAN_FRONTEND noninteractive
+        - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
+
   - name: opensuse-leap
     driver:
       image: dokken/opensuse-leap
@@ -458,7 +467,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
-    includes: ["debian-9", "ubuntu-18.04"]
+    includes: ["debian-9", "debian-10", "ubuntu-18.04"]
 
   # Erlang package, Debian, version pinning
   - name: rabbitmq-erlang-pinned-deb
@@ -469,12 +478,12 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:21.3.3-1"
+          version: "1:21.3.6-1"
         version: "3.7.14"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
-    includes: ["ubuntu-18.04"]
+    includes: ["debian-10", "ubuntu-18.04"]
 
   # Latest Erlang package, RPM
   - name: rabbitmq-erlang-latest-rpm-el7
@@ -502,7 +511,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.3"
+          version: "21.3.6"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true

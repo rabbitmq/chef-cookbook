@@ -96,7 +96,7 @@ if platform_family?('debian', 'ubuntu')
     allow false
   end
 
-  if node['platform_version'].to_i < 8 && !use_distro_version?
+  if node['platform_version'].to_i == 7 && !use_distro_version?
     Chef::Log.warn 'Debian 7 is too old to use the recent .deb RabbitMQ packages. Falling back to distro package!'
     node.normal['rabbitmq']['use_distro_version'] = true
   end
