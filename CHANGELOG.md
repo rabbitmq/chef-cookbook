@@ -1,5 +1,10 @@
 # Change Log
 
+## [v5.8.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.1) (under development)
+
+No changes yet.
+
+
 ## [v5.8.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.0) (2019-04-22)
 
 ### Chef Compatibility
