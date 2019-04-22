@@ -32,7 +32,7 @@ recipe 'rabbitmq::esl_erlang_package', 'Alias for erlang::esl'
 issues_url 'https://github.com/rabbitmq/chef-cookbook/issues'
 source_url 'https://github.com/rabbitmq/chef-cookbook'
 
-chef_version '>= 13.0'
+chef_version '>= 14.0'
 
 depends 'erlang'
 depends 'yum-epel'
