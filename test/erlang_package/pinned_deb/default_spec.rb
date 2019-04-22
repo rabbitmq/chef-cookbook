@@ -9,7 +9,7 @@
 ).each do |p|
   describe package(p) do
     it { should be_installed }
-    its('version') { should eq '1:21.3.3-1' }
+    its('version') { should match(/^1:21.3/) }
   end
 end
 

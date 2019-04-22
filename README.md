@@ -7,7 +7,7 @@ This is a cookbook for managing RabbitMQ with Chef.
 
 ## Supported Chef Versions
 
-This cookbook targets Chef 12.1 and later.
+This cookbook targets Chef 13.0 and later.
 
 
 ## Supported Distributions
@@ -100,10 +100,10 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:21.3.3-1'
+node['rabbitmq']['erlang']['version'] = '1:21.3.6-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '21.3.3'
+node['rabbitmq']['erlang']['version'] = '21.3.6'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
@@ -438,7 +438,7 @@ Install the package. Here's an example for Debian-based systems:
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
   # This package version assumes a Debian-based distribution.
-  version '1:21.3.3-1'
+  version '1:21.3.6-1'
 
   # provision a HiPE-enabled Erlang runtime if available
   use_hipe true
@@ -451,7 +451,7 @@ Here's another one for RPM-based ones:
 
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
-  version '21.3.3'
+  version '21.3.6'
 
   action :install
 end
