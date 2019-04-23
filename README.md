@@ -152,19 +152,19 @@ The Erlang cookbook will provision packages from Erlang Solutions if `node['erla
 node['erlang']['install_method'] = "esl"
 ```
 
-to provision a specific version, e.g. 20.3.8.20:
+to provision a specific version, e.g. 20.3.8.21:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # Ubuntu and Debian
 # note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:20.3.8.20"
+node['erlang']['esl']['version'] = "1:20.3.8.21"
 ```
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "20.3.8.20-1"
+node['erlang']['esl']['version'] = "20.3.8.21-1"
 ```
 
 ### Seting RabbitMQ Version
@@ -172,7 +172,7 @@ node['erlang']['esl']['version'] = "20.3.8.20-1"
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.7.13"
+node['rabbitmq']['version'] = "3.7.14"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
