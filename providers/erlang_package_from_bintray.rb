@@ -34,30 +34,11 @@ action :install do
     else
       'erlang-base'
     end
-    apt_package "#{new_resource.name}-#{base_pkg}" do
-      options new_resource.options unless new_resource.options.nil?
-      package_name base_pkg
-      version new_resource.version unless new_resource.version.nil?
-      retries new_resource.retries
-      retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
 
-      action :install
-    end
+    erlang_packages = [base_pkg] + DEBIAN_PACKAGES
 
-    apt_preference "#{new_resource.name}-#{base_pkg}" do
-      package_name base_pkg
-      pin "version #{new_resource.version}"
-      pin_priority 900
-
-      action :add
-      not_if { new_resource.version.nil? }
-    end
-
-    # Note: apt_resource can install multiple packages at once but not of a specific version.
-    # This may be a bug in that resource. Instead of relying on pinning to happen first, install
-    # packages one by one: slower but avoids implicit behavior/execution order dependency. MK.
     unless new_resource.version.nil?
-      DEBIAN_PACKAGES.each do |p|
+      erlang_packages.each do |p|
         apt_preference "#{new_resource.name}-#{p}" do
           package_name p
           pin "version #{new_resource.version}"
@@ -68,13 +49,12 @@ action :install do
       end
     end
 
-    apt_package(DEBIAN_PACKAGES) do
+    apt_package(erlang_packages) do
       options new_resource.options unless new_resource.options.nil?
       # must provide an array of versions!
-      version DEBIAN_PACKAGES.map { new_resource.version } unless new_resource.version.nil?
+      version erlang_packages.map { new_resource.version } unless new_resource.version.nil?
       retries new_resource.retries
       retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
-
       action :install
     end
   end
@@ -98,38 +78,28 @@ action :remove do
       'erlang-base'
     end
 
-    apt_package "#{new_resource.name}-#{base_pkg}" do
-      options new_resource.options unless new_resource.options.nil?
+    erlang_packages = [base_pkg] + DEBIAN_PACKAGES
 
-      action :remove
-    end
-
-    apt_preference "#{new_resource.name}-#{base_pkg}" do
-      action :remove
-      not_if { new_resource.version.nil? }
-    end
-
-    DEBIAN_PACKAGES.each do |p|
+    erlang_packages.each do |p|
       apt_preference "#{new_resource.name}-#{p}" do
         action :remove
         not_if { new_resource.version.nil? }
       end
-    end # DEBIAN_PACKAGES
-
-    apt_package(DEBIAN_PACKAGES) do
-      options new_resource.options unless new_resource.options.nil?
-      # must provide an array of versions!
-      version DEBIAN_PACKAGES.map { new_resource.version } unless new_resource.version.nil?
-      retries new_resource.retries
-      retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
-
-      action :remove
     end
 
-    if platform_family?('rhel', 'centos', 'scientific', 'fedora', 'amazon')
-      package new_resource.name do
-        action :remove
-      end
+    apt_package(erlang_packages) do
+      options new_resource.options unless new_resource.options.nil?
+      # must provide an array of versions!
+      version erlang_packages.map { new_resource.version } unless new_resource.version.nil?
+      retries new_resource.retries
+      retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
+      action :remove
+    end
+  end
+
+  if platform_family?('rhel', 'centos', 'scientific', 'fedora', 'amazon')
+    package new_resource.name do
+      action :remove
     end
   end
 end
