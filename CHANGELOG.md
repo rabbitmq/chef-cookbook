@@ -1,8 +1,22 @@
 # Change Log
 
-## [v5.8.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.1) (under development)
+## [v5.8.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.1) (2019-05-01)
 
-No changes yet.
+### Bug Fixes
+
+ * `rabbitmq[erlang_package_from_bintray]` could install different versions of Debian packages due to a two step
+   installation proceess.
+
+   Contributed by Kevin Bonner.
+
+   GitHub issue: [\#525](https://github.com/rabbitmq/chef-cookbook/issues/525)
+
+ * `rabbitmq[erlang_package_from_bintray]` had a no-op `:remove` action block on
+   non-Debian platforms.
+
+   Contributed by Kevin Bonner.
+
+   GitHub issue: [\#526](https://github.com/rabbitmq/chef-cookbook/pull/526)
 
 
 ## [v5.8.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.0) (2019-04-22)
