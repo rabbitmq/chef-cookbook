@@ -4,7 +4,7 @@ maintainer 'Chef, Inc. and contributors'
 maintainer_email 'mklishin@pivotal.io'
 license 'Apache-2.0'
 description 'Installs and configures RabbitMQ server'
-version '5.8.0'
+version '5.7.8'
 
 recipe 'rabbitmq', 'Install and configure RabbitMQ'
 
@@ -32,7 +32,7 @@ recipe 'rabbitmq::esl_erlang_package', 'Alias for erlang::esl'
 issues_url 'https://github.com/rabbitmq/chef-cookbook/issues'
 source_url 'https://github.com/rabbitmq/chef-cookbook'
 
-chef_version '>= 13.0'
+chef_version '>= 12.0'
 
 depends 'erlang'
 depends 'yum-epel'
