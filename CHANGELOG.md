@@ -1,18 +1,18 @@
 # Change Log
 
-## [v5.8.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.0) (under development)
-
-### Chef Compatibility
-
- * Chef 13 is now the minimum required version. Chef 12 has been out of support since April 2018.
-
-   GitHub issue: [\#523](https://github.com/rabbitmq/chef-cookbook/issues/523)
+## [v5.7.8](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.8) (under development)
 
 ### Enhancements
 
  * `rabbitmq[erlang_package_from_bintray]` now supports Debian 10 (Buster)
    starting with Erlang 21.3.6. More versions will be available as they come out
    and become available in the [rabbitmq-erlang/debian Bintray repository](https://bintray.com/beta/#/rabbitmq-erlang/debian/erlang?tab=overview).
+
+ * `rabbitmq[erlang_package_from_bintray]` is now compatible with the classic `apt` cookbook.
+
+   Contributed by Stefan Sundin.
+
+   GitHub issue: [rabbitmq/chef-cookbook#527](https://github.com/rabbitmq/chef-cookbook/pull/527)
 
 ## [v5.7.7](https://github.com/rabbitmq/chef-cookbook/tree/v5.7.7) (2019-04-16)
 
