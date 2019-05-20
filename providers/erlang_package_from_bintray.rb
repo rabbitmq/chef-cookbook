@@ -61,7 +61,7 @@ action :install do
         apt_preference "#{new_resource.name}-#{p}" do
           package_name p
           pin "version #{new_resource.version}"
-          pin_priority 900
+          pin_priority '900'
           action :add
           not_if { new_resource.version.nil? }
         end
