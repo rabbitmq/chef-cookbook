@@ -398,6 +398,32 @@ To use https connection to management console, turn `['rabbitmq']['web_console_s
 
 Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq']['disabled_plugins']` attributes.
 
+### Ldap Plugin & Configuration
+
+To enable ldap plugin do the following
+1. `default['rabbitmq']['ldap']['enabled'] = true`
+2. `default['rabbitmq']['auth_backends'] = 'rabbit_auth_backend_internal, rabbit_auth_backend_ldap'`
+3. Add to your plugins the `rabbitmq_auth_backend_ldap` plugin
+4. Set your configurations in `default['rabbitmq']['ldap']['conf']` variable
+
+##### Example configuration
+
+```ruby
+default['rabbitmq']['ldap']['conf'] = {
+    :servers => ["<your servers>"],
+    :user_bind_pattern => "${username}@<your domain>",
+    :dn_lookup_attribute => "sAMAccountName",
+    :dn_lookup_base => "DC=<CHANGEME>,DC=<CHANGEME>",
+    :port => <CHANGEME (number)>,
+    :log => <CHANGEME (boolean)>,
+    :vhost_access_query => '{constant, true}',
+    :topic_access_query => '{constant, true}',
+    :resource_access_query => '{constant, true}',
+    :tag_queries => "[{administrator, {constant, false}}]"
+  }
+```
+
+
 ### users
 
 Enables any users listed in the `node['rabbitmq']['enabled_users']` and disables any listed in `node['rabbitmq']['disabled_users']` attributes.
