@@ -122,6 +122,15 @@ default['rabbitmq']['open_file_limit'] = nil
 # job control
 default['rabbitmq']['job_control'] = 'initd'
 
+#authentication
+#define auth backend (internal auth is set by default)
+# Ldap Example:
+# default['rabbitmq']['auth_backends'] = 'rabbit_auth_backend_internal, rabbit_auth_backend_ldap'
+default['rabbitmq']['auth_backends'] = 'rabbit_auth_backend_internal'
+default['rabbitmq']['ldap']['enabled'] = false
+default['rabbitmq']['ldap']['conf'] = {}
+
+
 # ssl
 default['rabbitmq']['ssl'] = false
 default['rabbitmq']['ssl_port'] = 5671
