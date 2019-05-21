@@ -41,6 +41,7 @@
   {ssl, [{versions, [<%= @ssl_versions %>]}]},
 <% end %>
   {rabbit, [
+    {auth_backends, [<%= node['rabbitmq']['auth_backends'] %>]},
 <% if node['rabbitmq']['clustering']['enable'] -%>
     <%if node['rabbitmq']['clustering']['use_auto_clustering'] -%>
     {cluster_nodes, {[<%= node['rabbitmq']['clustering']['cluster_nodes'].map { |n| "'#{n['name']}'"}.join(',') %>], disc}},
@@ -130,6 +131,17 @@
       ,{<%= key %>, <%= value %>}
     <% end -%>
   ]}
+<%if node['rabbitmq']['ldap']['enabled']%>
+    ,{rabbitmq_auth_backend_ldap, [
+        <% node['rabbitmq']['ldap']['conf'].each_with_index do |(key, value), index|  -%>
+            <%if index == 0%>
+                {<%= key %>, <%= value %>}
+            <%else%> 
+	            ,{<%= key %>, <%= value %>}
+            <%end%>
+        <% end -%>
+    ]}
+<% end %>
 <% node['rabbitmq']['conf'].each do |key,value|  -%>
 	,{<%= key %>, <%= value %>}
 <% end -%>
