@@ -144,7 +144,7 @@ action :clear_permissions do
 
   vhosts = new_resource.vhost.is_a?(Array) ? new_resource.vhost : [new_resource.vhost]
   # filter out vhosts for which the user already has the permissions we expect
-  filtered = vhosts.reject { |vhost|  user_has_expected_permissions?(new_resource.user, vhost, perm_list) }
+  filtered = vhosts.reject { |vhost|  user_has_expected_permissions?(new_resource.user, vhost) }
   filtered.each do |vhost|
     vhostopt = "-p #{vhost}" unless vhost.nil?
     cmd = "rabbitmqctl -q clear_permissions #{vhostopt} #{new_resource.user}"
