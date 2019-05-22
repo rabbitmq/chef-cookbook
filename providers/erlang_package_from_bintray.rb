@@ -24,7 +24,7 @@ provides :erlang_package_from_bintray, platform_family: %w(debian ubuntu rhel ce
 
 DEBIAN_PACKAGES = %w(erlang-mnesia erlang-runtime-tools erlang-asn1 erlang-crypto erlang-public-key erlang-ssl
                      erlang-syntax-tools erlang-snmp erlang-os-mon erlang-parsetools
-                     erlang-ftp erlang-tftp erlang-inets erlang-tools erlang-eldap erlang-xmerl
+                     erlang-inets erlang-tools erlang-eldap erlang-xmerl
                      erlang-dev erlang-edoc erlang-eunit erlang-erl-docgen erlang-src).freeze
 
 action :install do
