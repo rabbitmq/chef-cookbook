@@ -66,7 +66,7 @@ end
 
 # does the user have the rights listed on the vhost?
 # empty perm_list means we're checking for any permissions
-def user_has_permissions?(name, vhost, perm_list = nil)
+def user_has_correct_permissions?(name, vhost, perm_list = nil)
   vhost = '/' if vhost.nil? # rubocop:enable all
   cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')
           "rabbitmqctl -s list_user_permissions #{name} | grep \"^#{vhost}\\s\""
@@ -75,18 +75,18 @@ def user_has_permissions?(name, vhost, perm_list = nil)
         end
   cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
   cmd.run_command
-  Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd}"
-  Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd.stdout}"
-  Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd.exitstatus}"
+  Chef::Log.debug "rabbitmq_user_has_correct_permissions?: #{cmd}"
+  Chef::Log.debug "rabbitmq_user_has_correct_permissions?: #{cmd.stdout}"
+  Chef::Log.debug "rabbitmq_user_has_correct_permissions?: #{cmd.exitstatus}"
   if perm_list.nil? && cmd.stdout.empty? # looking for empty and found nothing
-    Chef::Log.debug 'rabbitmq_user_has_permissions?: no permissions found'
-    return false
-  end
-  if perm_list == cmd.stdout.split.drop(1) # existing match search
-    Chef::Log.debug 'rabbitmq_user_has_permissions?: matching permissions already found'
+    Chef::Log.debug 'rabbitmq_user_has_correct_permissions?: no permissions found'
     return true
   end
-  Chef::Log.debug 'rabbitmq_user_has_permissions?: permissions found but do not match'
+  if perm_list == cmd.stdout.split.drop(1) # existing match search
+    Chef::Log.debug 'rabbitmq_user_has_correct_permissions?: matching permissions already found'
+    return true
+  end
+  Chef::Log.debug 'rabbitmq_user_has_correct_permissions?: permissions found but do not match'
   false
 end
 
@@ -126,7 +126,7 @@ action :set_permissions do
   perm_list = new_resource.permissions.split
   vhosts = new_resource.vhost.is_a?(Array) ? new_resource.vhost : [new_resource.vhost]
   vhosts.each do |vhost|
-    next if user_has_permissions?(new_resource.user, vhost, perm_list)
+    next if user_has_correct_permissions?(new_resource.user, vhost, perm_list)
     vhostopt = "-p #{vhost}" unless vhost.nil?
     cmd = "rabbitmqctl -q set_permissions #{vhostopt} #{new_resource.user} \"#{perm_list.join('" "')}\""
     execute cmd do
@@ -141,7 +141,7 @@ action :clear_permissions do
 
   vhosts = new_resource.vhost.is_a?(Array) ? new_resource.vhost : [new_resource.vhost]
   vhosts.each do |vhost|
-    next unless user_has_permissions?(new_resource.user, vhost)
+    next if user_has_correct_permissions?(new_resource.user, vhost)
     vhostopt = "-p #{vhost}" unless vhost.nil?
     cmd = "rabbitmqctl -q clear_permissions #{vhostopt} #{new_resource.user}"
     execute cmd do
