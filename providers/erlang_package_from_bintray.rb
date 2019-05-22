@@ -24,7 +24,7 @@ provides :erlang_package_from_bintray, platform_family: %w(debian ubuntu rhel ce
 
 DEBIAN_PACKAGES = %w(erlang-mnesia erlang-runtime-tools erlang-asn1 erlang-crypto erlang-public-key erlang-ssl
                      erlang-syntax-tools erlang-snmp erlang-os-mon erlang-parsetools
-                     erlang-inets erlang-tools erlang-eldap erlang-xmerl
+                     erlang-ftp erlang-tftp erlang-inets erlang-tools erlang-eldap erlang-xmerl
                      erlang-dev erlang-edoc erlang-eunit erlang-erl-docgen erlang-src).freeze
 
 action :install do
@@ -36,6 +36,10 @@ action :install do
     end
 
     erlang_packages = [base_pkg] + DEBIAN_PACKAGES
+
+    if node['rabbitmq']['erlang']['apt']['lsb_codename'] == 'xenial'
+      erlang_packages -= %w(erlang-ftp erlang-tftp)
+    end
 
     unless new_resource.version.nil?
       erlang_packages.each do |p|
