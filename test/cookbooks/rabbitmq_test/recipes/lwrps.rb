@@ -40,6 +40,15 @@ rabbitmq_user 'kitchen3' do
   action :change_password
 end
 
+rabbitmq_user 'permissionless' do
+  password 'permi$$ionless'
+  action :add
+end
+
+rabbitmq_user 'permissionless' do
+  action :clear_permissions
+end
+
 # download the rabbitmqadmin util from management plugin
 # this tests an immediate notifies statement
 # see https://github.com/kennonkwok/rabbitmq/issues/141
