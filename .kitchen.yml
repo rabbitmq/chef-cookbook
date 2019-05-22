@@ -37,7 +37,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
         virtualhosts:
@@ -80,7 +80,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
     verifier:
@@ -97,7 +97,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
         systemd:
@@ -200,7 +200,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.3-1"
+          version: "21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
     verifier:
@@ -216,7 +216,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.3"
+          version: "21.3.8.2"
         version: "3.7.14"
     verifier:
       inspec_tests:
@@ -233,7 +233,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.3-1"
+          version: "21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
         systemd:
@@ -252,7 +252,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
     verifier:
@@ -286,7 +286,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
     verifier:
@@ -303,7 +303,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.3-1"
+          version: "21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
     verifier:
@@ -320,7 +320,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
     attributes:
@@ -331,7 +331,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
     verifier:
@@ -351,7 +351,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
         version: "3.7.14"
     verifier:
@@ -390,7 +390,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
         version: "3.7.14"
     verifier:
       inspec_tests:
@@ -423,7 +423,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.3"
+          version: "21.3.8.2"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true
@@ -460,7 +460,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.3"
+          version: "21.3.8.2"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: true
