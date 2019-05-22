@@ -37,6 +37,7 @@ action :install do
 
     erlang_packages = [base_pkg] + DEBIAN_PACKAGES
 
+    # xenial does not have these packages
     if node['rabbitmq']['erlang']['apt']['lsb_codename'] == 'xenial'
       erlang_packages -= %w(erlang-ftp erlang-tftp)
     end
