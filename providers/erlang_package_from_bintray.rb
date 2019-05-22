@@ -63,7 +63,7 @@ action :install do
     package new_resource.name do
       package_name 'erlang'
       version new_resource.version unless new_resource.version.nil?
-      options "-y"
+      options '-y'
       retries new_resource.retries
       retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
     end
