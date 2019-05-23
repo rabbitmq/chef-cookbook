@@ -100,14 +100,19 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:21.3.6-1'
+node['rabbitmq']['erlang']['version'] = '1:21.3.8.2-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '21.3.6'
+node['rabbitmq']['erlang']['version'] = '21.3.8.2'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
 It is possible to override the component used (see [Ubuntu and Debian installation guide](https://www.rabbitmq.com/install-debian.html) to learn more):
+
+``` ruby
+# provisions Erlang 22.x
+node['rabbitmq']['erlang']['apt']['components'] = ["erlang-22.x"]
+```
 
 ``` ruby
 # provisions Erlang 20.3.x
@@ -170,7 +175,7 @@ node['erlang']['esl']['version'] = "20.3.8.21-1"
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.7.14"
+node['rabbitmq']['version'] = "3.7.15"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
@@ -310,6 +315,35 @@ To use https connection to management console, turn `['rabbitmq']['web_console_s
 
 Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq']['disabled_plugins']` attributes.
 
+### LDAP Configuration
+
+To enable the [LDAP plugin](https://www.rabbitmq.com/ldap.html), a few attributes have to be used
+in combination:
+
+1. Set `node['rabbitmq']['ldap']['enabled'] = true`
+2. Enable `auth_backends`: `node['rabbitmq']['auth_backends'] = 'rabbit_auth_backend_internal,rabbit_auth_backend_ldap'`
+3. Enable the `rabbitmq_auth_backend_ldap` plugin
+4. Configure LDAP servers and queries via the `node['rabbitmq']['ldap']['conf']` variable
+
+##### Example configuration
+
+```ruby
+# this is just an example
+node['rabbitmq']['ldap']['conf'] = {
+  :servers => ["ldap-host1", "ldap-host2"],
+  :user_bind_pattern => "${username}@<domain>",
+  :dn_lookup_attribute => "sAMAccountName",
+  :dn_lookup_base => "DC=<CHANGEME>,DC=<CHANGEME>",
+  :port => <CHANGEME (number)>,
+  :log => <CHANGEME (boolean)>,
+  :vhost_access_query => '{constant, true}',
+  :topic_access_query => '{constant, true}',
+  :resource_access_query => '{constant, true}',
+  :tag_queries => "[{administrator, {constant, false}}]"
+  }
+```
+
+
 ### users
 
 Enables any users listed in the `node['rabbitmq']['enabled_users']` and disables any listed in `node['rabbitmq']['disabled_users']` attributes.
@@ -438,7 +472,7 @@ Install the package. Here's an example for Debian-based systems:
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
   # This package version assumes a Debian-based distribution.
-  version '1:21.3.6-1'
+  version '1:21.3.8.2-1'
 
   # provision a HiPE-enabled Erlang runtime if available
   use_hipe true
@@ -451,7 +485,7 @@ Here's another one for RPM-based ones:
 
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
-  version '21.3.6'
+  version '21.3.8.2'
 
   action :install
 end

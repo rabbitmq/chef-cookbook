@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # Version to install
-default['rabbitmq']['version'] = '3.7.14'
+default['rabbitmq']['version'] = '3.7.15'
 
 default['rabbitmq']['package_source'] = 'github'
 
@@ -128,7 +128,14 @@ default['rabbitmq']['open_file_limit'] = nil
 ## job control
 default['rabbitmq']['job_control'] = 'initd'
 
-## TLS
+# authentication and authorization backends
+# For example, to enable LDAP:
+# default['rabbitmq']['auth_backends'] = 'rabbit_auth_backend_internal, rabbit_auth_backend_ldap'
+default['rabbitmq']['auth_backends'] = 'rabbit_auth_backend_internal'
+default['rabbitmq']['ldap']['enabled'] = false
+default['rabbitmq']['ldap']['conf'] = {}
+
+# TLS
 default['rabbitmq']['ssl'] = false
 default['rabbitmq']['ssl_port'] = 5671
 default['rabbitmq']['ssl_listen_interface'] = nil

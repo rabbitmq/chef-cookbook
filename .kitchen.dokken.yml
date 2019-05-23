@@ -74,6 +74,15 @@ platforms:
         - RUN /usr/bin/apt-get update -y
         - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
+  - name: ubuntu-16.04
+    driver:
+      image: dokken/ubuntu-16.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - ENV DEBIAN_FRONTEND noninteractive
+        - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
+
   - name: debian-9
     driver:
       image: dokken/debian-9
@@ -100,9 +109,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
         virtualhosts:
           - vhost1
           - vhost2
@@ -143,9 +152,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/integration/management_plugin
@@ -160,9 +169,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
         systemd:
           limits:
             NOFILE: 54000
@@ -179,9 +188,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.3-1"
+          version: "21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -196,8 +205,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.3"
-        version: "3.7.14"
+          version: "21.3.8.2"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -212,9 +221,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.3-1"
+          version: "21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
         systemd:
           limits:
             NOFILE: 54000
@@ -231,9 +240,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -248,9 +257,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -265,9 +274,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.3-1"
+          version: "21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -282,9 +291,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
     attributes:
       apt:
         confd:
@@ -293,9 +302,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -313,9 +322,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.3-1"
+          version: "1:21.3.8.2-1"
       rabbitmq:
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -337,11 +346,11 @@ suites:
         erlang:
           enabled: true
           hipe: true
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
-    includes: ["debian-9", "debian-10", "ubuntu-18.04"]
+    includes: ["debian-9", "debian-10", "ubuntu-18.04", "ubuntu-16.04"]
 
   # Erlang package, Debian, version pinning
   - name: rabbitmq-erlang-pinned-deb
@@ -352,12 +361,12 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:21.3.6-1"
-        version: "3.7.14"
+          version: "1:21.3.8.2-1"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
-    includes: ["debian-10", "ubuntu-18.04"]
+    includes: ["debian-10", "ubuntu-18.04", "ubuntu-16.04"]
 
   # Latest Erlang package, RPM
   - name: rabbitmq-erlang-latest-rpm-el7
@@ -370,7 +379,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -385,11 +394,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.6"
+          version: "21.3.8.2"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -407,7 +416,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: false
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -422,11 +431,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.3"
+          version: "21.3.8.2"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: true
-        version: "3.7.14"
+        version: "3.7.15"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm

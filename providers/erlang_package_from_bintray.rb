@@ -37,12 +37,17 @@ action :install do
 
     erlang_packages = [base_pkg] + DEBIAN_PACKAGES
 
+    # xenial does not have these packages
+    if node['rabbitmq']['erlang']['apt']['lsb_codename'] == 'xenial'
+      erlang_packages -= %w(erlang-ftp erlang-tftp)
+    end
+
     unless new_resource.version.nil?
       erlang_packages.each do |p|
         apt_preference "#{new_resource.name}-#{p}" do
           package_name p
           pin "version #{new_resource.version}"
-          pin_priority 900
+          pin_priority '900'
           action :add
           not_if { new_resource.version.nil? }
         end
@@ -63,7 +68,7 @@ action :install do
     package new_resource.name do
       package_name 'erlang'
       version new_resource.version unless new_resource.version.nil?
-      options "-y"
+      options '-y'
       retries new_resource.retries
       retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
     end

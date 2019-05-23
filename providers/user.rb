@@ -67,7 +67,7 @@ end
 
 # does the user have the rights listed on the vhost?
 # empty perm_list means we're checking for any permissions
-def user_has_permissions?(name, vhost, perm_list = nil)
+def user_has_expected_permissions?(name, vhost, perm_list = nil)
   vhost = '/' if vhost.nil? # rubocop:enable all
   cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')
           "rabbitmqctl -s list_user_permissions #{name} | grep \"^#{vhost}\\s\""
@@ -77,18 +77,20 @@ def user_has_permissions?(name, vhost, perm_list = nil)
   cmd = Mixlib::ShellOut.new(cmd, env: shell_environment)
 
   cmd.run_command
-  Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd}"
-  Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd.stdout}"
-  Chef::Log.debug "rabbitmq_user_has_permissions?: #{cmd.exitstatus}"
-  if perm_list.nil? && cmd.stdout.empty? # looking for empty and found nothing
-    Chef::Log.debug 'rabbitmq_user_has_permissions?: no permissions found'
-    return false
-  end
-  if perm_list == cmd.stdout.split.drop(1) # existing match search
-    Chef::Log.debug 'rabbitmq_user_has_permissions?: matching permissions already found'
+  Chef::Log.debug "rabbitmq_user_has_expected_permissions?: #{cmd}"
+  Chef::Log.debug "rabbitmq_user_has_expected_permissions?: #{cmd.stdout}"
+  Chef::Log.debug "rabbitmq_user_has_expected_permissions?: #{cmd.exitstatus}"
+  # no permissions found and none expected
+  if perm_list.nil? && cmd.stdout.empty?
+    Chef::Log.debug 'rabbitmq_user_has_expected_permissions?: no permissions found'
     return true
   end
-  Chef::Log.debug 'rabbitmq_user_has_permissions?: permissions found but do not match'
+  # existing match search
+  if perm_list == cmd.stdout.split.drop(1)
+    Chef::Log.debug 'rabbitmq_user_has_expected_permissions?: matching permissions already found'
+    return true
+  end
+  Chef::Log.debug 'rabbitmq_user_has_expected_permissions?: permissions found but do not match'
   false
 end
 
@@ -123,12 +125,13 @@ action :delete do
 end
 
 action :set_permissions do
-  Chef::Application.fatal!("rabbitmq_user action :set_permissions fails with non-existant '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
+  Chef::Application.fatal!("rabbitmq_user action :set_permissions fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
 
   perm_list = new_resource.permissions.split
   vhosts = new_resource.vhost.is_a?(Array) ? new_resource.vhost : [new_resource.vhost]
-  vhosts.each do |vhost|
-    next if user_has_permissions?(new_resource.user, vhost, perm_list)
+  filtered = vhosts.reject { |vhost| user_has_expected_permissions?(new_resource.user, vhost, perm_list) }
+  # filter out vhosts for which the user already has the permissions we expect
+  filtered.each do |vhost|
     vhostopt = "-p #{vhost}" unless vhost.nil?
     cmd = "rabbitmqctl -q set_permissions #{vhostopt} #{new_resource.user} \"#{perm_list.join('" "')}\""
     execute cmd do
@@ -139,11 +142,12 @@ action :set_permissions do
 end
 
 action :clear_permissions do
-  Chef::Application.fatal!("rabbitmq_user action :clear_permissions fails with non-existant '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
+  Chef::Application.fatal!("rabbitmq_user action :clear_permissions fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
 
   vhosts = new_resource.vhost.is_a?(Array) ? new_resource.vhost : [new_resource.vhost]
-  vhosts.each do |vhost|
-    next unless user_has_permissions?(new_resource.user, vhost)
+  # filter out vhosts for which the user already has the permissions we expect
+  filtered = vhosts.reject { |vhost| user_has_expected_permissions?(new_resource.user, vhost) }
+  filtered.each do |vhost|
     vhostopt = "-p #{vhost}" unless vhost.nil?
     cmd = "rabbitmqctl -q clear_permissions #{vhostopt} #{new_resource.user}"
     execute cmd do
@@ -154,7 +158,7 @@ action :clear_permissions do
 end
 
 action :set_tags do
-  Chef::Application.fatal!("rabbitmq_user action :set_tags fails with non-existant '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
+  Chef::Application.fatal!("rabbitmq_user action :set_tags fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
 
   unless user_has_tag?(new_resource.user, new_resource.tag)
     cmd = "rabbitmqctl -q set_user_tags #{new_resource.user} #{new_resource.tag}"
@@ -166,7 +170,7 @@ action :set_tags do
 end
 
 action :clear_tags do
-  Chef::Application.fatal!("rabbitmq_user action :clear_tags fails with non-existant '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
+  Chef::Application.fatal!("rabbitmq_user action :clear_tags fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
 
   unless user_has_tag?(new_resource.user, '"\[\]"')
     cmd = "rabbitmqctl -q set_user_tags #{new_resource.user}"

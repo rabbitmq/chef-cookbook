@@ -39,7 +39,7 @@ action :add do
   apt_preference(new_resource.name) do
     glob 'erlang*'
     pin 'release o=Bintray'
-    pin_priority 800
+    pin_priority '800'
 
     action :add
   end
