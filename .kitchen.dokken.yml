@@ -11,6 +11,8 @@ transport:
 provisioner:
   name: dokken
   # chef_log_level: debug
+  client_rb:
+    chef_license: accept
 
 verifier:
   root_path: '/opt/verifier'

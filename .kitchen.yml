@@ -8,6 +8,8 @@ provisioner:
   name: chef_zero
   product_name: chef
   install_strategy: always
+  client_rb:
+    chef_license: accept
 
 transport:
   name: "ssh"

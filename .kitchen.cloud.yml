@@ -2,6 +2,8 @@
 provisioner:
   name: chef_zero
   require_chef_omnibus: latest
+  client_rb:
+    chef_license: accept
 
 platforms:
 - name: centos-7-x64
