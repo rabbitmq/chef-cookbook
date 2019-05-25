@@ -32,9 +32,6 @@ script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen 
 
 matrix:
   include:
-    before_install:
-      - gem update bundler
-      - bundle update --bundler
-    - script:
-      - /opt/chefdk/bin/chef exec rake
+    script:
+      - bundle exec rake
       env: UNIT_AND_LINT=1
