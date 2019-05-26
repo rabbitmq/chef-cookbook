@@ -37,6 +37,7 @@ No changes yet.
 
    GitHub issue: [\#532](https://github.com/rabbitmq/chef-cookbook/pull/532)
 
+
 ## [v5.8.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.1) (2019-05-01)
 
 ### Bug Fixes
