@@ -223,10 +223,10 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:20.3.8.20-1'
+node['rabbitmq']['erlang']['version'] = '1:20.3.8.21-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '20.3.8.20'
+node['rabbitmq']['erlang']['version'] = '20.3.8.21'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
@@ -282,13 +282,13 @@ The following examples provision Erlang `20.3.8.20`:
 node['erlang']['install_method'] = "esl"
 # Ubuntu and Debian
 # note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:20.3.8.20-1"
+node['erlang']['esl']['version'] = "1:20.3.8.21-1"
 ```
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "20.3.8.20-1"
+node['erlang']['esl']['version'] = "20.3.8.21-1"
 ```
 
 #### Set RabbitMQ Version
@@ -754,6 +754,7 @@ For an already running cluster, these actions still require manual intervention:
 
 ```text
 Copyright (c) 2009-2018, Chef Software, Inc.
+Copyright (c) 2018-2019, Pivotal Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
