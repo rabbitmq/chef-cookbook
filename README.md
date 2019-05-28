@@ -138,13 +138,25 @@ On CentOS 7 and 6, base Yum repository URL will be picked based on distribution 
 On Fedora the CentOS 7 package will be used. Erlang package version is set the same way
 as for Debian (see above).
 
-Below are the defaults used by the Yum repository:
+Below are the defaults used by the Yum repository (assuming RHEL or CentOS 7):
 
 ``` ruby
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
+```
+
+To provision Erlang `21.x`, change `default['rabbitmq']['erlang']['yum']['baseurl']`:
+
+``` ruby
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+```
+
+To provision Erlang `21.x` on CentOS 6:
+
+``` ruby
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6'
 ```
 
 #### Installing Erlang with the Erlang Cookbook
