@@ -114,6 +114,9 @@
 <% if node['rabbitmq']['vm_memory_high_watermark'] -%>
     {vm_memory_high_watermark, <%= node['rabbitmq']['vm_memory_high_watermark'] %>},
 <% end %>
+<% if node['rabbitmq']['channel_max'] -%>
+    {channel_max, <%= node['rabbitmq']['channel_max'] %>},
+<% end %>
 <% if node['rabbitmq']['loopback_users'] -%>
     {loopback_users, [<%= node['rabbitmq']['loopback_users'].map{|n| "<<\"#{n}\">>"}.join(',') %>]},
 <% end %>
