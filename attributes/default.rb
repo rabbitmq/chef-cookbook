@@ -116,6 +116,7 @@ default['rabbitmq']['logrotate']['postrotate'] = '/usr/sbin/rabbitmqctl rotate_l
 default['rabbitmq']['disk_free_limit_relative'] = nil
 default['rabbitmq']['disk_free_limit'] = nil
 default['rabbitmq']['vm_memory_high_watermark'] = nil
+default['rabbitmq']['channel_max'] = nil
 default['rabbitmq']['max_file_descriptors'] = 1024
 default['rabbitmq']['open_file_limit'] = nil
 
