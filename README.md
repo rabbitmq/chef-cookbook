@@ -189,7 +189,7 @@ node['erlang']['esl']['version'] = "20.3.8.21-1"
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.7.15"
+node['rabbitmq']['version'] = "3.7.16"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
@@ -288,7 +288,7 @@ The Erlang cookbook will provision packages from Erlang Solutions if `node['erla
 node['erlang']['install_method'] = "esl"
 ```
 
-The following examples provision Erlang `20.3.8.20`:
+The following examples provision Erlang `20.3.8.22`:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
