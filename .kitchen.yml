@@ -72,7 +72,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
 
   - name: management-plugin-deb
     run_list:
@@ -108,7 +108,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
 
   - name: 36x-deb
     run_list:
