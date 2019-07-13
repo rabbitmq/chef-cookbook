@@ -1,8 +1,50 @@
 # Change Log
 
-## [v5.8.2](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.2) (under development)
+## [v5.8.3](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.3) (under development)
 
-No changes yet.
+* `rabbitmq[erlang_package_from_bintray]` now provisions Erlang 22 by default on RPM-based
+   distributions. Erlang `21.x` and `20.3.x` can be provisioned by overriding the
+   ``node['rabbitmq']['erlang']['yum']['baseurl']` attribute (see README for examples).
+
+ * `node['rabbitmq']['channel_max']` is a new attribute used to configure
+   the [maximum number of channels allowed per connection](https://www.rabbitmq.com/channels.html#channel-max).
+
+   Contributed by @rafaelyehuda.
+   
+   GitHub issue: [\#533](https://github.com/rabbitmq/chef-cookbook/pull/533)
+
+## [v5.8.2](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.2) (2019-05-29)
+
+### Chef Compatibility
+
+ * Restored compatibility with pre-Chef 13 `apt_preference` resource.
+
+   Contributed by Stefan Sundin.
+
+   GitHub issue: [\#527](https://github.com/rabbitmq/cphef-cookbook/pull/527)
+
+### Enhancements
+
+ * Basic LDAP plugin configuration support (see documentation in the README).
+
+   Contributed by @refaelyehuda.
+
+   GitHub issue: [\#528](https://github.com/rabbitmq/chef-cookbook/pull/528)
+
+### Bug Fixes
+
+ * `rabbitmq[user]`'s `:clear_permissions` action unintentionally had no effect.
+
+   Contributed by Brandon Kneeld.
+
+   GitHub issue: [\#529](https://github.com/rabbitmq/chef-cookbook/issues/529)
+
+ * `rabbitmq[erlang_package_from_bintray]` now skips Erlang packages not available on Ubuntu 16.04 (Xenial).
+
+   Contributed by Stefan Sundin.
+
+   GitHub issue: [\#532](https://github.com/rabbitmq/chef-cookbook/pull/532)
+
 
 ## [v5.8.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.1) (2019-05-01)
 
@@ -121,8 +163,8 @@ No changes yet.
       ``` ruby
       rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
         # This package version assumes a Debian-based distribution.
-        # On RHEL/CentOS/Fedora it would be '21.3.8.2'
-        version '1:21.3.8.2-1'
+        # On RHEL/CentOS/Fedora it would be '21.3.8.6'
+        version '1:21.3.8.6-1'
 
         # provision a HiPE-enabled Erlang runtime if available
         use_hipe true

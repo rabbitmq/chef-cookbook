@@ -31,6 +31,5 @@ script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen 
 
 matrix:
   include:
-    - script:
-      - /opt/chefdk/bin/chef exec rake
-      env: UNIT_AND_LINT=1
+    script: bundle exec rake
+    env: UNIT_AND_LINT=1

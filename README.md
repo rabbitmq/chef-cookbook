@@ -100,10 +100,10 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:21.3.8.2-1'
+node['rabbitmq']['erlang']['version'] = '1:21.3.8.6-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '21.3.8.2'
+node['rabbitmq']['erlang']['version'] = '21.3.8.6'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
@@ -136,13 +136,25 @@ On CentOS 7 and 6, base Yum repository URL will be picked based on distribution 
 On Fedora the CentOS 7 package will be used. Erlang package version is set the same way
 as for Debian (see above).
 
-Below are the defaults used by the Yum repository:
+Below are the defaults used by the Yum repository (assuming RHEL or CentOS 7):
 
 ``` ruby
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
+```
+
+To provision Erlang `21.x`, change `default['rabbitmq']['erlang']['yum']['baseurl']`:
+
+``` ruby
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+```
+
+To provision Erlang `21.x` on CentOS 6:
+
+``` ruby
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6'
 ```
 
 #### Installing Erlang with the Erlang Cookbook
@@ -175,7 +187,7 @@ node['erlang']['esl']['version'] = "20.3.8.21-1"
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.7.15"
+node['rabbitmq']['version'] = "3.7.16"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
@@ -472,7 +484,7 @@ Install the package. Here's an example for Debian-based systems:
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
   # This package version assumes a Debian-based distribution.
-  version '1:21.3.8.2-1'
+  version '1:21.3.8.6-1'
 
   # provision a HiPE-enabled Erlang runtime if available
   use_hipe true
@@ -485,7 +497,7 @@ Here's another one for RPM-based ones:
 
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
-  version '21.3.8.2'
+  version '21.3.8.6'
 
   action :install
 end

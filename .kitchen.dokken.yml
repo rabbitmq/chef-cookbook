@@ -11,6 +11,8 @@ transport:
 provisioner:
   name: dokken
   # chef_log_level: debug
+  client_rb:
+    chef_license: accept
 
 verifier:
   root_path: '/opt/verifier'
@@ -109,9 +111,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.2-1"
+          version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
         virtualhosts:
           - vhost1
           - vhost2
@@ -152,9 +154,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.2-1"
+          version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/integration/management_plugin
@@ -169,9 +171,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.2-1"
+          version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
         systemd:
           limits:
             NOFILE: 54000
@@ -188,9 +190,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.2-1"
+          version: "21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -205,8 +207,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.2"
-        version: "3.7.15"
+          version: "22.0.7"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -221,9 +223,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.2-1"
+          version: "21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
         systemd:
           limits:
             NOFILE: 54000
@@ -240,9 +242,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.2-1"
+          version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -257,9 +259,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.2-1"
+          version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -274,9 +276,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.2-1"
+          version: "21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -291,9 +293,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.2-1"
+          version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
     attributes:
       apt:
         confd:
@@ -302,9 +304,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.2-1"
+          version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -322,9 +324,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.2-1"
+          version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -346,7 +348,7 @@ suites:
         erlang:
           enabled: true
           hipe: true
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
@@ -361,8 +363,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:21.3.8.2-1"
-        version: "3.7.15"
+          version: "1:21.3.8.6-1"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
@@ -379,7 +381,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -394,11 +396,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.2"
+          version: "21.3.8.6"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -416,7 +418,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: false
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -431,11 +433,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.2"
+          version: "21.3.8.6"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: true
-        version: "3.7.15"
+        version: "3.7.16"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm

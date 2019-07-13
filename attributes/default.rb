@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # Version to install
-default['rabbitmq']['version'] = '3.7.15'
+default['rabbitmq']['version'] = '3.7.16'
 
 default['rabbitmq']['package_source'] = 'github'
 
@@ -122,6 +122,7 @@ default['rabbitmq']['logrotate']['postrotate'] = '/usr/sbin/rabbitmqctl rotate_l
 default['rabbitmq']['disk_free_limit_relative'] = nil
 default['rabbitmq']['disk_free_limit'] = nil
 default['rabbitmq']['vm_memory_high_watermark'] = nil
+default['rabbitmq']['channel_max'] = nil
 default['rabbitmq']['max_file_descriptors'] = 1024
 default['rabbitmq']['open_file_limit'] = nil
 
@@ -267,15 +268,15 @@ default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 # yum
 default['rabbitmq']['erlang']['yum']['baseurl'] = value_for_platform(
   %w(centos rhel redhat scientific) => {
-    '< 7.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6',
-    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+    '< 7.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6',
+    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
   },
   'fedora' => {
-    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
   },
   'amazon' => {
-    '< 2.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6',
-    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
+    '< 2.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6',
+    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
   }
 )
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'

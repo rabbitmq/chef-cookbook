@@ -85,6 +85,11 @@ action :remove do
 
     erlang_packages = [base_pkg] + DEBIAN_PACKAGES
 
+    # xenial does not have these packages
+    if node['rabbitmq']['erlang']['apt']['lsb_codename'] == 'xenial'
+      erlang_packages -= %w(erlang-ftp erlang-tftp)
+    end
+
     erlang_packages.each do |p|
       apt_preference "#{new_resource.name}-#{p}" do
         action :remove

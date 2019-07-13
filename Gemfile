@@ -19,16 +19,16 @@ group :integration do
   gem 'kitchen-inspec', '~> 1.0'
   # note: without https://github.com/inspec/train/pull/406 `kitchen verify`
   # will fail on Ruby 2.6 even with the latest version. MK.
-  gem 'train', '~> 1.7.4'
-  gem 'inspec', '~> 3.7'
+  gem 'train', '~> 2.0'
+  gem 'inspec', '~> 4.7'
 end
 
 group :kitchen_common do
-  gem 'test-kitchen', '>= 1.24'
+  gem 'test-kitchen', '~> 2.2'
 end
 
 group :kitchen_vagrant do
-  gem 'kitchen-vagrant', '~> 1.4'
+  gem 'kitchen-vagrant', '~> 1.5'
 end
 
 group :kitchen_docker do
@@ -41,7 +41,6 @@ end
 
 group :kitchen_cloud do
   gem 'kitchen-ec2'
-  gem 'kitchen-openstack'
   gem 'kitchen-digitalocean'
 end
 
