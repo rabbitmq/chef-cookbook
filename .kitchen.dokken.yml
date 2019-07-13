@@ -298,7 +298,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.6"
+          version: "22.0.7"
         version: "3.7.16"
     verifier:
       inspec_tests:
