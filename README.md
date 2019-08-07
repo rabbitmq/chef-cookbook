@@ -443,6 +443,26 @@ node['rabbitmq']['ldap']['conf'] = {
   }
 ```
 
+### Auth Backend Cache
+
+To enable the [RabbitMQ access control cache plugin](https://github.com/rabbitmq/rabbitmq-auth-backend-cache), a few attributes have to be used
+in combination:
+
+
+1. Set `node['rabbitmq']['auth']['cache']['enabled'] = true`
+2. Enable `auth_backends`: `node['rabbitmq']['auth_backends'] = 'rabbit_auth_backend_internal,rabbit_auth_backend_cache'`
+3. Enable the `rabbitmq_auth_backend_cache` plugin
+4. Configure auth backend to cache via the `node['rabbitmq']['auth']['cache']['conf']` variable
+
+##### Example configuration
+
+```ruby
+node['rabbitmq']['auth']['cache']['conf'] = {
+  :cached_backend => 'rabbit_auth_backend_ldap',
+  :cache_ttl => 300000
+}
+```
+You can see more examples [here](https://github.com/rabbitmq/rabbitmq-auth-backend-cache)
 
 ### users
 
