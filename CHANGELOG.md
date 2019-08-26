@@ -1,5 +1,9 @@
 # Change Log
 
+## [v5.8.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.5) (under development)
+
+No changes yet.
+
 ## [v5.8.4](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.4) (2019-08-26)
 
 * `rabbitmq[erlang_package_from_bintray]` now provisions Erlang 22 by default on RPM-based
