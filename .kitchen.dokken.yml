@@ -60,6 +60,13 @@ platforms:
       intermediate_instructions:
         - RUN dnf -y install sudo
 
+  - name: fedora-30
+    driver:
+      image: dokken/fedora-30
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN dnf -y install sudo
+
   - name: amazonlinux-2
     driver:
       image: dokken/amazonlinux-2
@@ -113,7 +120,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
         virtualhosts:
           - vhost1
           - vhost2
@@ -156,7 +163,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/integration/management_plugin
@@ -173,7 +180,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
         systemd:
           limits:
             NOFILE: 54000
@@ -192,7 +199,7 @@ suites:
         esl:
           version: "21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -208,11 +215,11 @@ suites:
         erlang:
           enabled: true
           version: "22.0.7"
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7.4", "fedora-29", "amazonlinux-2", "scientificlinux-7"]
+    includes: ["centos-7.4", "fedora-29", "fedora-30", "amazonlinux-2"]
 
   - name: system-limits-rpm
     run_list:
@@ -225,7 +232,7 @@ suites:
         esl:
           version: "21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
         systemd:
           limits:
             NOFILE: 54000
@@ -244,7 +251,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -261,7 +268,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -278,7 +285,7 @@ suites:
         esl:
           version: "21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -295,7 +302,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
     attributes:
       apt:
         confd:
@@ -306,7 +313,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -326,7 +333,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -348,7 +355,7 @@ suites:
         erlang:
           enabled: true
           hipe: true
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
@@ -364,7 +371,7 @@ suites:
         erlang:
           enabled: true
           version: "1:21.3.8.6-1"
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
@@ -381,7 +388,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -400,7 +407,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -418,7 +425,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: false
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -437,7 +444,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: true
-        version: "3.7.16"
+        version: "3.7.17"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
