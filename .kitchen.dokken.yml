@@ -127,7 +127,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
         virtualhosts:
           - vhost1
           - vhost2
@@ -170,7 +170,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/management_plugin
@@ -187,7 +187,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
         systemd:
           limits:
             NOFILE: 54000
@@ -290,7 +290,7 @@ suites:
         esl:
           version: "21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -306,7 +306,7 @@ suites:
         erlang:
           enabled: true
           version: "22.0.7"
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -341,7 +341,7 @@ suites:
         esl:
           version: "21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
         systemd:
           limits:
             NOFILE: 54000
@@ -360,7 +360,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -394,7 +394,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -411,7 +411,7 @@ suites:
         esl:
           version: "21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -428,7 +428,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
     attributes:
       apt:
         confd:
@@ -439,7 +439,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -459,7 +459,7 @@ suites:
         esl:
           version: "1:21.3.8.4-1"
       rabbitmq:
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -481,7 +481,7 @@ suites:
         erlang:
           enabled: true
           hipe: true
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
@@ -497,7 +497,7 @@ suites:
         erlang:
           enabled: true
           version: "1:21.3.8.6-1"
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
@@ -514,7 +514,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -533,7 +533,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -551,7 +551,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: false
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -570,7 +570,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: true
-        version: "3.7.17"
+        version: "3.7.19"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
