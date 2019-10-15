@@ -16,7 +16,7 @@ verifier:
   sudo: false
 
 platforms:
-  - name: centos-6.9
+  - name: centos-6
     driver:
       image: dokken/centos-6
       platform: rhel
@@ -25,7 +25,7 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo which initscripts
 
-  - name: centos-7.4
+  - name: centos-7
     driver:
       image: dokken/centos-7
       platform: rhel
@@ -100,7 +100,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7.4", "fedora-29"]
+    includes: ["centos-7", "fedora-29"]
 
   - name: default-rpm-el6-alpha
     run_list:
@@ -120,4 +120,4 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-6.9"]
+    includes: ["centos-6"]

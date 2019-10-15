@@ -2,11 +2,16 @@
 
 ## [v5.8.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.5) (under development)
 
-No changes yet.
+ * User tags are now set unconditionally by the `users` recipe.
+
+   Contributed by @tophercullen.
+
+   GitHub issue: [#538](https://github.com/rabbitmq/chef-cookbook/issues/538)
+
 
 ## [v5.8.4](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.4) (2019-08-26)
 
-* `rabbitmq[erlang_package_from_bintray]` now provisions Erlang 22 by default on RPM-based
+ * `rabbitmq[erlang_package_from_bintray]` now provisions Erlang 22 by default on RPM-based
    distributions. Erlang `21.x` can be provisioned by overriding the
    ``node['rabbitmq']['erlang']['yum']['baseurl']` attribute (see README for examples).
 
