@@ -2,7 +2,6 @@
 
 ## [v5.8.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.5) (under development)
 
-
  * User tags are now set unconditionally by the `users` recipe.
 
    Contributed by @tophercullen.
