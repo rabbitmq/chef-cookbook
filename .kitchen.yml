@@ -21,7 +21,7 @@ platforms:
   - name: debian-10
   - name: fedora-29
   - name: fedora-30
-  - name: centos-6.9
+  - name: centos-6
 
 #
 # Suites
@@ -40,7 +40,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
         virtualhosts:
@@ -83,7 +83,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -100,7 +100,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
         systemd:
@@ -203,13 +203,13 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.4-1"
+          version: "21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7.4", "centos-6.9"]
+    includes: ["centos-7.4", "centos-6"]
 
   - name: default-modern-rpm
     run_list:
@@ -219,7 +219,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.0.7"
+          version: "22.1.3"
         version: "3.7.19"
     verifier:
       inspec_tests:
@@ -236,7 +236,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.4-1"
+          version: "21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
         systemd:
@@ -255,7 +255,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -289,7 +289,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -306,7 +306,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.4-1"
+          version: "21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -323,7 +323,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     attributes:
@@ -334,7 +334,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -354,7 +354,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -452,7 +452,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["centos-6.9"]
+    includes: ["centos-6"]
 
   # Erlang package, RPM, version pinning, CentOS 6 repo
   - name: rabbitmq-erlang-pinned-rpm-el6
@@ -471,4 +471,4 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["centos-6.9"]
+    includes: ["centos-6"]

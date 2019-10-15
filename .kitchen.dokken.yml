@@ -19,7 +19,7 @@ verifier:
   sudo: false
 
 platforms:
-  - name: centos-6.9
+  - name: centos-6
     driver:
       image: dokken/centos-6
       platform: rhel
@@ -28,9 +28,17 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo which initscripts
 
-  - name: centos-7.4
+  - name: centos-7
     driver:
       image: dokken/centos-7
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
+
+  - name: centos-8
+    driver:
+      image: dokken/centos-8
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
@@ -125,7 +133,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
         virtualhosts:
@@ -168,7 +176,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -185,7 +193,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
         systemd:
@@ -288,13 +296,13 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.4-1"
+          version: "21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7.4", "centos-6.9"]
+    includes: ["centos-7", "centos-6"]
 
   # Fedora and Amazon Linux 2 require recipe[rabbitmq::erlang_package]
   - name: default-modern-rpm
@@ -305,12 +313,12 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.0.7"
+          version: "22.1.3"
         version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7.4", "fedora-29", "fedora-30", "amazonlinux-2"]
+    includes: ["centos-8", "centos-7", "fedora-29", "fedora-30", "amazonlinux-2"]
 
   # Fedora and Amazon Linux 2 require recipe[rabbitmq::erlang_package]
   - name: 36x-modern-rpm
@@ -328,7 +336,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/36x
-    includes: ["centos-7.4", "fedora-29", "fedora-30", "amazonlinux-2"]
+    includes: ["centos-8", "centos-7", "fedora-29", "fedora-30", "amazonlinux-2"]
 
   - name: system-limits-rpm
     run_list:
@@ -339,7 +347,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.4-1"
+          version: "21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
         systemd:
@@ -348,7 +356,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["centos-7.4"]
+    includes: ["centos-7"]
 
   - name: lwrps
     run_list:
@@ -358,7 +366,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -392,7 +400,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -409,14 +417,14 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.4-1"
+          version: "21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/cluster
-    includes: ["centos-7.4"]
+    includes: ["centos-7", "centos-8"]
 
   - name: default-force-yes
     run_list:
@@ -426,7 +434,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     attributes:
@@ -437,7 +445,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -457,7 +465,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.4-1"
+          version: "1:21.3.8.8-1"
       rabbitmq:
         version: "3.7.19"
     verifier:
@@ -518,7 +526,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-29", "centos-7.4"]
+    includes: ["fedora-29", "centos-7", "centos-8"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el7
@@ -537,7 +545,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-29", "centos-7.4"]
+    includes: ["fedora-29", "centos-7", "centos-8"]
 
   # Latest Erlang package, RPM, CentOS 6 repo
   - name: rabbitmq-erlang-latest-rpm-el6
@@ -555,7 +563,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["centos-6.9"]
+    includes: ["centos-6"]
 
   # Erlang package, RPM, version pinning, CentOS 6 repo
   - name: rabbitmq-erlang-pinned-rpm-el6
@@ -574,4 +582,4 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["centos-6.9"]
+    includes: ["centos-6"]

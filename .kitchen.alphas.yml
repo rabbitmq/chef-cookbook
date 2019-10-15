@@ -16,7 +16,7 @@ verifier:
   sudo: false
 
 platforms:
-  - name: centos-6.9
+  - name: centos-6
     driver:
       image: dokken/centos-6
       platform: rhel
@@ -120,4 +120,4 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-6.9"]
+    includes: ["centos-6"]
