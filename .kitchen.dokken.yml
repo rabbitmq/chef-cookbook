@@ -19,9 +19,9 @@ verifier:
   sudo: false
 
 platforms:
-  - name: opensuse-leap-42.3
+  - name: opensuse-leap-15
     driver:
-      image: dokken/opensuse-leap-42
+      image: dokken/opensuse-leap-15
       platform: suse
       pid_one_command: /usr/lib/systemd/systemd
       hostname: localhost
@@ -465,13 +465,11 @@ suites:
       - recipe[rabbitmq::default]
     attributes:
         rabbitmq:
-          version: "3.7.19"
           erlang:
             enabled: true
-            version: "21.3.2"
             zypper:
-              baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_42.3/
+              baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_15.1/
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["opensuse-leap-42.3"]
+    includes: ["opensuse-leap-15"]
