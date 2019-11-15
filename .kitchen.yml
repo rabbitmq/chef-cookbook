@@ -22,6 +22,7 @@ platforms:
   - name: fedora-29
   - name: fedora-30
   - name: centos-6
+  - name: opensuse-leap-15
 
 #
 # Suites
@@ -472,3 +473,19 @@ suites:
       inspec_tests:
         - test/erlang_package/pinned_rpm
     includes: ["centos-6"]
+
+  # Latest Erlang package, RPM, openSUSE leap 15 repo
+  - name: rabbitmq-erlang-latest-rpm-suse
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+        rabbitmq:
+          erlang:
+            enabled: true
+            zypper:
+              baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_15.1
+    verifier:
+      inspec_tests:
+        - test/erlang_package/latest_rpm
+    includes: ["opensuse-leap-15"]

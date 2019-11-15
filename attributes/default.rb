@@ -277,3 +277,8 @@ default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitm
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
 default['rabbitmq']['erlang']['yum']['enabled'] = true
+
+# zypper
+
+default['rabbitmq']['erlang']['zypper']['baseurl'] = 'https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_15.1/'
+default['rabbitmq']['erlang']['zypper']['enabled'] = true
