@@ -23,7 +23,7 @@ platforms:
   - name: fedora-29
   - name: fedora-30
   - name: centos-6
-  - name: opensuse-leap-42.3
+  - name: opensuse-leap-15
 
 #
 # Suites
@@ -381,13 +381,11 @@ suites:
       - recipe[rabbitmq::default]
     attributes:
         rabbitmq:
-          version: "3.7.19"
           erlang:
             enabled: true
-            version: "21.3.2"
             zypper:
-              baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_42.3/
+              baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_15.1
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["opensuse-leap-42.3"]
+    includes: ["opensuse-leap-15"]

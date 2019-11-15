@@ -290,5 +290,5 @@ default['rabbitmq']['erlang']['yum']['enabled'] = true
 
 # zypper
 
-default['rabbitmq']['erlang']['zypper']['baseurl'] = 'https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_42.3/'
+default['rabbitmq']['erlang']['zypper']['baseurl'] = 'https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_15.1/'
 default['rabbitmq']['erlang']['zypper']['enabled'] = true
