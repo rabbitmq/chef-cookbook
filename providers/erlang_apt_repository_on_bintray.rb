@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-provides :erlang_repository, platform_family: %w(debian ubuntu)
+provides :erlang_repository, platform_family: %w(debian)
 
 action :add do
   package 'apt-transport-https'

@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-provides :erlang_repository, platform_family: %w(suse opensuse)
+provides :erlang_repository, platform_family: %w(suse)
 
 action :create do
   execute 'zypper refresh' do
