@@ -30,7 +30,7 @@ node.override['yum']['erlang_solutions']['enabled'] = false
 
 erlang_version = node['rabbitmq']['erlang']['version']
 
-if platform_family?('debian', 'ubuntu')
+if platform_family?('debian')
   rabbitmq_erlang_apt_repository_on_bintray 'rabbitmq_erlang_repo_on_bintray' do
     uri node['rabbitmq']['erlang']['apt']['uri'] unless node['rabbitmq']['erlang']['apt']['uri'].nil?
     distribution node['rabbitmq']['erlang']['apt']['lsb_codename'] if node['rabbitmq']['erlang']['apt']['lsb_codename']
@@ -48,19 +48,35 @@ if platform_family?('debian', 'ubuntu')
   end
 end
 
-if platform_family?('rhel', 'centos', 'scientific')
+if platform_family?('rhel')
   if node['platform_version'].to_i <= 5
     Chef::Log.fatal('RabbitMQ package repositories are not available for EL5')
     raise
   end
 end
 
-if platform_family?('rhel', 'centos', 'fedora', 'amazon', 'scientific')
+if platform_family?('rhel', 'fedora', 'amazon')
   rabbitmq_erlang_yum_repository_on_bintray 'rabbitmq_erlang' do
     baseurl node['rabbitmq']['erlang']['yum']['baseurl']
     gpgkey node['rabbitmq']['erlang']['yum']['gpgkey']
     gpgcheck node['rabbitmq']['erlang']['yum']['gpgcheck']
     repo_gpgcheck node['rabbitmq']['erlang']['yum']['repo_gpgcheck']
+    enabled true
+  end
+
+  rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
+    version erlang_version unless erlang_version.nil?
+
+    retry_delay node['rabbitmq']['erlang']['retry_delay'] unless node['rabbitmq']['erlang']['retry_delay'].nil?
+  end
+end
+
+if platform_family?('suse')
+  rabbitmq_erlang_zypper_repository_on_suse_factory 'rabbitmq_erlang' do
+    baseurl node['rabbitmq']['erlang']['zypper']['baseurl']
+    gpgkey node['rabbitmq']['erlang']['zypper']['gpgkey']
+    gpgcheck node['rabbitmq']['erlang']['zypper']['gpgcheck']
+    gpgautoimportkeys node['rabbitmq']['erlang']['zypper']['gpgautoimportkeys']
     enabled true
   end
 

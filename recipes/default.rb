@@ -77,7 +77,7 @@ directory node['rabbitmq']['config_root'] do
 end
 
 ## Install the package
-if platform_family?('debian', 'ubuntu')
+if platform_family?('debian')
   template '/etc/apt/apt.conf.d/90forceyes' do
     source '90forceyes.erb'
     owner 'root'
@@ -182,7 +182,7 @@ if platform_family?('fedora')
   end
 end
 
-if platform_family?('rhel', 'redhat', 'centos', 'scientific') # ~FC024
+if platform_family?('rhel')
   package 'logrotate'
   if node['platform_version'].to_i >= 7
     package 'socat'

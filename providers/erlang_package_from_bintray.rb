@@ -26,7 +26,7 @@ DEBIAN_PACKAGES = %w(erlang-mnesia erlang-runtime-tools erlang-asn1 erlang-crypt
                      erlang-dev erlang-edoc erlang-eunit erlang-erl-docgen erlang-src).freeze
 
 action :install do
-  if platform_family?('debian', 'ubuntu')
+  if platform_family?('debian')
     base_pkg = if new_resource.use_hipe
       'erlang-base-hipe'
     else
@@ -62,7 +62,7 @@ action :install do
     end
   end
 
-  if platform_family?('rhel', 'centos', 'scientific', 'fedora', 'amazon')
+  if platform_family?('rhel', 'fedora', 'amazon')
     package new_resource.name do
       package_name 'erlang'
       version new_resource.version unless new_resource.version.nil?
@@ -74,7 +74,7 @@ action :install do
 end
 
 action :remove do
-  if platform_family?('debian', 'ubuntu')
+  if platform_family?('debian')
     base_pkg = if new_resource.use_hipe
       'erlang-base-hipe'
     else
@@ -105,7 +105,7 @@ action :remove do
     end
   end
 
-  if platform_family?('rhel', 'centos', 'scientific', 'fedora', 'amazon')
+  if platform_family?('rhel', 'fedora', 'amazon')
     package new_resource.name do
       action :remove
     end
