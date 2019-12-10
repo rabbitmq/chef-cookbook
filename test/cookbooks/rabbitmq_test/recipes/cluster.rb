@@ -19,5 +19,5 @@
 #
 
 # 2017, @rmoriz, this is broken and probably never worked
-node.normal['rabbitmq']['cluster'] = true
+node.override['rabbitmq']['cluster'] = true
 include_recipe 'rabbitmq::default'
