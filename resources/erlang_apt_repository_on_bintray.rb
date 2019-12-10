@@ -17,8 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-actions :add, :remove
 default_action :add
 
 attribute :name, String, name_attribute: true

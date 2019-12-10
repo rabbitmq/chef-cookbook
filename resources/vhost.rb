@@ -17,8 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-actions :add, :delete
 default_action :add
 
 attribute :vhost, kind_of: String, name_attribute: true

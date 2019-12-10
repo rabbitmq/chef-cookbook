@@ -20,8 +20,6 @@
 # limitations under the License.
 #
 
-actions :join, :set_cluster_name, :change_cluster_node_type
-
 default_action :join
 
 # the elements must be hashes with 2 keys: node name and type (disc or ram)

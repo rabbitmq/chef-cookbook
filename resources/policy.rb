@@ -18,8 +18,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-actions :set, :clear, :list
 default_action :set
 
 attribute :policy, kind_of: String, name_attribute: true
