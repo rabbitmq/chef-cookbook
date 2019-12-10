@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-node.normal['rabbitmq']['open_file_limit'] = 2048
+node.override['rabbitmq']['open_file_limit'] = 2048
 include_recipe 'rabbitmq::default'
 
 # HACK: Give rabbit time to spin up before the tests, it seems
