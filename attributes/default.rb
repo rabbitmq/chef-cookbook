@@ -138,7 +138,7 @@ default['rabbitmq']['ldap']['conf'] = {}
 
 #  rabbitmq_auth_backend_cache
 default['rabbitmq']['auth']['cache']['enabled'] = false
-default['rabbitmq']['auth']['cache']['conf']  = {}
+default['rabbitmq']['auth']['cache']['conf'] = {}
 
 # TLS
 default['rabbitmq']['ssl'] = false
