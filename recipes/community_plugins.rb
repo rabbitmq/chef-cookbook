@@ -30,7 +30,7 @@ node['rabbitmq']['community_plugins'].each do |plugin, download_url|
     source download_url
     owner  'rabbitmq'
     group  'rabbitmq'
-    mode   0644
+    mode   '644'
   end
 
   rabbitmq_plugin plugin do
