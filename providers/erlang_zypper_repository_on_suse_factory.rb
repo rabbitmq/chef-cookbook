@@ -18,17 +18,25 @@
 # limitations under the License.
 #
 
-provides :erlang_repository, platform_family: %w(rhel centos fedora)
+provides :erlang_repository, platform_family: %w(suse opensuse)
 
 action :create do
-  yum_repository(new_resource.name) do
-    description 'Erlang RPM packages from Team RabbitMQ'
+  execute 'zypper refresh' do
+    command 'zypper --gpg-auto-import-keys refresh'
+    # triggered by a notification
+    action :nothing
+  end
+
+  zypper_repository(new_resource.name) do
+    description 'Erlang RPM packages from SUSE'
 
     baseurl new_resource.baseurl
     gpgcheck new_resource.gpgcheck unless new_resource.gpgcheck.nil?
     gpgkey new_resource.gpgkey unless new_resource.gpgkey.nil?
+    gpgautoimportkeys new_resource.gpgautoimportkeys unless new_resource.gpgautoimportkeys.nil?
 
-    repo_gpgcheck new_resource.repo_gpgcheck unless new_resource.repo_gpgcheck.nil?
+    autorefresh true
+
     repositoryid new_resource.repositoryid unless new_resource.repositoryid.nil?
     enabled new_resource.enabled unless new_resource.enabled.nil?
     priority new_resource.priority unless new_resource.priority.nil?
@@ -44,12 +52,14 @@ action :create do
 
     timeout new_resource.timeout unless new_resource.timeout.nil?
 
+    notifies :run, 'execute[zypper refresh]', :immediately
+
     action :create
   end
 end
 
 action :remove do
-  yum_repository(new_resource.name) do
+  zypper_repository(new_resource.name) do
     action :remove
   end
 end

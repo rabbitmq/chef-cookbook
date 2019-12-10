@@ -21,8 +21,6 @@
 
 include RabbitMQ::CoreHelpers
 
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
-
 # Get ShellOut
 def get_shellout(cmd)
   sh_cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
