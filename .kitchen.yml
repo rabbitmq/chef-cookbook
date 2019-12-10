@@ -137,8 +137,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.1.3"
-        version: "3.7.23"
+          version: "22.2"
+        version: "3.8.2"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -278,8 +278,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          hipe: true
-        version: "3.7.23"
+        version: "3.8.2"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
@@ -294,8 +293,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:21.3.8.11-1"
-        version: "3.7.23"
+          version: "1:22.2-1"
+        version: "3.8.2"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
@@ -312,7 +311,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.7.23"
+        version: "3.8.2"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -327,11 +326,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.11"
+          version: "22.2"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true
-        version: "3.7.23"
+        version: "3.8.2"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -349,7 +348,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: false
-        version: "3.7.23"
+        version: "3.8.2"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -364,11 +363,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.11"
+          version: "22.2"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: true
-        version: "3.7.23"
+        version: "3.8.2"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
