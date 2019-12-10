@@ -58,7 +58,6 @@ deb_package_url = node['rabbitmq']['deb_package_url'] || default_package_url
 rpm_package_name = node['rabbitmq']['rpm_package'] || default_rpm_package_name
 rpm_package_url = node['rabbitmq']['rpm_package_url'] || default_package_url
 
-
 # see rabbitmq/chef-cookbook#351
 directory node['rabbitmq']['config_root'] do
   owner 'root'
@@ -69,7 +68,7 @@ directory node['rabbitmq']['config_root'] do
 end
 
 ## Install the package
-if platform_family?('debian', 'ubuntu')
+if platform_family?('debian')
   template '/etc/apt/apt.conf.d/90forceyes' do
     source '90forceyes.erb'
     owner 'root'
@@ -156,7 +155,7 @@ if platform_family?('fedora')
   rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
 end
 
-if platform_family?('rhel', 'redhat', 'centos', 'scientific') # ~FC024
+if platform_family?('rhel')
   package 'logrotate'
   if node['platform_version'].to_i >= 7
     package 'socat'
