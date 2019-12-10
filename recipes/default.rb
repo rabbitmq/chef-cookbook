@@ -149,8 +149,8 @@ if platform_family?('debian')
       source 'rabbitmq.upstart.conf.erb'
       owner 'root'
       group 'root'
-      mode 0644
-      variables(:max_file_descriptors => node['rabbitmq']['max_file_descriptors'])
+      mode '644'
+      variables(max_file_descriptors: node['rabbitmq']['max_file_descriptors'])
     end
   end
 end
@@ -316,7 +316,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   cookbook node['rabbitmq']['config-env_template_cookbook']
   owner 'root'
   group 'root'
-  mode 00644
+  mode '644'
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   variables(
     :config_path => rabbitmq_config_file_path
@@ -329,7 +329,7 @@ template rabbitmq_config_file_path do
   cookbook node['rabbitmq']['config_template_cookbook']
   owner 'root'
   group 'root'
-  mode 00644
+  mode '644'
   variables(
     :kernel => format_kernel_parameters,
     :ssl_versions => (format_ssl_versions if node['rabbitmq']['ssl_versions']),
@@ -342,7 +342,7 @@ template "/etc/default/#{node['rabbitmq']['service_name']}" do
   source 'default.rabbitmq-server.erb'
   owner 'root'
   group 'root'
-  mode 00644
+  mode '644'
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
@@ -361,7 +361,7 @@ if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'
     source 'doterlang.cookie.erb'
     owner 'rabbitmq'
     group 'rabbitmq'
-    mode 00400
+    mode '400'
     sensitive true
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
     notifies :run, 'execute[reset-node]', :immediately
