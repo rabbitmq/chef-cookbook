@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Resource:: erlang_zypper_repository_on_suse_factory
 #
-# Copyright 2019, Pivotal Software, Inc.
+# Copyright:: 2019, Pivotal Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-actions :create, :remove
 default_action :create
 
 attribute :name, String, name_attribute: true

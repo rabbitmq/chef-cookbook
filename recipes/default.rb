@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Recipe:: default
 #
-# Copyright 2009, Benjamin Black
-# Copyright 2009-2013, Chef Software, Inc.
-# Copyright 2012, Kevin Nuckolls <kevin.nuckolls@gmail.com>
-# Copyright 2016-2019, Pivotal Software, Inc
+# Copyright:: 2009, Benjamin Black
+# Copyright:: 2009-2013, Chef Software, Inc.
+# Copyright:: 2012, Kevin Nuckolls <kevin.nuckolls@gmail.com>
+# Copyright:: 2016-2019, Pivotal Software, Inc
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,7 +58,6 @@ deb_package_url = node['rabbitmq']['deb_package_url'] || default_package_url
 rpm_package_name = node['rabbitmq']['rpm_package'] || default_rpm_package_name
 rpm_package_url = node['rabbitmq']['rpm_package_url'] || default_package_url
 
-
 # see rabbitmq/chef-cookbook#351
 directory node['rabbitmq']['config_root'] do
   owner 'root'
@@ -69,7 +68,7 @@ directory node['rabbitmq']['config_root'] do
 end
 
 ## Install the package
-if platform_family?('debian', 'ubuntu')
+if platform_family?('debian')
   template '/etc/apt/apt.conf.d/90forceyes' do
     source '90forceyes.erb'
     owner 'root'
@@ -129,7 +128,7 @@ if platform_family?('debian', 'ubuntu')
       source 'rabbitmq.upstart.conf.erb'
       owner 'root'
       group 'root'
-      mode 0644
+      mode '644'
       variables(max_file_descriptors: node['rabbitmq']['max_file_descriptors'])
     end
   end
@@ -156,7 +155,7 @@ if platform_family?('fedora')
   rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
 end
 
-if platform_family?('rhel', 'redhat', 'centos', 'scientific') # ~FC024
+if platform_family?('rhel')
   package 'logrotate'
   if node['platform_version'].to_i >= 7
     package 'socat'
@@ -280,7 +279,7 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
   cookbook node['rabbitmq']['config-env_template_cookbook']
   owner 'root'
   group 'root'
-  mode 00644
+  mode '644'
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   variables(
     config_path: rabbitmq_config_file_path
@@ -293,7 +292,7 @@ template rabbitmq_config_file_path do
   cookbook node['rabbitmq']['config_template_cookbook']
   owner 'root'
   group 'root'
-  mode 00644
+  mode '644'
   variables(
     kernel: format_kernel_parameters,
     ssl_versions: (format_ssl_versions if node['rabbitmq']['ssl_versions']),
@@ -306,7 +305,7 @@ template "/etc/default/#{node['rabbitmq']['service_name']}" do
   source 'default.rabbitmq-server.erb'
   owner 'root'
   group 'root'
-  mode 00644
+  mode '644'
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end
 
@@ -325,7 +324,7 @@ if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'
     source 'doterlang.cookie.erb'
     owner 'rabbitmq'
     group 'rabbitmq'
-    mode 00400
+    mode '400'
     sensitive true
     notifies :start, "service[#{node['rabbitmq']['service_name']}]", :immediately
     notifies :run, 'execute[reset-node]', :immediately

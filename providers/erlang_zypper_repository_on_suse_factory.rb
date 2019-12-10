@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Provider:: erlang_yum_repository_on_bintray
 #
-# Copyright 2019, Pivotal Software, Inc.
+# Copyright:: 2019, Pivotal Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,9 +18,7 @@
 # limitations under the License.
 #
 
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
-
-provides :erlang_repository, platform_family: %w(suse opensuse)
+provides :erlang_repository, platform_family: %w(suse)
 
 action :create do
   execute 'zypper refresh' do

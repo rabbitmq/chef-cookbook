@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Provider:: user
 #
-# Copyright 2011-2013, Chef Software, Inc.
+# Copyright:: 2011-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@
 #
 
 include RabbitMQ::CoreHelpers
-
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def user_exists?(name)
   cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')

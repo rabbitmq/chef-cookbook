@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Recipe:: erlang_package
 #
 # Provisions Erlang via RabbitMQ's own
 # packages for Debian and CentOS.
 #
-# Copyright 2019, Pivotal Software, Inc
+# Copyright:: 2019, Pivotal Software, Inc
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ node.override['yum']['erlang_solutions']['enabled'] = false
 
 erlang_version = node['rabbitmq']['erlang']['version']
 
-if platform_family?('debian', 'ubuntu')
+if platform_family?('debian')
   rabbitmq_erlang_apt_repository_on_bintray 'rabbitmq_erlang_repo_on_bintray' do
     uri node['rabbitmq']['erlang']['apt']['uri'] unless node['rabbitmq']['erlang']['apt']['uri'].nil?
     distribution node['rabbitmq']['erlang']['apt']['lsb_codename'] if node['rabbitmq']['erlang']['apt']['lsb_codename']
@@ -48,14 +48,14 @@ if platform_family?('debian', 'ubuntu')
   end
 end
 
-if platform_family?('rhel', 'centos', 'scientific')
+if platform_family?('rhel')
   if node['platform_version'].to_i <= 5
     Chef::Log.fatal('RabbitMQ package repositories are not available for EL5')
     raise
   end
 end
 
-if platform_family?('rhel', 'centos', 'fedora', 'amazon', 'scientific')
+if platform_family?('rhel', 'fedora', 'amazon')
   rabbitmq_erlang_yum_repository_on_bintray 'rabbitmq_erlang' do
     baseurl node['rabbitmq']['erlang']['yum']['baseurl']
     gpgkey node['rabbitmq']['erlang']['yum']['gpgkey']
@@ -71,7 +71,7 @@ if platform_family?('rhel', 'centos', 'fedora', 'amazon', 'scientific')
   end
 end
 
-if platform_family?('suse', 'opensuse')
+if platform_family?('suse')
   rabbitmq_erlang_zypper_repository_on_suse_factory 'rabbitmq_erlang' do
     baseurl node['rabbitmq']['erlang']['zypper']['baseurl']
     gpgkey node['rabbitmq']['erlang']['zypper']['gpgkey']

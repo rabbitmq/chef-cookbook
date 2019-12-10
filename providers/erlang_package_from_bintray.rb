@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Provider:: erlang_package_from_bintray
 #
-# Copyright 2019, Pivotal Software, Inc.
+# Copyright:: 2019, Pivotal Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,9 +18,7 @@
 # limitations under the License.
 #
 
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
-
-provides :erlang_package_from_bintray, platform_family: %w(debian ubuntu rhel centos fedora)
+provides :erlang_package_from_bintray, platform_family: %w(debian rhel fedora)
 
 DEBIAN_PACKAGES = %w(erlang-mnesia erlang-runtime-tools erlang-asn1 erlang-crypto erlang-public-key erlang-ssl
                      erlang-syntax-tools erlang-snmp erlang-os-mon erlang-parsetools
@@ -28,7 +26,7 @@ DEBIAN_PACKAGES = %w(erlang-mnesia erlang-runtime-tools erlang-asn1 erlang-crypt
                      erlang-dev erlang-edoc erlang-eunit erlang-erl-docgen erlang-src).freeze
 
 action :install do
-  if platform_family?('debian', 'ubuntu')
+  if platform_family?('debian')
     base_pkg = if new_resource.use_hipe
       'erlang-base-hipe'
     else
@@ -64,7 +62,7 @@ action :install do
     end
   end
 
-  if platform_family?('rhel', 'centos', 'scientific', 'fedora', 'amazon')
+  if platform_family?('rhel', 'fedora', 'amazon')
     package new_resource.name do
       package_name 'erlang'
       version new_resource.version unless new_resource.version.nil?
@@ -76,7 +74,7 @@ action :install do
 end
 
 action :remove do
-  if platform_family?('debian', 'ubuntu')
+  if platform_family?('debian')
     base_pkg = if new_resource.use_hipe
       'erlang-base-hipe'
     else
@@ -107,7 +105,7 @@ action :remove do
     end
   end
 
-  if platform_family?('rhel', 'centos', 'scientific', 'fedora', 'amazon')
+  if platform_family?('rhel', 'fedora', 'amazon')
     package new_resource.name do
       action :remove
     end

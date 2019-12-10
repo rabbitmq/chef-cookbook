@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Recipe:: mgmt_console
 #
-# Copyright 2012, Tacit Knowledge, Inc.
-# Copyright 2013-2018, Chef Software, Inc.
-# Copyright 2018-2019, Pivotal Software, Inc.
+# Copyright:: 2012, Tacit Knowledge, Inc.
+# Copyright:: 2013-2018, Chef Software, Inc.
+# Copyright:: 2018-2019, Pivotal Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

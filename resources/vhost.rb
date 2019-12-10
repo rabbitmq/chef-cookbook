@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Resource:: vhost
 #
-# Copyright 2011, Chef Software, Inc.
+# Copyright:: 2011, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 actions :add, :delete
+
 default_action :add
 
 attribute :vhost, kind_of: String, name_attribute: true

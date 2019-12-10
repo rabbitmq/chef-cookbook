@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Resource:: plugin
 #
-# Copyright 2011, Chef Software, Inc.
+# Copyright:: 2011, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #
 
 actions :enable, :disable
+
 default_action :enable
 
 attribute :plugin, kind_of: String, name_attribute: true

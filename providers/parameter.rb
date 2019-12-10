@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Provider:: parameter
 #
 # Author: Sean Porter <portertech@gmail.com>
-# Copyright 2015 by Heavy Water Operations, LLC.
+# Copyright:: 2015 by Heavy Water Operations, LLC.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,8 +22,6 @@
 require 'shellwords'
 
 include RabbitMQ::CoreHelpers
-
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def parameter_exists?(vhost, name)
   cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')

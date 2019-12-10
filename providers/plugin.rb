@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Provider:: plugin
 #
-# Copyright 2012-2018, Chef Software, Inc.
-# Copyright 2018-2019, Pivotal Software, Inc.
+# Copyright:: 2012-2018, Chef Software, Inc.
+# Copyright:: 2018-2019, Pivotal Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,8 +31,6 @@ def plugin_enabled?(name)
   cmd.error!
   cmd.stdout =~ /\b#{name}\b/
 end
-
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 action :enable do
   unless plugin_enabled?(new_resource.plugin)

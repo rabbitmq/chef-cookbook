@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Recipe:: systemd_limits
 #
 # Configures kernel limits on systemd-based distributions
@@ -37,7 +37,7 @@ template "#{node['rabbitmq']['systemd_unit_root']}/limits.conf" do
   cookbook node['rabbitmq']['config-env_template_cookbook']
   owner 'root'
   group 'root'
-  mode 00644
+  mode '644'
   notifies :run,     'execute[systemctl daemon-reload]', :immediately
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
 end

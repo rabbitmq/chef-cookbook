@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq_test
+# Cookbook:: rabbitmq_test
 # Recipe:: cook-openfiles
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-node.normal['rabbitmq']['open_file_limit'] = 2048
+node.override['rabbitmq']['open_file_limit'] = 2048
 include_recipe 'rabbitmq::default'
 
 # HACK: Give rabbit time to spin up before the tests, it seems

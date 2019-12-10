@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Provider:: policy
 #
 # Author: Robert Choi <taeilchoi1@gmail.com>
-# Copyright 2013 by Robert Choi
+# Copyright:: 2013 by Robert Choi
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,8 +22,6 @@
 require 'shellwords'
 
 include RabbitMQ::CoreHelpers
-
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
 def policy_exists?(vhost, name)
   cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')
