@@ -18,8 +18,6 @@
 # limitations under the License.
 #
 
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
-
 provides :erlang_repository, platform_family: %w(suse opensuse)
 
 action :create do

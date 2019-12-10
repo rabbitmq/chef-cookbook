@@ -23,8 +23,6 @@ require 'shellwords'
 
 include RabbitMQ::CoreHelpers
 
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
-
 def policy_exists?(vhost, name)
   cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')
           'rabbitmqctl list_policies -s'

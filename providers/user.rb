@@ -20,8 +20,6 @@
 
 include RabbitMQ::CoreHelpers
 
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
-
 def user_exists?(name)
   cmd = if Gem::Version.new(installed_rabbitmq_version) >= Gem::Version.new('3.7.10')
           "rabbitmqctl -s list_users |grep '^#{name}\\s'"

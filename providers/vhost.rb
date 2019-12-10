@@ -20,8 +20,6 @@
 
 include RabbitMQ::CoreHelpers
 
-use_inline_resources if defined?(:use_inline_resources) # ~FC113
-
 def vhost_exists?(name)
   cmd = "rabbitmqctl -q list_vhosts | grep ^#{name}$"
   cmd = Mixlib::ShellOut.new(cmd, env: shell_environment)
