@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Recipe:: systemd_limits
 #
 # Configures kernel limits on systemd-based distributions

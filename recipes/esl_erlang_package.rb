@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Recipe:: esl_erlang_package
 #
 # A convenience recipe for provisioning Erlang from

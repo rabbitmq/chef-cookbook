@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq_test
+# Cookbook:: rabbitmq_test
 # Recipe:: cook-2151-3489
 #
 # This recipe exists to ensure that minitest tests are run.

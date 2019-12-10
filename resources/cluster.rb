@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Resource:: cluster
 #
 # Author: Sunggun Yu <sunggun.dev@gmail.com>
-# Copyright (C) 2015 Sunggun Yu
-# Copyright (C) 2015-2018 Contributors
+# Copyright:: (C) 2015 Sunggun Yu
+# Copyright:: (C) 2015-2018 Contributors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

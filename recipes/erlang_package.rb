@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq
+# Cookbook:: rabbitmq
 # Recipe:: erlang_package
 #
 # Provisions Erlang via RabbitMQ's own
 # packages for Debian and CentOS.
 #
-# Copyright 2019, Pivotal Software, Inc
+# Copyright:: 2019, Pivotal Software, Inc
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

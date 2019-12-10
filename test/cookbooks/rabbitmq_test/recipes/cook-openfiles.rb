@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: rabbitmq_test
+# Cookbook:: rabbitmq_test
 # Recipe:: cook-openfiles
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
