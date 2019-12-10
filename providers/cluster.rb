@@ -20,7 +20,6 @@
 #
 
 include RabbitMQ::CoreHelpers
-include Chef::Mixin::ShellOut
 
 use_inline_resources if defined?(:use_inline_resources) # ~FC113
 
