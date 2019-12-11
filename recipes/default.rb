@@ -101,7 +101,7 @@ if platform_family?('debian')
     # We start with stock init.d, remove it if we're not using init.d, otherwise leave it alone
     service node['rabbitmq']['service_name'] do
       action [:stop]
-      only_if { File.exist?('/etc/init.d/rabbitmq-server') }
+      only_if { ::File.exist?('/etc/init.d/rabbitmq-server') }
     end
 
     execute 'remove rabbitmq init.d command' do
