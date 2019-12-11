@@ -27,7 +27,7 @@ Those are the distributions currently used to run tests [with Kitchen](.kitchen.
 
 ### Newer Versions
 
-Newer Debian, Ubuntu and CentOS 7.x versions should work.
+Newer Debian, Ubuntu and CentOS 8.x versions should work.
 
 ### Older Versions
 
