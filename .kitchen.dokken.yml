@@ -1,9 +1,10 @@
 driver:
   name: dokken
-  chef_version: latest
   privileged: true # because Docker and SystemD/Upstart
+  chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
   volumes:
     - /sys/fs/cgroup:/sys/fs/cgroup
+  chef_license: accept-no-persist
 
 transport:
   name: dokken
@@ -11,8 +12,6 @@ transport:
 provisioner:
   name: dokken
   # chef_log_level: debug
-  client_rb:
-    chef_license: accept
 
 verifier:
   root_path: '/opt/verifier'
