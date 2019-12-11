@@ -14,12 +14,12 @@ This cookbook targets Chef 13.0 and later.
 
 The cookbook targets and is tested against
 
- * RHEL 7
- * CentOS 7 and 8
  * Ubuntu 18.04
  * Ubuntu 16.04
  * Debian 9 and 10
- * Fedora 28 or later
+ * RHEL 7 and 8
+ * CentOS 7 and 8
+ * Fedora 30 or later
  * Amazon Linux 2 (as of `5.7.5`)
  * Scientific Linux 7
 
@@ -27,7 +27,7 @@ Those are the distributions currently used to run tests [with Kitchen](.kitchen.
 
 ### Newer Versions
 
-Newer Debian, Ubuntu and CentOS 8.x versions should work.
+Newer Debian, Ubuntu and RHEL/CentOS 8.x versions should work.
 
 ### Older Versions
 
