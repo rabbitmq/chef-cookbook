@@ -4,6 +4,8 @@ before_install:
   - gem update bundler
   - bundle update --bundler
 
+install: ./bin/ci/install_chef_dk.sh
+
 env:
   - CHEF_LICENSE=accept
 
