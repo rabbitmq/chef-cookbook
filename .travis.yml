@@ -1,4 +1,5 @@
 dist: xenial
+sudo: required
 
 before_install:
   - gem update bundler
