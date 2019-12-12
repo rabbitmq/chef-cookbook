@@ -6,10 +6,8 @@ verifier:
 
 provisioner:
   name: chef_zero
-  product_name: chef
-  install_strategy: always
-  client_rb:
-    chef_license: accept
+  install_strategy: <%= ENV['KI_INSTALL_STRATEGY'] || 'once' %>
+  chef_license: accept-no-persist
 
 transport:
   name: "ssh"
