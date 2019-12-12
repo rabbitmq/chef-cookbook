@@ -1,4 +1,3 @@
-sudo: required
 dist: xenial
 
 before_install:
@@ -6,6 +5,9 @@ before_install:
   - bundle update --bundler
 
 install: ./bin/ci/install_chef_dk.sh
+
+env:
+  - CHEF_LICENSE=accept
 
 cache: bundler
 
