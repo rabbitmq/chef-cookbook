@@ -21,7 +21,7 @@ default_action :create
 
 attribute :baseurl, String, required: true
 
-property :gpgautoimportkeys, [true, false], default: true
+property :gpgautoimportkeys, [TrueClass, FalseClass], default: true
 attribute :gpgcheck, [true, false], default: false
 attribute :gpgkey, String
 
