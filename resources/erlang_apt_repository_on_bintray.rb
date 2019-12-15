@@ -27,4 +27,4 @@ attribute :components, Array, default: ['erlang'], required: true
 attribute :key, String, default: '6B73A36E6026DFCA', required: true
 attribute :keyserver, String
 
-attribute :trusted, [true, false], default: false
+attribute :trusted, [TrueClass, FalseClass], default: false

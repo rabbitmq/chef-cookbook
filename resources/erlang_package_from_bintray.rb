@@ -20,7 +20,7 @@
 default_action :install
 
 attribute :version, String
-attribute :use_hipe, [true, false], default: false
+attribute :use_hipe, [TrueClass, FalseClass], default: false
 attribute :options, [String, Array]
 attribute :retries, Integer, default: 3
 attribute :retry_delay, Integer, default: 10
