@@ -19,7 +19,6 @@
 #
 default_action :create
 
-attribute :name, String, name_attribute: true
 attribute :baseurl, String, required: true
 
 property :gpgautoimportkeys, [true, false], default: true

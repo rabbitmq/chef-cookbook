@@ -19,7 +19,6 @@
 #
 default_action :install
 
-attribute :name, String, name_attribute: true
 attribute :version, String
 attribute :use_hipe, [true, false], default: false
 attribute :options, [String, Array]
