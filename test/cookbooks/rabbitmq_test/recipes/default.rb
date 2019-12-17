@@ -19,10 +19,7 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-when 'debian', 'ubuntu'
-  apt_update
-end
+apt_update if platform_family?('debian')
 
 chef_gem 'bunny' do
   action :install
