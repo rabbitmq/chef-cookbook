@@ -19,7 +19,6 @@
 #
 default_action :add
 
-attribute :name, String, name_attribute: true
 attribute :uri, String, default: 'https://dl.bintray.com/rabbitmq-erlang/debian'
 attribute :distribution, String
 # Available values: 'erlang', 'erlang-21.x', 'erlang-20.x', 'erlang-19.x'
@@ -28,4 +27,4 @@ attribute :components, Array, default: ['erlang'], required: true
 attribute :key, String, default: '6B73A36E6026DFCA', required: true
 attribute :keyserver, String
 
-attribute :trusted, [true, false], default: false
+attribute :trusted, [TrueClass, FalseClass], default: false

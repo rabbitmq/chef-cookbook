@@ -19,16 +19,15 @@
 #
 default_action :create
 
-attribute :name, String, name_attribute: true
 attribute :baseurl, String, required: true
 
-property :gpgautoimportkeys, [true, false], default: true
-attribute :gpgcheck, [true, false], default: false
+property :gpgautoimportkeys, [TrueClass, FalseClass], default: true
+attribute :gpgcheck, [TrueClass, FalseClass], default: false
 attribute :gpgkey, String
 
-attribute :repo_gpgcheck, [true, false], default: true
+attribute :repo_gpgcheck, [TrueClass, FalseClass], default: true
 attribute :repositoryid, String
-attribute :enabled, [true, false], default: true
+attribute :enabled, [TrueClass, FalseClass], default: true
 attribute :priority, String
 
 attribute :proxy, String
@@ -38,6 +37,6 @@ attribute :proxy_password, String
 attribute :sslcacert, String
 attribute :sslclientcert, String
 attribute :sslclientkey, String
-attribute :sslverify, [true, false]
+attribute :sslverify, [TrueClass, FalseClass]
 
 attribute :timeout
