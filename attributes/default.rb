@@ -56,9 +56,10 @@ default['rabbitmq']['manage_service'] = true
 default['rabbitmq']['retry'] = 0
 default['rabbitmq']['retry_delay'] = 2
 
-# config file location
-# https://www.rabbitmq.com/configure.html#define-environment-variables
-# "The .config extension is automatically appended unless a file extension is already present."
+# See https://www.rabbitmq.com/configure.html and specifically
+#     https://www.rabbitmq.com/configure.html#config-file-formats
+# Note that the cookbook currently uses classic config format (rabbitmq.config)
+# and the docs have moved to recommend rabbitmq.conf + advanced.config where needed.
 default['rabbitmq']['config_root'] = '/etc/rabbitmq'
 default['rabbitmq']['config'] = "#{node['rabbitmq']['config_root']}/rabbitmq"
 default['rabbitmq']['erlang_cookie_path'] = '/var/lib/rabbitmq/.erlang.cookie'
