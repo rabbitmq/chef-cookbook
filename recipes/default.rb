@@ -95,6 +95,7 @@ if platform_family?('debian')
   dpkg_package 'rabbitmq-server' do
     source ::File.join(Chef::Config[:file_cache_path], deb_package_name)
     action :upgrade
+    notifies :reload, 'ohai[reload_packages]', :immediately
   end
 
   if service_control_upstart? && manage_rabbitmq_service?
@@ -152,7 +153,9 @@ if platform_family?('fedora')
     source "#{rpm_package_url}#{rpm_package_name}"
     action :create_if_missing
   end
-  rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+  rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+    notifies :reload, 'ohai[reload_packages]', :immediately
+  end
 end
 
 if platform_family?('rhel')
@@ -182,7 +185,9 @@ if platform_family?('rhel')
     source "#{rpm_package_url}#{rpm_package_name}"
     action :create_if_missing
   end
-  rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+  rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+    notifies :reload, 'ohai[reload_packages]', :immediately
+  end
 end
 
 if platform_family?('amazon')
@@ -203,7 +208,9 @@ if platform_family?('amazon')
     source "#{rpm_package_url}#{rpm_package_name}"
     action :create_if_missing
   end
-  yum_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+  yum_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+    notifies :reload, 'ohai[reload_packages]', :immediately
+  end
 end
 
 if platform_family?('suse')
@@ -220,6 +227,7 @@ if platform_family?('suse')
   package 'rabbitmq-server' do
     action :install
     version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
+    notifies :reload, 'ohai[reload_packages]', :immediately
   end
 
   service 'epmd' do
@@ -361,6 +369,6 @@ end
 # from ohai. The version is used when deciding what release series-specific
 # features can bee used.
 ohai 'reload_packages' do
-  action :reload
+  action :nothing
   plugin 'packages'
 end
