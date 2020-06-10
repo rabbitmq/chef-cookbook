@@ -11,6 +11,8 @@ transport:
 
 provisioner:
   name: dokken
+  multiple_converge: 2
+  enforce_idempotency: true
   # chef_log_level: debug
 
 verifier:
@@ -60,9 +62,9 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
-  - name: fedora-29
+  - name: fedora-31
     driver:
-      image: dokken/fedora-29
+      image: dokken/fedora-31
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
         - RUN dnf -y install sudo
@@ -141,9 +143,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.11-1"
+          version: "1:23.0.2-2"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.8.4"
         virtualhosts:
           - vhost1
           - vhost2
@@ -184,9 +186,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.11-1"
+          version: "1:21.3.8.16-1"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/integration/management_plugin
@@ -201,9 +203,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.11-1"
+          version: "1:21.3.8.16-1"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.7.26"
         systemd:
           limits:
             NOFILE: 54000
@@ -211,38 +213,6 @@ suites:
       inspec_tests:
         - test/integration/limits
     includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
-
-  - name: 36x-deb
-    run_list:
-      - recipe[erlang::default]
-      - recipe[rabbitmq::default]
-    attributes:
-      erlang:
-        install_method: "esl"
-        esl:
-          version: "1:20.3.8.22-1"
-      rabbitmq:
-        version: "3.6.16"
-    verifier:
-      inspec_tests:
-        - test/integration/36x
-    includes: ["ubuntu-16.04"]
-
-  - name: 366-deb
-    run_list:
-      - recipe[erlang::default]
-      - recipe[rabbitmq::default]
-    attributes:
-      erlang:
-        install_method: "esl"
-        esl:
-          version: "1:19.3.6.13-1"
-      rabbitmq:
-        version: "3.6.6"
-    verifier:
-      inspec_tests:
-        - test/integration/36x
-    includes: ["ubuntu-16.04"]
 
   - name: use-distro-version-deb
     run_list:
@@ -256,7 +226,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:20.3.8.22-1"
+          version: "1:20.3.8.26-1"
       rabbitmq:
         use_distro_version: true
         virtualhosts:
@@ -304,9 +274,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.11-1"
+          version: "21.3.8.16-1"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -321,30 +291,12 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.1.3"
-        version: "3.7.23"
+          version: "22.3.4"
+        version: "3.8.4"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8", "centos-7", "fedora-29", "fedora-30", "amazonlinux-2"]
-
-  # Fedora and Amazon Linux 2 require recipe[rabbitmq::erlang_package]
-  - name: 36x-modern-rpm
-    run_list:
-      - recipe[rabbitmq::erlang_package]
-      - recipe[rabbitmq::plugins]
-    attributes:
-      rabbitmq:
-        erlang:
-          enabled: true
-          version: "20.3.8.22"
-          yum:
-            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/20/el/7
-        version: "3.6.16"
-    verifier:
-      inspec_tests:
-        - test/integration/36x
-    includes: ["centos-8", "centos-7", "fedora-29", "fedora-30", "amazonlinux-2"]
+    includes: ["centos-8", "centos-7", "fedora-31", "fedora-30", "amazonlinux-2"]
 
   - name: system-limits-rpm
     run_list:
@@ -355,9 +307,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.11-1"
+          version: "21.3.8.16-1"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.7.26"
         systemd:
           limits:
             NOFILE: 54000
@@ -374,30 +326,13 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.11-1"
+          version: "1:21.3.8.16-1"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/lwrps
-    includes: ["ubuntu-18.04"]
-
-  - name: 36x-lwrps
-    run_list:
-      - recipe[erlang::default]
-      - recipe[rabbitmq_test::lwrps]
-    attributes:
-      erlang:
-        install_method: "esl"
-        esl:
-          version: "1:20.3.8.22-1"
-      rabbitmq:
-        version: "3.6.16"
-    verifier:
-      inspec_tests:
-        - test/integration/36x
-        - test/integration/36x_lwrps
     includes: ["ubuntu-18.04"]
 
   - name: cluster-deb
@@ -408,9 +343,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.11-1"
+          version: "1:21.3.8.16-1"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -425,9 +360,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.11-1"
+          version: "21.3.8.16-1"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -442,9 +377,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.11-1"
+          version: "1:21.3.8.16-1"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.7.26"
     attributes:
       apt:
         confd:
@@ -453,9 +388,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.11-1"
+          version: "1:21.3.8.16-1"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -473,9 +408,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.11-1"
+          version: "1:21.3.8.16-1"
       rabbitmq:
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -497,7 +432,7 @@ suites:
         erlang:
           enabled: true
           hipe: true
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
@@ -512,8 +447,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:21.3.8.11-1"
-        version: "3.7.23"
+          version: "1:21.3.8.16-1"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
@@ -530,11 +465,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-29", "centos-7", "centos-8"]
+    includes: ["fedora-31", "centos-7", "centos-8"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el7
@@ -545,15 +480,15 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.11"
+          version: "21.3.8.16"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-29", "centos-7", "centos-8"]
+    includes: ["fedora-31", "centos-7", "centos-8"]
 
   # Latest Erlang package, RPM, CentOS 6 repo
   - name: rabbitmq-erlang-latest-rpm-el6
@@ -567,7 +502,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: false
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -582,11 +517,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.11"
+          version: "21.3.8.16"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: true
-        version: "3.7.23"
+        version: "3.7.26"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -603,7 +538,7 @@ suites:
             enabled: true
             zypper:
               baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_15.1/
-          version: "3.7.23"
+          version: "3.7.26"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm

@@ -105,6 +105,7 @@ if platform_family?('debian')
     package 'rabbitmq-server' do
       action :install
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
+      notifies :reload, 'ohai[reload_packages]', :immediately
     end
   else
     # we need to download the package
@@ -115,6 +116,7 @@ if platform_family?('debian')
     dpkg_package 'rabbitmq-server' do
       source ::File.join(Chef::Config[:file_cache_path], deb_package_name)
       action :upgrade
+      notifies :reload, 'ohai[reload_packages]', :immediately
     end
   end
 
@@ -178,7 +180,9 @@ if platform_family?('fedora')
       source "#{rpm_package_url}#{rpm_package_name}"
       action :create_if_missing
     end
-    rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+    rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+      notifies :reload, 'ohai[reload_packages]', :immediately
+    end
   end
 end
 
@@ -215,7 +219,9 @@ if platform_family?('rhel')
       source "#{rpm_package_url}#{rpm_package_name}"
       action :create_if_missing
     end
-    rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+    rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+      notifies :reload, 'ohai[reload_packages]', :immediately
+    end
   end
 end
 
@@ -237,13 +243,17 @@ if platform_family?('amazon')
     package 'rabbitmq-server' do
       action :install
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
+
+      notifies :reload, 'ohai[reload_packages]', :immediately
     end
   else
     remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
       source "#{rpm_package_url}#{rpm_package_name}"
       action :create_if_missing
     end
-    yum_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}"
+    yum_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+      notifies :reload, 'ohai[reload_packages]', :immediately
+    end
   end
 end
 
@@ -261,6 +271,7 @@ if platform_family?('suse')
   package 'rabbitmq-server' do
     action :install
     version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
+    notifies :reload, 'ohai[reload_packages]', :immediately
   end
 end
 
@@ -273,7 +284,6 @@ if platform_family?('smartos')
   service 'epmd' do
     action :start
   end
-
 end
 
 #
@@ -397,6 +407,6 @@ end
 # from ohai. The version is used when deciding what release series-specific
 # features can bee used.
 ohai 'reload_packages' do
-  action :reload
+  action :nothing
   plugin 'packages'
 end
