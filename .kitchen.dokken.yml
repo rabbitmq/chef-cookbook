@@ -62,9 +62,9 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
-  - name: fedora-29
+  - name: fedora-31
     driver:
-      image: dokken/fedora-29
+      image: dokken/fedora-31
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
         - RUN dnf -y install sudo
@@ -228,7 +228,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8", "centos-7", "fedora-29", "fedora-30", "amazonlinux-2"]
+    includes: ["centos-8", "centos-7", "fedora-31", "fedora-30", "amazonlinux-2"]
 
   - name: system-limits-rpm
     run_list:
@@ -401,7 +401,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-29", "centos-7", "centos-8"]
+    includes: ["fedora-31", "centos-7", "centos-8"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el7
@@ -420,7 +420,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-29", "centos-7", "centos-8"]
+    includes: ["fedora-31", "centos-7", "centos-8"]
 
   # Latest Erlang package, RPM, CentOS 6 repo
   - name: rabbitmq-erlang-latest-rpm-el6

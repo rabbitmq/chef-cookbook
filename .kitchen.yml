@@ -18,7 +18,7 @@ platforms:
   - name: ubuntu-16.04
   - name: ubuntu-18.04
   - name: debian-10
-  - name: fedora-29
+  - name: fedora-31
   - name: fedora-30
   - name: centos-6
   - name: opensuse-leap-15
@@ -140,7 +140,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8", "centos-7", "fedora-29"]
+    includes: ["centos-8", "centos-7", "fedora-31"]
 
 
   - name: system-limits-rpm
