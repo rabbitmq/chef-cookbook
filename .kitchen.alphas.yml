@@ -33,9 +33,9 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
-  - name: fedora-29
+  - name: fedora-31
     driver:
-      image: dokken/fedora-29
+      image: dokken/fedora-31
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
         - RUN dnf -y install sudo
@@ -71,7 +71,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.11-1"
+          version: "1:21.3.8.16-1"
       rabbitmq:
         # export RABBITMQ_VERSION="3.7.14-alpha.11"
         version: <%= ENV['RABBITMQ_VERSION'] %>
@@ -91,7 +91,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.11"
+          version: "21.3.8.16"
         # export RABBITMQ_VERSION="3.7.13-alpha.21"
         version: <%= ENV['RABBITMQ_VERSION'] %>
 
@@ -100,7 +100,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7", "fedora-29"]
+    includes: ["centos-7", "fedora-31"]
 
   - name: default-rpm-el6-alpha
     run_list:
@@ -110,7 +110,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.11-1"
+          version: "21.3.8.16-1"
       rabbitmq:
         # export RABBITMQ_VERSION="3.7.13-alpha.21"
         version: <%= ENV['RABBITMQ_VERSION'] %>

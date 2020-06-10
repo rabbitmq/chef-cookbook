@@ -172,8 +172,8 @@
       ``` ruby
       rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
         # This package version assumes a Debian-based distribution.
-        # On RHEL/CentOS/Fedora it would be '21.3.8.11'
-        version '1:21.3.8.11-1'
+        # On RHEL/CentOS/Fedora it would be '21.3.8.16'
+        version '1:21.3.8.16-1'
 
         # provision a HiPE-enabled Erlang runtime if available
         use_hipe true

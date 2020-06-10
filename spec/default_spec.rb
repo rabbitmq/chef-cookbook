@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'rabbitmq::default' do
   let(:runner) do
     ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
-      node.override['rabbitmq']['version'] = '3.7.23'
+      node.override['rabbitmq']['version'] = '3.7.26'
     end
   end
   let(:node) { runner.node }
@@ -105,7 +105,7 @@ describe 'rabbitmq::default' do
   describe 'when Erlang is provisioned from ESL' do
     let(:runner) do
       ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.23'
+        node.override['rabbitmq']['version'] = '3.7.26'
         node.override['rabbitmq']['erlang']['enabled'] = false
       end
     end
@@ -258,7 +258,7 @@ describe 'rabbitmq::default' do
   describe 'suse' do
     let(:runner) do
       ChefSpec::ServerRunner.new(SUSE_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.23'
+        node.override['rabbitmq']['version'] = '3.7.26'
       end
     end
     let(:node) { runner.node }
@@ -286,12 +286,12 @@ describe 'rabbitmq::default' do
   describe 'ubuntu' do
     let(:runner) do
       ChefSpec::ServerRunner.new(UBUNTU_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.23'
+        node.override['rabbitmq']['version'] = '3.7.26'
       end
     end
     let(:node) { runner.node }
     let(:chef_run) do
-      node.override['rabbitmq']['version'] = '3.7.23'
+      node.override['rabbitmq']['version'] = '3.7.26'
       runner.converge(described_recipe)
     end
 
@@ -311,7 +311,7 @@ describe 'rabbitmq::default' do
     end
 
     it 'creates a rabbitmq-server deb in the cache path' do
-      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.7.23-1_all.deb')
+      expect(chef_run).to create_remote_file_if_missing('/tmp/rabbitmq-server_3.7.26-1_all.deb')
     end
 
     it 'installs the rabbitmq-server deb_package with the default action' do
@@ -330,7 +330,7 @@ describe 'rabbitmq::default' do
   describe 'redhat' do
     let(:runner) do
       ChefSpec::ServerRunner.new(REDHAT_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.23'
+        node.override['rabbitmq']['version'] = '3.7.26'
       end
     end
     let(:node) { runner.node }
@@ -338,7 +338,7 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
-    let(:rpm_file) { 'rabbitmq-server-3.7.23-1.el7.noarch.rpm' }
+    let(:rpm_file) { 'rabbitmq-server-3.7.26-1.el7.noarch.rpm' }
 
     it 'creates a rabbitmq-server rpm in the cache path' do
       expect(chef_run).to create_remote_file_if_missing("/tmp/#{rpm_file}")
@@ -379,7 +379,7 @@ describe 'rabbitmq::default' do
   describe 'CentOS 7' do
     let(:runner) do
       ChefSpec::ServerRunner.new(CENTOS7_OPTS) do |node, _|
-        node.override['rabbitmq']['version'] = '3.7.23'
+        node.override['rabbitmq']['version'] = '3.7.26'
         node.override['rabbitmq']['use_distro_version'] = false
       end
     end
@@ -388,7 +388,7 @@ describe 'rabbitmq::default' do
       runner.converge(described_recipe)
     end
 
-    let(:rpm_file) { 'rabbitmq-server-3.7.23-1.el7.noarch.rpm' }
+    let(:rpm_file) { 'rabbitmq-server-3.7.26-1.el7.noarch.rpm' }
 
     it 'should install the logrotate package' do
       expect(chef_run).to install_package('logrotate')
