@@ -110,7 +110,7 @@ default['rabbitmq']['logrotate']['enable'] = true
 default['rabbitmq']['logrotate']['path'] = '/var/log/rabbitmq/*.log'
 default['rabbitmq']['logrotate']['rotate'] = 20
 default['rabbitmq']['logrotate']['frequency'] = 'weekly'
-default['rabbitmq']['logrotate']['options'] = %w(missingok notifempty delaycompress)
+default['rabbitmq']['logrotate']['options'] = %w(missingok notifempty compress delaycompress)
 default['rabbitmq']['logrotate']['sharedscripts'] = true
 default['rabbitmq']['logrotate']['postrotate'] = '/usr/sbin/rabbitmqctl rotate_logs > /dev/null'
 
