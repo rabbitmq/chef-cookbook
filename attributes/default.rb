@@ -71,6 +71,12 @@ default['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 default['rabbitmq']['config_template_cookbook'] = 'rabbitmq'
 # override this if you wish to provide `rabbitmq-env.config.erb` in your own wrapper cookbook
 default['rabbitmq']['config-env_template_cookbook'] = 'rabbitmq'
+# override this if you wish to use the ini-like configuration format
+default['rabbitmq']['config_source'] = 'rabbitmq.config.erb'
+default['rabbitmq']['config_style']['use_new_style'] = false
+if node['rabbitmq']['config_style']['use_new_style']
+  default['rabbitmq']['config_source'] = 'rabbitmq.conf.erb'
+end
 
 # rabbitmq.config defaults
 default['rabbitmq']['default_user'] = 'guest'

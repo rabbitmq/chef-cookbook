@@ -296,7 +296,7 @@ end
 
 template rabbitmq_config_file_path do
   sensitive true if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
-  source 'rabbitmq.config.erb'
+  source node['rabbitmq']['config_source']
   cookbook node['rabbitmq']['config_template_cookbook']
   owner 'root'
   group 'root'
@@ -307,6 +307,19 @@ template rabbitmq_config_file_path do
     ssl_ciphers: (format_ssl_ciphers if node['rabbitmq']['ssl_ciphers'])
   )
   notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+end
+
+template "#{node['rabbitmq']['config_root']}/advanced.config" do
+  source 'rabbitmq.advanced.config.erb'
+  cookbook 'air'
+  owner 'root'
+  group 'root'
+  mode '644'
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
+  variables(
+    kernel: format_kernel_parameters
+  )
+  only_if { node['rabbitmq']['config_style']['use_new_style'] }
 end
 
 template "/etc/default/#{node['rabbitmq']['service_name']}" do
