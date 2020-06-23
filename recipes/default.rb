@@ -311,7 +311,7 @@ end
 
 template "#{node['rabbitmq']['config_root']}/advanced.config" do
   source 'rabbitmq.advanced.config.erb'
-  cookbook 'air'
+  cookbook node['rabbitmq']['config_template_cookbook']
   owner 'root'
   group 'root'
   mode '644'
