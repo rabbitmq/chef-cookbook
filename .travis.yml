@@ -21,6 +21,7 @@ services: docker
 # kitchen list -b | xargs -I {} echo "- INSTANCE={}"
 env:
   matrix:
+  - INSTANCE=default-deb-debian-10
   - INSTANCE=default-deb-debian-9
   - INSTANCE=default-deb-ubuntu-1804
   - INSTANCE=default-rpm-centos-74
