@@ -43,15 +43,20 @@ end
 
 # Get cluster status result
 def cluster_status
+  # Default formatting changed to "table" in 3.8, need to explicity specify
+  # "erlang" to parse output properly.
+  installed_version = Gem::Version.new(installed_rabbitmq_version)
+  version_requiring_formatter = Gem::Version.new('3.8.0')
+  cmd = +'rabbitmqctl -q cluster_status'
+  cmd << ' --formatter erlang' if installed_version >= version_requiring_formatter
   # execute > rabbitmqctl cluster_status"
   # This removes an optional "... Done" linee that older version used to output
-  cmd = 'rabbitmqctl -q cluster_status'
   Chef::Log.debug("[rabbitmq_cluster] Executing #{cmd}")
   cmd = get_shellout(cmd)
   cmd.run_command
   cmd.error!
   result = cmd.stdout.squeeze(' ').gsub(/\n */, '').gsub('...done.', '')
-  Chef::Log.debug("[rabbitmq_cluster] rabbitmqctl cluster_status : #{result}")
+  Chef::Log.debug("[rabbitmq_cluster] #{cmd} : #{result}")
   result
 end
 
