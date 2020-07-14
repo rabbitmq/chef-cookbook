@@ -129,7 +129,7 @@ suites:
         esl:
           version: "1:23.0.2-2"
       rabbitmq:
-        version: "3.8.4"
+        version: "3.8.5"
         virtualhosts:
           - vhost1
           - vhost2
@@ -224,7 +224,7 @@ suites:
         erlang:
           enabled: true
           version: "22.3.4"
-        version: "3.8.4"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
