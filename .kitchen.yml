@@ -73,7 +73,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10"]
 
   - name: management-plugin-deb
     run_list:
@@ -109,7 +109,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10"]
 
   - name: default-rpm
     run_list:
@@ -135,8 +135,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.2"
-        version: "3.8.2"
+          version: "22.3.4"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -239,7 +239,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["debian-9"]
+    includes: ["debian-10"]
 
   - name: default-force-yes-false
     run_list:
@@ -259,7 +259,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["debian-9"]
+    includes: ["debian-10"]
 
   #
   # Team RabbitMQ Erlang packages
@@ -276,7 +276,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.8.2"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
@@ -291,8 +291,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:22.2-1"
-        version: "3.8.2"
+          version: "1:22.3-1"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
@@ -309,7 +309,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.8.2"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -324,11 +324,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.2"
+          version: "22.3"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true
-        version: "3.8.2"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -346,7 +346,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: false
-        version: "3.8.2"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -361,11 +361,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.2"
+          version: "22.3"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: true
-        version: "3.8.2"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
