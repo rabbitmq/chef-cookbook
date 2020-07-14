@@ -29,15 +29,6 @@ platforms:
       intermediate_instructions:
         - RUN zypper -n install sudo lsof which openssl net-tools
 
-  - name: centos-6
-    driver:
-      image: dokken/centos-6
-      platform: rhel
-      pid_one_command: /sbin/init
-      hostname: localhost
-      intermediate_instructions:
-        - RUN yum -y install sudo which initscripts
-
   - name: centos-7
     driver:
       image: dokken/centos-7
@@ -104,6 +95,15 @@ platforms:
   - name: debian-9
     driver:
       image: dokken/debian-9
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - ENV DEBIAN_FRONTEND noninteractive
+        - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
+
+  - name: debian-10
+    driver:
+      image: dokken/debian-10
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
@@ -212,7 +212,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7", "centos-6"]
+    includes: ["centos-8", "centos-7"]
 
   # Fedora and Amazon Linux 2 require recipe[rabbitmq::erlang_package]
   - name: default-modern-rpm
