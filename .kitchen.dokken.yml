@@ -160,7 +160,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10", "debian-9"]
 
   - name: management-plugin-deb
     run_list:
@@ -196,7 +196,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10"]
 
   - name: default-rpm
     run_list:
@@ -282,7 +282,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/cluster
-    includes: ["ubuntu-18.04", "debian-9"]
+    includes: ["ubuntu-18.04", "debian-10"]
 
   - name: cluster-rpm
     run_list:
@@ -346,7 +346,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["debian-9"]
+    includes: ["debian-10"]
 
   #
   # Team RabbitMQ Erlang packages
@@ -368,7 +368,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
-    includes: ["debian-9", "debian-10", "ubuntu-18.04", "ubuntu-16.04"]
+    includes: ["debian-10", "debian-9", "ubuntu-18.04", "ubuntu-16.04"]
 
   # Erlang package, Debian, version pinning
   - name: rabbitmq-erlang-pinned-deb
