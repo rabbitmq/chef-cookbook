@@ -13,7 +13,7 @@ transport:
   name: "ssh"
 
 platforms:
-  - name: centos-7.4
+  - name: centos-7
   - name: ubuntu-16.04
   - name: ubuntu-18.04
   - name: debian-10
@@ -72,7 +72,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10"]
 
   - name: management-plugin-deb
     run_list:
@@ -108,7 +108,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-9"]
+    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10"]
 
   - name: use-distro-version-deb
     run_list:
@@ -176,7 +176,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7.4", "centos-6"]
+    includes: ["centos-7", "centos-6"]
 
   - name: default-modern-rpm
     run_list:
@@ -187,7 +187,7 @@ suites:
         erlang:
           enabled: true
           version: "22.3.4"
-        version: "3.8.4"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -212,7 +212,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["centos-7.4"]
+    includes: ["centos-7"]
 
   - name: lwrps
     run_list:
@@ -263,7 +263,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/cluster
-    includes: ["centos-7.4"]
+    includes: ["centos-7"]
 
   - name: default-force-yes
     run_list:
@@ -290,7 +290,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["debian-9"]
+    includes: ["debian-10"]
 
   - name: default-force-yes-false
     run_list:
@@ -310,7 +310,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["debian-9"]
+    includes: ["debian-10"]
 
   #
   # Team RabbitMQ Erlang packages
@@ -327,7 +327,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.8.4"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
@@ -343,7 +343,7 @@ suites:
         erlang:
           enabled: true
           version: "1:22.2-1"
-        version: "3.8.4"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
@@ -360,11 +360,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.8.4"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-29", "centos-7.4"]
+    includes: ["fedora-30", "centos-7"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el7
@@ -379,11 +379,11 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true
-        version: "3.8.4"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-29", "centos-7.4"]
+    includes: ["fedora-30", "centos-7"]
 
   # Latest Erlang package, RPM, CentOS 6 repo
   - name: rabbitmq-erlang-latest-rpm-el6
@@ -397,7 +397,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: false
-        version: "3.8.4"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -416,7 +416,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: true
-        version: "3.8.4"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
