@@ -35,7 +35,7 @@ end
 action :enable do
   unless plugin_enabled?(new_resource.plugin)
     execute "rabbitmq-plugins enable #{new_resource.plugin}" do
-      umask 0022
+      umask '0022'
       Chef::Log.info "Enabling RabbitMQ plugin '#{new_resource.plugin}'."
       environment shell_environment.merge(
         'PATH' => "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
@@ -48,7 +48,7 @@ end
 action :disable do
   if plugin_enabled?(new_resource.plugin)
     execute "rabbitmq-plugins disable #{new_resource.plugin}" do
-      umask 0022
+      umask '0022'
       Chef::Log.info "Disabling RabbitMQ plugin '#{new_resource.plugin}'."
       environment shell_environment.merge(
         'PATH' => "#{ENV['PATH']}:/usr/lib/rabbitmq/bin"
