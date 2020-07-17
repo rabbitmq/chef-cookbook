@@ -174,6 +174,7 @@ if platform_family?('fedora')
     package 'rabbitmq-server' do
       action :install
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
+      notifies :reload, 'ohai[reload_packages]', :immediately
     end
   else
     remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
@@ -213,6 +214,7 @@ if platform_family?('rhel')
     package 'rabbitmq-server' do
       action :install
       version node['rabbitmq']['version'] if node['rabbitmq']['pin_distro_version']
+      notifies :reload, 'ohai[reload_packages]', :immediately
     end
   else
     remote_file "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
