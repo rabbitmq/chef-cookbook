@@ -20,7 +20,9 @@
 default_action :install
 
 attribute :version, String
-attribute :use_hipe, [TrueClass, FalseClass], default: false
+# HiPE's been deprecated since Erlang/OTP 22 and is going away in Erlang/OTP 24.
+# DO NOT USE.
+attribute :use_hipe, [true, false], default: false
 attribute :options, [String, Array]
 attribute :retries, Integer, default: 3
 attribute :retry_delay, Integer, default: 10

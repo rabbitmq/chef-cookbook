@@ -29,6 +29,15 @@ platforms:
       intermediate_instructions:
         - RUN zypper -n install sudo lsof which openssl net-tools
 
+  - name: centos-6
+    driver:
+      image: dokken/opensuse-leap-15
+      platform: suse
+      pid_one_command: /usr/lib/systemd/systemd
+      hostname: localhost
+      intermediate_instructions:
+        - RUN zypper -n install sudo lsof which openssl net-tools
+
   - name: centos-7
     driver:
       image: dokken/centos-7
@@ -169,7 +178,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-18.04", "ubuntu-20.04", "debian-10", "debian-9"]
+    includes: ["ubuntu-20.04", "ubuntu-18.04", "ubuntu-16.04", "debian-10", "debian-9"]
 
   - name: management-plugin-deb
     run_list:
@@ -361,7 +370,7 @@ suites:
   # Team RabbitMQ Erlang packages
   #
 
-  # Latest Erlang package, Debian, HiPE enabled
+  # Latest Erlang package, Debian
   - name: rabbitmq-erlang-latest-deb
     run_list:
       - recipe[rabbitmq::erlang_package]
@@ -372,12 +381,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          hipe: true
         version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
-    includes: ["debian-10", "debian-9", "ubuntu-18.04", "ubuntu-16.04"]
+    includes: ["debian-10", "debian-9", "ubuntu-18.04", "ubuntu-20.04"]
 
   # Erlang package, Debian, version pinning
   - name: rabbitmq-erlang-pinned-deb
@@ -393,7 +401,44 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
-    includes: ["debian-10", "ubuntu-18.04", "ubuntu-16.04"]
+    includes: ["debian-10", "ubuntu-18.04", "ubuntu-20.04"]
+
+
+  # Latest Erlang package, RPM
+  - name: rabbitmq-erlang-latest-rpm-el8
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      # relies on node.rabbitmq.erlang.version default
+      # which is nil/"install latest"
+      rabbitmq:
+        erlang:
+          enabled: true
+        version: "3.8.5"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/latest_rpm
+    includes: ["fedora-31", "centos-7", "centos-8"]
+
+  # Erlang package, RPM, version pinning
+  - name: rabbitmq-erlang-pinned-rpm-el8
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      rabbitmq:
+        erlang:
+          enabled: true
+          version: "23.0.2"
+          yum:
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/8
+            repo_gpgcheck: true
+        version: "3.8.5"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/pinned_rpm
+    includes: ["fedora-31", "centos-8"]
 
   # Latest Erlang package, RPM
   - name: rabbitmq-erlang-latest-rpm-el7
@@ -423,7 +468,7 @@ suites:
           enabled: true
           version: "23.0.2"
           yum:
-            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7
             repo_gpgcheck: true
         version: "3.8.5"
     verifier:
@@ -441,7 +486,7 @@ suites:
         erlang:
           enabled: true
           yum:
-            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/6
             repo_gpgcheck: false
         version: "3.8.5"
     verifier:
@@ -460,7 +505,7 @@ suites:
           enabled: true
           version: "23.0.2"
           yum:
-            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6
             repo_gpgcheck: true
         version: "3.8.5"
     verifier:

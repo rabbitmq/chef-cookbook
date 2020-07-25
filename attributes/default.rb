@@ -115,7 +115,7 @@ default['rabbitmq']['logrotate']['enable'] = true
 default['rabbitmq']['logrotate']['path'] = '/var/log/rabbitmq/*.log'
 default['rabbitmq']['logrotate']['rotate'] = 20
 default['rabbitmq']['logrotate']['frequency'] = 'weekly'
-default['rabbitmq']['logrotate']['options'] = %w(missingok notifempty delaycompress)
+default['rabbitmq']['logrotate']['options'] = %w(missingok notifempty compress delaycompress)
 default['rabbitmq']['logrotate']['sharedscripts'] = true
 default['rabbitmq']['logrotate']['postrotate'] = '/usr/sbin/rabbitmqctl rotate_logs > /dev/null'
 
@@ -257,6 +257,8 @@ default['rabbitmq']['additional_rabbit_configs'] = {}
 # if setting to a specific version, apt repository components
 # will have to be updated
 default['rabbitmq']['erlang']['version'] = nil
+# HiPE's been deprecated since Erlang/OTP 22 and is going away in Erlang/OTP 24.
+# DO NOT USE.
 default['rabbitmq']['erlang']['hipe'] = false
 default['rabbitmq']['erlang']['retry_delay'] = 10
 

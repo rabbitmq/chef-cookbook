@@ -13,14 +13,14 @@ transport:
   name: "ssh"
 
 platforms:
-  - name: centos-8
   - name: centos-7
+  - name: centos-8
   - name: ubuntu-16.04
   - name: ubuntu-18.04
+  - name: ubuntu-20.04
   - name: debian-10
-  - name: fedora-31
   - name: fedora-30
-  - name: centos-6
+  - name: fedora-31
   - name: opensuse-leap-15
 
 #
@@ -73,7 +73,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10"]
+    includes: ["ubuntu-20.04", "ubuntu-18.04", "ubuntu-16.04", "debian-10"]
 
   - name: management-plugin-deb
     run_list:
@@ -109,7 +109,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10"]
+    includes: ["ubuntu-20.04", "ubuntu-18.04", "debian-10"]
 
   - name: default-rpm
     run_list:
@@ -135,7 +135,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.3.4"
+          version: "22.3.4.4"
         version: "3.8.5"
     verifier:
       inspec_tests:
@@ -265,7 +265,7 @@ suites:
   # Team RabbitMQ Erlang packages
   #
 
-  # Latest Erlang package, Debian, HiPE enabled
+  # Latest Erlang package, Debian
   - name: rabbitmq-erlang-latest-deb
     run_list:
       - recipe[rabbitmq::erlang_package]
@@ -299,7 +299,7 @@ suites:
     includes: ["ubuntu-18.04"]
 
   # Latest Erlang package, RPM
-  - name: rabbitmq-erlang-latest-rpm-el7
+  - name: rabbitmq-erlang-latest-rpm-el8
     run_list:
       - recipe[rabbitmq::erlang_package]
       - recipe[rabbitmq::default]
@@ -313,10 +313,10 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-30", "centos-7", "centos-8"]
+    includes: ["fedora-31", "centos-7", "centos-8"]
 
   # Erlang package, RPM, version pinning
-  - name: rabbitmq-erlang-pinned-rpm-el7
+  - name: rabbitmq-erlang-pinned-rpm-el8
     run_list:
       - recipe[rabbitmq::erlang_package]
       - recipe[rabbitmq::default]
@@ -324,15 +324,15 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.3"
+          version: "23.0.3"
           yum:
-            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/8
             repo_gpgcheck: true
         version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-30", "centos-7", "centos-8"]
+    includes: ["fedora-31", "centos-7", "centos-8"]
 
   # Latest Erlang package, RPM, CentOS 6 repo
   - name: rabbitmq-erlang-latest-rpm-el6
@@ -344,7 +344,7 @@ suites:
         erlang:
           enabled: true
           yum:
-            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/6
             repo_gpgcheck: false
         version: "3.8.5"
     verifier:
@@ -361,9 +361,9 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.3"
+          version: "22.3.4.4"
           yum:
-            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6
             repo_gpgcheck: true
         version: "3.8.5"
     verifier:

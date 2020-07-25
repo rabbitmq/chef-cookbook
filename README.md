@@ -14,13 +14,12 @@ This cookbook targets Chef 13.0 and later.
 
 The cookbook targets and is tested against
 
- * Ubuntu 18.04
- * Ubuntu 16.04
+ * Ubuntu 16.04 through 20.04
  * Debian 9 and 10
  * RHEL 7 and 8
  * CentOS 7 and 8
  * Fedora 30 or later
- * Amazon Linux 2 (as of `5.7.5`)
+ * Amazon Linux 2
  * Scientific Linux 7
 
 Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
@@ -53,18 +52,19 @@ Both options are covered below.
 
 ## Supported RabbitMQ Versions
 
-`6.x` release series of this cookbook only support RabbitMQ `3.7.x` versions.
+`6.x` release series of this cookbook only support RabbitMQ `3.8.x` versions.
 A [supported Erlang version](https://www.rabbitmq.com/which-erlang.html) must also be provisioned.
 
 `5.x` release series of this cookbook can provision any recent (`3.7.x`, `3.6.16`) version
 if a [supported Erlang version](https://www.rabbitmq.com/which-erlang.html) is also provisioned.
 
-## Provisioning RabbitMQ 3.7.x
+## Provisioning RabbitMQ 3.8.x
 
-### Provision Erlang/OTP 20.3 or Later
+### Provision Erlang/OTP 22.3 or Later
 
-Before provisioning a 3.7.x release, please learn about
-the [minimum required Erlang version](https://www.rabbitmq.com/which-erlang.html).
+Before provisioning a 3.8.x release, please learn about
+the [minimum required Erlang/OTP version](https://www.rabbitmq.com/which-erlang.html)
+and Erlang/OTP version recommendations.
 
 Most distributions provide older versions, so Erlang must be provisioned either
 using [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm),
@@ -76,12 +76,11 @@ or from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/)
 `rabbitmq::erlang_package` is a recipe that provisions latest Erlang packages from team RabbitMQ.
 The packages support
 
- * Debian Stretch and Buster
- * Ubuntu 16.04 and 18.04
- * RHEL 7
- * CentOS 7
- * CentOS 6
- * Fedora 27 or later
+ * Debian 9 and 10
+ * Ubuntu 16.04 through 20.04
+ * RHEL 7 and 8
+ * CentOS 7 and 8
+ * Fedora 30 or later
  * Scientific Linux 7
  * Amazon Linux 2
 
@@ -100,23 +99,24 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:21.3.8.16-1'
+node['rabbitmq']['erlang']['version'] = '1:23.0.3-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '21.3.8.16'
+node['rabbitmq']['erlang']['version'] = '23.0.3'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
-It is possible to override the component used (see [Ubuntu and Debian installation guide](https://www.rabbitmq.com/install-debian.html) to learn more):
+It is possible to override the component used (see [Ubuntu and Debian installation guide](https://www.rabbitmq.com/install-debian.html)
+to learn more):
 
 ``` ruby
-# provisions Erlang 22.x
-node['rabbitmq']['erlang']['apt']['components'] = ["erlang-22.x"]
+# provisions Erlang 23.x
+node['rabbitmq']['erlang']['apt']['components'] = ["erlang-23.x"]
 ```
 
 ``` ruby
-# provisions Erlang 20.3.x
-node['rabbitmq']['erlang']['apt']['components'] = ["erlang-20.x"]
+# provisions Erlang 22.3.x
+node['rabbitmq']['erlang']['apt']['components'] = ["erlang-22.x"]
 ```
 
 Most of the time there is no need to override other attributes. Below is a list of defaults
@@ -132,8 +132,133 @@ default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
 default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 ```
 
-On CentOS 7 and 6, base Yum repository URL will be picked based on distribution versions.
-On Fedora the CentOS 7 package will be used. Erlang package version is set the same way
+On CentOS 8 and 7, base Yum repository URL will be picked based on distribution versions.
+On Fedora, a suitable CentOS package will be used. Erlang package version is set the same way
+as for Debian (see above).
+
+Below are the defaults used by the Yum repository (assuming RHEL or CentOS 8):
+
+``` ruby
+# Provisions CentOS 8 RPMs of Erlang 23
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/8'
+default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
+default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
+default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
+```
+
+To provision Erlang `22.x`, change `default['rabbitmq']['erlang']['yum']['baseurl']`:
+
+``` ruby
+# Provisions CentOS 8 RPMs of Erlang 22
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/8'
+```
+
+To provision Erlang `22.x` on CentOS 7:
+
+``` ruby
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
+```
+
+#### Installing Erlang with the Erlang Cookbook
+
+The Erlang cookbook will provision [packages from Erlang Solutions](https://www.erlang-solutions.com/resources/download.html)
+if `node['erlang']['install_method']` is set to `esl`.
+Note that Erlang Solutions repositories can be behind the latest Erlang/OTP patch releases.
+
+``` ruby
+# will install the latest release, please
+# consult with https://www.rabbitmq.com/which-erlang.html first
+node['erlang']['install_method'] = "esl"
+```
+
+to provision a specific version, e.g. `22.3.4.4`:
+
+``` ruby
+node['erlang']['install_method'] = "esl"
+# Ubuntu and Debian
+# note the "1:" package epoch prefix
+node['erlang']['esl']['version'] = "1:22.3.4.4"
+```
+
+``` ruby
+node['erlang']['install_method'] = "esl"
+# CentOS, RHEL, Fedora
+node['erlang']['esl']['version'] = "22.3.4.4-1"
+```
+
+### Seting RabbitMQ Version
+
+Set `node['rabbitmq']['version']` to specify a version:
+
+``` ruby
+node['rabbitmq']['version'] = "3.8.5"
+```
+
+If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
+from earlier versions, consider omitting those attributes. Otherwise see a section on download
+location customization below.
+
+RabbitMQ packages will be downloaded [from Bintray](https://bintray.com/rabbitmq/all/) by default.
+
+
+## Supported Distributions
+
+The release was tested with recent RabbitMQ releases on
+
+ * Ubuntu 18.04
+ * Ubuntu 16.04
+ * Debian Stretch and Buster
+ * Ubuntu 16.04 through 20.04
+ * RHEL 7 and 8
+ * CentOS 7 and 8
+ * Fedora 30 or later
+ * Scientific Linux 7
+ * Amazon Linux 2
+
+The packages are **cannot be installed alongside with other Erlang packages**, for example, those
+from standard Debian repositories or Erlang Solutions.
+
+To make sure that the Erlang cookbook is not used by `rabbitmq::default`, `rabbitmq::cluster`,
+and other recipes, set `node['rabbitmq']['erlang']['enabled']` to `true`:
+
+``` ruby
+node['rabbitmq']['erlang']['enabled'] = true
+```
+
+By default `rabbitmq::erlang_package` will install the latest Erlang version available.
+To override package version, use `node['rabbitmq']['erlang']['version']`:
+
+``` ruby
+# Debian
+node['rabbitmq']['erlang']['version'] = '1:22.3.4.4-1'
+
+# RPM
+node['rabbitmq']['erlang']['version'] = '22.3.4.4'
+```
+
+On Ubuntu and Debian the distribution will be picked from node attributes.
+It is possible to override the component used (see [Ubuntu and Debian installation guide](https://www.rabbitmq.com/install-debian.html) to learn more):
+
+``` ruby
+# provisions Erlang 22.x
+node['rabbitmq']['erlang']['apt']['components'] = ["erlang-22.x"]
+```
+
+Most of the time there is no need to override other attributes. Below is a list of defaults
+used on Ubuntu and Debian:
+
+``` ruby
+# RabbitMQ Erlang packages
+default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.bintray.com/rabbitmq-erlang/debian"
+default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
+default['rabbitmq']['erlang']['apt']['components'] = ["erlang"]
+default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
+
+default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
+```
+
+On CentOS 8 and 7, base Yum repository URL will be picked based on distribution versions.
+On Fedora, a suitable CentOS package will be used. Erlang package version is set the same way
 as for Debian (see above).
 
 Below are the defaults used by the Yum repository (assuming RHEL or CentOS 7):
@@ -145,16 +270,10 @@ default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
 ```
 
-To provision Erlang `21.x`, change `default['rabbitmq']['erlang']['yum']['baseurl']`:
+To provision Erlang `22.x` on CentOS 6:
 
 ``` ruby
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7'
-```
-
-To provision Erlang `21.x` on CentOS 6:
-
-``` ruby
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6'
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6'
 ```
 
 #### Installing Erlang with the Erlang Cookbook
@@ -167,51 +286,22 @@ The Erlang cookbook will provision packages from Erlang Solutions if `node['erla
 node['erlang']['install_method'] = "esl"
 ```
 
-to provision a specific version, e.g. 20.3.8.21:
+to provision a specific version, e.g. `22.3.4.4`:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # Ubuntu and Debian
 # note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:20.3.8.21"
+node['erlang']['esl']['version'] = "1:22.3.4.4"
 ```
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "20.3.8.21-1"
+node['erlang']['esl']['version'] = "22.3.4.4-1"
 ```
 
 ### Seting RabbitMQ Version
-
-Set `node['rabbitmq']['version']` to specify a version:
-
-``` ruby
-node['rabbitmq']['version'] = "3.7.26"
-```
-
-If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
-from earlier versions, consider omitting those attributes. Otherwise see a section on download
-location customization below.
-
-3.7.x releases will be downloaded [from Bintray](https://bintray.com/rabbitmq/all/) by default.
-
-
-## Supported Distributions
-
-The release was tested with recent RabbitMQ releases on
-
- * Ubuntu 18.04
- * Ubuntu 16.04
- * Debian Stretch and Buster
- * CentOS 7.x
- * RHEL 7
- * Fedora 27+
- * Amazon Linux 2
-
-Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
-
-### Newer Versions
 
 Newer Debian, Ubuntu and CentOS 7.x versions should work.
 
@@ -230,32 +320,33 @@ Installs `rabbitmq-server` via direct download (from Bintray or GitHub, dependin
 the installation package or using the distribution version. Depending on your distribution,
 the provided version may be quite old so direct download is the default option.
 
-The cluster recipe is now combined with the default and will now auto-cluster. Set the `['rabbitmq']['clustering']['enable']` attribute to `true`, `['rabbitmq']['clustering']['cluster_disk_nodes']` array of `node@host` strings that describe which you want to be disk nodes and then set an alphanumeric string for the `erlang_cookie`.
+#### Clustering Essentials
 
-To [enable TLS](https://www.rabbitmq.com/ssl.html) turn `ssl` to `true` and set the paths to CA certificate, server
-certificate and server private key files.
+Set the `['rabbitmq']['clustering']['enable']` attribute to `true`, `['rabbitmq']['clustering']['cluster_disk_nodes']`
+array of `node@host` strings that describe cluster members,
+and a alphanumeric string for the [`erlang_cookie`](https://www.rabbitmq.com/clustering.html#erlang-cookie).
 
-```ruby
+#### TLS
+
+To enable [TLS for client connections](https://www.rabbitmq.com/ssl.html), set the `ssl` to `true` and set the paths to your cacert, cert and key files.
+
+``` ruby
 node['rabbitmq']['ssl'] = true
-# CA certificate
-node['rabbitmq']['ssl_cacert'] = '/path/to/ca_certificate.pem'
-# server certificate (public key)
-node['rabbitmq']['ssl_cert'] = '/path/to/server_certificate.pem'
-# server private key
-node['rabbitmq']['ssl_key'] = '/path/to/server_key.pem'
+# path to the CA bundle file
+node['rabbitmq']['ssl_cacert'] = '/path/to/cacert.pem'
+# path to the server certificate (pubic key) PEM file
+node['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
+# path to the server private key file
+node['rabbitmq']['ssl_key'] = '/path/to/key.pem'
 ```
 
-Listening for TCP connections may be limited to a specific interface by setting the following attribute:
+#### Client Connection Listeners
 
-```
-node['rabbitmq']['tcp_listen_interface'] = nil
-```
+[TCP connection listeners](https://rabbitmq.com/networking.html) may be limited to a specific interface
+using the `node['rabbitmq']['tcp_listen_interface']` attribute.
 
-Listening for TLS connections may be limited to a specific interface by setting the following attribute:
+Its [TLS connection listener](https://rabbitmq.com/networking.html) counterpart is `node['rabbitmq']['ssl_listen_interface']`.
 
-```
-node['rabbitmq']['ssl_listen_interface'] = nil
-```
 
 #### Custom Package Download Locations
 
@@ -265,10 +356,7 @@ Set them to a download location without a version if you want to provision from 
 endpoint such as a local mirror.
 
 The `default` recipe will append a version suffix that matches RabbitMQ tag naming scheme.
-For `3.7.x` or later, it is just the version (unchanged).
-
-For `3.6.16`, it is `"rabbitmq_v{version}"` where `{version}` being the value of `node['rabbitmq']['version']`
-with dots replaced by underscores. So `3.6.16` will be translated to `rabbitmq_v3_6_16`.
+For `3.7.x` or later, it is just the version (the value is used as is).
 
 Lastly, a package name will be appended to form a full download URL. They rarely need
 changing but can also be overridden using the `node['rabbitmq']['deb_package']`
@@ -277,32 +365,41 @@ and `node['rabbitmq']['rpm_package']` attributes.
 
 #### Attributes
 
-A full list of SSL attributes can be found in [attributes/default.rb](attributes/default.rb).
+A full list of attributes related to [TLS in RabbitMQ](https://www.rabbitmq.com/ssl.html)
+can be found in [attributes/default.rb](attributes/default.rb).
 
 Default values and usage information of important attributes are shown below.  More attributes are documented in metadata.rb.
 
 ##### Username and Password
 
-The default username and password are guest/guest:
+The default username and password are `guest`/`guest`, with [access limited to localhost connections](https://www.rabbitmq.com/access-control.html#loopback-users):
 
-`['rabbitmq']['default_user'] = 'guest'`
+``` ruby
+['rabbitmq']['default_user'] = 'guest'
+['rabbitmq']['default_pass'] = 'guest'
+```
 
-`['rabbitmq']['default_pass'] = 'guest'`
+It is [highly recommended](https://www.rabbitmq.com/production-checklist.html#users-and-permissions) that a different
+default user name is used with a reasonably long (say, 30-40 characters) **generated password**.
 
 ##### Loopback Users
 
-By default, the guest user can only connect via localhost.  This is the behavior of RabbitMQ when the loopback_users configuration is not specified in it's configuration file.   Also, by default, this cookbook does not specify loopback_users in the configuration file:
+By default, the guest user [can only connect from localhost](https://www.rabbitmq.com/access-control.html#loopback-users).
+This prevents remote access for installations that use the well-known default credentials.
+It is [highly recommended](https://www.rabbitmq.com/production-checklist.html#users-and-permissions) that remote access for the default user is not enabled
+but if **security is of absolutely no importance** in a certain environment, this can be done:
 
-`['rabbitmq']['loopback_users'] = nil`
+``` ruby
+['rabbitmq']['loopback_users'] = []
+```
 
-If you wish to allow the default guest user to connect remotely, you can change this to `[]`. If instead you wanted to allow just the user 'foo' to connect over loopback, you would set this value to `["foo"]`. Learn more
-in the RabbitMQ [Access Control guide](https://www.rabbitmq.com/access-control.html).
+Learn more in the RabbitMQ [Access Control guide](https://www.rabbitmq.com/access-control.html).
 
 ##### Definitions Import
 
-[RabbitMQ management plugin](https://www.rabbitmq.com/management.html) provides a means to load a definitions
-(schema) file on node boot. See [Definitions Export and Import](https://www.rabbitmq.com/management.html#load-definitions)
-and [Backup](https://www.rabbitmq.com/backup.html) guides for details.
+It is possible to to load a [definitions (schema) file](https://www.rabbitmq.com/definitions.html) on node boot.
+Consult RabbitMQ's [Definitions](https://www.rabbitmq.com/definitions.html)
+and [Backup](https://www.rabbitmq.com/backup.html) doc guides to learn more.
 
 To configure definition loading, set the following attribute:
 
@@ -319,13 +416,16 @@ using a remote file resource.
 
 ### management_ui
 
-Enables the [RabbitMQ management plugin](https://www.rabbitmq.com/management.html).
+Installs the [RabbitMQ management plugin]().
 
-To use https connection to management console, turn `['rabbitmq']['web_console_ssl']` to true. The SSL port for web management console can be configured by setting attribute `['rabbitmq']['web_console_ssl_port']`, whose default value is 15671.
+To enable HTTPS for the management UI and HTTP API, set `['rabbitmq']['web_console_ssl']` attribute to `true`.
+The HTTPS port for the management UI can be configured by setting attribute `['rabbitmq']['web_console_ssl_port']`,
+whose default value is 15671.
 
 ### plugins
 
-Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed in `node['rabbitmq']['disabled_plugins']` attributes.
+Enables any plugins listed in the `node['rabbitmq']['enabled_plugins']` and disables any listed
+in `node['rabbitmq']['disabled_plugins']` attributes.
 
 ### LDAP Configuration
 
@@ -339,7 +439,8 @@ in combination:
 
 ##### Example configuration
 
-```ruby
+``` ruby
+
 # this is just an example
 node['rabbitmq']['ldap']['conf'] = {
   :servers => ["ldap-host1", "ldap-host2"],
@@ -377,10 +478,10 @@ You can see more examples [here](https://github.com/rabbitmq/rabbitmq-auth-backe
 
 ### users
 
-Enables any users listed in the `node['rabbitmq']['enabled_users']` and disables any listed in `node['rabbitmq']['disabled_users']` attributes.
+Enables any [RabbitMQ users](https://www.rabbitmq.com/access-control.html) listed in the `node['rabbitmq']['enabled_users']` and disables any listed in `node['rabbitmq']['disabled_users']` attributes.
 You can provide user credentials, the vhosts that they need to have access to and the permissions that should be allocated to each user.
 
-```ruby
+``` ruby
 node['rabbitmq']['enabled_users'] = [
     {
         name: 'kitten',
@@ -405,16 +506,18 @@ Alternatively [definitions export and import](https://www.rabbitmq.com/managemen
 Definition files contain password hashes since clear text values are not stored.
 
 ### vhosts
-Enables any vhosts listed in the `node['rabbitmq']['virtualhosts']` and disables any listed in `node['rabbitmq']['disabled_virtualhosts']` attributes.
+
+Enables any [virtual hosts](https://www.rabbitmq.com/vhosts.html) listed in the `node['rabbitmq']['virtualhosts']`
+and disables any listed in `node['rabbitmq']['disabled_virtualhosts']` attributes.
 
 ### cluster
 
-Configures a cluster of nodes.
+Forms a [cluster RabbitMQ of nodes](https://www.rabbitmq.com/clustering.html).
 
 It supports two clustering modes: auto or manual.
 
-* Auto clustering: lists [cluster nodes in the RabbitMQ config file](https://www.rabbitmq.com/cluster-formation.html#peer-discovery-classic-config). Those are taken from lists the nodes `node['rabbitmq']['clustering']['cluster_nodes']`.
-* Manual clustering : Configure the cluster by executing `rabbitmqctl join_cluster` command.
+* Auto clustering: lists [cluster members in the RabbitMQ config file](https://www.rabbitmq.com/cluster-formation.html#peer-discovery-classic-config). Those are taken from lists the nodes `node['rabbitmq']['clustering']['cluster_nodes']`.
+* Manual clustering : joins cluter members using `rabbitmqctl join_cluster`.
 
 #### Attributes
 
@@ -426,7 +529,7 @@ It supports two clustering modes: auto or manual.
 
 Example
 
-```ruby
+``` ruby
 node['rabbitmq']['clustering']['enable'] = true
 node['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
 node['rabbitmq']['clustering']['cluster_partition_handling'] = 'pause_minority'
@@ -457,7 +560,8 @@ Downloads, installs and enables pre-built community plugins binaries.
 
 To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['PLUGIN_NAME']` to `'{DOWNLOAD_URL}'`.
 
-## Resources/Providers
+
+## Available Resources/Providers
 
 There are several LWRPs for interacting with RabbitMQ and a few setting up Erlang repositories
 and package.
@@ -503,10 +607,7 @@ Install the package. Here's an example for Debian-based systems:
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
   # This package version assumes a Debian-based distribution.
-  version '1:21.3.8.16-1'
-
-  # provision a HiPE-enabled Erlang runtime if available
-  use_hipe true
+  version '1:23.0.3-1'
 
   action :install
 end
@@ -516,57 +617,71 @@ Here's another one for RPM-based ones:
 
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
-  version '21.3.8.16'
+  version '23.0.3'
 
   action :install
 end
 ```
 
-### plugin
+## plugin
 
 Enables or disables a rabbitmq plugin. Plugins are not supported for releases prior to 2.7.0.
 
 - `:enable` enables a `plugin`
 - `:disable` disables a `plugin`
 
-#### Examples
-```ruby
+### Examples
+
+``` ruby
 rabbitmq_plugin "rabbitmq_stomp" do
   action :enable
 end
 ```
 
-```ruby
+``` ruby
 rabbitmq_plugin "rabbitmq_shovel" do
   action :disable
 end
 ```
 
-### policy
-sets or clears a rabbitmq policy.
+## policy
+
+Sets or clears a RabbitMQ [policy](https://www.rabbitmq.com/parameters.html#policies).
 
 - `:set` sets a `policy`
 - `:clear` clears a `policy`
 - `:list` lists `policy`s
 
-#### Examples
-```ruby
-rabbitmq_policy "ha-all" do
+### Examples
+
+``` ruby
+
+rabbitmq_policy "classic-queue-mirroring-2-replicas" do
   pattern "^(?!amq\\.).*"
-  parameters ({"ha-mode"=>"all"})
+  parameters ({"ha-mode" => "exactly", "ha-params" => 2})
   priority 1
   action :set
 end
 ```
 
-```ruby
-rabbitmq_policy "ha-all" do
+``` ruby
+rabbitmq_policy "queue-length-limit" do
+  pattern "^limited\\.*"
+  parameters ({"max-length" => "exactly"})
+  priority 1
+  action :set
+end
+```
+
+``` ruby
+rabbitmq_policy "classic-queue-mirroring-2-replicas" do
   action :clear
 end
 ```
 
-### user
-Adds and deletes users, fairly simplistic permissions management.
+## user
+
+Adds and deletes [users](https://www.rabbitmq.com/access-control.html):
 
 - `:add` adds a `user` with a `password`
 - `:delete` deletes a `user`
@@ -576,21 +691,22 @@ Adds and deletes users, fairly simplistic permissions management.
 - `:clear_tags` clear any tags on a user
 - `:change_password` set the `password` for a `user`
 
-#### Examples
-```ruby
+### Examples
+
+``` ruby
 rabbitmq_user "guest" do
   action :delete
 end
 ```
 
-```ruby
+``` ruby
 rabbitmq_user "nova" do
   password "sekret"
   action :add
 end
 ```
 
-```ruby
+``` ruby
 rabbitmq_user "nova" do
   vhost "/nova"
   permissions ".* .* .*"
@@ -598,7 +714,7 @@ rabbitmq_user "nova" do
 end
 ```
 
-```ruby
+``` ruby
 rabbitmq_user "rmq" do
   vhost ["/", "/rmq", "/nova"]
   permissions ".* .* .*"
@@ -606,28 +722,31 @@ rabbitmq_user "rmq" do
 end
 ```
 
-```ruby
+``` ruby
 rabbitmq_user "joe" do
   tag "admin,lead"
   action :set_tags
 end
 ```
 
-### vhost
-Adds and deletes vhosts.
+## vhost
+
+Adds and deletes [virtual hosts](https://www.rabbitmq.com/vhosts.html).
 
 - `:add` adds a `vhost`
 - `:delete` deletes a `vhost`
 
-#### Examples
+### Examples
+
 ``` ruby
 rabbitmq_vhost "/nova" do
   action :add
 end
 ```
 
-### cluster
-Join cluster, set cluster name and change cluster node type.
+## cluster
+
+[Forms a cluster](https://www.rabbitmq.com/clustering.html) and controls cluster name.
 
 - `:join` join in cluster as a manual clustering. node will join in first node of json string data.
 
@@ -653,37 +772,40 @@ Join cluster, set cluster name and change cluster node type.
 - `:set_cluster_name` set the cluster name.
 - `:change_cluster_node_type` change cluster type of node. `disc` or `ram` should be set.
 
-#### Examples
-```ruby
+### Examples
+
+``` ruby
 rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2","type":"ram"},{"name":"rabbit@rabbit3","type":"disc"}]' do
   action :join
 end
 ```
 
-```ruby
+``` ruby
 rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2","type":"ram"},{"name":"rabbit@rabbit3","type":"disc"}]' do
   cluster_name 'seoul_tokyo_newyork'
   action :set_cluster_name
 end
 ```
 
-```ruby
+``` ruby
 rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2","type":"ram"},{"name":"rabbit@rabbit3","type":"disc"}]' do
   action :change_cluster_node_type
 end
 ```
 
-#### Removing nodes from cluster
+### Removing Nodes from an Existing Cluster
 
 This cookbook provides the primitives to remove a node from a cluster via helper functions but do not include these in any recipes. This is something that is potentially very dangerous and different deployments will have different needs and IF you decide you need this it should be implemented in your wrapper with EXTREME caution. There are 2 helper methods for 2 different scenario:
 - removing self from cluster. This should likely only be considered for machines on a normal decommission. This is accomplished by using the helper fucntion `reset_current_node`.
 - removing another node from cluster. This should only be done once you are sure the machine is gone and won't come back. This can be accomplished via `remove_remote_node_from_cluster`.
 
+
 ## Limitations
 
 For an already running cluster, these actions still require manual intervention:
-- changing the :erlang_cookie
-- turning :cluster from true to false
+
+- changing the [shared cluster secret](https://www.rabbitmq.com/clustering.html#erlang-cookie) using the `:erlang_cookie` attribute
+- disabling clutering entirely by setting `:cluster` from `true` to `false`
 
 
 ## License & Authors
@@ -697,7 +819,7 @@ For an already running cluster, these actions still require manual intervention:
 
 ```text
 Copyright (c) 2009-2018, Chef Software, Inc.
-Copyright (c) 2018-2019, Pivotal Software, Inc.
+Copyright (c) 2018-2020, VMware, Inc. or its affiliates.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -16,14 +16,13 @@ verifier:
   sudo: false
 
 platforms:
-  - name: centos-6
+  - name: centos-8
     driver:
-      image: dokken/centos-6
+      image: dokken/centos-8
       platform: rhel
-      pid_one_command: /sbin/init
-      hostname: localhost
+      pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
-        - RUN yum -y install sudo which initscripts
+        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
   - name: centos-7
     driver:
@@ -33,25 +32,25 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
-  - name: fedora-31
+  - name: fedora-32
     driver:
-      image: dokken/fedora-31
+      image: dokken/fedora-32
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
         - RUN dnf -y install sudo
 
-  - name: ubuntu-18.04
+  - name: ubuntu-20.04
     driver:
-      image: dokken/ubuntu-18.04
+      image: dokken/ubuntu-20.04
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
         - RUN /usr/bin/apt-get update -y
         - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
-  - name: debian-9
+  - name: debian-10
     driver:
-      image: dokken/debian-9
+      image: dokken/debian-10
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
@@ -81,9 +80,9 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-18.04", "debian-9"]
+    includes: ["ubuntu-20.04", "debian-10"]
 
-  - name: default-rpm-el7-alpha
+  - name: default-rpm-el8-alpha
     run_list:
       - recipe[rabbitmq::erlang_package]
       - recipe[rabbitmq::plugins]
@@ -96,13 +95,13 @@ suites:
         version: <%= ENV['RABBITMQ_VERSION'] %>
 
         rpm_package_url: "https://dl.bintray.com/rabbitmq/all-dev/rabbitmq-server/<%= ENV['RABBITMQ_VERSION'] %>/"
-        rpm_package: "rabbitmq-server-<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1.el7.noarch.rpm"
+        rpm_package: "rabbitmq-server-<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1.el8.noarch.rpm"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7", "fedora-31"]
+    includes: ["centos-8", "fedora-32"]
 
-  - name: default-rpm-el6-alpha
+  - name: default-rpm-el7-alpha
     run_list:
       - recipe[erlang::default]
       - recipe[rabbitmq::plugins]
@@ -110,14 +109,14 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.0.2-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        # export RABBITMQ_VERSION="3.7.13-alpha.21"
+        # export RABBITMQ_VERSION="3.8.6-alpha.21"
         version: <%= ENV['RABBITMQ_VERSION'] %>
 
         rpm_package_url: "https://dl.bintray.com/rabbitmq/all-dev/rabbitmq-server/<%= ENV['RABBITMQ_VERSION'] %>/"
-        rpm_package: "rabbitmq-server-<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1.el6.noarch.rpm"
+        rpm_package: "rabbitmq-server-<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1.el7.noarch.rpm"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-6"]
+    includes: ["centos-7"]

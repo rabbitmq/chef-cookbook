@@ -82,7 +82,7 @@ if platform_family?('debian')
   # socat is a package dependency of rabbitmq-server
   package 'socat'
 
-  #: Prevent Debian systems from automatically starting RabbitMQ after dpkg install
+  # Prevent Debian systems from automatically starting RabbitMQ after dpkg install
   dpkg_autostart node['rabbitmq']['service_name'] do
     allow false
   end
@@ -244,7 +244,6 @@ if platform_family?('smartos')
   service 'epmd' do
     action :start
   end
-
 end
 
 #
@@ -324,8 +323,9 @@ existing_erlang_key = if File.exist?(node['rabbitmq']['erlang_cookie_path']) && 
                       end
 
 if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
-  log "stop #{node['rabbitmq']['service_name']} to change erlang cookie" do
-    notifies :stop, "service[#{node['rabbitmq']['service_name']}]", :immediately
+  log "stopping #{node['rabbitmq']['service_name']} because shared cluster secret (the Erlang cookie) has changed"
+  service node['rabbitmq']['service_name'] do
+    action :stop
   end
 
   template node['rabbitmq']['erlang_cookie_path'] do
