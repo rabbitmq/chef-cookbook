@@ -25,13 +25,12 @@ platforms:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
   - name: centos-7
-      driver:
-        image: dokken/centos-7
-        platform: rhel
-        pid_one_command: /usr/lib/systemd/systemd
-        intermediate_instructions:
-          - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
-
+    driver:
+      image: dokken/centos-7
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
   - name: fedora-32
     driver:
