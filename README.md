@@ -14,13 +14,12 @@ This cookbook targets Chef 13.0 and later.
 
 The cookbook targets and is tested against
 
- * Ubuntu 18.04
- * Ubuntu 16.04
+ * Ubuntu 16.04 through 20.04
  * Debian 9 and 10
  * RHEL 7 and 8
  * CentOS 7 and 8
  * Fedora 30 or later
- * Amazon Linux 2 (as of `5.7.5`)
+ * Amazon Linux 2
  * Scientific Linux 7
 
 Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
@@ -79,11 +78,10 @@ or from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/)
 The packages support
 
  * Debian Stretch and Buster
- * Ubuntu 16.04 and 18.04
- * RHEL 7
- * CentOS 7
- * CentOS 6
- * Fedora 27 or later
+ * Ubuntu 16.04 through 20.04
+ * RHEL 7 and 8
+ * CentOS 7 and 8
+ * Fedora 30 or later
  * Scientific Linux 7
  * Amazon Linux 2
 
