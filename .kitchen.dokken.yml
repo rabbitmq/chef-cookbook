@@ -481,7 +481,7 @@ suites:
     includes: ["fedora-31", "centos-7", "centos-8"]
 
   # Erlang package, RPM, version pinning
-  - name: rabbitmq-erlang-pinned-rpm-el7
+  - name: rabbitmq-erlang-pinned-rpm-el8
     run_list:
       - recipe[rabbitmq::erlang_package]
       - recipe[rabbitmq::default]
@@ -491,7 +491,7 @@ suites:
           enabled: true
           version: "23.0.2"
           yum:
-            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/8
             repo_gpgcheck: true
         version: "3.8.5"
     verifier:
