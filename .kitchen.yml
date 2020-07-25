@@ -40,9 +40,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
         virtualhosts:
           - vhost1
           - vhost2
@@ -83,9 +83,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/management_plugin
@@ -100,9 +100,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
         systemd:
           limits:
             NOFILE: 54000
@@ -119,9 +119,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.16-1"
+          version: "23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -152,9 +152,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.16-1"
+          version: "23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
         systemd:
           limits:
             NOFILE: 54000
@@ -171,9 +171,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -188,9 +188,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -205,9 +205,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.16-1"
+          version: "23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -222,9 +222,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     attributes:
       apt:
         confd:
@@ -233,9 +233,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -253,9 +253,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -382,7 +382,7 @@ suites:
             enabled: true
             zypper:
               baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_15.1
-          version: "3.7.26"
+          version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
