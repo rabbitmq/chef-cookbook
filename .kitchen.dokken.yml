@@ -462,8 +462,9 @@ suites:
         - test/erlang_package/pinned_deb
     includes: ["debian-10", "ubuntu-18.04", "ubuntu-20.04"]
 
+
   # Latest Erlang package, RPM
-  - name: rabbitmq-erlang-latest-rpm-el7
+  - name: rabbitmq-erlang-latest-rpm-el8
     run_list:
       - recipe[rabbitmq::erlang_package]
       - recipe[rabbitmq::default]
@@ -496,7 +497,43 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-31", "centos-7", "centos-8"]
+    includes: ["fedora-31", "centos-8"]
+
+  # Latest Erlang package, RPM
+  - name: rabbitmq-erlang-latest-rpm-el7
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      # relies on node.rabbitmq.erlang.version default
+      # which is nil/"install latest"
+      rabbitmq:
+        erlang:
+          enabled: true
+        version: "3.8.5"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/latest_rpm
+    includes: ["centos-7"]
+
+  # Erlang package, RPM, version pinning
+  - name: rabbitmq-erlang-pinned-rpm-el7
+    run_list:
+      - recipe[rabbitmq::erlang_package]
+      - recipe[rabbitmq::default]
+    attributes:
+      rabbitmq:
+        erlang:
+          enabled: true
+          version: "22.3.4.4"
+          yum:
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7
+            repo_gpgcheck: true
+        version: "3.8.5"
+    verifier:
+      inspec_tests:
+        - test/erlang_package/pinned_rpm
+    includes: ["centos-7"]
 
   # Latest Erlang package, RPM, CentOS 6 repo
   - name: rabbitmq-erlang-latest-rpm-el6
@@ -508,7 +545,7 @@ suites:
         erlang:
           enabled: true
           yum:
-            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/6
             repo_gpgcheck: false
         version: "3.8.5"
     verifier:
@@ -525,9 +562,9 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.0.2"
+          version: "22.3.4.4"
           yum:
-            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
+            baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6
             repo_gpgcheck: true
         version: "3.8.5"
     verifier:
