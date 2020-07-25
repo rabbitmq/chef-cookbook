@@ -186,7 +186,7 @@ No changes yet.
       rabbitmq_erlang_apt_repository_on_bintray 'rabbitmq_erlang_repo_on_bintray' do
         distribution node['lsb']['codename'] unless node['lsb'].nil?
         # See https://www.rabbitmq.com/install-debian.html
-        components ['erlang-21.x']
+        components ['erlang-22.x']
 
         action :add
       end
@@ -207,11 +207,8 @@ No changes yet.
       ``` ruby
       rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
         # This package version assumes a Debian-based distribution.
-        # On RHEL/CentOS/Fedora it would be '21.3.8.16'
-        version '1:21.3.8.16-1'
-
-        # provision a HiPE-enabled Erlang runtime if available
-        use_hipe true
+        # On RHEL/CentOS/Fedora it would be '22.3.4.4'
+        version '1:22.3.4.4-1'
 
         action :install
       end
