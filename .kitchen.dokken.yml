@@ -185,7 +185,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-18.04", "ubuntu-20.04", "debian-10", "debian-9"]
+    includes: ["ubuntu-20.04", "ubuntu-18.04", "ubuntu-16.04", "debian-10", "debian-9"]
 
   - name: management-plugin-deb
     run_list:
@@ -429,7 +429,7 @@ suites:
   # Team RabbitMQ Erlang packages
   #
 
-  # Latest Erlang package, Debian, HiPE enabled
+  # Latest Erlang package, Debian
   - name: rabbitmq-erlang-latest-deb
     run_list:
       - recipe[rabbitmq::erlang_package]
@@ -440,12 +440,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          hipe: true
         version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
-    includes: ["debian-10", "debian-9", "ubuntu-18.04", "ubuntu-16.04"]
+    includes: ["debian-10", "debian-9", "ubuntu-18.04", "ubuntu-20.04"]
 
   # Erlang package, Debian, version pinning
   - name: rabbitmq-erlang-pinned-deb
@@ -456,12 +455,12 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:23.0.2-1"
+          version: "1:22.3.4.4-1"
         version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
-    includes: ["debian-10", "ubuntu-18.04", "ubuntu-16.04"]
+    includes: ["debian-10", "ubuntu-18.04", "ubuntu-20.04"]
 
   # Latest Erlang package, RPM
   - name: rabbitmq-erlang-latest-rpm-el7
