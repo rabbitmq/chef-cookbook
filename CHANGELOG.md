@@ -1,12 +1,47 @@
 # Change Log
 
-## [v5.8.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.5) (under development)
+## [v5.8.6](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.6) (under development)
+
+No changes yet.
+
+
+## [v5.8.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.5) (2020-07-25)
+
+ * Idempotency w.r.t. Ohai package state reloading.
+
+   Contributed by @Wing924 and @ramereth.
+
+   GitHub issue: [#554](https://github.com/rabbitmq/chef-cookbook/pull/554), [#562](https://github.com/rabbitmq/chef-cookbook/pull/562)
+
+ * Chef 16 compatibility and cookbook style fixes.
+
+   Contributed by @tas50 and @ramereth.
+
+   GitHub issues: [#541](https://github.com/rabbitmq/chef-cookbook/pull/541), [#542](https://github.com/rabbitmq/chef-cookbook/pull/542), [#561](https://github.com/rabbitmq/chef-cookbook/pull/561)
+
+ * Cluster status output parser failed with the new RabbitMQ 3.8-specific output format
+
+   Contributed by @DecoyJoe.
+
+   GitHub issue: [#560](https://github.com/rabbitmq/chef-cookbook/pull/560)
 
  * User tags are now set unconditionally by the `users` recipe.
 
    Contributed by @tophercullen.
 
    GitHub issue: [#538](https://github.com/rabbitmq/chef-cookbook/issues/538)
+
+ * Compression enabled for logrotate.
+
+   Contributed by @drewhammond.
+
+   GitHub issue: [#557](https://github.com/rabbitmq/chef-cookbook/pull/557)
+
+ * `File` is scoped explicitly to disambiguate.
+
+   Contributed by @tas50.
+
+   GitHub issue: [#542](https://github.com/rabbitmq/chef-cookbook/pull/542)
 
 
 ## [v5.8.4](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.4) (2019-08-26)
