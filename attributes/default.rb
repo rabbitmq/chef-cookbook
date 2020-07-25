@@ -22,8 +22,8 @@ default['rabbitmq']['erlang']['enabled'] = false
 # suggests that the intent is to use recipe[rabbitmq::erlang_package]
 #
 if !node['rabbitmq']['use_distro_version'] && !node['rabbitmq']['erlang']['enabled'] &&
-   (node['platform'] == 'debian' && node['platform_version'].to_i < 8 ||
-    platform_family?('rhel', 'centos', 'scientific') && node['platform_version'].to_i < 7)
+   (platform_family?('debian') && node['platform_version'].to_i < 8 ||
+    platform_family?('rhel') && node['platform_version'].to_i < 7)
   default['erlang']['install_method'] = 'esl'
 end
 

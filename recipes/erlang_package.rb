@@ -55,7 +55,7 @@ if platform_family?('rhel')
   end
 end
 
-if platform_family?('rhel', 'fedora', 'amazon')
+if platform_family?('rhel', 'fedora')
   rabbitmq_erlang_yum_repository_on_bintray 'rabbitmq_erlang' do
     baseurl node['rabbitmq']['erlang']['yum']['baseurl']
     gpgkey node['rabbitmq']['erlang']['yum']['gpgkey']

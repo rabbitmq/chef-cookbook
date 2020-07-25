@@ -62,7 +62,7 @@ action :install do
     end
   end
 
-  if platform_family?('rhel', 'fedora', 'amazon')
+  if platform_family?('rhel', 'fedora')
     package new_resource.name do
       package_name 'erlang'
       version new_resource.version unless new_resource.version.nil?
@@ -105,7 +105,7 @@ action :remove do
     end
   end
 
-  if platform_family?('rhel', 'fedora', 'amazon')
+  if platform_family?('rhel', 'fedora')
     package new_resource.name do
       action :remove
     end

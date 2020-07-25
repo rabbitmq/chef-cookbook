@@ -25,8 +25,8 @@ attribute :uri, String, default: 'https://dl.bintray.com/rabbitmq-erlang/debian'
 attribute :distribution, String
 # Available values: 'erlang', 'erlang-21.x', 'erlang-20.x', 'erlang-19.x'
 # 'erlang' means "the latest release"
-attribute :components, Array, default: ['erlang'], required: true
-attribute :key, String, default: '6B73A36E6026DFCA', required: true
+attribute :components, Array, default: ['erlang']
+attribute :key, String, default: '6B73A36E6026DFCA'
 attribute :keyserver, String
 
-attribute :trusted, [TrueClass, FalseClass], default: false
+attribute :trusted, [true, false], default: false

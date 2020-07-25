@@ -92,7 +92,7 @@ end
 
 action :add do
   unless user_exists?(new_resource.user)
-    Chef::Application.fatal!('rabbitmq_user with action :add requires a non-nil/empty password.') if new_resource.password.nil? || new_resource.password.empty?
+    raise('rabbitmq_user with action :add requires a non-nil/empty password.') if new_resource.password.nil? || new_resource.password.empty?
 
     # To escape single quotes in a shell, you have to close the surrounding single quotes, add
     # in an escaped single quote, and then re-open the original single quotes.
@@ -121,7 +121,7 @@ action :delete do
 end
 
 action :set_permissions do
-  Chef::Application.fatal!("rabbitmq_user action :set_permissions fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
+  raise("rabbitmq_user action :set_permissions fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
 
   perm_list = new_resource.permissions.split
   vhosts = new_resource.vhost.is_a?(Array) ? new_resource.vhost : [new_resource.vhost]
@@ -138,7 +138,7 @@ action :set_permissions do
 end
 
 action :clear_permissions do
-  Chef::Application.fatal!("rabbitmq_user action :clear_permissions fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
+  raise("rabbitmq_user action :clear_permissions fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
 
   vhosts = new_resource.vhost.is_a?(Array) ? new_resource.vhost : [new_resource.vhost]
   # filter out vhosts for which the user already has the permissions we expect
@@ -154,7 +154,7 @@ action :clear_permissions do
 end
 
 action :set_tags do
-  Chef::Application.fatal!("rabbitmq_user action :set_tags fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
+  raise("rabbitmq_user action :set_tags fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
 
   unless user_has_tag?(new_resource.user, new_resource.tag)
     cmd = "rabbitmqctl -q set_user_tags #{new_resource.user} #{new_resource.tag}"
@@ -166,7 +166,7 @@ action :set_tags do
 end
 
 action :clear_tags do
-  Chef::Application.fatal!("rabbitmq_user action :clear_tags fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
+  raise("rabbitmq_user action :clear_tags fails with nonexistent '#{new_resource.user}' user.") unless user_exists?(new_resource.user)
 
   unless user_has_tag?(new_resource.user, '"\[\]"')
     cmd = "rabbitmqctl -q set_user_tags #{new_resource.user}"

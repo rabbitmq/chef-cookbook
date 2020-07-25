@@ -98,7 +98,7 @@ if platform_family?('debian')
 
   if node['platform_version'].to_i == 7 && !use_distro_version?
     Chef::Log.warn 'Debian 7 is too old to use the recent .deb RabbitMQ packages. Falling back to distro package!'
-    node.normal['rabbitmq']['use_distro_version'] = true
+    node.override['rabbitmq']['use_distro_version'] = true
   end
 
   if use_distro_version?
@@ -365,8 +365,9 @@ existing_erlang_key = if File.exist?(node['rabbitmq']['erlang_cookie_path']) && 
                       end
 
 if node['rabbitmq']['clustering']['enable'] && (node['rabbitmq']['erlang_cookie'] != existing_erlang_key)
-  log "stop #{node['rabbitmq']['service_name']} to change erlang cookie" do
-    notifies :stop, "service[#{node['rabbitmq']['service_name']}]", :immediately
+  log "stopping #{node['rabbitmq']['service_name']} because shared cluster secret (the Erlang cookie) has changed"
+  service node['rabbitmq']['service_name'] do
+    action :stop
   end
 
   template node['rabbitmq']['erlang_cookie_path'] do

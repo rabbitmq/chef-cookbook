@@ -37,7 +37,7 @@ def run_rabbitmqctl(*args)
     cmd.error!
     Chef::Log.debug("[rabbitmq_cluster] #{cmd.stdout}")
   rescue
-    Chef::Application.fatal!("[rabbitmq_cluster] #{cmd.stderr}")
+    raise("[rabbitmq_cluster] #{cmd.stderr}")
   end
 end
 
@@ -63,7 +63,7 @@ end
 # Match regex pattern from result of rabbitmqctl cluster_status
 def match_pattern_cluster_status(cluster_status, pattern)
   if cluster_status.nil? || cluster_status.to_s.empty?
-    Chef::Application.fatal!('[rabbitmq_cluster] cluster_status should not be empty')
+    raise('[rabbitmq_cluster] cluster_status should not be empty')
   end
   match = cluster_status.match(pattern)
   match && match[2]
@@ -181,7 +181,7 @@ def change_cluster_node_type(cluster_node_type)
     if err.include?('{not_clustered,"Non-clustered nodes can only be disc nodes."}')
       Chef::Log.info('[rabbitmq_cluster] Node is not clustered yet, error will be ignored.')
     else
-      Chef::Application.fatal!("[rabbitmq_cluster] #{err}")
+      raise("[rabbitmq_cluster] #{err}")
     end
   end
 end
@@ -196,7 +196,7 @@ end
 action :join do
   Chef::Log.info('[rabbitmq_cluster] Action join ... ')
 
-  Chef::Application.fatal!('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
+  raise('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
 
   var_cluster_status = cluster_status
   var_node_name = node_name
@@ -220,7 +220,7 @@ action :join do
     begin
       join_cluster(var_node_name_to_join, var_node_type)
     rescue JoinError => exc
-      Chef::Application.fatal!("[rabbitmq_cluster] #{exc.message}")
+      raise("[rabbitmq_cluster] #{exc.message}")
     ensure
       run_rabbitmqctl('start_app')
     end
@@ -232,7 +232,7 @@ end
 
 # Action for set cluster name
 action :set_cluster_name do
-  Chef::Application.fatal!('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
+  raise('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
   var_cluster_status = cluster_status
   var_cluster_name = new_resource.cluster_name
   if current_cluster_name(var_cluster_status).nil?
@@ -251,7 +251,7 @@ end
 action :change_cluster_node_type do
   Chef::Log.info('[rabbitmq_cluster] Action change_cluster_node_type ... ')
 
-  Chef::Application.fatal!('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
+  raise('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
 
   var_cluster_status = cluster_status
   var_node_name = node_name
