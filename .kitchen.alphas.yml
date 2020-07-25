@@ -109,7 +109,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.0.2-1"
+          version: "1:23.0.2-1"
       rabbitmq:
         # export RABBITMQ_VERSION="3.8.6-alpha.21"
         version: <%= ENV['RABBITMQ_VERSION'] %>
