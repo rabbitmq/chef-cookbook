@@ -248,6 +248,8 @@ default['rabbitmq']['additional_rabbit_configs'] = {}
 # if setting to a specific version, apt repository components
 # will have to be updated
 default['rabbitmq']['erlang']['version'] = nil
+# HiPE's been deprecated since Erlang/OTP 22 and is going away in Erlang/OTP 24.
+# DO NOT USE.
 default['rabbitmq']['erlang']['hipe'] = false
 default['rabbitmq']['erlang']['retry_delay'] = 10
 

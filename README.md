@@ -614,9 +614,6 @@ rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
   # This package version assumes a Debian-based distribution.
   version '1:23.0.3-1'
 
-  # provision a HiPE-enabled Erlang runtime if available
-  use_hipe true
-
   action :install
 end
 ```
