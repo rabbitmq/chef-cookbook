@@ -83,6 +83,15 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
+  - name: ubuntu-20.04
+    driver:
+      image: dokken/ubuntu-20.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - ENV DEBIAN_FRONTEND noninteractive
+        - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
+
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
@@ -176,7 +185,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10", "debian-9"]
+    includes: ["ubuntu-18.04", "ubuntu-20.04", "debian-10", "debian-9"]
 
   - name: management-plugin-deb
     run_list:
@@ -186,9 +195,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/management_plugin
@@ -203,9 +212,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
         systemd:
           limits:
             NOFILE: 54000
@@ -274,9 +283,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.16-1"
+          version: "23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -307,9 +316,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.16-1"
+          version: "23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
         systemd:
           limits:
             NOFILE: 54000
@@ -326,9 +335,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -343,9 +352,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -360,9 +369,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "21.3.8.16-1"
+          version: "23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -377,9 +386,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     attributes:
       apt:
         confd:
@@ -388,9 +397,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -408,9 +417,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:21.3.8.16-1"
+          version: "1:23.0.2-1"
       rabbitmq:
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -432,7 +441,7 @@ suites:
         erlang:
           enabled: true
           hipe: true
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
@@ -447,8 +456,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:21.3.8.16-1"
-        version: "3.7.26"
+          version: "1:23.0.2-1"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
@@ -465,7 +474,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -480,11 +489,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.16"
+          version: "23.0.2"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/7
             repo_gpgcheck: true
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -502,7 +511,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: false
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -517,11 +526,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "21.3.8.16"
+          version: "23.0.2"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/21/el/6
             repo_gpgcheck: true
-        version: "3.7.26"
+        version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -538,7 +547,7 @@ suites:
             enabled: true
             zypper:
               baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_15.1/
-          version: "3.7.26"
+          version: "3.8.5"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
