@@ -478,7 +478,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-31", "centos-7", "centos-8"]
+    includes: ["fedora-31", "centos-8"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el8
