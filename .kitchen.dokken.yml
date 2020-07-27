@@ -12,6 +12,8 @@ transport:
 provisioner:
   name: dokken
   multiple_converge: 2
+  # this is an awful productivity killer,
+  # see rabbitmq/chef-cookbook#555
   enforce_idempotency: false
   # chef_log_level: debug
 
