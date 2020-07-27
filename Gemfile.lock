@@ -771,16 +771,16 @@ DEPENDENCIES
   inspec (~> 4.7)
   kitchen-digitalocean
   kitchen-docker
-  kitchen-dokken
+  kitchen-dokken (~> 2.10)
   kitchen-ec2
   kitchen-inspec (~> 1.0)
-  kitchen-vagrant (~> 1.5)
+  kitchen-vagrant (~> 1.6)
   rake
   rb-fsevent
   ruby_gntp
   stove
-  test-kitchen (~> 2.2)
+  test-kitchen (~> 2.5)
   train (~> 2.0)
 
 BUNDLED WITH
-   2.0.2
+   2.1.4
