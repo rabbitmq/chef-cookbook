@@ -24,11 +24,11 @@ group :integration do
 end
 
 group :kitchen_common do
-  gem 'test-kitchen', '~> 2.2'
+  gem 'test-kitchen', '~> 2.5'
 end
 
 group :kitchen_vagrant do
-  gem 'kitchen-vagrant', '~> 1.5'
+  gem 'kitchen-vagrant', '~> 1.6'
 end
 
 group :kitchen_docker do
@@ -36,7 +36,7 @@ group :kitchen_docker do
 end
 
 group :kitchen_dokken do
-  gem 'kitchen-dokken'
+  gem 'kitchen-dokken', '~> 2.10'
 end
 
 group :kitchen_cloud do
