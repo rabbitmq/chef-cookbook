@@ -491,7 +491,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.0.2"
+          version: "23.0.3"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/8
             repo_gpgcheck: true
