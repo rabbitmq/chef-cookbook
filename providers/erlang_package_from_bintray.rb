@@ -59,6 +59,8 @@ action :install do
       retries new_resource.retries
       retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
       action :install
+
+      notifies :reload, 'ohai[reload_packages]', :immediately
     end
   end
 
@@ -69,6 +71,8 @@ action :install do
       options '-y'
       retries new_resource.retries
       retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
+
+      notifies :reload, 'ohai[reload_packages]', :immediately
     end
   end
 end
@@ -92,6 +96,8 @@ action :remove do
       apt_preference "#{new_resource.name}-#{p}" do
         action :remove
         not_if { new_resource.version.nil? }
+
+        notifies :reload, 'ohai[reload_packages]', :immediately
       end
     end
 
@@ -102,12 +108,16 @@ action :remove do
       retries new_resource.retries
       retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
       action :remove
+
+      notifies :reload, 'ohai[reload_packages]', :immediately
     end
   end
 
   if platform_family?('rhel', 'fedora')
     package new_resource.name do
       action :remove
+
+      notifies :reload, 'ohai[reload_packages]', :immediately
     end
   end
 end
