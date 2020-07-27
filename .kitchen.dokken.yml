@@ -12,7 +12,7 @@ transport:
 provisioner:
   name: dokken
   multiple_converge: 2
-  enforce_idempotency: true
+  enforce_idempotency: false
   # chef_log_level: debug
 
 verifier:
