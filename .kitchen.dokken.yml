@@ -419,7 +419,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-31", "centos-7", "centos-8"]
+    includes: ["fedora-31", "centos-8"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el8
@@ -455,7 +455,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-31", "centos-7", "centos-8"]
+    includes: ["centos-7"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el7
@@ -474,7 +474,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-31", "centos-7", "centos-8"]
+    includes: ["centos-7"]
 
   # Latest Erlang package, RPM, CentOS 6 repo
   - name: rabbitmq-erlang-latest-rpm-el6
