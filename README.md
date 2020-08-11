@@ -10,6 +10,14 @@ This is a cookbook for managing RabbitMQ with Chef.
 This cookbook targets Chef 13.0 and later.
 
 
+## Supported RabbitMQ Versions
+
+`5.x` release series targets RabbitMQ `3.8.x` releases.
+It can also provision `3.7.x` series (which are [out of general support](https://www.rabbitmq.com/versions.html)),
+
+For any series used, a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) must be installed.
+
+
 ## Supported Distributions
 
 The cookbook targets and is tested against
@@ -49,11 +57,6 @@ Those packages provide the latest patch releases of Erlang/OTP.
 
 Both options are covered below.
 
-
-## Supported RabbitMQ Versions
-
-`5.x` release series targets RabbitMQ `3.8.x` releases and can also provision `3.7.x` series (which are [out of general support](https://www.rabbitmq.com/versions.html)),
-assuming a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) is also provisioned.
 
 
 ## Provisioning RabbitMQ 3.8.x
