@@ -29,7 +29,7 @@ describe 'rabbitmq::default' do
         user: 'root',
         group: 'root',
         source: 'rabbitmq-env.conf.erb',
-        mode: 00644)
+        mode: '644')
     end
 
     it 'has no erl args by default' do
@@ -46,6 +46,11 @@ describe 'rabbitmq::default' do
        /^CTL_ERL_ARGS='test123'/].each do |line|
         expect(chef_run).to render_file(file.name).with_content(line)
       end
+    end
+
+    it 'has advanced config set (new_style)' do
+      node.override['rabbitmq']['config_style']['use_new_style'] = true
+      expect(chef_run).to render_file(file.name).with_content('RABBITMQ_ADVANCED_CONFIG_FILE=/etc/rabbitmq/advanced.config')
     end
 
     it 'has no additional_env_settings default' do
@@ -124,7 +129,7 @@ describe 'rabbitmq::default' do
       user: 'root',
       group: 'root',
       source: 'default.rabbitmq-server.erb',
-      mode: 00644
+      mode: '644'
     )
   end
 
@@ -133,12 +138,27 @@ describe 'rabbitmq::default' do
       user: 'root',
       group: 'root',
       source: 'rabbitmq.config.erb',
-      mode: 00644)
+      mode: '644')
 
     if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
       expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.config').with(sensitive:  true)
     else
       expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.config').with(sensitive:  false)
+    end
+  end
+
+  it 'creates a template rabbitmq.conf with attributes (new_style)' do
+    node.override['rabbitmq']['config_style']['use_new_style'] = true
+    expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.conf').with(
+      user: 'root',
+      group: 'root',
+      source: node['rabbitmq']['config_source'],
+      mode: '644')
+
+    if Gem::Version.new(Chef::VERSION.to_s) >= Gem::Version.new('11.14.2')
+      expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.conf').with(sensitive:  true)
+    else
+      expect(chef_run).to create_template('/etc/rabbitmq/rabbitmq.conf').with(sensitive:  false)
     end
   end
 
@@ -204,12 +224,76 @@ describe 'rabbitmq::default' do
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content(
         /{ssl_listeners, \[5670\]},/)
     end
+
+    # New config style
+    it 'has no ssl ciphers specified by default' do
+      expect(chef_run).not_to render_file('/etc/rabbitmq/rabbitmq.conf').with_content(
+        /ssl_options.ciphers.*/)
+    end
+
+    it 'enables secure renegotiation by default (new_style)' do
+      node.override['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['config_style']['use_new_style'] = true
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.conf').with_content(
+        'ssl_options.secure_renegotiate = true')
+    end
+
+    it 'uses server cipher suite preference by default (new_style)' do
+      node.override['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['config_style']['use_new_style'] = true
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.conf').with_content(
+        'ssl_options.honor_cipher_order = true')
+    end
+
+    it 'uses server ECC curve preference by default (new_style)' do
+      node.override['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['config_style']['use_new_style'] = true
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.conf').with_content(
+        'ssl_options.honor_ecc_order = true')
+    end
+
+    it 'allows web console ssl ciphers (new_style)' do
+      node.override['rabbitmq']['web_console_ssl'] = true
+      node.override['rabbitmq']['config_style']['use_new_style'] = true
+      node.override['rabbitmq']['ssl_ciphers'] = ['"ECDHE-ECDSA-AES256-SHA384"', '"ECDH-ECDSA-AES256-SHA384"']
+      ['management.ssl.ciphers.1 = ECDHE-ECDSA-AES256-SHA384',
+        'management.ssl.ciphers.2 = ECDH-ECDSA-AES256-SHA384'].each do |line|
+        expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.conf').with_content(line)
+      end
+    end
+
+    it 'enables TLS listeners by default (new_style)' do
+      node.override['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['config_style']['use_new_style'] = true
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.conf').with_content('listeners.ssl.default = 5671')
+    end
+
+    it 'enables TLS listener, if set (new_style)' do
+      node.override['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['config_style']['use_new_style'] = true
+      node.override['rabbitmq']['ssl_listen_interface'] = '0.0.0.0'
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.conf').with_content(
+        'listeners.ssl.1 = 0.0.0.0:5671')
+    end
+
+    it 'overrides TLS listener port, if set (new_style)' do
+      node.override['rabbitmq']['ssl'] = true
+      node.override['rabbitmq']['ssl_port'] = 5670
+      node.override['rabbitmq']['config_style']['use_new_style'] = true
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.conf').with_content('listeners.ssl.default = 5670')
+    end
   end
 
   describe 'TCP listener options' do
     it 'allows interface to be overridden' do
       node.override['rabbitmq']['tcp_listen_interface'] = '192.168.1.10'
       expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.config').with_content('{"192.168.1.10", 5672}')
+    end
+
+    it 'allows interface to be overridden (new_style)' do
+      node.override['rabbitmq']['config_style']['use_new_style'] = true
+      node.override['rabbitmq']['tcp_listen_interface'] = '192.168.1.10'
+      expect(chef_run).to render_file('/etc/rabbitmq/rabbitmq.conf').with_content('192.168.1.10:5672')
     end
 
     it 'allows AMQP port to be overridden' do
@@ -323,7 +407,21 @@ describe 'rabbitmq::default' do
         user: 'root',
         group: 'root',
         source: 'default.rabbitmq-server.erb',
-        mode: 00644)
+        mode: '644')
+    end
+
+    describe 'uses distro version' do
+      before do
+        node.override['rabbitmq']['use_distro_version'] = true
+      end
+
+      it 'should install rabbitmq-server package' do
+        expect(chef_run).to install_package('rabbitmq-server')
+      end
+
+      it 'should install the logrotate package' do
+        expect(chef_run).to install_package('logrotate')
+      end
     end
   end
 

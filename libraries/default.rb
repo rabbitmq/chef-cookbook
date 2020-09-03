@@ -59,10 +59,15 @@ module RabbitMQ
 
     def rabbitmq_config_file_path
       configured_path = node['rabbitmq']['config']
+      ext = if node['rabbitmq']['config_style']['use_new_style']
+              'conf'
+            else
+              'config'
+            end
 
       # If no extension is configured, append it.
       if ::File.extname(configured_path).empty?
-        "#{configured_path}.config"
+        "#{configured_path}.#{ext}"
       else
         configured_path
       end

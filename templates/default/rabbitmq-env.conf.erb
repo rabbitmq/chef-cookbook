@@ -20,6 +20,7 @@ export ERL_EPMD_ADDRESS=<%= node['rabbitmq']['erl_networking_bind_address'] %>
 <% if node['rabbitmq']['mnesiadir'] -%>MNESIA_BASE=<%= node['rabbitmq']['mnesiadir'] %><% end %>
 <% if node['rabbitmq']['server_additional_erl_args'] -%>SERVER_ADDITIONAL_ERL_ARGS='<%= node['rabbitmq']['server_additional_erl_args'] %>'<% end %>
 <% if node['rabbitmq']['ctl_erl_args'] -%>CTL_ERL_ARGS='<%= node['rabbitmq']['ctl_erl_args'] %>'<% end %>
+<% if node['rabbitmq']['config_style']['use_new_style'] -%>RABBITMQ_ADVANCED_CONFIG_FILE=/etc/rabbitmq/advanced.config<% end %>
 <% if node['rabbitmq']['additional_env_settings'] -%>
 # Additional ENV settings
 <% node['rabbitmq']['additional_env_settings'].each do |line| -%>
