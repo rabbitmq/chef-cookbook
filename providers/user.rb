@@ -82,7 +82,7 @@ def user_has_expected_permissions?(name, vhost, perm_list = nil)
     return true
   end
   # existing match search
-  if perm_list == cmd.stdout.split.drop(1)
+  if perm_list == %(\"#{cmd.stdout}\").undump.split.drop(1)
     Chef::Log.debug 'rabbitmq_user_has_expected_permissions?: matching permissions already found'
     return true
   end
