@@ -189,6 +189,7 @@ end
 ########################################################################################################################
 # Actions
 #  :join
+#  :set_cluster_name
 #  :change_cluster_node_type
 ########################################################################################################################
 
@@ -232,7 +233,7 @@ end
 
 # Action for set cluster name
 action :set_cluster_name do
-  raise('rabbitmq_cluster with action :join requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
+  raise('rabbitmq_cluster with action :set_cluster_name requires a non-nil/empty cluster_nodes.') if new_resource.cluster_nodes.nil? || new_resource.cluster_nodes.empty?
   var_cluster_status = cluster_status
   var_cluster_name = new_resource.cluster_name
   if current_cluster_name(var_cluster_status).nil?
@@ -259,7 +260,7 @@ action :change_cluster_node_type do
   var_cluster_node_type = parse_cluster_nodes_string(new_resource.cluster_nodes).compact.select { |node| node['name'] == var_node_name }.first['type'] # ~FC039
 
   if var_current_cluster_node_type == var_cluster_node_type
-    Chef::Log.warn('[rabbitmq_cluster] Skip changing cluster node type : trying to change to same cluster node type')
+    Chef::Log.warn('[rabbitmq_cluster] Skip changing cluster node type: the node is already of the desired type')
     node_type_changeable = false
   else
     if var_cluster_node_type == 'ram' # rubocop:disable all
