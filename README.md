@@ -327,7 +327,7 @@ node['erlang']['esl']['version'] = "22.3.4.4-1"
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.7.26"
+node['rabbitmq']['version'] = "3.7.28"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
