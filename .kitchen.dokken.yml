@@ -147,9 +147,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.0.2-2"
+          version: "1:23.0.3-2"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
         virtualhosts:
           - vhost1
           - vhost2
@@ -190,9 +190,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.0.2-1"
+          version: "1:23.0.3-1"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/integration/management_plugin
@@ -207,9 +207,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.0.2-1"
+          version: "1:23.0.3-1"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
         systemd:
           limits:
             NOFILE: 54000
@@ -226,9 +226,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.0.2-1"
+          version: "23.0.3-1"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -243,8 +243,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.3.4"
-        version: "3.8.5"
+          version: "22.3.4.10"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -259,9 +259,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.0.2-1"
+          version: "23.0.3-1"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
         systemd:
           limits:
             NOFILE: 54000
@@ -278,9 +278,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.0.2-1"
+          version: "1:23.0.3-1"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -295,9 +295,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.0.2-1"
+          version: "1:23.0.3-1"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -312,9 +312,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.0.2-1"
+          version: "23.0.3-1"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -329,9 +329,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.0.2-1"
+          version: "1:23.0.3-1"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
     attributes:
       apt:
         confd:
@@ -340,9 +340,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.0.2-1"
+          version: "1:23.0.3-1"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -360,9 +360,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.0.2-1"
+          version: "1:23.0.3-1"
       rabbitmq:
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -383,7 +383,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
@@ -398,8 +398,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:23.0.2-1"
-        version: "3.8.5"
+          version: "1:22.3.4.10.4-1"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
@@ -417,7 +417,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -432,11 +432,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.0.2"
+          version: "23.0.3"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/8
             repo_gpgcheck: true
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -453,7 +453,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -468,11 +468,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.0.2"
+          version: "22.3.4.10.4"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7
             repo_gpgcheck: true
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -490,7 +490,7 @@ suites:
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/6
             repo_gpgcheck: false
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -505,11 +505,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.0.2"
+          version: "22.3.4.10.4"
           yum:
             baseurl: https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6
             repo_gpgcheck: true
-        version: "3.8.5"
+        version: "3.8.8"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -526,7 +526,7 @@ suites:
             enabled: true
             zypper:
               baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_15.1/
-          version: "3.8.5"
+          version: "3.8.8"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm

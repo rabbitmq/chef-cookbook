@@ -8,48 +8,48 @@ require 'chef/application'
 
 # rubocop:disable all
 
-LOG_LEVEL = :fatal
+SPEC_LOG_LEVEL = :fatal
 SUSE_OPTS = {
-  platform: 'suse',
-  version: '12.3',
-  log_level: LOG_LEVEL
+  :platform => 'suse',
+  :version => '12.5',
+  :log_level => SPEC_LOG_LEVEL
 }
 REDHAT_OPTS = {
-  platform: 'redhat',
-  version: '7.4',
-  log_level: LOG_LEVEL,
-  file_cache_path: '/tmp'
+  :platform => 'redhat',
+  :version => '8',
+  :log_level => SPEC_LOG_LEVEL,
+  :file_cache_path => '/tmp'
 }
 UBUNTU_OPTS = {
-  platform: 'ubuntu',
-  version: '18.04',
-  log_level: LOG_LEVEL,
-  file_cache_path: '/tmp'
+  :platform => 'ubuntu',
+  :version => '18.04',
+  :log_level => SPEC_LOG_LEVEL,
+  :file_cache_path => '/tmp'
 }
 CENTOS7_OPTS = {
   :platform => 'centos',
-  :version => '7.4.1708',
-  :log_level => LOG_LEVEL,
+  :version => '7.7.1908',
+  :log_level => SPEC_LOG_LEVEL,
   :file_cache_path => '/tmp'
 }
 CENTOS_OPTS = CENTOS7_OPTS
 CENTOS6_OPTS = {
   :platform => 'centos',
-  :version => '6.9',
-  :log_level => LOG_LEVEL,
+  :version => '6.10',
+  :log_level => SPEC_LOG_LEVEL,
   :file_cache_path => '/tmp'
 }
 FEDORA_OPTS = {
   platform: 'fedora',
-  version: '29',
-  log_level: LOG_LEVEL,
+  version: '32',
+  log_level: SPEC_LOG_LEVEL,
   file_cache_path: '/tmp'
 }
 
 CLUSTER_OPTS = {
   platform: 'centos',
-  version: '7.6.1804',
-  log_level: LOG_LEVEL,
+  version: '7.7.1908',
+  log_level: SPEC_LOG_LEVEL,
   file_cache_path: '/tmp',
 
   'rabbitmq' => {

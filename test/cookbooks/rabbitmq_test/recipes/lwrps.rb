@@ -49,6 +49,18 @@ rabbitmq_user 'permissionless' do
   action :clear_permissions
 end
 
+rabbitmq_user 'kitchen4' do
+  password 'kitchen4'
+  action :add
+end
+
+rabbitmq_user 'kitchen4' do
+  password 'kitchen4'
+  # see #565
+  permissions '".*" "^amq\\.default$" ".*"'
+  action :set_permissions
+end
+
 # download the rabbitmqadmin util from management plugin
 # this tests an immediate notifies statement
 # see https://github.com/kennonkwok/rabbitmq/issues/141
