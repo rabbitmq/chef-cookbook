@@ -176,19 +176,19 @@ Note that Erlang Solutions repositories can be behind the latest Erlang/OTP patc
 node['erlang']['install_method'] = "esl"
 ```
 
-to provision a specific version, e.g. `22.3.4.4`:
+to provision a specific version, e.g. `22.3.4.10.4`:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # Ubuntu and Debian
 # note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:22.3.4.4"
+node['erlang']['esl']['version'] = "1:22.3.4.10.4"
 ```
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "22.3.4.4-1"
+node['erlang']['esl']['version'] = "22.3.4.10.4-1"
 ```
 
 ### Seting RabbitMQ Version
@@ -196,7 +196,7 @@ node['erlang']['esl']['version'] = "22.3.4.4-1"
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.8.5"
+node['rabbitmq']['version'] = "3.8.8"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
@@ -251,10 +251,10 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:22.3.4.4-1'
+node['rabbitmq']['erlang']['version'] = '1:22.3.4.10.4-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '22.3.4.4'
+node['rabbitmq']['erlang']['version'] = '22.3.4.10.4'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
@@ -307,19 +307,19 @@ The Erlang cookbook will provision packages from Erlang Solutions if `node['erla
 node['erlang']['install_method'] = "esl"
 ```
 
-to provision a specific version, e.g. `22.3.4.4`:
+to provision a specific version, e.g. `22.3.4.10.4`:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # Ubuntu and Debian
 # note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:22.3.4.4"
+node['erlang']['esl']['version'] = "1:22.3.4.10.4"
 ```
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "22.3.4.4-1"
+node['erlang']['esl']['version'] = "22.3.4.10.4-1"
 ```
 
 ### Seting RabbitMQ Version
