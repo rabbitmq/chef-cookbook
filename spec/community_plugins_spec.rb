@@ -23,7 +23,7 @@ describe 'rabbitmq::community_plugins' do
         :source => download_url,
         :owner => 'rabbitmq',
         :group => 'rabbitmq',
-        :mode => 0644
+        :mode => '644'
       )
     end
 
