@@ -265,7 +265,7 @@ default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 
 # yum
 default['rabbitmq']['erlang']['yum']['baseurl'] = value_for_platform(
-  %w(centos redhat scientific) => {
+  %w(centos redhat scientific oracle) => {
     '< 7.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6',
     'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
   },
