@@ -46,7 +46,7 @@ end
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
 default_rpm_package_name = value_for_platform(
-  %w(centos redhat scientific) => {
+  %w(centos redhat scientific oracle) => {
     '< 7.0' => "rabbitmq-server-#{version}-1.el6.noarch.rpm",
     'default' => "rabbitmq-server-#{version}-1.el7.noarch.rpm"
   },
