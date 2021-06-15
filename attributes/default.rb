@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # Version to install
-default['rabbitmq']['version'] = '3.7.28'
+default['rabbitmq']['version'] = '3.8.17'
 
 # When true, distribution-provided package will be used.
 # This may be useful e.g. on old distributions.
