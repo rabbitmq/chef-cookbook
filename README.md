@@ -7,26 +7,25 @@ This is a cookbook for managing RabbitMQ with Chef.
 
 ## Supported Chef Versions
 
-This cookbook targets Chef 13.0 and later.
+This cookbook targets Chef 14.0 and later.
 
 
 ## Supported RabbitMQ Versions
 
-`5.x` release series targets RabbitMQ `3.8.x` releases.
-It can also provision `3.7.x` series (which are [out of general support](https://www.rabbitmq.com/versions.html)),
+`5.x` release series targets [RabbitMQ `3.8.x` releases](https://www.rabbitmq.com/versions.html).
 
-For any series used, a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) must be installed.
+For any series used, a [supported Erlang version](http://www.rabbitmq.com/which-erlang.html) must be provisioned.
 
 
 ## Supported Distributions
 
 The cookbook targets and is tested against
 
- * Ubuntu 16.04 through 20.04
- * Debian 9 and 10
+ * Ubuntu 18.04 through 20.04
+ * Debian 10 (Buster) and 11 (Bullseye)
  * RHEL 7 and 8
  * CentOS 7 and 8
- * Fedora 30 or later
+ * Fedora 32 or later
  * Amazon Linux 2
  * Scientific Linux 7
 
@@ -38,9 +37,8 @@ Newer Debian, Ubuntu and RHEL/CentOS 8.x versions should work.
 
 ### Older Versions
 
-CentOS 6.x, Ubuntu 14.04 and Debian 8.0 might
-work just fine but their support has been discontinued. Some of those distributions
-will go out of vendor support in 2019.
+CentOS 6.x, Ubuntu 16.04 and Debian 9 (Stretch) are no longer supported
+by modern RabbitMQ releases as they do not provide OpenSSL 1.1.
 
 
 ## Dependencies
@@ -104,10 +102,10 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:23.3-1'
+node['rabbitmq']['erlang']['version'] = '1:23.3.4.3-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '23.3'
+node['rabbitmq']['erlang']['version'] = '23.3.1'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
@@ -117,7 +115,16 @@ used on Ubuntu and Debian:
 
 ``` ruby
 # RabbitMQ Erlang packages
-default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/deb/"
+deb_distro = value_for_platform(
+  'debian' => {
+    'default' => 'debian'
+  },
+  'ubuntu' => {
+    'default' => 'ubuntu'
+  }
+)
+
+default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/deb/#{deb_distro}"
 default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
 default['rabbitmq']['erlang']['apt']['components'] = ["main"]
 default['rabbitmq']['erlang']['apt']['key'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'
@@ -132,25 +139,23 @@ as for Debian (see above).
 Below are the defaults used by the Yum repository (assuming RHEL or CentOS 8):
 
 ``` ruby
-# Provisions CentOS 8 RPMs of Erlang 23
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/noarch'
+# CentOS 8, RHEL 8, Fedora
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch'
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
 ```
 
-To provision Erlang `22.x`, change `default['rabbitmq']['erlang']['yum']['baseurl']`:
+The CentOS 7 variant uses `el/7` for distribution name in the `baseurl`:
 
 ``` ruby
-# Provisions CentOS 8 RPMs of Erlang 22
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/8'
+# CentOS 7, RHEL 7
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/7/$basearch'
+default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'
+default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
+default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
 ```
 
-To provision Erlang `22.x` on CentOS 7:
-
-``` ruby
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
-```
 
 #### Installing Erlang with the Erlang Cookbook
 
@@ -164,19 +169,19 @@ Note that Erlang Solutions repositories can be behind the latest Erlang/OTP patc
 node['erlang']['install_method'] = "esl"
 ```
 
-to provision a specific version, e.g. `22.3.4.10.4`:
+to provision a specific version, e.g. `23.3.1`:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # Ubuntu and Debian
 # note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:22.3.4.10.4"
+node['erlang']['esl']['version'] = "1:23.3.1"
 ```
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "22.3.4.10.4-1"
+node['erlang']['esl']['version'] = "23.3.1-1"
 ```
 
 ### Seting RabbitMQ Version
@@ -184,147 +189,14 @@ node['erlang']['esl']['version'] = "22.3.4.10.4-1"
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.8.8"
+node['rabbitmq']['version'] = "3.8.17"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
 from earlier versions, consider omitting those attributes. Otherwise see a section on download
 location customization below.
 
-RabbitMQ packages will be downloaded [from Bintray](https://bintray.com/rabbitmq/all/) by default.
-
-
-
-## Provisioning RabbitMQ 3.7.x
-
-### Ensure Your Cookbook Version is Compatible
-
-To provision RabbitMQ 3.7.x, you must use version `5.7.0` of this cookbook or later.
-
-### Provision Erlang/OTP 20.3 or Later
-
-Before provisioning a 3.7.x release, please learn about
-the [minimum required Erlang version](https://www.rabbitmq.com/which-erlang.html).
-
-Most distributions provide older versions, so Erlang must be provisioned either
-using [RabbitMQ's zero dependency Erlang RPM](https://github.com/rabbitmq/erlang-rpm),
-[Debian Erlang packages](https://github.com/rabbitmq/erlang-debian-package/),
-or from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/)
-
-#### Installing Erlang Using Packages by Team RabbitMQ
-
-`rabbitmq::erlang_package` is a recipe that provisions latest Erlang packages from team RabbitMQ.
-The packages support
-
- * Debian Stretch and Buster
- * Ubuntu 16.04 through 20.04
- * RHEL 7 and 8
- * CentOS 7 and 8
- * Fedora 30 or later
- * Scientific Linux 7
- * Amazon Linux 2
-
-The packages are **cannot be installed alongside with other Erlang packages**, for example, those
-from standard Debian repositories or Erlang Solutions.
-
-To make sure that the Erlang cookbook is not used by `rabbitmq::default`, `rabbitmq::cluster`,
-and other recipes, set `node['rabbitmq']['erlang']['enabled']` to `true`:
-
-``` ruby
-node['rabbitmq']['erlang']['enabled'] = true
-```
-
-By default `rabbitmq::erlang_package` will install the latest Erlang version available.
-To override package version, use `node['rabbitmq']['erlang']['version']`:
-
-``` ruby
-# Debian
-node['rabbitmq']['erlang']['version'] = '1:22.3.4.10.4-1'
-
-# RPM
-node['rabbitmq']['erlang']['version'] = '22.3.4.10.4'
-```
-
-On Ubuntu and Debian the distribution will be picked from node attributes.
-It is possible to override the component used (see [Ubuntu and Debian installation guide](https://www.rabbitmq.com/install-debian.html) to learn more):
-
-``` ruby
-# provisions Erlang 22.x
-node['rabbitmq']['erlang']['apt']['components'] = ["erlang-22.x"]
-```
-
-Most of the time there is no need to override other attributes. Below is a list of defaults
-used on Ubuntu and Debian:
-
-``` ruby
-# RabbitMQ Erlang packages
-default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.bintray.com/rabbitmq-erlang/debian"
-default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
-default['rabbitmq']['erlang']['apt']['components'] = ["erlang"]
-default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
-
-default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
-```
-
-On CentOS 8 and 7, base Yum repository URL will be picked based on distribution versions.
-On Fedora, a suitable CentOS package will be used. Erlang package version is set the same way
-as for Debian (see above).
-
-Below are the defaults used by the Yum repository (assuming RHEL or CentOS 7):
-
-``` ruby
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
-default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
-default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
-default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
-```
-
-To provision Erlang `22.x` on CentOS 6:
-
-``` ruby
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6'
-```
-
-#### Installing Erlang with the Erlang Cookbook
-
-The Erlang cookbook will provision packages from Erlang Solutions if `node['erlang']['install_method']` is set to `esl`:
-
-``` ruby
-# will install the latest release, please
-# consult with https://www.rabbitmq.com/which-erlang.html first
-node['erlang']['install_method'] = "esl"
-```
-
-to provision a specific version, e.g. `22.3.4.10.4`:
-
-``` ruby
-node['erlang']['install_method'] = "esl"
-# Ubuntu and Debian
-# note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:22.3.4.10.4"
-```
-
-``` ruby
-node['erlang']['install_method'] = "esl"
-# CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "22.3.4.10.4-1"
-```
-
-### Seting RabbitMQ Version
-
-Set `node['rabbitmq']['version']` to specify a version:
-
-``` ruby
-node['rabbitmq']['version'] = "3.7.28"
-```
-
-If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
-from earlier versions, consider omitting those attributes. Otherwise see a section on download
-location customization below.
-
-3.7.x releases will be downloaded [from Bintray](https://bintray.com/rabbitmq/all/) by default.
-
-
+RabbitMQ packages will be downloaded [from Cloudsmith](https://cloudsmith.io/~rabbitmq/repos/).
 
 
 ## Recipes
@@ -562,48 +434,45 @@ To specify a plugin, set the attribute `node['rabbitmq']['community_plugins']['P
 There are several LWRPs for interacting with RabbitMQ and a few setting up Erlang repositories
 and package.
 
-## erlang_apt_repository_on_bintray
+## erlang_apt_repository_on_cloudsmith
 
-`erlang_apt_repository_on_bintray` sets up a [Debian package](https://www.rabbitmq.com/install-debian.html) repository [from Bintray](https://bintray.com/rabbitmq-erlang).
+`erlang_apt_repository_on_cloudsmith` sets up a [Debian package](https://www.rabbitmq.com/install-debian.html) repository [from Cloudsmith](https://cloudsmith.io/~rabbitmq/repos/rabbitmq-erlang/packages/).
 It is a wrapper around the standard `apt_repository` resource provider.
 
 See also [RabbitMQ Erlang Compatibility guide](https://www.rabbitmq.com/which-erlang.html).
 
 ``` ruby
-rabbitmq_erlang_apt_repository_on_bintray 'rabbitmq_erlang_repo_on_bintray' do
+rabbitmq_erlang_apt_repository_on_cloudsmith 'rabbitmq_erlang_repo_on_cloudsmith' do
   distribution node['lsb']['codename'] unless node['lsb'].nil?
-  # See https://www.rabbitmq.com/install-debian.html
-  components ['erlang-21.x']
 
   action :add
 end
 ```
 
-## erlang_yum_repository_on_bintray
+## erlang_yum_repository_on_cloudsmith
 
-`erlang_apt_repository_on_bintray` sets up an [RPM package](https://www.rabbitmq.com/install-rpm.html) repository [from Bintray](https://bintray.com/rabbitmq-erlang).
+`erlang_apt_repository_on_cloudsmith` sets up an [RPM package](https://www.rabbitmq.com/install-rpm.html) repository [from Bintray](https://bintray.com/rabbitmq-erlang).
 It is a wrapper around the standard `apt_repository` resource provider.
 
 See also [RabbitMQ Erlang Compatibility guide](https://www.rabbitmq.com/which-erlang.html).
 
 ``` ruby
-rabbitmq_erlang_yum_repository_on_bintray 'rabbitmq_erlang' do
-  # for RHEL/CentOS 7+, Fedora. See https://www.rabbitmq.com/install-rpm.html.
-  baseurl 'https://dl.bintray.com/rabbitmq/rpm/rabbitmq-server/v3.7.x/el/7/'
-  gpgkey 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
+rabbitmq_erlang_yum_repository_on_cloudsmith 'rabbitmq_erlang' do
+  # for RHEL/CentOS 8+, Fedora. See https://www.rabbitmq.com/install-rpm.html.
+  baseurl 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch'
 
   action :add
 end
 ```
 
-## erlang_package_from_bintray
+## erlang_package_from_cloudsmith
 
 Install the package. Here's an example for Debian-based systems:
 
 ``` ruby
-rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
+rabbitmq_erlang_package_from_cloudsmith 'rabbitmq_erlang' do
   # This package version assumes a Debian-based distribution.
-  version '1:23.3-1'
+  version '1:23.3.4.3-1'
 
   action :install
 end
@@ -612,8 +481,8 @@ end
 Here's another one for RPM-based ones:
 
 ``` ruby
-rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
-  version '23.3'
+rabbitmq_erlang_package_from_cloudsmith 'rabbitmq_erlang' do
+  version '23.3.4.3'
 
   action :install
 end
@@ -651,27 +520,11 @@ Sets or clears a RabbitMQ [policy](https://www.rabbitmq.com/parameters.html#poli
 ### Examples
 
 ``` ruby
-
-rabbitmq_policy "classic-queue-mirroring-2-replicas" do
-  pattern "^(?!amq\\.).*"
-  parameters ({"ha-mode" => "exactly", "ha-params" => 2})
-  priority 1
-  action :set
-end
-```
-
-``` ruby
 rabbitmq_policy "queue-length-limit" do
   pattern "^limited\\.*"
-  parameters ({"max-length" => "exactly"})
+  parameters ({"max-length" => "3000"})
   priority 1
   action :set
-end
-```
-
-``` ruby
-rabbitmq_policy "classic-queue-mirroring-2-replicas" do
-  action :clear
 end
 ```
 
@@ -743,12 +596,14 @@ end
 ## cluster
 
 [Forms a cluster](https://www.rabbitmq.com/clustering.html) and controls cluster name.
+This is an imperative version of [classic config peer discovery](https://www.rabbitmq.com/cluster-formation.html) in
+modern RabbitMQ versions.
 
 - `:join` join in cluster as a manual clustering. node will join in first node of json string data.
 
- - cluster nodes data json format : Data should have all the cluster nodes information.
+ - cluster nodes as JSON: all cluster nodes should be listed.
 
- ```
+ ``` json
  [
      {
          "name" : "rabbit@rabbit1",
@@ -756,7 +611,7 @@ end
      },
      {
          "name" : "rabbit@rabbit2",
-         "type" : "ram"
+         "type":  "disc"
      },
      {
          "name" "rabbit@rabbit3",
@@ -765,26 +620,25 @@ end
 ]
  ```
 
-- `:set_cluster_name` set the cluster name.
-- `:change_cluster_node_type` change cluster type of node. `disc` or `ram` should be set.
+- `:set_cluster_name` set the cluster name
 
 ### Examples
 
 ``` ruby
-rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2","type":"ram"},{"name":"rabbit@rabbit3","type":"disc"}]' do
+rabbitmq_cluster '[{"name":"rabbit@rabbit1", "type":"disc"},{"name":"rabbit@rabbit2", "type":"disc"},{"name":"rabbit@rabbit3", "type":"disc"}]' do
   action :join
 end
 ```
 
 ``` ruby
-rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2","type":"ram"},{"name":"rabbit@rabbit3","type":"disc"}]' do
+rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2", ,"type":"disc"},{"name":"rabbit@rabbit3","type":"disc"}]' do
   cluster_name 'seoul_tokyo_newyork'
   action :set_cluster_name
 end
 ```
 
 ``` ruby
-rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2","type":"ram"},{"name":"rabbit@rabbit3","type":"disc"}]' do
+rabbitmq_cluster '[{"name":"rabbit@rabbit1","type":"disc"},{"name":"rabbit@rabbit2", ,"type":"disc"},{"name":"rabbit@rabbit3","type":"disc"}]' do
   action :change_cluster_node_type
 end
 ```
@@ -815,7 +669,7 @@ For an already running cluster, these actions still require manual intervention:
 
 ```text
 Copyright (c) 2009-2018, Chef Software, Inc.
-Copyright (c) 2018-2020, VMware, Inc. or its affiliates.
+Copyright (c) 2018-2021, VMware, Inc. or its affiliates.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
