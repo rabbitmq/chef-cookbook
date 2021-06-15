@@ -55,9 +55,9 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
-  - name: fedora-31
+  - name: fedora-33
     driver:
-      image: dokken/fedora-31
+      image: dokken/fedora-33
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
         - RUN dnf -y install sudo
@@ -81,15 +81,6 @@ platforms:
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - ENV DEBIAN_FRONTEND noninteractive
-        - RUN /usr/bin/apt-get update -y
-        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
-
-  - name: ubuntu-16.04
-    driver:
-      image: dokken/ubuntu-16.04
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
@@ -162,7 +153,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-20.04", "ubuntu-18.04", "ubuntu-16.04", "debian-10"]
+    includes: ["ubuntu-20.04", "ubuntu-18.04", "debian-10"]
 
   - name: management-plugin-deb
     run_list:
@@ -198,7 +189,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["ubuntu-18.04", "ubuntu-16.04", "debian-10"]
+    includes: ["ubuntu-20.04", "debian-10"]
 
   - name: use-distro-version-deb
     run_list:
@@ -260,7 +251,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.3-1"
+          version: "23.3.1-1"
       rabbitmq:
         version: "3.8.17"
     verifier:
@@ -277,12 +268,12 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.3.4.10"
+          version: "23.3.4.3"
         version: "3.8.17"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8", "centos-7", "fedora-31", "amazonlinux-2"]
+    includes: ["centos-8", "centos-7", "fedora-33", "amazonlinux-2"]
 
   - name: system-limits-rpm
     run_list:
@@ -293,7 +284,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.3-1"
+          version: "23.3.1-1"
       rabbitmq:
         version: "3.8.17"
         systemd:
@@ -346,7 +337,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.3-1"
+          version: "23.3.1-1"
       rabbitmq:
         version: "3.8.17"
     verifier:
@@ -455,7 +446,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-31", "centos-8"]
+    includes: ["fedora-33", "centos-8"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el8
@@ -474,7 +465,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-31", "centos-8"]
+    includes: ["fedora-33", "centos-8"]
 
   # Latest Erlang package, RPM
   - name: rabbitmq-erlang-latest-rpm-el7
