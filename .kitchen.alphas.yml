@@ -70,11 +70,11 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.0.3-1"
+          version: "1:23.3.1-1"
       rabbitmq:
-        # export RABBITMQ_VERSION="3.7.14-alpha.11"
+        # export RABBITMQ_VERSION="3.9.0~alpha.543"
         version: <%= ENV['RABBITMQ_VERSION'] %>
-        deb_package_url: "https://dl.bintray.com/rabbitmq/all-dev/rabbitmq-server/<%= ENV['RABBITMQ_VERSION'] %>/"
+        deb_package_url: "https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server-all-dev/raw/versions/<%= ENV['RABBITMQ_VERSION'] %>"
         deb_package: "rabbitmq-server_<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1_all.deb"
 
     verifier:
@@ -90,33 +90,13 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.0.3"
+          version: "23.3"
         # export RABBITMQ_VERSION="3.7.13-alpha.21"
         version: <%= ENV['RABBITMQ_VERSION'] %>
 
-        rpm_package_url: "https://dl.bintray.com/rabbitmq/all-dev/rabbitmq-server/<%= ENV['RABBITMQ_VERSION'] %>/"
+        rpm_package_url: "https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server-all-dev/raw/versions/<%= ENV['RABBITMQ_VERSION'] %>/"
         rpm_package: "rabbitmq-server-<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1.el8.noarch.rpm"
     verifier:
       inspec_tests:
         - test/integration/default
     includes: ["centos-8", "fedora-32"]
-
-  - name: default-rpm-el7-alpha
-    run_list:
-      - recipe[erlang::default]
-      - recipe[rabbitmq::plugins]
-    attributes:
-      erlang:
-        install_method: "esl"
-        esl:
-          version: "1:23.0.3-1"
-      rabbitmq:
-        # export RABBITMQ_VERSION="3.8.6-alpha.21"
-        version: <%= ENV['RABBITMQ_VERSION'] %>
-
-        rpm_package_url: "https://dl.bintray.com/rabbitmq/all-dev/rabbitmq-server/<%= ENV['RABBITMQ_VERSION'] %>/"
-        rpm_package: "rabbitmq-server-<%= ENV['RABBITMQ_VERSION'].to_s.gsub(/\-alpha/, "~alpha") %>-1.el7.noarch.rpm"
-    verifier:
-      inspec_tests:
-        - test/integration/default
-    includes: ["centos-7"]

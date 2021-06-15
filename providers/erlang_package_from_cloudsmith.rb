@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq
-# Provider:: erlang_package_from_bintray
+# Provider:: erlang_package_from_cloudsmith
 #
 # Copyright 2019, Pivotal Software, Inc.
 #
@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-provides :erlang_package_from_bintray, platform_family: %w(debian rhel fedora)
+provides :erlang_package_from_cloudsmith, platform_family: %w(debian rhel fedora)
 
 DEBIAN_PACKAGES = %w(erlang-mnesia erlang-runtime-tools erlang-asn1 erlang-crypto erlang-public-key erlang-ssl
                      erlang-syntax-tools erlang-snmp erlang-os-mon erlang-parsetools
@@ -27,11 +27,7 @@ DEBIAN_PACKAGES = %w(erlang-mnesia erlang-runtime-tools erlang-asn1 erlang-crypt
 
 action :install do
   if platform_family?('debian')
-    base_pkg = if new_resource.use_hipe
-      'erlang-base-hipe'
-    else
-      'erlang-base'
-    end
+    base_pkg = 'erlang-base'
 
     erlang_packages = [base_pkg] + DEBIAN_PACKAGES
 
@@ -79,11 +75,7 @@ end
 
 action :remove do
   if platform_family?('debian')
-    base_pkg = if new_resource.use_hipe
-      'erlang-base-hipe'
-    else
-      'erlang-base'
-    end
+    base_pkg = 'erlang-base'
 
     erlang_packages = [base_pkg] + DEBIAN_PACKAGES
 

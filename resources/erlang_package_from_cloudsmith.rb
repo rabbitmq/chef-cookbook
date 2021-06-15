@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq
-# Resource:: erlang_apt_repository_on_bintray
+# Resource:: erlang_package_from_cloudsmith
 #
 # Copyright 2019, Pivotal Software, Inc.
 #
@@ -18,15 +18,13 @@
 # limitations under the License.
 #
 
-actions :add, :remove
-default_action :add
+actions :install, :remove
+default_action :install
 
-attribute :uri, String, default: 'https://dl.bintray.com/rabbitmq-erlang/debian'
-attribute :distribution, String
-# Available values: 'erlang', 'erlang-21.x', 'erlang-20.x', 'erlang-19.x'
-# 'erlang' means "the latest release"
-attribute :components, Array, default: ['erlang']
-attribute :key, String, default: '6B73A36E6026DFCA'
-attribute :keyserver, String
-
-attribute :trusted, [true, false], default: false
+attribute :version, String
+# HiPE's been deprecated since Erlang/OTP 22 and is going away in Erlang/OTP 24.
+# DO NOT USE.
+attribute :use_hipe, [true, false], default: false
+attribute :options, [String, Array]
+attribute :retries, Integer, default: 3
+attribute :retry_delay, Integer, default: 10

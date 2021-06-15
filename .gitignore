@@ -9,6 +9,7 @@ Berksfile.lock
 .bundle
 .cache
 .kitchen
+.kitchen/*
 bin
 .kitchen.local.yml
 .coverage

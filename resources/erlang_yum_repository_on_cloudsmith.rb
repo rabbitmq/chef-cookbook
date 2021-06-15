@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq
-# Resource:: erlang_package_from_bintray
+# Resource:: erlang_yum_repository_on_cloudsmith
 #
 # Copyright 2019, Pivotal Software, Inc.
 #
@@ -18,13 +18,26 @@
 # limitations under the License.
 #
 
-actions :install, :remove
-default_action :install
+actions :create, :remove
+default_action :create
 
-attribute :version, String
-# HiPE's been deprecated since Erlang/OTP 22 and is going away in Erlang/OTP 24.
-# DO NOT USE.
-attribute :use_hipe, [true, false], default: false
-attribute :options, [String, Array]
-attribute :retries, Integer, default: 3
-attribute :retry_delay, Integer, default: 10
+attribute :baseurl, String, required: true
+
+attribute :gpgcheck, [true, false], default: true
+attribute :gpgkey, String
+
+attribute :repo_gpgcheck, [true, false], default: true
+attribute :repositoryid, String
+attribute :enabled, [true, false], default: true
+attribute :priority, String
+
+attribute :proxy, String
+attribute :proxy_username, String
+attribute :proxy_password, String
+
+attribute :sslcacert, String
+attribute :sslclientcert, String
+attribute :sslclientkey, String
+attribute :sslverify, [true, false]
+
+attribute :timeout

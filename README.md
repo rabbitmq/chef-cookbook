@@ -65,7 +65,7 @@ Both options are covered below.
 
 To provision RabbitMQ 3.8.x, you must use version `5.8.5` of this cookbook or later.
 
-### Provision Erlang/OTP 22.3 or Later
+### Provision Erlang/OTP 23.2 or Later
 
 Before provisioning a 3.8.x release, please learn about
 the [minimum required Erlang/OTP version](https://www.rabbitmq.com/which-erlang.html)
@@ -85,7 +85,7 @@ The packages support
  * Ubuntu 16.04 through 20.04
  * RHEL 7 and 8
  * CentOS 7 and 8
- * Fedora 30 or later
+ * Fedora 32 or later
  * Scientific Linux 7
  * Amazon Linux 2
 
@@ -104,35 +104,23 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:23.0.3-1'
+node['rabbitmq']['erlang']['version'] = '1:23.3-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '23.0.3'
+node['rabbitmq']['erlang']['version'] = '23.3'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
-It is possible to override the component used (see [Ubuntu and Debian installation guide](https://www.rabbitmq.com/install-debian.html)
-to learn more):
-
-``` ruby
-# provisions Erlang 23.x
-node['rabbitmq']['erlang']['apt']['components'] = ["erlang-23.x"]
-```
-
-``` ruby
-# provisions Erlang 22.3.x
-node['rabbitmq']['erlang']['apt']['components'] = ["erlang-22.x"]
-```
 
 Most of the time there is no need to override other attributes. Below is a list of defaults
 used on Ubuntu and Debian:
 
 ``` ruby
 # RabbitMQ Erlang packages
-default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.bintray.com/rabbitmq-erlang/debian"
+default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/deb/"
 default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
-default['rabbitmq']['erlang']['apt']['components'] = ["erlang"]
-default['rabbitmq']['erlang']['apt']['key'] = "6B73A36E6026DFCA"
+default['rabbitmq']['erlang']['apt']['components'] = ["main"]
+default['rabbitmq']['erlang']['apt']['key'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'
 
 default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 ```
@@ -145,8 +133,8 @@ Below are the defaults used by the Yum repository (assuming RHEL or CentOS 8):
 
 ``` ruby
 # Provisions CentOS 8 RPMs of Erlang 23
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/23/el/8'
-default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
+default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/noarch'
+default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
 ```
@@ -615,7 +603,7 @@ Install the package. Here's an example for Debian-based systems:
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
   # This package version assumes a Debian-based distribution.
-  version '1:23.0.3-1'
+  version '1:23.3-1'
 
   action :install
 end
@@ -625,7 +613,7 @@ Here's another one for RPM-based ones:
 
 ``` ruby
 rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
-  version '23.0.3'
+  version '23.3'
 
   action :install
 end
