@@ -1,9 +1,33 @@
 # Change Log
 
-## [v5.8.6](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.6) (under development)
+## [v5.9.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.6) (under development)
 
-No changes yet.
+This release introduces **potentially breaking changes** due to a number of **significant changes in the RabbitMQ ecosystem**
+and beyond.
 
+ * Switch from Bintray to [Cloudsmith](https://cloudsmith.io/~rabbitmq/repos/) for package provisioning.
+   Bintray has been permanently shut down.
+
+   GitHub issue: [#574](https://github.com/rabbitmq/chef-cookbook/pull/574)
+
+ * RabbitMQ 3.7.x has been [entirely out of support since September 2020](https://www.rabbitmq.com/versions.html).
+   The package now provisions `3.8.17` by default instead of an unsupported version.
+   `3.8.x` series also address several CVEs.
+
+   GitHub issue: [#574](https://github.com/rabbitmq/chef-cookbook/pull/574)
+
+ * This cookbook now can provision [Erlang 24](https://blog.rabbitmq.com/posts/2021/03/erlang-24-support-roadmap/) from Cloudsmith.
+
+   GitHub issue: [#574](https://github.com/rabbitmq/chef-cookbook/pull/574)
+
+ * Support for Ubuntu versions prior to 16.04, Fedora prior to 31, Debian prior to Stretch
+   has been dropped as modern RabbitMQ and Erlang versions no longer support them
+   and assume OpenSSL 1.1 to be available.
+
+   Instead, integration tests now focus on more modern distributions such as Ubuntu 20.04 and 21.04,
+   CentOS Stream, Fedora 34, Debian 10 and 11.
+
+   GitHub issue: [#574](https://github.com/rabbitmq/chef-cookbook/pull/574)
 
 ## [v5.8.5](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.5) (2020-07-25)
 
