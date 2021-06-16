@@ -41,7 +41,7 @@ platforms:
 
   - name: centos-8
     driver:
-      image: dokken/centos-8
+      image: dokken/centos-stream-8
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
@@ -55,9 +55,9 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
-  - name: fedora-33
+  - name: fedora-34
     driver:
-      image: dokken/fedora-33
+      image: dokken/fedora-34
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
         - RUN dnf -y install sudo
@@ -68,6 +68,15 @@ platforms:
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
+
+  - name: ubuntu-21.04
+    driver:
+      image: dokken/ubuntu-21.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - ENV DEBIAN_FRONTEND noninteractive
+        - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
   - name: ubuntu-20.04
     driver:
@@ -81,6 +90,15 @@ platforms:
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - ENV DEBIAN_FRONTEND noninteractive
+        - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
+
+  - name: debian-11
+    driver:
+      image: dokken/debian-11
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
@@ -108,6 +126,53 @@ platforms:
 #
 
 suites:
+  - name: default-deb
+    run_list:
+      - recipe[erlang::default]
+      - recipe[rabbitmq::plugins]
+      - recipe[rabbitmq::management_ui]
+      - recipe[rabbitmq::vhosts]
+      - recipe[rabbitmq::users]
+      - recipe[rabbitmq::policies]
+    attributes:
+      erlang:
+        install_method: "esl"
+        esl:
+          version: "1:23.3.1-1"
+      rabbitmq:
+        version: "3.8.17"
+        virtualhosts:
+          - vhost1
+          - vhost2
+        enabled_users:
+          - name: user1
+            password: user1-pwd
+            tag: management
+            rights:
+              - vhost: vhost1
+                read: ".*"
+                write: ".*"
+                conf: ".*"
+          - name: user2
+            password: user2-pwd
+            tag: management
+            rights:
+              - vhost: vhost2
+                read: ".*"
+                write: ".*"
+                conf: ".*"
+        policies:
+          mirroring:
+            pattern: "^mirrored\\."
+            params:
+              ha-mode: exactly
+              ha-params: 2
+            priority: 1
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    includes: ["ubuntu-20.04", "ubuntu-18.04", "debian-10"]
+
   - name: default-deb
     run_list:
       - recipe[erlang::default]
@@ -273,7 +338,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8", "centos-7", "fedora-33", "amazonlinux-2"]
+    includes: ["centos-8", "centos-7", "fedora-34", "amazonlinux-2"]
 
   - name: system-limits-rpm
     run_list:
@@ -412,7 +477,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
-    includes: ["debian-10", "ubuntu-18.04", "ubuntu-20.04"]
+    includes: ["debian-11", "debian-10", "ubuntu-21.04", "ubuntu-20.04"]
 
   # Erlang package, Debian, version pinning
   - name: rabbitmq-erlang-pinned-deb
@@ -428,7 +493,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
-    includes: ["debian-10", "ubuntu-18.04", "ubuntu-20.04"]
+    includes: ["debian-10", "ubuntu-21.04", "ubuntu-20.04"]
 
 
   # Latest Erlang package, RPM
@@ -446,7 +511,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-33", "centos-8"]
+    includes: ["fedora-34", "centos-8"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el8
@@ -465,7 +530,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-33", "centos-8"]
+    includes: ["fedora-34", "centos-8"]
 
   # Latest Erlang package, RPM
   - name: rabbitmq-erlang-latest-rpm-el7

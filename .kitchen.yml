@@ -18,7 +18,7 @@ platforms:
   - name: ubuntu-18.04
   - name: ubuntu-20.04
   - name: debian-10
-  - name: fedora-33
+  - name: fedora-34
   - name: opensuse-leap-15
 
 #
@@ -185,12 +185,12 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "22.3.4.10.4"
+          version: "24.0.2"
         version: "3.8.17"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8", "centos-7", "fedora-33"]
+    includes: ["centos-8", "centos-7", "fedora-34"]
 
 
   - name: system-limits-rpm
@@ -363,7 +363,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-33", "centos-8"]
+    includes: ["fedora-34", "centos-8"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el8
@@ -382,7 +382,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-33", "centos-8"]
+    includes: ["fedora-34", "centos-8"]
 
   # Latest Erlang package, RPM, openSUSE leap 15 repo
   - name: rabbitmq-erlang-latest-rpm-suse

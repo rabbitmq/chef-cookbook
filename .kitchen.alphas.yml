@@ -18,7 +18,7 @@ verifier:
 platforms:
   - name: centos-8
     driver:
-      image: dokken/centos-8
+      image: dokken/centos-stream-8
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
@@ -32,9 +32,9 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
-  - name: fedora-32
+  - name: fedora-34
     driver:
-      image: dokken/fedora-32
+      image: dokken/fedora-34
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
         - RUN dnf -y install sudo
@@ -99,4 +99,4 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8", "fedora-32"]
+    includes: ["centos-8", "fedora-34"]
