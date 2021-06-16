@@ -22,7 +22,7 @@ env:
   - INSTANCE=default-deb-debian-10
   - INSTANCE=default-deb-ubuntu-2004
   - INSTANCE=default-deb-ubuntu-1804
-  - INSTANCE=default-rpm-centos-7
+  - INSTANCE=default-rpm-centos-8
   - INSTANCE=system-limits-deb-ubuntu-1804
   - INSTANCE=lwrps
   - INSTANCE=cluster-deb-ubuntu-1804
