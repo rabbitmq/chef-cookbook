@@ -31,7 +31,7 @@ node.override['yum']['erlang_solutions']['enabled'] = false
 erlang_version = node['rabbitmq']['erlang']['version']
 
 if platform_family?('debian')
-  rabbitmq_erlang_apt_repository_on_bintray 'rabbitmq_erlang_repo_on_bintray' do
+  rabbitmq_erlang_apt_repository_on_cloudsmith 'rabbitmq_erlang_repo_on_cloudsmith' do
     uri node['rabbitmq']['erlang']['apt']['uri'] unless node['rabbitmq']['erlang']['apt']['uri'].nil?
     distribution node['rabbitmq']['erlang']['apt']['lsb_codename'] if node['rabbitmq']['erlang']['apt']['lsb_codename']
     components node['rabbitmq']['erlang']['apt']['components']
@@ -39,7 +39,7 @@ if platform_family?('debian')
     action :add
   end
 
-  rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
+  rabbitmq_erlang_package_from_cloudsmith 'rabbitmq_erlang' do
     use_hipe node['rabbitmq']['erlang']['hipe']
     version erlang_version unless erlang_version.nil?
 
@@ -56,7 +56,7 @@ if platform_family?('rhel')
 end
 
 if platform_family?('rhel', 'fedora', 'amazon')
-  rabbitmq_erlang_yum_repository_on_bintray 'rabbitmq_erlang' do
+  rabbitmq_erlang_yum_repository_on_cloudsmith 'rabbitmq_erlang' do
     baseurl node['rabbitmq']['erlang']['yum']['baseurl']
     gpgkey node['rabbitmq']['erlang']['yum']['gpgkey']
     gpgcheck node['rabbitmq']['erlang']['yum']['gpgcheck']
@@ -64,7 +64,7 @@ if platform_family?('rhel', 'fedora', 'amazon')
     enabled true
   end
 
-  rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
+  rabbitmq_erlang_package_from_cloudsmith 'rabbitmq_erlang' do
     version erlang_version unless erlang_version.nil?
 
     retry_delay node['rabbitmq']['erlang']['retry_delay'] unless node['rabbitmq']['erlang']['retry_delay'].nil?
@@ -80,7 +80,7 @@ if platform_family?('suse')
     enabled true
   end
 
-  rabbitmq_erlang_package_from_bintray 'rabbitmq_erlang' do
+  rabbitmq_erlang_package_from_cloudsmith 'rabbitmq_erlang' do
     version erlang_version unless erlang_version.nil?
 
     retry_delay node['rabbitmq']['erlang']['retry_delay'] unless node['rabbitmq']['erlang']['retry_delay'].nil?

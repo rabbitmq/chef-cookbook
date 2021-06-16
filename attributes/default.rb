@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # Version to install
-default['rabbitmq']['version'] = '3.7.28'
+default['rabbitmq']['version'] = '3.8.17'
 
 # When true, distribution-provided package will be used.
 # This may be useful e.g. on old distributions.
@@ -245,39 +245,45 @@ default['rabbitmq']['additional_rabbit_configs'] = {}
 # Erlang packages
 #
 
-# if setting to a specific version, apt repository components
-# will have to be updated
 default['rabbitmq']['erlang']['version'] = nil
-# HiPE's been deprecated since Erlang/OTP 22 and is going away in Erlang/OTP 24.
+# HiPE's been deprecated since Erlang/OTP 22 and was removed completely in Erlang/OTP 24.
 # DO NOT USE.
 default['rabbitmq']['erlang']['hipe'] = false
 default['rabbitmq']['erlang']['retry_delay'] = 10
 
 # apt
-default['rabbitmq']['erlang']['apt']['uri'] = 'https://dl.bintray.com/rabbitmq-erlang/debian'
+
+deb_distro = value_for_platform(
+  'debian' => {
+    'default' => 'debian'
+  },
+  'ubuntu' => {
+    'default' => 'ubuntu'
+  }
+)
+default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/deb/#{deb_distro}"
 unless node['lsb'].nil?
   default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
 end
-default['rabbitmq']['erlang']['apt']['components'] = ['erlang']
-default['rabbitmq']['erlang']['apt']['key'] = '6B73A36E6026DFCA'
+default['rabbitmq']['erlang']['apt']['components'] = ["main"]
+default['rabbitmq']['erlang']['apt']['key'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'
 
 default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 
 # yum
 default['rabbitmq']['erlang']['yum']['baseurl'] = value_for_platform(
   %w(centos redhat scientific oracle) => {
-    '< 7.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6',
-    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
+    '< 8.0'   => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/7/$basearch',
+    'default' => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch'
   },
   'fedora' => {
-    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
+    'default' => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch'
   },
   'amazon' => {
-    '< 2.0' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/6',
-    'default' => 'https://dl.bintray.com/rabbitmq-erlang/rpm/erlang/22/el/7'
+    'default' => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/7/$basearch'
   }
 )
-default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc'
+default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
 default['rabbitmq']['erlang']['yum']['enabled'] = true

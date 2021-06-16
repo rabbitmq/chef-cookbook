@@ -20,12 +20,11 @@ services: docker
 env:
   matrix:
   - INSTANCE=default-deb-debian-10
-  - INSTANCE=default-deb-debian-9
+  - INSTANCE=default-deb-ubuntu-2004
   - INSTANCE=default-deb-ubuntu-1804
-  - INSTANCE=default-rpm-centos-7
+  - INSTANCE=default-rpm-centos-8
   - INSTANCE=system-limits-deb-ubuntu-1804
   - INSTANCE=lwrps
-  - INSTANCE=36x-lwrps
   - INSTANCE=cluster-deb-ubuntu-1804
   - INSTANCE=cluster-rpm
   - INSTANCE=default-force-yes

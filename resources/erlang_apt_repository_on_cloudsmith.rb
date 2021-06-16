@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq
-# Resource:: erlang_yum_repository_on_bintray
+# Resource:: erlang_apt_repository_on_cloudsmith
 #
 # Copyright 2019, Pivotal Software, Inc.
 #
@@ -18,26 +18,13 @@
 # limitations under the License.
 #
 
-actions :create, :remove
-default_action :create
+actions :add, :remove
+default_action :add
 
-attribute :baseurl, String, required: true
+attribute :uri, String, default: ''
+attribute :distribution, String
+attribute :components, Array, default: ['erlang']
+attribute :key, String, default: ''
+attribute :keyserver, String
 
-attribute :gpgcheck, [true, false], default: true
-attribute :gpgkey, String
-
-attribute :repo_gpgcheck, [true, false], default: true
-attribute :repositoryid, String
-attribute :enabled, [true, false], default: true
-attribute :priority, String
-
-attribute :proxy, String
-attribute :proxy_username, String
-attribute :proxy_password, String
-
-attribute :sslcacert, String
-attribute :sslclientcert, String
-attribute :sslclientkey, String
-attribute :sslverify, [true, false]
-
-attribute :timeout
+attribute :trusted, [true, false], default: false

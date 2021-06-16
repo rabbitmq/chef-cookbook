@@ -34,28 +34,20 @@ end
 
 version = node['rabbitmq']['version']
 
-default_package_url = if rabbitmq_37? || rabbitmq_38?
-  # 3.7.0 and later
-  "https://dl.bintray.com/rabbitmq/all/rabbitmq-server/#{version}/"
-else
-  # prior to 3.7.0
-  legacy_version = version.tr('.', '_')
-  "https://github.com/rabbitmq/rabbitmq-server/releases/download/rabbitmq_v#{legacy_version}/"
-end
+default_package_url = "https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server-all/raw/versions/#{version}/"
 
 default_deb_package_name = "rabbitmq-server_#{version}-1_all.deb"
 
 default_rpm_package_name = value_for_platform(
   %w(centos redhat scientific oracle) => {
-    '< 7.0' => "rabbitmq-server-#{version}-1.el6.noarch.rpm",
-    'default' => "rabbitmq-server-#{version}-1.el7.noarch.rpm"
+    '< 8.0' => "rabbitmq-server-#{version}-1.el7.noarch.rpm",
+    'default' => "rabbitmq-server-#{version}-1.el8.noarch.rpm"
   },
   'fedora' => {
-    'default' => "rabbitmq-server-#{version}-1.el7.noarch.rpm"
+    'default' => "rabbitmq-server-#{version}-1.el8.noarch.rpm"
   },
   'amazon' => {
-    '< 2.0' => "rabbitmq-server-#{version}-1.el6.noarch.rpm",
-    'default' => "rabbitmq-server-#{version}-1.el7.noarch.rpm"
+    'default' => "rabbitmq-server-#{version}-1.el8.noarch.rpm"
   },
   'suse' => {
     'default' => "rabbitmq-server-#{version}-1.suse.noarch.rpm"
@@ -96,8 +88,8 @@ if platform_family?('debian')
     allow false
   end
 
-  if node['platform_version'].to_i == 7 && !use_distro_version?
-    Chef::Log.warn 'Debian 7 is too old to use the recent .deb RabbitMQ packages. Falling back to distro package!'
+  if node['platform_version'].to_i < 9 && !use_distro_version?
+    Chef::Log.warn 'This Debian release is too old to use the recent .deb RabbitMQ packages. Falling back to distro package!'
     node.override['rabbitmq']['use_distro_version'] = true
   end
 

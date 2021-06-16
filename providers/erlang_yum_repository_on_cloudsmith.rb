@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 #
 # Cookbook Name:: rabbitmq
-# Provider:: erlang_yum_repository_on_bintray
+# Provider:: erlang_yum_repository_on_cloudsmith
 #
 # Copyright 2019, Pivotal Software, Inc.
 #
