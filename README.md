@@ -102,7 +102,7 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:23.3.4.3-1'
+node['rabbitmq']['erlang']['version'] = '1:23.3.4.4-1'
 
 # RPM
 node['rabbitmq']['erlang']['version'] = '23.3.1'
@@ -472,7 +472,7 @@ Install the package. Here's an example for Debian-based systems:
 ``` ruby
 rabbitmq_erlang_package_from_cloudsmith 'rabbitmq_erlang' do
   # This package version assumes a Debian-based distribution.
-  version '1:23.3.4.3-1'
+  version '1:23.3.4.4-1'
 
   action :install
 end
@@ -482,7 +482,7 @@ Here's another one for RPM-based ones:
 
 ``` ruby
 rabbitmq_erlang_package_from_cloudsmith 'rabbitmq_erlang' do
-  version '23.3.4.3'
+  version '23.3.4.4'
 
   action :install
 end

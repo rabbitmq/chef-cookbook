@@ -333,7 +333,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.3.4.3"
+          version: "23.3.4.4"
         version: "3.8.17"
     verifier:
       inspec_tests:
@@ -488,7 +488,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:23.3.4.3-1"
+          version: "1:23.3.4.4-1"
         version: "3.8.17"
     verifier:
       inspec_tests:
@@ -522,7 +522,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.3.4.3"
+          version: "23.3.4.4"
           yum:
             baseurl: https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch
             repo_gpgcheck: true
