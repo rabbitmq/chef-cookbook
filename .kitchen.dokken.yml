@@ -31,14 +31,6 @@ platforms:
       intermediate_instructions:
         - RUN zypper -n install sudo lsof which openssl net-tools
 
-  - name: centos-7
-    driver:
-      image: dokken/centos-7
-      platform: rhel
-      pid_one_command: /usr/lib/systemd/systemd
-      intermediate_instructions:
-        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
-
   - name: centos-8
     driver:
       image: dokken/centos-stream-8
@@ -296,7 +288,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8", "centos-7", "fedora-34", "amazonlinux-2"]
+    includes: ["centos-8", "fedora-34", "amazonlinux-2"]
 
   - name: system-limits-rpm
     run_list:
@@ -470,25 +462,6 @@ suites:
       inspec_tests:
         - test/erlang_package/latest_rpm
     includes: ["fedora-34", "centos-8"]
-
-  # Erlang package, RPM, version pinning
-  - name: rabbitmq-erlang-pinned-rpm-el7
-    run_list:
-      - recipe[rabbitmq::erlang_package]
-      - recipe[rabbitmq::default]
-    attributes:
-      rabbitmq:
-        erlang:
-          enabled: true
-          version: "23.3.4.4"
-          yum:
-            baseurl: https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/7/$basearch
-            repo_gpgcheck: true
-        version: "3.8.17"
-    verifier:
-      inspec_tests:
-        - test/erlang_package/pinned_rpm
-    includes: ["centos-7"]
 
     # Latest Erlang package, RPM, openSUSE leap 15 repo
   - name: rabbitmq-erlang-latest-suse
