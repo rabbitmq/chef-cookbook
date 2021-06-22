@@ -176,7 +176,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-21.04", "ubuntu-20.04", "ubuntu-18.04", "debian-10"]
+    includes: ["ubuntu-20.04", "ubuntu-18.04", "debian-10"]
 
   - name: management-plugin-deb
     run_list:
