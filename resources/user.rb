@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+unified_mode true
+
 actions :add, :delete, :set_permissions, :clear_permissions, :set_tags, :clear_tags, :change_password
 default_action :add
 

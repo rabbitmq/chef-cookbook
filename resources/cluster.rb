@@ -19,6 +19,8 @@
 # limitations under the License.
 #
 
+unified_mode true
+
 actions :join, :set_cluster_name, :change_cluster_node_type
 
 default_action :join

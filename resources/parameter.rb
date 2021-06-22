@@ -19,6 +19,8 @@
 # limitations under the License.
 #
 
+unified_mode true
+
 actions :set, :clear, :list
 default_action :set
 
