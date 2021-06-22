@@ -76,6 +76,7 @@ platforms:
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
         - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get upgrade -y
         - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
   - name: ubuntu-20.04
@@ -85,6 +86,7 @@ platforms:
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
         - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get upgrade -y
         - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
   - name: ubuntu-18.04
@@ -94,6 +96,7 @@ platforms:
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
         - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get upgrade -y
         - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
   - name: debian-11
@@ -103,6 +106,7 @@ platforms:
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
         - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get upgrade -y
         - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
   - name: debian-10
@@ -112,6 +116,7 @@ platforms:
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
         - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get upgrade -y
         - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
   - name: opensuse-leap
@@ -218,7 +223,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-20.04", "ubuntu-18.04", "debian-10"]
+    includes: ["ubuntu-20.04", "ubuntu-18.04", "debian-11", "debian-10"]
 
   - name: management-plugin-deb
     run_list:
@@ -234,7 +239,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/management_plugin
-    includes: ["ubuntu-18.04"]
+    includes: ["ubuntu-20.04"]
 
   - name: system-limits-deb
     run_list:
@@ -254,7 +259,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["ubuntu-20.04", "debian-10"]
+    includes: ["ubuntu-20.04", "debian-11"]
 
   - name: use-distro-version-deb
     run_list:
@@ -322,7 +327,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7"]
+    includes: ["centos-8"]
 
   # Fedora and Amazon Linux 2 require recipe[rabbitmq::erlang_package]
   - name: default-modern-rpm
@@ -358,7 +363,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["centos-7"]
+    includes: ["centos-8"]
 
   - name: lwrps
     run_list:
@@ -375,7 +380,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/lwrps
-    includes: ["ubuntu-18.04"]
+    includes: ["ubuntu-20.04"]
 
   - name: cluster-deb
     run_list:
@@ -392,7 +397,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/cluster
-    includes: ["ubuntu-18.04", "debian-10"]
+    includes: ["ubuntu-20.04", "debian-11"]
 
   - name: cluster-rpm
     run_list:
@@ -409,7 +414,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/cluster
-    includes: ["centos-7", "centos-8"]
+    includes: ["centos-8"]
 
   - name: default-force-yes
     run_list:
@@ -488,12 +493,12 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "1:23.3.4.4-1"
+          version: "1:24.0.2-1"
         version: "3.8.17"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
-    includes: ["debian-10", "ubuntu-21.04", "ubuntu-20.04"]
+    includes: ["debian-10"]
 
 
   # Latest Erlang package, RPM
@@ -514,7 +519,7 @@ suites:
     includes: ["fedora-34", "centos-8"]
 
   # Erlang package, RPM, version pinning
-  - name: rabbitmq-erlang-pinned-rpm-el8
+  - name: rabbitmq-erlang-pinned-rpm-el7
     run_list:
       - recipe[rabbitmq::erlang_package]
       - recipe[rabbitmq::default]
@@ -524,29 +529,12 @@ suites:
           enabled: true
           version: "23.3.4.4"
           yum:
-            baseurl: https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch
+            baseurl: https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/7/$basearch
             repo_gpgcheck: true
         version: "3.8.17"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-34", "centos-8"]
-
-  # Latest Erlang package, RPM
-  - name: rabbitmq-erlang-latest-rpm-el7
-    run_list:
-      - recipe[rabbitmq::erlang_package]
-      - recipe[rabbitmq::default]
-    attributes:
-      # relies on node.rabbitmq.erlang.version default
-      # which is nil/"install latest"
-      rabbitmq:
-        erlang:
-          enabled: true
-        version: "3.8.17"
-    verifier:
-      inspec_tests:
-        - test/erlang_package/latest_rpm
     includes: ["centos-7"]
 
     # Latest Erlang package, RPM, openSUSE leap 15 repo
