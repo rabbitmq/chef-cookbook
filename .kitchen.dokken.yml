@@ -176,54 +176,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-20.04", "ubuntu-18.04", "debian-10"]
-
-  - name: default-deb
-    run_list:
-      - recipe[erlang::default]
-      - recipe[rabbitmq::plugins]
-      - recipe[rabbitmq::management_ui]
-      - recipe[rabbitmq::vhosts]
-      - recipe[rabbitmq::users]
-      - recipe[rabbitmq::policies]
-    attributes:
-      erlang:
-        install_method: "esl"
-        esl:
-          version: "1:23.3.1-1"
-      rabbitmq:
-        version: "3.8.17"
-        virtualhosts:
-          - vhost1
-          - vhost2
-        enabled_users:
-          - name: user1
-            password: user1-pwd
-            tag: management
-            rights:
-              - vhost: vhost1
-                read: ".*"
-                write: ".*"
-                conf: ".*"
-          - name: user2
-            password: user2-pwd
-            tag: management
-            rights:
-              - vhost: vhost2
-                read: ".*"
-                write: ".*"
-                conf: ".*"
-        policies:
-          mirroring:
-            pattern: "^mirrored\\."
-            params:
-              ha-mode: exactly
-              ha-params: 2
-            priority: 1
-    verifier:
-      inspec_tests:
-        - test/integration/default
-    includes: ["ubuntu-20.04", "ubuntu-18.04", "debian-11", "debian-10"]
+    includes: ["ubuntu-21.04", "ubuntu-20.04", "ubuntu-18.04", "debian-11", "debian-10"]
 
   - name: management-plugin-deb
     run_list:
@@ -482,7 +435,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
-    includes: ["debian-11", "debian-10", "ubuntu-21.04", "ubuntu-20.04"]
+    includes: ["debian-11", "debian-10", "ubuntu-20.04", "ubuntu-18.04"]
 
   # Erlang package, Debian, version pinning
   - name: rabbitmq-erlang-pinned-deb
@@ -498,7 +451,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
-    includes: ["debian-10"]
+    includes: ["debian-10", "ubuntu-20.04"]
 
 
   # Latest Erlang package, RPM
