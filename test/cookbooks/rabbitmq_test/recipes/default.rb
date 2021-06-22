@@ -21,10 +21,6 @@
 
 apt_update if platform_family?('debian')
 
-chef_gem 'bunny' do
-  action :install
-end
-
 include_recipe 'rabbitmq::default'
 
 # HACK: Give rabbit time to spin up before the tests, it seems

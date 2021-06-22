@@ -18,10 +18,6 @@
 # limitations under the License.
 #
 
-chef_gem 'bunny' do
-  action :install
-end
-
 include_recipe 'rabbitmq::mgmt_console'
 
 # HACK: Give rabbit time to spin up before the tests, it seems

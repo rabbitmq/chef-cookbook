@@ -18,10 +18,6 @@
 # limitations under the License.
 #
 
-chef_gem 'bunny' do
-  action :install
-end
-
 include_recipe 'rabbitmq::default'
 
 # force the rabbitmq restart now, then start testing
@@ -57,7 +53,7 @@ end
 rabbitmq_user 'kitchen4' do
   password 'kitchen4'
   # see #565
-  permissions '".*" "^amq\\.default$" ".*"'
+  permissions "'.*' '^amq\\.default$' '.*'"
   action :set_permissions
 end
 
@@ -73,9 +69,9 @@ rabbitmq_plugin 'rabbitmq_top' do
   action :disable
 end
 
-rabbitmq_policy 'rabbitmq_mirroring' do
-  pattern 'mirroring.*'
-  parameters 'ha-mode' => 'all', 'ha-sync-mode' => 'automatic'
+rabbitmq_policy 'queue_length_limit' do
+  pattern 'limited.*'
+  parameters 'max-length' => 1000
   apply_to 'queues'
   action :set
 end
