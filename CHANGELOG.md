@@ -1,6 +1,10 @@
 # Change Log
 
-## [v5.9.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.6) (under development)
+## [v5.9.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.6) (under development)
+
+ * Change log corrections
+
+## [v5.9.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.9.0) (2021-06-23)
 
 This release introduces **potentially breaking changes** due to a number of **significant changes in the RabbitMQ ecosystem**
 and beyond.
