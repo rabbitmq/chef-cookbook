@@ -18,7 +18,7 @@ describe command('curl -u guest:guest -H "Accept: application/json" -X GET "http
 end
 
 describe command('rabbitmqctl -q list_policies') do
-  its(:stdout) { should match(%r{{"ha-mode":"all","ha-sync-mode":"automatic"}}) }
+  its(:stdout) { should match(%r{{"length-limit": 1000}}) }
 end
 
 describe command('rabbitmqctl -q list_parameters -p sensu') do

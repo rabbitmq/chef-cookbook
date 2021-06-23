@@ -6,7 +6,7 @@ describe command('curl -u guest:guest -H "Accept: application/json" -X GET "http
 end
 
 describe command('rabbitmqctl list_policies -s') do
-  its(:stdout) { should match(%r{{"ha-mode":"all","ha-sync-mode":"automatic"}}) }
+  its(:stdout) { should match(%r{{"max-length":1000}}) }
 end
 
 describe command('rabbitmqctl list_parameters -s -p sensu') do
