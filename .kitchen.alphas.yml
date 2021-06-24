@@ -24,14 +24,6 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
-  - name: centos-7
-    driver:
-      image: dokken/centos-7
-      platform: rhel
-      pid_one_command: /usr/lib/systemd/systemd
-      intermediate_instructions:
-        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
-
   - name: fedora-34
     driver:
       image: dokken/fedora-34
@@ -70,7 +62,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.3.1-1"
+          version: "1:24.0.2-1"
       rabbitmq:
         # export RABBITMQ_VERSION="3.9.0~alpha.543"
         version: <%= ENV['RABBITMQ_VERSION'] %>
@@ -90,7 +82,6 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.3"
         # export RABBITMQ_VERSION="3.7.13-alpha.21"
         version: <%= ENV['RABBITMQ_VERSION'] %>
 

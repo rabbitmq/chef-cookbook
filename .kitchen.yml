@@ -13,7 +13,6 @@ transport:
   name: "ssh"
 
 platforms:
-  - name: centos-7
   - name: centos-8
   - name: ubuntu-18.04
   - name: ubuntu-20.04
@@ -38,7 +37,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.3.1-1"
+          version: "1:24.0.2-1"
       rabbitmq:
         version: "3.8.17"
         virtualhosts:
@@ -81,7 +80,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.3.1-1"
+          version: "1:24.0.2-1"
       rabbitmq:
         version: "3.8.17"
     verifier:
@@ -98,7 +97,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.3.1-1"
+          version: "1:24.0.2-1"
       rabbitmq:
         version: "3.8.17"
         systemd:
@@ -169,13 +168,13 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.3.1-1"
+          version: "24.0.2-1"
       rabbitmq:
         version: "3.8.17"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-7"]
+    includes: ["centos-8"]
 
   - name: default-modern-rpm
     run_list:
@@ -190,7 +189,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8", "centos-7", "fedora-34"]
+    includes: ["centos-8", "fedora-34"]
 
 
   - name: system-limits-rpm
@@ -202,7 +201,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.3.1-1"
+          version: "24.0.2-1"
       rabbitmq:
         version: "3.8.17"
         systemd:
@@ -221,7 +220,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.3.1-1"
+          version: "1:24.0.2-1"
       rabbitmq:
         version: "3.8.17"
     verifier:
@@ -238,7 +237,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.3.1-1"
+          version: "1:24.0.2-1"
       rabbitmq:
         version: "3.8.17"
     verifier:
@@ -255,7 +254,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.3.1-1"
+          version: "24.0.2-1"
       rabbitmq:
         version: "3.8.17"
     verifier:
@@ -272,7 +271,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.3.1-1"
+          version: "1:24.0.2-1"
       rabbitmq:
         version: "3.8.17"
     attributes:
@@ -283,7 +282,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.3.1-1"
+          version: "1:24.0.2-1"
       rabbitmq:
         version: "3.8.17"
     verifier:
@@ -303,7 +302,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:23.3.1-1"
+          version: "1:24.0.2-1"
       rabbitmq:
         version: "3.8.17"
     verifier:
