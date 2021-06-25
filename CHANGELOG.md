@@ -1,6 +1,15 @@
 # Change Log
+## [v5.9.2](https://github.com/rabbitmq/chef-cookbook/tree/v5.9.2) (in development)
 
-## [v5.9.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.8.6) (under development)
+No changes yet.
+
+## [v5.9.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.9.1) (2021-06-25)
+
+ * `unified_mode` is now used only if provided by the Chef client.
+    This restores compatibility with Chef 14.
+
+    GitHub issue: [#577](https://github.com/rabbitmq/chef-cookbook/issues/577)
+
 
  * Change log corrections
 
