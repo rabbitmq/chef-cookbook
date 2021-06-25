@@ -4,6 +4,7 @@
 # Provider:: vhost
 #
 # Copyright 2011-2013, Chef Software, Inc.
+# Copyright 2019-2021, VMware, Inc or its affiliates.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

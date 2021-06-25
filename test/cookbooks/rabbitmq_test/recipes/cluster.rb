@@ -4,6 +4,7 @@
 # Recipe:: cluster
 #
 # Copyright 2012, Chef Software, Inc. <legal@chef.io>
+# Copyright 2019-2021, VMware, Inc or its affiliates.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

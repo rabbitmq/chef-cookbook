@@ -6,7 +6,7 @@
 # Author: Sunggun Yu <sunggun.dev@gmail.com>
 # Copyright 2015 Sunggun Yu
 # Copyright 2013-2018, Chef Software, Inc.
-# Copyright 2018-2019, Pivotal Software, Inc.
+# Copyright 2018-2019, VMware, Inc. or its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
