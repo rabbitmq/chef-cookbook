@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-unified_mode true
+unified_mode true if respond_to?(:unified_mode)
 
 actions :install, :remove
 default_action :install

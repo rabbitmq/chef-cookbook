@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-unified_mode true
+unified_mode true if respond_to?(:unified_mode)
 
 actions :join, :set_cluster_name, :change_cluster_node_type
 

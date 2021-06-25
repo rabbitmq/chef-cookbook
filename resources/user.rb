@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-unified_mode true
+unified_mode true if respond_to?(:unified_mode)
 
 actions :add, :delete, :set_permissions, :clear_permissions, :set_tags, :clear_tags, :change_password
 default_action :add

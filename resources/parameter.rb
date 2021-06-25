@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-unified_mode true
+unified_mode true if respond_to?(:unified_mode)
 
 actions :set, :clear, :list
 default_action :set
