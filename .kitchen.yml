@@ -14,9 +14,8 @@ transport:
 
 platforms:
   - name: centos-8
-  - name: ubuntu-18.04
   - name: ubuntu-20.04
-  - name: debian-10
+  - name: debian-11
   - name: fedora-34
   - name: opensuse-leap-15
 
@@ -37,9 +36,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:24.0.2-1"
+          version: "1:24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
         virtualhosts:
           - vhost1
           - vhost2
@@ -70,7 +69,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-20.04", "ubuntu-18.04", "debian-10"]
+    includes: ["ubuntu-20.04", "debian-11"]
 
   - name: management-plugin-deb
     run_list:
@@ -80,13 +79,13 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:24.0.2-1"
+          version: "1:24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/integration/management_plugin
-    includes: ["ubuntu-18.04"]
+    includes: ["ubuntu-20.04"]
 
   - name: system-limits-deb
     run_list:
@@ -97,68 +96,16 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:24.0.2-1"
+          version: "1:24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
         systemd:
           limits:
             NOFILE: 54000
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["ubuntu-20.04", "ubuntu-18.04", "debian-10"]
-
-  - name: use-distro-version-deb
-    run_list:
-      - recipe[erlang::default]
-      - recipe[rabbitmq::default]
-      - recipe[rabbitmq::management_ui]
-      - recipe[rabbitmq::vhosts]
-      - recipe[rabbitmq::users]
-      - recipe[rabbitmq::policies]
-    attributes:
-      erlang:
-        install_method: "esl"
-        esl:
-          version: "1:20.3.8.26-1"
-      rabbitmq:
-        use_distro_version: true
-        virtualhosts:
-          - vhost1
-          - vhost2
-        enabled_users:
-          - name: user1
-            password: user1-pwd
-            tag: management
-            rights:
-              - vhost: vhost1
-                read: ".*"
-                write: ".*"
-                conf: ".*"
-          - name: user2
-            password: user2-pwd
-            tag: management
-            rights:
-              - vhost: vhost2
-                read: ".*"
-                write: ".*"
-                conf: ".*"
-        policies:
-          mirroring:
-            pattern: "^mirrored\\."
-            params:
-              ha-mode: exactly
-              ha-params: 2
-            priority: 2
-          dlx:
-            pattern: "^dlx\\."
-            params:
-              dead-letter-exchange: deadlettered
-            priority: 1
-    verifier:
-      inspec_tests:
-        - test/integration/36x
-    includes: ["ubuntu-18.04"]
+    includes: ["ubuntu-20.04", "debian-11"]
 
   - name: default-rpm
     run_list:
@@ -168,9 +115,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "24.0.2-1"
+          version: "24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -184,8 +131,8 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "24.0.2"
-        version: "3.8.17"
+          version: "24.3.3"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -201,9 +148,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "24.0.2-1"
+          version: "24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
         systemd:
           limits:
             NOFILE: 54000
@@ -220,14 +167,14 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:24.0.2-1"
+          version: "1:24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/lwrps
-    includes: ["ubuntu-18.04"]
+    includes: ["ubuntu-20.04"]
 
   - name: cluster-deb
     run_list:
@@ -237,14 +184,14 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:24.0.2-1"
+          version: "1:24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/cluster
-    includes: ["ubuntu-18.04", "debian-10"]
+    includes: ["ubuntu-20.04", "debian-11"]
 
   - name: cluster-rpm
     run_list:
@@ -254,9 +201,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "24.0.2-1"
+          version: "24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/integration/default
@@ -271,9 +218,9 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:24.0.2-1"
+          version: "1:24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
     attributes:
       apt:
         confd:
@@ -282,13 +229,13 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:24.0.2-1"
+          version: "1:24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["debian-10"]
+    includes: ["debian-11"]
 
   - name: default-force-yes-false
     run_list:
@@ -302,13 +249,13 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "1:24.0.2-1"
+          version: "1:24.3.3-1"
       rabbitmq:
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["debian-10"]
+    includes: ["debian-11"]
 
   #
   # Team RabbitMQ Erlang packages
@@ -325,11 +272,11 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
-    includes: ["debian-10", "ubuntu-18.04"]
+    includes: ["debian-11", "ubuntu-20.04"]
 
   # Erlang package, Debian, version pinning
   - name: rabbitmq-erlang-pinned-deb
@@ -341,11 +288,11 @@ suites:
         erlang:
           enabled: true
           version: "1:22.3.4.10.10-1"
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
-    includes: ["ubuntu-18.04"]
+    includes: ["ubuntu-20.04"]
 
   # Latest Erlang package, RPM
   - name: rabbitmq-erlang-latest-rpm-el8
@@ -358,7 +305,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
@@ -377,7 +324,7 @@ suites:
           yum:
             baseurl: https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/noarch
             repo_gpgcheck: true
-        version: "3.8.17"
+        version: "3.8.28"
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
@@ -394,7 +341,7 @@ suites:
             enabled: true
             zypper:
               baseurl: https://download.opensuse.org/repositories/network:/messaging:/amqp/openSUSE_Leap_15.1
-          version: "3.8.17"
+          version: "3.8.28"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm

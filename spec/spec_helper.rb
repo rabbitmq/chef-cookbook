@@ -26,19 +26,6 @@ UBUNTU_OPTS = {
   :log_level => LOGLEVEL,
   :file_cache_path => '/tmp'
 }
-CENTOS7_OPTS = {
-  :platform => 'centos',
-  :version => '7.7.1908',
-  :log_level => LOGLEVEL,
-  :file_cache_path => '/tmp'
-}
-CENTOS_OPTS = CENTOS7_OPTS
-CENTOS6_OPTS = {
-  :platform => 'centos',
-  :version => '6.10',
-  :log_level => LOGLEVEL,
-  :file_cache_path => '/tmp'
-}
 FEDORA_OPTS = {
   :platform => 'fedora',
   :version => '32',
