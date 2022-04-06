@@ -40,6 +40,17 @@ module RabbitMQ
       rendered.join(",\n")
     end
 
+    def get_policy(name, vhost)
+      # Returns JSON of a policy in a vhost
+      # Returns false if the policy does not exist
+      cmd = "rabbitmqctl list_policies --vhost #{Shellwords.escape vhost} --formatter json"
+      cmd = Mixlib::ShellOut.new(cmd, env: shell_environment).run_command
+      pol = JSON.parse(cmd.stdout).select { |p| p['name'] == name }.first
+      return false unless pol
+      pol['definition'] = JSON.parse(pol['definition']) unless pol['definition'].is_a?(Hash)
+      pol
+    end
+
     def format_ssl_versions
       Array(node['rabbitmq']['ssl_versions']).map { |n| "'#{n}'" }.join(',')
     end

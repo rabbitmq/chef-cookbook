@@ -515,14 +515,13 @@ Sets or clears a RabbitMQ [policy](https://www.rabbitmq.com/parameters.html#poli
 
 - `:set` sets a `policy`
 - `:clear` clears a `policy`
-- `:list` lists `policy`s
 
 ### Examples
 
 ``` ruby
 rabbitmq_policy "queue-length-limit" do
   pattern "^limited\\.*"
-  parameters ({"max-length" => "3000"})
+  definition ({"max-length" => "3000"})
   priority 1
   action :set
 end

@@ -20,14 +20,63 @@
 # limitations under the License.
 #
 
+include RabbitMQ::CoreHelpers
+
 unified_mode true if respond_to?(:unified_mode)
 
-actions :set, :clear, :list
 default_action :set
 
-attribute :policy, :kind_of => String, :name_attribute => true
-attribute :pattern, :kind_of => String
-attribute :parameters, :kind_of => Hash
-attribute :priority, :kind_of => Integer
-attribute :vhost, :kind_of => String
-attribute :apply_to, :kind_of => String, :equal_to => %w(all queues exchanges)
+property :policy, String, name_property: true
+property :pattern, String
+property :definition, Hash
+property :priority, Integer, default: 0
+property :apply_to, String, :equal_to => %w(all queues exchanges), default: 'all'
+property :vhost, String, default: '/'
+
+deprecated_property_alias 'parameters',
+                          'definition',
+                          'The \"parameters\" property has been renamed \"definition\". '\
+                          'Please update your cookbooks to use the new property name.'
+
+load_current_value do |new_resource|
+  p = get_policy(new_resource.policy, new_resource.vhost)
+
+  current_value_does_not_exist! unless p
+
+  pattern p['pattern']
+  definition p['definition']
+  apply_to p['apply-to']
+  priority p['priority']
+end
+
+action :set do
+  # These properties are only required for the :set action
+  [:pattern, :definition].each do |prop|
+    raise(
+      Chef::Exceptions::ValidationFailed,
+      "#{prop} is a required property"
+    ) unless property_is_set?(prop)
+  end
+
+  converge_if_changed do
+    cmd = "rabbitmqctl -q set_policy -p #{new_resource.vhost}"
+    cmd += " --apply-to #{new_resource.apply_to}"
+    cmd += " #{new_resource.policy}"
+    cmd += " \"#{new_resource.pattern}\""
+    cmd += " '#{new_resource.definition.to_json}'"
+    cmd += " --priority #{new_resource.priority}"
+
+    execute "set_policy #{new_resource.policy} on vhost #{new_resource.vhost}" do
+      command cmd
+      environment shell_environment
+    end
+  end
+end
+
+action :clear do
+  execute "clear_policy #{new_resource.policy} from vhost #{new_resource.vhost}" do
+    command "rabbitmqctl clear_policy #{new_resource.policy} -p #{new_resource.vhost}"
+    environment shell_environment
+    only_if { get_policy(new_resource.policy, new_resource.vhost) }
+  end
+end

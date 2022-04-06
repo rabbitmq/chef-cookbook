@@ -72,7 +72,7 @@ end
 
 rabbitmq_policy 'queue_length_limit' do
   pattern 'limited.*'
-  parameters 'max-length' => 1000
+  definition 'max-length' => 1000
   apply_to 'queues'
   action :set
 end
