@@ -97,9 +97,9 @@ platforms:
         - RUN /usr/bin/apt-get upgrade -y
         - RUN /usr/bin/apt-get install -y ca-certificates sudo apt-transport-https lsb-release procps net-tools
 
-  - name: debian-11
+  - name: debian-10
     driver:
-      image: dokken/debian-11
+      image: dokken/debian-10
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - ENV DEBIAN_FRONTEND noninteractive
@@ -164,7 +164,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["ubuntu-20.04", "debian-11"]
+    includes: ["ubuntu-20.04", "debian-10"]
 
   - name: management-plugin-deb
     run_list:
@@ -200,7 +200,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["ubuntu-20.04", "debian-11"]
+    includes: ["ubuntu-20.04", "debian-10"]
 
   - name: default-rpm
     run_list:
@@ -286,7 +286,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/cluster
-    includes: ["ubuntu-20.04", "debian-11"]
+    includes: ["ubuntu-20.04", "debian-10"]
 
   - name: cluster-rpm
     run_list:
@@ -330,7 +330,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["debian-11"]
+    includes: ["debian-10"]
 
   - name: default-force-yes-false
     run_list:
@@ -350,7 +350,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["debian-11"]
+    includes: ["debian-10"]
 
   #
   # Team RabbitMQ Erlang packages
@@ -371,7 +371,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_deb
-    includes: ["debian-11", "ubuntu-20.04"]
+    includes: ["debian-10", "ubuntu-20.04"]
 
   # Erlang package, Debian, version pinning
   - name: rabbitmq-erlang-pinned-deb
@@ -387,7 +387,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_deb
-    includes: ["debian-11", "ubuntu-20.04"]
+    includes: ["debian-10", "ubuntu-20.04"]
 
 
   # Latest Erlang package, RPM
