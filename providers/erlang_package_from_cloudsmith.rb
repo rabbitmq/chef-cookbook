@@ -53,11 +53,8 @@ action :install do
         retries new_resource.retries
         retry_delay new_resource.retry_delay unless new_resource.retry_delay.nil?
         action :install
+        notifies :reload, 'ohai[reload_packages]', :immediately
       end
-    end
-
-    ohai 'reload' do
-      action :reload
     end
   end
 
