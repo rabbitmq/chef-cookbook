@@ -26,7 +26,7 @@ include_recipe 'rabbitmq::default'
 node['rabbitmq']['policies'].each do |name, policy|
   rabbitmq_policy name do
     pattern policy['pattern']
-    parameters policy['params']
+    definition policy['params']
     priority policy['priority']
     vhost policy['vhost']
     apply_to policy['apply_to']
