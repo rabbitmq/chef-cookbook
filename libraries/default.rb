@@ -42,7 +42,7 @@ module RabbitMQ
 
     def get_policy(name, vhost)
       # Returns JSON of a policy in a vhost
-      # Returns nil if the policy does not exist
+      # Returns false if the policy does not exist
       cmd = "rabbitmqctl list_policies --vhost #{Shellwords.escape vhost} --formatter json"
       cmd = Mixlib::ShellOut.new(cmd, env: shell_environment).run_command
       pol = JSON.parse(cmd.stdout).select { |p| p['name'] == name }.first
