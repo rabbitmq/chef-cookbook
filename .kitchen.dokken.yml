@@ -62,6 +62,13 @@ platforms:
       intermediate_instructions:
         - RUN dnf -y install sudo
 
+  - name: amazonlinux-2
+    driver:
+      image: dokken/amazonlinux-2
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
+
   - name: amazonlinux-2022
     driver:
       image: dokken/amazonlinux-2022
@@ -212,9 +219,12 @@ suites:
 
   - name: default-modern-rpm
     run_list:
+      - recipe[rabbitmq::erlang_package]
       - recipe[rabbitmq::plugins]
     attributes:
       rabbitmq:
+        erlang:
+          enabled: true
         version: "3.8.28"
     verifier:
       inspec_tests:
@@ -387,12 +397,13 @@ suites:
       # which is nil/"install latest"
       rabbitmq:
         erlang:
+          version: "24.3.3"
           enabled: true
         version: "3.8.28"
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-34", "amazonlinux-2022", "centos-stream-8"]
+    includes: ["fedora-34", "centos-stream-8", "amazonlinux-2022"]
 
     # Latest Erlang package, RPM, openSUSE leap 15 repo
   - name: rabbitmq-erlang-latest-suse
