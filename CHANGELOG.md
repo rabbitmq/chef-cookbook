@@ -1,7 +1,16 @@
 # Change Log
-## [v5.9.2](https://github.com/rabbitmq/chef-cookbook/tree/v5.9.2) (in development)
+## [v5.10.0](https://github.com/rabbitmq/chef-cookbook/tree/v5.10.0) (in development)
 
-No changes yet.
+ * This release series provisions RabbitMQ `3.8.28` by default. `3.9.14` and later
+   versions are recommended and will be provisioned in a future minor release.
+
+ * Minimum supported OS versions are now: Debian 10, Ubuntu 18.04, CentOS Stream 8, Fedora 32.
+
+ * Refactored `rabbitmq_policy` resource and dropped the rarely used `:list` action.
+
+   Contributed by @fozboz.
+
+   GitHub issue: [#587](https://github.com/rabbitmq/chef-cookbook/pull/587)
 
 ## [v5.9.1](https://github.com/rabbitmq/chef-cookbook/tree/v5.9.1) (2021-06-25)
 
