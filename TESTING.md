@@ -70,6 +70,36 @@ machines and apply cookbooks. After a successful converge, tests are
 uploaded and ran out of band of Chef. Tests should be designed to
 ensure that a recipe has accomplished its goal.
 
+### Using Docker
+
+Docker testing relies on Dokken. At the time of writing, Dokken
+is [only compatible with Docker Desktop `4.2.x`](https://github.com/test-kitchen/dokken-images/issues/57).
+
+To list available configurations that can be run, use
+
+```
+KICHEN_LOCAL_YAML=".kitchen.dokken.yml" kitchen list
+```
+
+To run Kitchen tests in Docker, use
+
+```
+KICHEN_LOCAL_YAML=".kitchen.dokken.yml" kitchen test default-deb --concurrency=2
+```
+
+where `default-deb` is a prefix of a group of configurations (they can be run in parallel
+if the `--concurrency` flag is used).
+
+To run all suites (this can take up to 90 minutes depending on the driver,
+hardware and concurrency rate):
+
+```
+export KI_DRIVER=dokken
+bundle exec kitchen test
+```
+This will run tels of suites on multiple operating systems (Debian, Ubuntu, CentOS 7, CentOS 6,
+and so on).
+
 ### Using Vagrant
 
 Integration tests can be performed on a local workstation using
@@ -91,25 +121,6 @@ or
 ```
 rake integration:vagrant
 ```
-
-### Using Docker
-
-To run Kitchen tests in Docker, use
-
-```
-KICHEN_LOCAL_YAML=".kitchen.dokken.yml" kitchen test default-deb --concurrency=2
-```
-
-To run all suites (this can take up to 90 minutes depending on the driver,
-hardware and concurrency rate):
-
-```
-export KI_DRIVER=dokken
-bundle exec kitchen test
-```
-This will run tels of suites on multiple operating systems (Debian, Ubuntu, CentOS 7, CentOS 6,
-and so on).
-
 
 ### Integration Testing using IaaS Providers
 
