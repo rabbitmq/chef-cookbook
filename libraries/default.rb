@@ -33,7 +33,7 @@ module RabbitMQ
       # Otherwise, we can just render it nicely as Erlang wants. This
       # theoretically opens the door for arbitrary kernel_app parameters to be
       # declared.
-      kernel.select { |_k, v| !v.nil? }.each_pair do |param, val|
+      kernel.compact.each_pair do |param, val|
         rendered << "    {#{param}, #{val}}"
       end
 
@@ -114,7 +114,7 @@ module RabbitMQ
     end
 
     def service_control_systemd?
-      node['init_package'] == 'systemd' || node['rabbitmq']['job_control'] == 'systemd'
+      systemd? || node['rabbitmq']['job_control'] == 'systemd'
     end
   end
 end

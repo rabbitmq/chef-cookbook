@@ -23,29 +23,19 @@ rake integration:cloud    # Run Test Kitchen with cloud plugins
 rake integration:vagrant  # Run Test Kitchen with Vagrant
 rake spec                 # Run ChefSpec examples
 rake style                # Run all style checks
-rake style:chef           # Lint Chef cookbooks
 rake style:ruby           # Run Ruby style checks
 rake travis               # Run all tests on Travis
 ```
 
 ## Style Testing
 
-Ruby style tests can be performed by Rubocop by issuing either
+Ruby style tests can be performed by Cookstyle by issuing either
 ```
-bundle exec rubocop
+bundle exec cookstyle
 ```
 or
 ```
 rake style:ruby
-```
-
-Chef style tests can be performed with Foodcritic by issuing either
-```
-bundle exec foodcritic
-```
-or
-```
-rake style:chef
 ```
 
 ## Spec Testing
@@ -78,13 +68,13 @@ is [only compatible with Docker Desktop `4.2.x`](https://github.com/test-kitchen
 To list available configurations that can be run, use
 
 ```
-KICHEN_LOCAL_YAML=".kitchen.dokken.yml" kitchen list
+KITCHEN_LOCAL_YAML=".kitchen.dokken.yml" kitchen list
 ```
 
 To run Kitchen tests in Docker, use
 
 ```
-KICHEN_LOCAL_YAML=".kitchen.dokken.yml" kitchen test default-deb --concurrency=2
+KITCHEN_LOCAL_YAML=".kitchen.dokken.yml" kitchen test default-deb --concurrency=2
 ```
 
 where `default-deb` is a prefix of a group of configurations (they can be run in parallel

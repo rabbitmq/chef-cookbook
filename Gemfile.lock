@@ -916,7 +916,6 @@ DEPENDENCIES
   chef
   chefspec
   cookstyle
-  foodcritic (>= 16.3)
   github_changelog_generator
   growl
   guard

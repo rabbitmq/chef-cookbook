@@ -265,7 +265,7 @@ default['rabbitmq']['erlang']['apt']['uri'] = "https://dl.cloudsmith.io/public/r
 unless node['lsb'].nil?
   default['rabbitmq']['erlang']['apt']['lsb_codename'] = node['lsb']['codename']
 end
-default['rabbitmq']['erlang']['apt']['components'] = ["main"]
+default['rabbitmq']['erlang']['apt']['components'] = ['main']
 default['rabbitmq']['erlang']['apt']['key'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'
 
 default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
@@ -281,7 +281,7 @@ default['rabbitmq']['erlang']['yum']['baseurl'] = value_for_platform(
   },
   'amazon' => {
     # Amazon Linux 2022 uses el/8 as it is based on Fedora 34+
-    '>= 2022'  => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch',
+    '>= 2022' => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch',
     # Amazon Linux 2 uses el/7 as it is based on CentOS 7
     '< 2022'  => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/7/$basearch',
     'default' => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch'

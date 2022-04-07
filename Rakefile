@@ -12,25 +12,10 @@ namespace :style do
   rescue LoadError => e
     puts ">>> Gem load error: #{e}, omitting style:ruby" unless ENV['CI']
   end
-
-  begin
-    require 'foodcritic'
-
-    desc 'Run Chef style checks'
-    FoodCritic::Rake::LintTask.new(:chef) do |t|
-      t.options = {
-        :fail_tags => ['any'],
-        :tags => %w(~FC007 ~FC023 ~FC085),
-        :progress => true,
-      }
-    end
-  rescue LoadError
-    puts ">>> Gem load error: #{e}, omitting style:chef" unless ENV['CI']
-  end
 end
 
 desc 'Run all style checks'
-task :style => ['style:chef', 'style:ruby']
+task :style => ['style:ruby']
 
 # ChefSpec
 begin

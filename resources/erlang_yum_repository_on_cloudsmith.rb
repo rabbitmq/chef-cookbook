@@ -41,5 +41,3 @@ attribute :sslcacert, String
 attribute :sslclientcert, String
 attribute :sslclientkey, String
 attribute :sslverify, [true, false]
-
-attribute :timeout

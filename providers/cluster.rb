@@ -23,8 +23,7 @@ include RabbitMQ::CoreHelpers
 
 # Get ShellOut
 def get_shellout(cmd)
-  sh_cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
-  sh_cmd
+  Mixlib::ShellOut.new(cmd, :env => shell_environment)
 end
 
 # Execute rabbitmqctl command with args
