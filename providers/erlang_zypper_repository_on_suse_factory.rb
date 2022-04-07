@@ -50,8 +50,6 @@ action :create do
     sslclientkey new_resource.sslclientkey unless new_resource.sslclientkey.nil?
     sslverify new_resource.sslverify unless new_resource.sslverify.nil?
 
-    timeout new_resource.timeout unless new_resource.timeout.nil?
-
     notifies :run, 'execute[zypper refresh]', :immediately
 
     action :create

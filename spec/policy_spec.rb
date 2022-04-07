@@ -9,7 +9,7 @@ describe 'rabbitmq_policy' do
     before do
       shellout = double
       allow(Mixlib::ShellOut).to receive(:new).with(
-        /rabbitmqctl list_policies/, {env: { 'HOME' => // } }
+        /rabbitmqctl list_policies/, { env: { 'HOME' => // } }
       ).and_return(shellout)
       allow(shellout).to receive(:run_command).and_return(shellout)
       allow(shellout).to receive(:stdout).and_return('[]')
@@ -44,7 +44,7 @@ describe 'rabbitmq_policy' do
     before do
       shellout = double
       allow(Mixlib::ShellOut).to receive(:new).with(
-        /rabbitmqctl list_policies/, {env: { 'HOME' => // } }
+        /rabbitmqctl list_policies/, { env: { 'HOME' => // } }
       ).and_return(shellout)
       allow(shellout).to receive(:run_command).and_return(shellout)
       allow(shellout).to receive(:stdout).and_return(

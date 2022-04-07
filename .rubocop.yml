@@ -1,13 +1,13 @@
 AsciiComments:
   Enabled: false
 
-ChefStyle/CommentFormat:
+Chef/Style/CommentFormat:
   Enabled: false
 
-ChefModernize/FoodcriticComments:
+Chef/Modernize/FoodcriticComments:
   Enabled: false
 
-ChefModernize/ExecuteSleep:
+Chef/Modernize/ExecuteSleep:
   Enabled: false
 
 Layout/ParameterAlignment:
