@@ -4,7 +4,7 @@
 
 A Ruby environment with Bundler installed is a prerequisite for using
 the testing harness shipped with this cookbook. At the time of this
-writing, it works with Ruby 2.0 and Bundler 1.5.3. All programs
+writing, it works with Ruby 2.7+ and latest Bundler releases. All programs
 involved, with the exception of Vagrant, can be installed by cd'ing
 into the parent directory of this cookbook and running "bundle install"
 
@@ -77,7 +77,7 @@ Virtualbox or VMWare. Detailed instructions for setting this up can be
 found at the [Bento](https://github.com/chef/bento) project web site.
 
 ```
-kitchen test default-deb-ubuntu-1604
+kitchen test default-deb-ubuntu-2004
 ```
 
 To run all suites (involves multiple operating systems: Ubuntu, Debian, CentOS 7, CentOS 6)
@@ -97,7 +97,7 @@ rake integration:vagrant
 To run Kitchen tests in Docker, use
 
 ```
-KICHEN_YAML=".kitchen.dokken.yml" kitchen test default-deb --concurrency=2
+KICHEN_LOCAL_YAML=".kitchen.dokken.yml" kitchen test default-deb --concurrency=2
 ```
 
 To run all suites (this can take up to 90 minutes depending on the driver,
