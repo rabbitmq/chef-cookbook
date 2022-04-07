@@ -281,10 +281,10 @@ default['rabbitmq']['erlang']['yum']['baseurl'] = value_for_platform(
   },
   'amazon' => {
     # Amazon Linux 2022 uses el/8 as it is based on Fedora 34+
-    'default' => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch',
     '>= 2022'  => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch',
     # Amazon Linux 2 uses el/7 as it is based on CentOS 7
-    '< 2022'  => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/7/$basearch'
+    '< 2022'  => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/7/$basearch',
+    'default' => 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch'
   }
 )
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'

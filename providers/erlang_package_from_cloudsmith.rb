@@ -59,7 +59,7 @@ action :install do
   end
 
   if platform_family?('rhel', 'fedora', 'amazon')
-    package new_resource.name do
+    rpm_package new_resource.name do
       package_name 'erlang'
       version new_resource.version unless new_resource.version.nil?
       options '-y'

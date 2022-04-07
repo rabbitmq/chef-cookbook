@@ -246,7 +246,7 @@ if platform_family?('amazon')
       action :create_if_missing
     end
     # Amazon Linux 2022 is based on Fedora 34+
-    dnf_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
+    rpm_package "#{Chef::Config[:file_cache_path]}/#{rpm_package_name}" do
       notifies :reload, 'ohai[reload_packages]', :immediately
     end
   end

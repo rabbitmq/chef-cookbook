@@ -210,16 +210,11 @@ suites:
         - test/integration/default
     includes: ["centos-stream-8"]
 
-  # Fedora and Amazon Linux 2 require recipe[rabbitmq::erlang_package]
   - name: default-modern-rpm
     run_list:
-      - recipe[rabbitmq::erlang_package]
       - recipe[rabbitmq::plugins]
     attributes:
       rabbitmq:
-        erlang:
-          enabled: true
-          version: "24.3.3-1"
         version: "3.8.28"
     verifier:
       inspec_tests:
@@ -383,7 +378,7 @@ suites:
 
 
   # Latest Erlang package, RPM
-  - name: rabbitmq-erlang-latest-rpm-el8
+  - name: rabbitmq-erlang-latest-rpm
     run_list:
       - recipe[rabbitmq::erlang_package]
       - recipe[rabbitmq::default]
@@ -397,7 +392,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-34", "centos-stream-9", "centos-stream-8"]
+    includes: ["fedora-34", "amazonlinux-2022", "centos-stream-8"]
 
     # Latest Erlang package, RPM, openSUSE leap 15 repo
   - name: rabbitmq-erlang-latest-suse

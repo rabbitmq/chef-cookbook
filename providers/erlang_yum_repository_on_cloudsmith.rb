@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-provides :erlang_repository, platform_family: %w(rhel fedora)
+provides :erlang_repository, platform_family: %w(rhel fedora amazon)
 
 action :create do
   yum_repository(new_resource.name) do
