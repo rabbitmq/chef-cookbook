@@ -13,7 +13,7 @@ transport:
   name: "ssh"
 
 platforms:
-  - name: centos-8
+  - name: centos-stream-8
   - name: ubuntu-20.04
   - name: debian-10
   - name: fedora-34
@@ -121,7 +121,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8"]
+    includes: ["centos-stream-8"]
 
   - name: default-modern-rpm
     run_list:
@@ -136,7 +136,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-8", "fedora-34"]
+    includes: ["centos-stream-8", "fedora-34"]
 
 
   - name: system-limits-rpm
@@ -157,7 +157,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/limits
-    includes: ["centos-7"]
+    includes: ["centos-stream-8"]
 
   - name: lwrps
     run_list:
@@ -208,7 +208,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/cluster
-    includes: ["centos-7"]
+    includes: ["centos-stream-8"]
 
   - name: default-force-yes
     run_list:
@@ -309,7 +309,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/latest_rpm
-    includes: ["fedora-34", "centos-8"]
+    includes: ["fedora-34", "centos-stream-8"]
 
   # Erlang package, RPM, version pinning
   - name: rabbitmq-erlang-pinned-rpm-el8
@@ -328,7 +328,7 @@ suites:
     verifier:
       inspec_tests:
         - test/erlang_package/pinned_rpm
-    includes: ["fedora-34", "centos-8"]
+    includes: ["fedora-34", "centos-stream-8"]
 
   # Latest Erlang package, RPM, openSUSE leap 15 repo
   - name: rabbitmq-erlang-latest-rpm-suse
