@@ -4,7 +4,7 @@ maintainer 'Chef, Inc. and contributors'
 maintainer_email 'mklishin@pivotal.io'
 license 'Apache-2.0'
 description 'Installs and configures RabbitMQ server'
-version '5.9.2'
+version '5.10.0'
 
 issues_url 'https://github.com/rabbitmq/chef-cookbook/issues'
 source_url 'https://github.com/rabbitmq/chef-cookbook'
