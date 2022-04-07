@@ -320,7 +320,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.3"
+          version: "23.3.4.11"
           yum:
             baseurl: https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/noarch
             repo_gpgcheck: true

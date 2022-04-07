@@ -55,14 +55,6 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
 
-  - name: scientificlinux-7
-    driver:
-      image: sl:7
-      platform: rhel
-      pid_one_command: /usr/lib/systemd/systemd
-      intermediate_instructions:
-        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
-
   - name: fedora-34
     driver:
       image: dokken/fedora-34
@@ -210,7 +202,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.3.1-1"
+          version: "24.3.3-1"
       rabbitmq:
         version: "3.8.28"
     verifier:
@@ -227,7 +219,7 @@ suites:
       rabbitmq:
         erlang:
           enabled: true
-          version: "23.3.4.4"
+          version: "24.3.3-1"
         version: "3.8.28"
     verifier:
       inspec_tests:
@@ -243,7 +235,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.3.1-1"
+          version: "24.3.3-1"
       rabbitmq:
         version: "3.8.28"
         systemd:
@@ -296,7 +288,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "23.3.1-1"
+          version: "24.3.3-1"
       rabbitmq:
         version: "3.8.28"
     verifier:

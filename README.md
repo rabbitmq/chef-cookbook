@@ -154,19 +154,19 @@ Note that Erlang Solutions repositories can be behind the latest Erlang/OTP patc
 node['erlang']['install_method'] = "esl"
 ```
 
-to provision a specific version, e.g. `23.3.1`:
+to provision a specific version, e.g. `24.3.3`:
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # Ubuntu and Debian
 # note the "1:" package epoch prefix
-node['erlang']['esl']['version'] = "1:23.3.1"
+node['erlang']['esl']['version'] = "1:24.3.3"
 ```
 
 ``` ruby
 node['erlang']['install_method'] = "esl"
 # CentOS, RHEL, Fedora
-node['erlang']['esl']['version'] = "23.3.1-1"
+node['erlang']['esl']['version'] = "24.3.3-1"
 ```
 
 ### Seting RabbitMQ Version
@@ -174,7 +174,7 @@ node['erlang']['esl']['version'] = "23.3.1-1"
 Set `node['rabbitmq']['version']` to specify a version:
 
 ``` ruby
-node['rabbitmq']['version'] = "3.8.17"
+node['rabbitmq']['version'] = "3.9.14"
 ```
 
 If you have `node['rabbitmq']['deb_package_url']` or `node['rabbitmq']['rpm_package_url']` overridden
