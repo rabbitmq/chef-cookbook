@@ -26,7 +26,7 @@ The cookbook targets and is tested against
  * RHEL 8
  * CentOS Stream 8
  * Fedora 32 or later
- * Amazon Linux 2022
+ * Amazon Linux 2
  * Scientific Linux 7
 
 Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
