@@ -23,22 +23,17 @@ The cookbook targets and is tested against
 
  * Ubuntu 18.04 through 20.04
  * Debian 10 (Buster) and 11 (Bullseye)
- * RHEL 7 and 8
- * CentOS 7 and 8
+ * RHEL 8
+ * CentOS Stream 8
  * Fedora 32 or later
- * Amazon Linux 2
+ * Amazon Linux 2022
  * Scientific Linux 7
 
 Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
 
 ### Newer Versions
 
-Newer Debian, Ubuntu and RHEL/CentOS 8.x versions should work.
-
-### Older Versions
-
-CentOS 6.x, Ubuntu 16.04 and Debian 9 (Stretch) are no longer supported
-by modern RabbitMQ releases as they do not provide OpenSSL 1.1.
+Newer Debian, Ubuntu and RHEL/Fedora/CentOS Stream versions should work.
 
 
 ## Dependencies
@@ -57,15 +52,15 @@ Both options are covered below.
 
 
 
-## Provisioning RabbitMQ 3.8.x
+## Provisioning RabbitMQ 3.9.x and 3.8.x
 
 ### Ensure Your Cookbook Version is Compatible
 
-To provision RabbitMQ 3.8.x, you must use version `5.8.5` of this cookbook or later.
+To provision RabbitMQ 3.9.x or 3.8.x, you must use version `5.8.5` of this cookbook or later.
 
 ### Provision Erlang/OTP 23.2 or Later
 
-Before provisioning a 3.8.x release, please learn about
+Before provisioning a 3.9.x or 3.8.x release, please learn about
 the [minimum required Erlang/OTP version](https://www.rabbitmq.com/which-erlang.html)
 and Erlang/OTP version recommendations.
 
@@ -79,13 +74,13 @@ or from [Erlang Solutions](https://packages.erlang-solutions.com/erlang/)
 `rabbitmq::erlang_package` is a recipe that provisions latest Erlang packages from team RabbitMQ.
 The packages support
 
- * Debian 9 and 10
- * Ubuntu 16.04 through 20.04
- * RHEL 7 and 8
- * CentOS 7 and 8
+ * Debian 10 and 11
+ * Ubuntu 18.04 through 20.04
+ * RHEL 8
+ * CentOS Stream 8
  * Fedora 32 or later
+ * Amazon Linux 2022
  * Scientific Linux 7
- * Amazon Linux 2
 
 The packages are **cannot be installed alongside with other Erlang packages**, for example, those
 from standard Debian repositories or Erlang Solutions.
@@ -102,10 +97,10 @@ To override package version, use `node['rabbitmq']['erlang']['version']`:
 
 ``` ruby
 # Debian
-node['rabbitmq']['erlang']['version'] = '1:23.3.4.4-1'
+node['rabbitmq']['erlang']['version'] = '1:24.3.3-1'
 
 # RPM
-node['rabbitmq']['erlang']['version'] = '23.3.1'
+node['rabbitmq']['erlang']['version'] = '24.3.3'
 ```
 
 On Ubuntu and Debian the distribution will be picked from node attributes.
@@ -132,25 +127,15 @@ default['rabbitmq']['erlang']['apt']['key'] = 'https://dl.cloudsmith.io/public/r
 default['rabbitmq']['erlang']['apt']['install_options'] = %w(--fix-missing)
 ```
 
-On CentOS 8 and 7, base Yum repository URL will be picked based on distribution versions.
+On CentOS Stream 8, base Yum repository URL will be picked based on distribution versions.
 On Fedora, a suitable CentOS package will be used. Erlang package version is set the same way
 as for Debian (see above).
 
-Below are the defaults used by the Yum repository (assuming RHEL or CentOS 8):
+Below are the defaults used by the Yum repository (assuming RHEL or CentOS Stream 8):
 
 ``` ruby
 # CentOS 8, RHEL 8, Fedora
 default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/8/$basearch'
-default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'
-default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
-default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
-```
-
-The CentOS 7 variant uses `el/7` for distribution name in the `baseurl`:
-
-``` ruby
-# CentOS 7, RHEL 7
-default['rabbitmq']['erlang']['yum']['baseurl'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/rpm/el/7/$basearch'
 default['rabbitmq']['erlang']['yum']['gpgkey'] = 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/gpg.E495BB49CC4BBE5B.key'
 default['rabbitmq']['erlang']['yum']['gpgcheck'] = true
 default['rabbitmq']['erlang']['yum']['repo_gpgcheck'] = false
@@ -472,7 +457,7 @@ Install the package. Here's an example for Debian-based systems:
 ``` ruby
 rabbitmq_erlang_package_from_cloudsmith 'rabbitmq_erlang' do
   # This package version assumes a Debian-based distribution.
-  version '1:23.3.4.4-1'
+  version '1:24.3.3-1'
 
   action :install
 end
@@ -482,7 +467,7 @@ Here's another one for RPM-based ones:
 
 ``` ruby
 rabbitmq_erlang_package_from_cloudsmith 'rabbitmq_erlang' do
-  version '23.3.4.4'
+  version '24.3.3'
 
   action :install
 end

@@ -70,9 +70,9 @@ platforms:
       intermediate_instructions:
         - RUN dnf -y install sudo
 
-  - name: amazonlinux-2
+  - name: amazonlinux-2022
     driver:
-      image: dokken/amazonlinux-2
+      image: dokken/amazonlinux-2022
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
         - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
@@ -232,7 +232,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-    includes: ["centos-stream-9", "centos-stream-8", "fedora-34", "amazonlinux-2"]
+    includes: ["centos-stream-9", "centos-stream-8", "fedora-34", "amazonlinux-2022"]
 
   - name: system-limits-rpm
     run_list:
