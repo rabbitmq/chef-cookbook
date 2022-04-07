@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 name 'rabbitmq'
-maintainer 'Chef, Inc. and contributors'
-maintainer_email 'mklishin@pivotal.io'
+maintainer 'VMware, Inc. and contributors'
+maintainer_email 'klishinm@vmware.com'
 license 'Apache-2.0'
 description 'Installs and configures RabbitMQ server'
 version '5.10.0'
