@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'chef'
 gem 'berkshelf'
 gem 'github_changelog_generator'
+gem 'nokogiri', ">= 1.13.4"
 gem 'stove'
 
 group :lint do
