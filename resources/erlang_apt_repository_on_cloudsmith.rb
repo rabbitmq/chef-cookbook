@@ -20,13 +20,47 @@
 
 unified_mode true if respond_to?(:unified_mode)
 
-actions :add, :remove
 default_action :add
 
-attribute :uri, String, default: ''
-attribute :distribution, String
-attribute :components, Array, default: ['erlang']
-attribute :key, String, default: ''
-attribute :keyserver, String
+property :uri, String, default: ''
+property :distribution, String
+property :components, Array, default: ['erlang']
+property :key, String, default: ''
+property :keyserver, String
 
-attribute :trusted, [true, false], default: false
+property :trusted, [true, false], default: false
+
+provides :erlang_repository, platform_family: %w(debian)
+
+action :add do
+  package 'apt-transport-https'
+
+  apt_repository(new_resource.name) do
+    uri new_resource.uri
+    distribution new_resource.distribution if new_resource.distribution
+    components new_resource.components
+    key new_resource.key
+    keyserver new_resource.keyserver if new_resource.keyserver
+    trusted new_resource.trusted
+
+    action :add
+  end
+
+  apt_preference(new_resource.name) do
+    glob 'erlang*'
+    pin 'release o=cloudsmith'
+    pin_priority '800'
+
+    action :add
+  end
+end
+
+action :remove do
+  apt_repository(new_resource.name) do
+    action :remove
+  end
+
+  apt_preference(new_resource.name) do
+    action :remove
+  end
+end

@@ -77,7 +77,10 @@ rabbitmq_policy 'queue_length_limit' do
   action :set
 end
 
-rabbitmq_plugin 'rabbitmq_federation'
+rabbitmq_plugin 'rabbitmq_federation' do
+  # this plugin does not work until we restart
+  notifies :restart, "service[#{node['rabbitmq']['service_name']}]", :immediately
+end
 
 rabbitmq_vhost 'sensu'
 

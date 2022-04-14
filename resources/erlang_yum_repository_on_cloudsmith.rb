@@ -20,24 +20,61 @@
 
 unified_mode true if respond_to?(:unified_mode)
 
-actions :create, :remove
+provides :erlang_repository, platform_family: %w(rhel fedora amazon)
+
 default_action :create
 
-attribute :baseurl, String, required: true
+property :baseurl, String, required: true
 
-attribute :gpgcheck, [true, false], default: true
-attribute :gpgkey, String
+property :gpgcheck, [true, false], default: true
+property :gpgkey, String
 
-attribute :repo_gpgcheck, [true, false], default: true
-attribute :repositoryid, String
-attribute :enabled, [true, false], default: true
-attribute :priority, String
+property :repo_gpgcheck, [true, false], default: true
+property :repositoryid, String
+property :enabled, [true, false], default: true
+property :priority, String
 
-attribute :proxy, String
-attribute :proxy_username, String
-attribute :proxy_password, String
+property :proxy, String
+property :proxy_username, String
+property :proxy_password, String
 
-attribute :sslcacert, String
-attribute :sslclientcert, String
-attribute :sslclientkey, String
-attribute :sslverify, [true, false]
+property :sslcacert, String
+property :sslclientcert, String
+property :sslclientkey, String
+property :sslverify, [true, false]
+
+property :timeout, String
+
+action :create do
+  yum_repository(new_resource.name) do
+    description 'Erlang RPM packages from Team RabbitMQ'
+
+    baseurl new_resource.baseurl
+    gpgcheck new_resource.gpgcheck
+    gpgkey new_resource.gpgkey if new_resource.gpgkey
+
+    repo_gpgcheck new_resource.repo_gpgcheck
+    repositoryid new_resource.repositoryid if new_resource.repositoryid
+    enabled new_resource.enabled
+    priority new_resource.priority if new_resource.priority
+
+    proxy new_resource.proxy if new_resource.proxy
+    proxy_username new_resource.proxy_username if new_resource.proxy_username
+    proxy_password new_resource.proxy_password if new_resource.proxy_password
+
+    sslcacert new_resource.sslcacert if new_resource.sslcacert
+    sslclientcert new_resource.sslclientcert if new_resource.sslclientcert
+    sslclientkey new_resource.sslclientkey if new_resource.sslclientkey
+    sslverify new_resource.sslverify if new_resource.sslverify
+
+    timeout new_resource.timeout if new_resource.timeout
+
+    action :create
+  end
+end
+
+action :remove do
+  yum_repository(new_resource.name) do
+    action :remove
+  end
+end

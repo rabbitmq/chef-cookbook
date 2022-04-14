@@ -20,8 +20,6 @@
 # limitations under the License.
 #
 
-include RabbitMQ::CoreHelpers
-
 unified_mode true if respond_to?(:unified_mode)
 
 default_action :set
@@ -37,6 +35,10 @@ deprecated_property_alias 'parameters',
                           'definition',
                           'The \"parameters\" property has been renamed \"definition\". '\
                           'Please update your cookbooks to use the new property name.'
+
+action_class do
+  include RabbitMQ::CoreHelpers
+end
 
 load_current_value do |new_resource|
   p = get_policy(new_resource.policy, new_resource.vhost)

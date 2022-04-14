@@ -18,7 +18,20 @@
 # limitations under the License.
 #
 
+unified_mode true if respond_to?(:unified_mode)
+
 provides :erlang_repository, platform_family: %w(suse)
+
+default_action :create
+
+property :baseurl, String, required: true
+
+property :gpgcheck, [true, false], default: true
+property :gpgkey, String
+property :gpgautoimportkeys, [true, false], default: true
+
+property :enabled, [true, false], default: true
+property :priority, Integer
 
 action :create do
   execute 'zypper refresh' do
@@ -31,24 +44,14 @@ action :create do
     description 'Erlang RPM packages from SUSE'
 
     baseurl new_resource.baseurl
-    gpgcheck new_resource.gpgcheck unless new_resource.gpgcheck.nil?
-    gpgkey new_resource.gpgkey unless new_resource.gpgkey.nil?
-    gpgautoimportkeys new_resource.gpgautoimportkeys unless new_resource.gpgautoimportkeys.nil?
+    gpgcheck new_resource.gpgcheck
+    gpgkey new_resource.gpgkey if new_resource.gpgkey
+    gpgautoimportkeys new_resource.gpgautoimportkeys
 
     autorefresh true
 
-    repositoryid new_resource.repositoryid unless new_resource.repositoryid.nil?
-    enabled new_resource.enabled unless new_resource.enabled.nil?
-    priority new_resource.priority unless new_resource.priority.nil?
-
-    proxy new_resource.proxy unless new_resource.proxy.nil?
-    proxy_username new_resource.proxy_username unless new_resource.proxy_username.nil?
-    proxy_password new_resource.proxy_password unless new_resource.proxy_password.nil?
-
-    sslcacert new_resource.sslcacert unless new_resource.sslcacert.nil?
-    sslclientcert new_resource.sslclientcert unless new_resource.sslclientcert.nil?
-    sslclientkey new_resource.sslclientkey unless new_resource.sslclientkey.nil?
-    sslverify new_resource.sslverify unless new_resource.sslverify.nil?
+    enabled new_resource.enabled
+    priority new_resource.priority if new_resource.priority
 
     notifies :run, 'execute[zypper refresh]', :immediately
 
