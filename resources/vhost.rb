@@ -21,7 +21,37 @@
 
 unified_mode true if respond_to?(:unified_mode)
 
-actions :add, :delete
-default_action :add
+property :vhost, String, name_property: true
 
-attribute :vhost, :kind_of => String, :name_attribute => true
+action_class do
+  include RabbitMQ::CoreHelpers
+
+  def vhost_exists?(name)
+    cmd = "rabbitmqctl -q list_vhosts | grep ^#{name}$"
+    cmd = Mixlib::ShellOut.new(cmd, :env => shell_environment)
+    cmd.run_command
+    Chef::Log.debug "rabbitmq_vhost_exists?: #{cmd}"
+    Chef::Log.debug "rabbitmq_vhost_exists?: #{cmd.stdout}"
+    !cmd.error?
+  end
+end
+
+action :add do
+  cmd = "rabbitmqctl -q add_vhost #{new_resource.vhost}"
+  execute cmd do
+    Chef::Log.debug "rabbitmq_vhost_add: #{cmd}"
+    Chef::Log.info "Adding RabbitMQ vhost '#{new_resource.vhost}'."
+    environment shell_environment
+    not_if { vhost_exists?(new_resource.vhost) }
+  end
+end
+
+action :delete do
+  cmd = "rabbitmqctl -q delete_vhost #{new_resource.vhost}"
+  execute cmd do
+    Chef::Log.debug "rabbitmq_vhost_delete: #{cmd}"
+    Chef::Log.info "Deleting RabbitMQ vhost '#{new_resource.vhost}'."
+    environment shell_environment
+    only_if { vhost_exists?(new_resource.vhost) }
+  end
+end

@@ -21,7 +21,40 @@
 
 unified_mode true if respond_to?(:unified_mode)
 
-actions :enable, :disable
 default_action :enable
 
-attribute :plugin, :kind_of => String, :name_attribute => true
+property :plugin, String, name_property: true
+
+action_class do
+  include RabbitMQ::CoreHelpers
+
+  def plugin_enabled?(name)
+    cmdstr = "/usr/lib/rabbitmq/bin/rabbitmq-plugins list -q -e '#{name}\\b'"
+    cmd = Mixlib::ShellOut.new(cmdstr, :env => shell_environment)
+    cmd.run_command
+    Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmdstr}"
+    Chef::Log.debug "rabbitmq_plugin_enabled?: #{cmd.stdout}"
+    cmd.error!
+    cmd.stdout =~ /\b#{name}\b/
+  end
+end
+
+action :enable do
+  execute "rabbitmq-plugins enable #{new_resource.plugin}" do
+    command "/usr/lib/rabbitmq/bin/rabbitmq-plugins enable #{new_resource.plugin}"
+    umask '0022'
+    Chef::Log.info "Enabling RabbitMQ plugin '#{new_resource.plugin}'."
+    environment shell_environment
+    not_if { plugin_enabled?(new_resource.plugin) }
+  end
+end
+
+action :disable do
+  execute "rabbitmq-plugins disable #{new_resource.plugin}" do
+    command "/usr/lib/rabbitmq/bin/rabbitmq-plugins disable #{new_resource.plugin}"
+    umask '0022'
+    Chef::Log.info "Disabling RabbitMQ plugin '#{new_resource.plugin}'."
+    environment shell_environment
+    only_if { plugin_enabled?(new_resource.plugin) }
+  end
+end

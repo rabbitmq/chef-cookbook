@@ -18,6 +18,7 @@ provisioner:
   # chef_log_level: debug
 
 verifier:
+  name: inspec
   root_path: '/opt/verifier'
   sudo: false
 
@@ -45,15 +46,7 @@ platforms:
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
-        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
-
-  - name: scientificlinux-7
-    driver:
-      image: sl:7
-      platform: rhel
-      pid_one_command: /usr/lib/systemd/systemd
-      intermediate_instructions:
-        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools
+        - RUN yum -y install sudo lsof which systemd-sysv initscripts openssl net-tools libxcrypt-compat
 
   - name: fedora-34
     driver:
@@ -209,7 +202,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "24.3.3-1"
+          version: "24.1.7-1"
       rabbitmq:
         version: "3.8.28"
     verifier:
@@ -240,7 +233,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "24.3.3-1"
+          version: "24.1.7-1"
       rabbitmq:
         version: "3.8.28"
         systemd:
@@ -293,7 +286,7 @@ suites:
       erlang:
         install_method: "esl"
         esl:
-          version: "24.3.3-1"
+          version: "24.1.7-1"
       rabbitmq:
         version: "3.8.28"
     verifier:

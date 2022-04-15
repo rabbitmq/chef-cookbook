@@ -305,7 +305,6 @@ describe 'rabbitmq::default' do
 
     include_context 'rabbitmq-stubs'
 
-    # ~FC005 -- we should ignore this during compile time
     it 'should install the logrotate package' do
       expect(chef_run).to install_package('logrotate')
     end
