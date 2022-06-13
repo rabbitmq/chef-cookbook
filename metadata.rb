@@ -4,7 +4,7 @@ maintainer 'VMware, Inc. and contributors'
 maintainer_email 'klishinm@vmware.com'
 license 'Apache-2.0'
 description 'Installs and configures RabbitMQ server'
-version '5.10.0'
+version '5.10.1'
 
 issues_url 'https://github.com/rabbitmq/chef-cookbook/issues'
 source_url 'https://github.com/rabbitmq/chef-cookbook'
