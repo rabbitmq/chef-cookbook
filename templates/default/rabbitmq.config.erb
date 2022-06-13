@@ -58,6 +58,7 @@
                     {certfile,"<%= node['rabbitmq']['ssl_cert'] %>"},
                     {keyfile,"<%= node['rabbitmq']['ssl_key'] %>"},
                     {verify,<%= node['rabbitmq']['ssl_verify'] %>},
+		    {depth,<%= node['rabbitmq']['ssl_depth'] %>},
                     {fail_if_no_peer_cert,<%= node['rabbitmq']['ssl_fail_if_no_peer_cert'] %>}
                     <% if @ssl_versions -%>,{versions,[<%= @ssl_versions %>]}<% end -%>
                     <% if @ssl_ciphers -%>,{ciphers,[<%= @ssl_ciphers %>]}<% end -%>
