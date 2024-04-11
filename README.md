@@ -19,17 +19,16 @@ For any series used, a [supported Erlang version](http://www.rabbitmq.com/which-
 
 ## Supported Distributions
 
-The cookbook targets and is tested against
+The cookbook generally targets [the same Debian-based distribution versions](https://www.rabbitmq.com/docs/install-debian) that RabbitMQ core team supports:
 
- * Ubuntu 18.04 through 20.04
- * Debian 10 (Buster) and 11 (Bullseye)
- * RHEL 8
- * CentOS Stream 8
- * Fedora 32 or later
- * Amazon Linux 2
- * Scientific Linux 7
-
-Those are the distributions currently used to run tests [with Kitchen](.kitchen.yml).
+ * Recent and [community supported versions of Ubuntu](https://ubuntu.com/about/release-cycle), e.g. 22.04 and later
+ * Debian 11 (Bullseye) and 12 (
+ * RHEL 8+
+ * CentOS Stream 9
+ * Fedora 35 or later
+ * Amazon Linux 2023
+ * Rocky Linux 9
+ * Alma Linux 9
 
 ### Newer Versions
 
@@ -52,7 +51,7 @@ Both options are covered below.
 
 
 
-## Provisioning RabbitMQ 3.9.x and 3.8.x
+## Provisioning RabbitMQ 3.9.x and 3.8.x (both [out of support](https://www.rabbitmq.com/release-information))
 
 ### Ensure Your Cookbook Version is Compatible
 
