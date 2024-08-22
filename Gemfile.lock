@@ -673,7 +673,7 @@ GEM
       addressable (>= 2.3.6, < 3.0.0)
     retriable (3.1.2)
     retryable (3.0.5)
-    rexml (3.3.3)
+    rexml (3.3.6)
       strscan
     rspec (3.11.0)
       rspec-core (~> 3.11.0)
