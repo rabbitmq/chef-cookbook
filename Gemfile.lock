@@ -744,7 +744,7 @@ GEM
       winrm (~> 2.0)
       winrm-elevated (~> 1.0)
       winrm-fs (~> 1.1)
-    thor (1.2.1)
+    thor (1.4.0)
     thread_safe (0.3.6)
     timeliness (0.3.10)
     timers (4.3.3)
