@@ -1,11 +1,18 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.7.2)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
+    activesupport (7.2.3.1)
+      base64
+      benchmark (>= 0.3)
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.3.1)
+      connection_pool (>= 2.2.5)
+      drb
       i18n (>= 1.6, < 2)
-      minitest (>= 5.1)
-      tzinfo (~> 2.0)
+      logger (>= 1.4.2)
+      minitest (>= 5.1, < 6)
+      securerandom (>= 0.3)
+      tzinfo (~> 2.0, >= 2.0.5)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
@@ -280,6 +287,7 @@ GEM
       ms_rest_azure (~> 0.12.0)
     base64 (0.3.0)
     bcrypt_pbkdf (1.1.0)
+    benchmark (0.5.0)
     berkshelf (7.2.2)
       chef (>= 15.7.32)
       chef-config
@@ -371,7 +379,8 @@ GEM
     coderay (1.1.3)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    concurrent-ruby (1.2.2)
+    concurrent-ruby (1.3.6)
+    connection_pool (3.0.2)
     console (1.15.0)
       fiber-local
     cookbook-omnifetch (0.11.1)
@@ -389,6 +398,7 @@ GEM
       multi_json
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    drb (2.2.3)
     droplet_kit (3.16.1)
       faraday (>= 0.15)
       kartograph (~> 0.2.8)
@@ -495,7 +505,7 @@ GEM
     http-cookie (1.0.4)
       domain_name (~> 0.5)
     httpclient (2.8.3)
-    i18n (1.14.1)
+    i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     inifile (3.0.0)
@@ -581,7 +591,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.9)
     minitar (0.9)
-    minitest (5.19.0)
+    minitest (5.27.0)
     mixlib-archive (1.1.7)
       mixlib-log
     mixlib-authentication (3.0.10)
@@ -716,6 +726,7 @@ GEM
     sawyer (0.8.2)
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
+    securerandom (0.4.1)
     semverse (3.0.0)
     shellany (0.0.1)
     signet (0.16.1)
