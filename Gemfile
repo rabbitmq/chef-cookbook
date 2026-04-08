@@ -9,6 +9,8 @@ gem 'nokogiri', ">= 1.13.4"
 # Contains the partial fix for CVE-2026-35611 (ReDoS in URI templates).
 # Drop this pin once chef-cli relaxes the constraint and addressable >= 2.9.0 can be used.
 gem 'addressable', '>= 2.8.10', '< 2.9'
+# Drop this pin once all transitive consumers allow >= 2.14.1.
+gem 'faraday', '>= 1.10.5'
 gem 'stove'
 
 group :lint do
@@ -22,7 +24,7 @@ end
 group :integration do
   gem 'kitchen-inspec', '~> 2.4'
   gem 'train', '~> 3.7'
-  gem 'inspec', '~> 4.37'
+  gem 'inspec', '~> 5.22'
 end
 
 group :kitchen_common do
