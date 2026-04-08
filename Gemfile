@@ -4,10 +4,14 @@ source 'https://rubygems.org'
 gem 'chef'
 gem 'berkshelf'
 gem 'github_changelog_generator'
+gem 'nokogiri', ">= 1.13.4"
+# Pinned to the highest version compatible with chef-cli's `< 2.9` constraint.
+# Contains the partial fix for CVE-2026-35611 (ReDoS in URI templates).
+# Drop this pin once chef-cli relaxes the constraint and addressable >= 2.9.0 can be used.
+gem 'addressable', '>= 2.8.10', '< 2.9'
 gem 'stove'
 
 group :lint do
-  gem 'foodcritic', '>= 12.2.1'
   gem 'cookstyle'
 end
 
@@ -16,19 +20,17 @@ group :unit do
 end
 
 group :integration do
-  gem 'kitchen-inspec', '~> 1.0'
-  # note: without https://github.com/inspec/train/pull/406 `kitchen verify`
-  # will fail on Ruby 2.6 even with the latest version. MK.
-  gem 'train', '~> 2.0'
-  gem 'inspec', '~> 4.7'
+  gem 'kitchen-inspec', '~> 2.4'
+  gem 'train', '~> 3.7'
+  gem 'inspec', '~> 4.37'
 end
 
 group :kitchen_common do
-  gem 'test-kitchen', '~> 2.5'
+  gem 'test-kitchen', '~> 2.12'
 end
 
 group :kitchen_vagrant do
-  gem 'kitchen-vagrant', '~> 1.6'
+  gem 'kitchen-vagrant', '~> 1.8'
 end
 
 group :kitchen_docker do
@@ -36,7 +38,7 @@ group :kitchen_docker do
 end
 
 group :kitchen_dokken do
-  gem 'kitchen-dokken', '~> 2.10'
+  gem 'kitchen-dokken', '~> 2.13'
 end
 
 group :kitchen_cloud do
