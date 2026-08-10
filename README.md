@@ -384,7 +384,6 @@ Example
 ``` ruby
 node['rabbitmq']['clustering']['enable'] = true
 node['rabbitmq']['erlang_cookie'] = 'AnyAlphaNumericStringWillDo'
-node['rabbitmq']['clustering']['cluster_partition_handling'] = 'pause_minority'
 node['rabbitmq']['clustering']['use_auto_clustering'] = false
 node['rabbitmq']['clustering']['cluster_name'] = 'qa_env'
 node['rabbitmq']['clustering']['cluster_nodes'] = [

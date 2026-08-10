@@ -46,7 +46,6 @@
     <%if node['rabbitmq']['clustering']['use_auto_clustering'] -%>
     {cluster_nodes, {[<%= node['rabbitmq']['clustering']['cluster_nodes'].map { |n| "'#{n['name']}'"}.join(',') %>], disc}},
     <% end %>
-    {cluster_partition_handling,<%= node['rabbitmq']['clustering']['cluster_partition_handling'] %>},
 <% end %>
 <% if node['rabbitmq']['ssl'] -%>
     <% if node['rabbitmq']['ssl_listen_interface'] %>
@@ -140,7 +139,7 @@
         <% node['rabbitmq']['ldap']['conf'].each_with_index do |(key, value), index|  -%>
             <%if index == 0%>
                 {<%= key %>, <%= value %>}
-            <%else%> 
+            <%else%>
 	            ,{<%= key %>, <%= value %>}
             <%end%>
         <% end -%>
