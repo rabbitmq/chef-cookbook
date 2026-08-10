@@ -88,8 +88,6 @@ default['rabbitmq']['kernel']['inet_dist_use_interface'] = nil
 
 # clustering
 default['rabbitmq']['clustering']['enable'] = false
-default['rabbitmq']['clustering']['cluster_partition_handling'] = 'ignore'
-
 default['rabbitmq']['clustering']['use_auto_clustering'] = false
 default['rabbitmq']['clustering']['cluster_name'] = nil
 default['rabbitmq']['clustering']['cluster_nodes'] = []
