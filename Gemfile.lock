@@ -462,7 +462,8 @@ GEM
     equalizer (0.0.11)
     erubi (1.10.0)
     erubis (2.7.0)
-    excon (0.92.2)
+    excon (1.5.0)
+      logger
     faraday (1.10.5)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -634,12 +635,12 @@ GEM
     jsonpath (1.1.5)
       multi_json
     jwt (2.3.0)
-    k8s-ruby (0.17.2)
+    k8s-ruby (0.18.0)
       base64
       dry-configurable
       dry-struct
       dry-types
-      excon (~> 0.71)
+      excon (~> 1.5)
       hashdiff (~> 1.0)
       jsonpath (~> 1.1)
       recursive-open-struct (~> 1.1, >= 1.1.3)
