@@ -633,7 +633,8 @@ GEM
     json (2.6.1)
     jsonpath (1.1.5)
       multi_json
-    jwt (2.3.0)
+    jwt (2.10.3)
+      base64
     k8s-ruby (0.17.2)
       base64
       dry-configurable
